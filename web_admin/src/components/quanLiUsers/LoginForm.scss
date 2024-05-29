@@ -45,6 +45,12 @@
         .form-group {
             .text-checkbox {
                 font-size: 1rem;
+
+                .span {
+
+                    color: #4154f1;
+
+                }
             }
         }
 
@@ -55,6 +61,9 @@
         }
 
         .text-footer {
+            display: flex;
+            gap: 5px;
+
             span {
                 &:last-child {
                     color: #4154f1;
@@ -67,10 +76,10 @@
 /* Thiết lập bảng có thể cuộn ngang trên các thiết bị có màn hình nhỏ */
 @media screen and (max-width: 990px) {
     .logo-title {
-            h3 {
-                display: none;
-            }
+        h3 {
+            display: none;
         }
+    }
 }
 
 /* Định dạng cho giao diện trên điện thoại */
@@ -87,7 +96,8 @@
                 max-width: 100px;
                 height: auto;
             }
-            h3{
+
+            h3 {
                 display: none;
             }
         }

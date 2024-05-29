@@ -1,7 +1,7 @@
 import React from "react";
 import { Checkbox } from "antd";
 
-const FormUser = (props) => {
+const FormLoginUser = (props) => {
   return (
     <div>
       <div className="form-group mb-3">
@@ -24,10 +24,12 @@ const FormUser = (props) => {
         <Checkbox className="text-checkbox">Remember me</Checkbox>
       </div>
       <div className="text-center button mt-3">
-        <button className="btn btn-primary">Login</button>
+        <button o className="btn btn-primary">
+          Login
+        </button>
       </div>
     </div>
   );
 };
 
-export default FormUser;
+export default FormLoginUser;

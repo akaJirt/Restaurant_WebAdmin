@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useCallback } from "react";
 import "./LoginForm.scss";
 import logo from "../../images/logo.png";
-import FormUser from "./formUser/FormUser";
+import { useNavigate } from "react-router-dom";
+import FormLoginUser from "./formLoginUser/FormLoginUser";
 
 const LoginFrom = (props) => {
+  const navigate = useNavigate();
+
+  const handleClickRegister = useCallback(() => {
+    navigate("/register");
+  }, [navigate]);
   return (
     <div className="content-login-from">
       <div className="logo-title mb-3">
@@ -15,10 +21,10 @@ const LoginFrom = (props) => {
           <h5 className="text-center">Login to You Account</h5>
           <p className="text-center">Enter your phone & password to login</p>
         </div>
-        <FormUser />
+        <FormLoginUser />
         <div className="text-footer mt-3">
           <span>Don't have account?</span>
-          <span>Create an account</span>
+          <span onClick={handleClickRegister}>Create an account</span>
         </div>
       </div>
     </div>
