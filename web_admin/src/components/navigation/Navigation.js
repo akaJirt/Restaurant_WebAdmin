@@ -7,8 +7,7 @@ export const PrivateNavigation = ({ isAuthenticated }) => {
   return <Outlet />;
 };
 
-export const PublicNavigation = () => {
-  const isAuthenticated = true;
+export const PublicNavigation = ({ isAuthenticated }) => {
   if (isAuthenticated) {
     return <Navigate to="/" />;
   }
