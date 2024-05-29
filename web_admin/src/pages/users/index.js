@@ -1,15 +1,11 @@
 // loginUsers.js
 import React from "react";
+import LoginFrom from "../../components/quanLiUsers/LoginFrom";
 
 const Login = ({ setIsAuthenticated }) => {
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
-
   return (
     <div>
-      <h2>Login Page</h2>
-      <button onClick={handleLogin}>Log In</button>
+      <LoginFrom />
     </div>
   );
 };
