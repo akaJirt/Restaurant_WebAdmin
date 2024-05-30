@@ -43,8 +43,10 @@ const RegisterForm = (props) => {
       </div>
       <div className="form-login">
         <div className="box-title">
-          <h5 className="text-center">Login to You Account</h5>
-          <p className="text-center">Enter your phone & password to login</p>
+          <h5 className="text-center">Create an Account</h5>
+          <p className="text-center">
+            Enter your personal details to create account
+          </p>
         </div>
         <FormRegisterUser />
         <div className="text-footer mt-3">
