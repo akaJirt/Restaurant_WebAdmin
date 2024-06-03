@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./LoginForm.scss";
 import "./RegisterForm.scss";
 import logo from "../../images/logo.png";
@@ -10,19 +10,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideScrollTop, showScrollTop } from "../../store/scrollTop/actions";
 import { getScrollState } from "../../store/selector";
 const RegisterForm = (props) => {
+  console.log("render RegisterForm");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const scroll = useSelector(getScrollState);
-  const handleClickLogin = useCallback(() => {
-    navigate("/");
-  }, [navigate]);
+  const handleClickLogin = () => {
+    navigate("/login");
+  };
 
   useEffect(() => {
+    console.log("useEffect RegisterForm");
     const handleScroll = () => {
       if (window.scrollY > 100) {
-        dispatch(showScrollTop());
+        return dispatch(showScrollTop());
       } else {
-        dispatch(hideScrollTop());
+        return dispatch(hideScrollTop());
       }
     };
 

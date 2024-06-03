@@ -4,6 +4,7 @@ import { SlideshowLightbox } from "lightbox.js-react";
 import "lightbox.js-react/dist/index.css";
 import "./FormRegister.scss";
 const FormRegisterUser = (props) => {
+  console.log("render FormRegisterUser");
   const [testImg, setTestImg] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const handleChangImg = (e) => {
@@ -91,9 +92,7 @@ const FormRegisterUser = (props) => {
         </Checkbox>
       </div>
       <div className="text-center button mt-3">
-        <button o className="btn btn-primary">
-          Register
-        </button>
+        <button className="btn btn-primary">Register</button>
       </div>
     </div>
   );

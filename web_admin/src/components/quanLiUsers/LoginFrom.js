@@ -1,15 +1,17 @@
-import React, { useCallback } from "react";
+import React from "react";
 import "./LoginForm.scss";
 import logo from "../../images/logo.png";
 import { useNavigate } from "react-router-dom";
 import FormLoginUser from "./formLoginUser/FormLoginUser";
 
 const LoginFrom = (props) => {
+  console.log("render LoginFrom");
+
   const navigate = useNavigate();
 
-  const handleClickRegister = useCallback(() => {
+  const handleClickRegister = () => {
     navigate("/register");
-  }, [navigate]);
+  };
   return (
     <div className="content-login-from">
       <div className="logo-title mb-3">

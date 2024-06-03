@@ -1,7 +1,16 @@
 import React from "react";
 import { Checkbox } from "antd";
-
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setShowHeader } from "../../../store/headerShow/actions";
 const FormLoginUser = (props) => {
+  console.log("render FormLoginUser");
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleClickLogin = () => {
+    navigate("/home");
+    dispatch(setShowHeader());
+  };
   return (
     <div>
       <div className="form-group mb-3">
@@ -24,7 +33,7 @@ const FormLoginUser = (props) => {
         <Checkbox className="text-checkbox">Remember me</Checkbox>
       </div>
       <div className="text-center button mt-3">
-        <button o className="btn btn-primary">
+        <button onClick={handleClickLogin} className="btn btn-primary">
           Login
         </button>
       </div>

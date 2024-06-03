@@ -2,7 +2,8 @@
 import React from "react";
 import LoginFrom from "../../components/quanLiUsers/LoginFrom";
 
-const Login = ({ setIsAuthenticated }) => {
+const Login = () => {
+  console.log("render Login");
   return (
     <div>
       <LoginFrom />
