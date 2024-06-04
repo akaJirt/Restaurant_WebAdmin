@@ -1,0 +1,125 @@
+.content-container {
+    background-color: #f0f5fb;
+
+    .container {
+        h1 {
+            font-size: 24px;
+            margin-bottom: 0;
+            font-weight: 600;
+            color: #012970;
+            padding: 10px 0;
+        }
+
+        .content-home {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            .box-left {
+                flex: 2;
+
+                .left-box-1 {
+                    display: flex;
+                    gap: 20px;
+                    flex-wrap: wrap;
+
+                    .content-title {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        .content-title-box-1 {
+                            display: flex;
+                            align-items: center;
+                            gap: 7px;
+
+                            .text-banHang {
+                                font-size: 18px;
+                                font-weight: 500;
+                                color: #012970;
+                                font-family: "Poppins", sans-serif;
+                                margin: 0;
+                                padding: 0;
+
+                            }
+
+                            .text-homNay {
+                                color: #899bbd;
+                                font-size: 14px;
+                                font-weight: 400;
+                            }
+
+                        }
+
+                        .icon-ellips {
+                            color: #899bbd;
+                            cursor: pointer;
+                        }
+                    }
+
+                    .content-body {
+                        display: flex;
+                        gap: 15px;
+
+                        .icon-cart {
+
+                            border: 1px solid #f6f6fe;
+                            background: #f6f6fe;
+                            padding: 0 11px;
+                            border-radius: 100%;
+
+                            .ic {
+                                color: #4154f1;
+                                font-size: 32px;
+                                height: 100%;
+                            }
+                        }
+
+                        .content-body-box-2 {
+                            .h6 {
+                                font-size: 28px;
+                                color: #012970;
+                                font-weight: 700;
+                                margin: 0;
+                            }
+
+                            .span {
+                                span {
+                                    &:first-child {
+                                        color: #595c5f;
+                                    }
+
+                                    &:last-child {
+                                        color: #4154f1;
+                                        font-weight: bold;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                }
+            }
+
+            .box-right {
+                flex: 1;
+                border: 1px solid gold;
+            }
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .content-container {
+        .container {
+            .content-home { 
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+
+    }
+
+}

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setShowHeader } from "../../store/headerShow/actions";
+import { QuanLiKhuyenMaiSlice } from "../../utils/sliceString";
 
 function QuanLiKhuyenMaiVaThongBao(props) {
   console.log("render QuanLiKhuyenMaiVaThongBao");
@@ -8,7 +9,11 @@ function QuanLiKhuyenMaiVaThongBao(props) {
   useEffect(() => {
     dispatch(setShowHeader());
   }, [dispatch]);
-  return <div>QuanLiKhuyenMaiVaThongBao</div>;
+  return (
+    <div className="container">
+      <QuanLiKhuyenMaiSlice />
+    </div>
+  );
 }
 
 export default QuanLiKhuyenMaiVaThongBao;

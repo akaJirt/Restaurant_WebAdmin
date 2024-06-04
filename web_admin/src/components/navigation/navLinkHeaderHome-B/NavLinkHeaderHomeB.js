@@ -24,7 +24,7 @@ function NavLinkHeaderHomeB(props) {
           <NavLink
             end
             className={"item-nav"}
-            to="quan-li-ban"
+            to="quanLiBan"
             style={({ isActive }) => ({
               color: isActive ? "#4154f1" : "",
               backgroundColor: isActive ? "#f6f9ff" : "",
@@ -38,7 +38,7 @@ function NavLinkHeaderHomeB(props) {
           <NavLink
             end
             className={"item-nav"}
-            to="quan-li-menu"
+            to="quanLiMenu"
             style={({ isActive }) => ({
               color: isActive ? "#4154f1" : "",
               backgroundColor: isActive ? "#f6f9ff" : "",
@@ -52,7 +52,7 @@ function NavLinkHeaderHomeB(props) {
           <NavLink
             end
             className={"item-nav"}
-            to="quan-li-users"
+            to="quanLiUsers"
             style={({ isActive }) => ({
               color: isActive ? "#4154f1" : "",
               backgroundColor: isActive ? "#f6f9ff" : "",
@@ -67,7 +67,7 @@ function NavLinkHeaderHomeB(props) {
           <NavLink
             end
             className={"item-nav"}
-            to="quan-li-dat-ban-online"
+            to="quanLiDatBanOnline"
             style={({ isActive }) => ({
               color: isActive ? "#4154f1" : "",
               backgroundColor: isActive ? "#f6f9ff" : "",
@@ -83,7 +83,7 @@ function NavLinkHeaderHomeB(props) {
           <NavLink
             end
             className={"item-nav"}
-            to="quan-li-thong-ke"
+            to="quanLiThongKe"
             style={({ isActive }) => ({
               color: isActive ? "#4154f1" : "",
               backgroundColor: isActive ? "#f6f9ff" : "",
@@ -97,7 +97,7 @@ function NavLinkHeaderHomeB(props) {
           <NavLink
             end
             className={"item-nav"}
-            to="quan-li-km"
+            to="quanLiKhuyenMai"
             style={({ isActive }) => ({
               color: isActive ? "#4154f1" : "",
               backgroundColor: isActive ? "#f6f9ff" : "",

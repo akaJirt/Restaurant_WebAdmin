@@ -1,0 +1,44 @@
+.card-2{
+    box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.1);
+    background-color: #fff;
+    flex: 1;
+    .content-body-2 {
+        display: flex;
+        gap: 15px;
+    
+        .icon-dollar {
+            border: 1px solid #e0f8e9;
+            background: #e0f8e9;
+            padding: 0 11px;
+            border-radius: 100%;
+    
+            .ic {
+                color: #2eca6a;
+                font-size: 32px;
+                height: 100%;
+            }
+        }
+    
+        .content-body-box-2 {
+            .h6 {
+                font-size: 28px;
+                color: #012970;
+                font-weight: 700;
+                margin: 0;
+            }
+    
+            .span {
+                span {
+                    &:first-child {
+                        color: #595c5f;
+                    }
+    
+                    &:last-child {
+                        color: rgba(25, 135, 84, 1);
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}

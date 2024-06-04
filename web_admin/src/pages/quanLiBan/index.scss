@@ -1,0 +1,23 @@
+.container {
+    .h1 {
+        font-size: 24px;
+        margin-bottom: 0;
+        font-weight: 600;
+        color: #012970;
+        padding: 10px 0;
+    }
+    .content-location{
+        display: flex;
+        .nav-link{
+            color: #899bbd;
+            margin-right: 6px;
+            &:hover{
+                color: #51678f;
+            }
+        }
+        span{
+            color: #51678f;
+                font-weight: 600;
+        }
+    }
+}

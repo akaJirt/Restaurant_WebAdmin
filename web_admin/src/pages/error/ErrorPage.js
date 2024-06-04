@@ -1,6 +1,8 @@
 import React from "react";
 import "./ErrorPage.scss";
+import { NavLink } from "react-router-dom";
 const ErrorPage = (props) => {
+  console.log("render ErrorPage");
   return (
     <div className="content-error-page">
       <h1 className="h1 text-center">404</h1>
@@ -8,7 +10,9 @@ const ErrorPage = (props) => {
         The page you are looking for doesn't exist.
       </h2>
       <div className="text-center">
-        <button>Back to home</button>
+        <NavLink to={"/home"} end>
+          <button>Back to home</button>
+        </NavLink>
       </div>
       <div className="img ">
         <img

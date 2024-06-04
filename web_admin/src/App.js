@@ -26,15 +26,15 @@ function App() {
         {/*----------------- HEADER HOME ------------------- */}
         <Route element={<HeaderStore />}>
           <Route path="home" element={<Home />} end />
-          <Route path="quan-li-ban" element={<QuanLiBan />} />
-          <Route path="quan-li-users" element={<QuanLiUser />} />
-          <Route path="quan-li-menu" element={<QuanLiMenu />} />
+          <Route path="quanLiBan" element={<QuanLiBan />} />
+          <Route path="quanLiUsers" element={<QuanLiUser />} />
+          <Route path="quanLiMenu" element={<QuanLiMenu />} />
+          <Route path="quanLiDatBanOnline" element={<QuanLiDatBanOnline />} />
+          <Route path="quanLiThongKe" element={<QuanLiThongKeVaBaoCao />} />
           <Route
-            path="quan-li-dat-ban-online"
-            element={<QuanLiDatBanOnline />}
+            path="quanLiKhuyenMai"
+            element={<QuanLiKhuyenMaiVaThongBao />}
           />
-          <Route path="quan-li-thong-ke" element={<QuanLiThongKeVaBaoCao />} />
-          <Route path="quan-li-km" element={<QuanLiKhuyenMaiVaThongBao />} />
           <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
