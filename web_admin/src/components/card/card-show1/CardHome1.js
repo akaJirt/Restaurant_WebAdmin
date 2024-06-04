@@ -3,6 +3,8 @@ import { EllipsisOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import "./CardHome1.scss";
 function CardHome1(props) {
+  console.log("render CardHome1");
+
   return (
     <Card
       className="card-1"

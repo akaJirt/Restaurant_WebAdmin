@@ -1,0 +1,91 @@
+.content-ban-chay-nhat {
+    .box-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .box-text {
+            display: flex;
+            align-items: center;
+
+            p {
+                font-size: 1.125rem;
+                /* Adjust as needed (18px = 1.125rem) */
+                font-weight: 500;
+                color: rgb(1, 41, 112);
+                font-family: Poppins, sans-serif;
+                margin: 0;
+            }
+
+            span {
+                color: rgb(137, 155, 189);
+                font-size: 0.875rem;
+                /* Adjust as needed (14px = 0.875rem) */
+                font-weight: 400;
+                margin-left: 0.375rem;
+                /* Adjust as needed (6px = 0.375rem) */
+            }
+        }
+    }
+
+    .content-body {
+        display: flex;
+        flex-direction: column;
+        .content-box {
+            .box-ul {
+                display: flex;
+                gap: 0.3125rem;
+                /* Adjust as needed (5px = 0.3125rem) */
+
+                .item-li {
+                    list-style: none;
+                    flex: 1;
+                    color: black;
+                    font-weight: bold;
+                }
+
+                .item-sp {
+                    flex: 4;
+                    word-wrap: break-word;
+                    word-wrap: break-word;
+                }
+            }
+        }
+
+        .content-box-sp {
+            .box-ul {
+                display: flex;
+                align-items: center;
+                gap: 0.3125rem;
+                /* Adjust as needed (5px = 0.3125rem) */
+
+                .item-img {
+                    height: 8%;
+                    /* Adjust as needed (80px = 5rem) */
+                    
+                    img {
+                        object-fit: cover;
+                        border-radius: 5px;
+                        max-width: 60px;
+                    }
+                }
+
+                .item-li {
+                    list-style: none;
+                    flex: 1;
+                }
+
+                .item-da-ban {
+                    color: black;
+                    font-weight: bold;
+                }
+
+                .item-sp {
+                    flex: 4;
+                    color: #4154f1;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}

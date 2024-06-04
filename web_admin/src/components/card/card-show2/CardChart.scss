@@ -1,0 +1,27 @@
+.cart-chart {
+    .box-title{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .box-text{
+            display: flex;
+            align-items: center;
+            .text-baoCao {
+                font-size: 18px;
+                font-weight: 500;
+                color: #012970;
+                font-family: "Poppins", sans-serif;
+                margin: 0;
+                
+            }
+        
+            .text-homNay {
+                color: #899bbd;
+                font-size: 14px;
+                font-weight: 400;
+                margin-left: 6px;
+            }
+        }
+    }
+   
+}

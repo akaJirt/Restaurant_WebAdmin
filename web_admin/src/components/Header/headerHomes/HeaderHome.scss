@@ -6,7 +6,11 @@
     gap: 0.625rem;
     padding: 0 1.25rem;
     align-items: center;
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
     .logo-text {
         flex: 1;
         display: flex;

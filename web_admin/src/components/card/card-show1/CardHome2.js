@@ -3,6 +3,8 @@ import { EllipsisOutlined, DollarOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import "./CardHome2.scss";
 function CardHome2(props) {
+  console.log("render CardHome2");
+
   return (
     <Card
       className="card-2"

@@ -4,6 +4,8 @@ import { Card } from "antd";
 import "./CardHome2.scss";
 import "./CardHome3.scss";
 function CardHome3(props) {
+  console.log("render CardHome3");
+
   return (
     <Card
       className="card-3"
