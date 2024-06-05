@@ -98,4 +98,4 @@ const FormRegisterUser = (props) => {
   );
 };
 
-export default FormRegisterUser;
+export default React.memo(FormRegisterUser);

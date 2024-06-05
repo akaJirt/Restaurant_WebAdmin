@@ -1,4 +1,4 @@
-.content-ban-chay-nhat {
+.content-dat-ban {
     .box-title {
         display: flex;
         align-items: center;
@@ -28,39 +28,23 @@
         }
     }
 
-    .content-body {
-        display: flex;
-        flex-direction: column;
-        .content-box {
-            border-collapse: collapse;
-            thead{
-                tr{
-                    th{
-                        padding-left: 5px;
-                    }
-                }
-            }
-            tbody{
-                tr{
-                    .text-mt{
-                        color: #4154f1;
-                        font-weight: bold;
-                    }
-                    .text-da-ban{
-                        color: black;
-                        font-weight: bold;
-                    }
-                    th,td{
-                        padding: 5px;
-                        .link-img{
+    .box-body {
+        table {
+            width: 100%;
+
+            tbody {
+                tr {
+                    th {
+                        .img{
                             img{
-                                max-width: 60px;
-                                border-radius: 5px;
+                                max-width: 100px;
+                                border-radius: 10px;
                             }
                         }
                     }
                 }
             }
+
         }
     }
 }

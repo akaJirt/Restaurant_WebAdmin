@@ -28,4 +28,4 @@ const CardChart = (props) => {
   );
 };
 
-export default CardChart;
+export default React.memo(CardChart);

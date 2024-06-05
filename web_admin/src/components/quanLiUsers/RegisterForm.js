@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import "./LoginForm.scss";
 import "./RegisterForm.scss";
 import logo from "../../images/logo.png";
@@ -34,9 +34,9 @@ const RegisterForm = (props) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [dispatch]);
-  const handleClickScrollTop = () => {
+  const handleClickScrollTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, []);
   return (
     <div className="content-login-from form-register">
       <div className="logo-title mb-3">

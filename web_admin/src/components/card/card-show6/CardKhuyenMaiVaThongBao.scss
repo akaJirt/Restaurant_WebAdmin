@@ -1,4 +1,4 @@
-.content-ban-chay-nhat {
+.content-km-tb {
     .box-title {
         display: flex;
         align-items: center;
@@ -28,36 +28,36 @@
         }
     }
 
-    .content-body {
+    .box-body {
         display: flex;
-        flex-direction: column;
-        .content-box {
-            border-collapse: collapse;
-            thead{
-                tr{
-                    th{
-                        padding-left: 5px;
-                    }
-                }
+        gap: 5px;
+        align-items: center;
+
+        .img {
+            img {
+                max-width: 100px;
+                border-radius: 10px;
             }
-            tbody{
-                tr{
-                    .text-mt{
-                        color: #4154f1;
+        }
+
+        .item-p {
+            p {
+                font-weight: bold;
+                margin: 0;
+                color: rgb(1, 41, 112);
+            }
+
+            .item-s {
+                span {
+                    &:first-child {
+                        color: red;
                         font-weight: bold;
+                        text-decoration: line-through;
                     }
-                    .text-da-ban{
-                        color: black;
+
+                    &:last-child {
+                        color: green;
                         font-weight: bold;
-                    }
-                    th,td{
-                        padding: 5px;
-                        .link-img{
-                            img{
-                                max-width: 60px;
-                                border-radius: 5px;
-                            }
-                        }
                     }
                 }
             }

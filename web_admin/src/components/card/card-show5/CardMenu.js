@@ -1,53 +1,50 @@
 import React from "react";
+import "./CardMenu.scss";
 import { Card } from "antd";
-import "./CardBanChayNhat.scss";
 import { EllipsisOutlined } from "@ant-design/icons";
-import product from "../../../images/product-2.jpg";
 import { Link } from "react-router-dom";
-function CardBanChayNhat(props) {
-  console.log("render CardBanChayNhat");
+import product from "../../../images/product-2.jpg";
+
+const CardMenu = (props) => {
+  console.log("render CardMenu");
   return (
     <Card
-      className="content-ban-chay-nhat"
+      className="content-dat-ban"
       title={
         <div className="box-title">
           <div className="box-text">
-            <p>Bán chạy nhất</p>
+            <p>Menu</p>
             <span>| Hôm nay</span>
           </div>
-          <EllipsisOutlined className="icon-ellips" />
+          <EllipsisOutlined />
         </div>
       }
       bordered={false}
     >
-      <div className="content-body">
-        <table className="content-box">
+      <div className="box-body">
+        <table>
           <thead>
             <tr>
               <th>Hình ảnh</th>
-              <th>Sản phẩm</th>
+              <th>Tên Món</th>
               <th>Giá</th>
-              <th>Đã bán</th>
-              <th>Doanh thu</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th>
-                <Link to={"/chiTietSanPham"} className="link-img">
+                <Link to={"#"} className="img">
                   <img src={product} alt="products-1" />
                 </Link>
               </th>
-              <td className="text-mt">Cá viên chiên</td>
+              <td>Dưa leo xào mướp đắng</td>
               <td>$10</td>
-              <td className="text-da-ban">20</td>
-              <td>$2000</td>
             </tr>
           </tbody>
         </table>
       </div>
     </Card>
   );
-}
+};
 
-export default React.memo(CardBanChayNhat);
+export default React.memo(CardMenu);

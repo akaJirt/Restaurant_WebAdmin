@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowHeader } from "../../store/headerShow/actions";
 import { useLocation } from "react-router-dom";
@@ -9,16 +9,20 @@ import CardHome2 from "../../components/card/card-show1/CardHome2";
 import CardHome3 from "../../components/card/card-show1/CardHome3";
 import CardChart from "../../components/card/card-show2/CardChart";
 import CardBanChayNhat from "../../components/card/card-show3/CardBanChayNhat";
-import { getScrollState } from "../../store/selector";
+import { getScrollState, getThemeState } from "../../store/selector";
 import { CaretUpOutlined } from "@ant-design/icons";
 import { hideScrollTop, showScrollTop } from "../../store/scrollTop/actions";
 import { FloatButton } from "antd";
+import CardDatBan from "../../components/card/card-show4/CardDatBan";
+import CardMenu from "../../components/card/card-show5/CardMenu";
+import CardKhuyenMaiVaThongBao from "../../components/card/card-show6/CardKhuyenMaiVaThongBao";
 
 const Home = (props) => {
   console.log("render Home");
   const dispatch = useDispatch();
   const location = useLocation();
   const scroll = useSelector(getScrollState);
+  const theme = useSelector(getThemeState);
   let pathNameLocation = location.pathname;
   useEffect(() => {
     dispatch(setShowHeader());
@@ -41,11 +45,11 @@ const Home = (props) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [dispatch]);
-  const handleClickScrollTop = () => {
+  const handleClickScrollTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, []);
   return (
-    <div className="content-container">
+    <div className={`content-container ${theme ? "theme" : ""}`}>
       <div className="container">
         <h1>Home</h1>
         <div className="content-home">
@@ -59,10 +63,20 @@ const Home = (props) => {
               <CardChart />
             </div>
             <div className="left-box-3">
+              <CardDatBan />
+            </div>
+            <div className="left-box-4">
               <CardBanChayNhat />
             </div>
           </div>
-          <div className="box-right"></div>
+          <div className="box-right">
+            <div className="right-box-1">
+              <CardMenu />
+            </div>
+            <div className="right-box-2">
+              <CardKhuyenMaiVaThongBao />
+            </div>
+          </div>
         </div>
       </div>
       {scroll && (

@@ -1,0 +1,52 @@
+.content-ban-gan-day {
+    .box-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .item-text {
+            display: flex;
+            align-items: center;
+
+            p {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 500;
+                color: rgb(1, 41, 112);
+                font-family: Poppins, sans-serif;
+            }
+
+            span {
+                margin-left: 6px;
+                color: rgb(137, 155, 189);
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+    }
+    .box-body{
+        .box-danh-muc{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .item-1{
+                display: flex;
+                gap: 5px;
+                align-items: center;
+                select{
+                    padding:6px 20px;
+                }
+            }
+            .item-2{
+                input{
+                    padding: 6px 7px;
+                    width: 250px;
+                }
+            }
+        }
+        .table-body{
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
+}
