@@ -1,5 +1,26 @@
+.content-container.theme {
+    background-color: #110f23;
+
+    .container {
+        .content-location {
+            .nav-link {
+                color: #FFF;
+                opacity: 0.8;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+            span{
+                color: #ae1481;
+            }
+        }
+    }
+}
+
 .container {
     margin-top: 61px;
+
     .h1 {
         font-size: 24px;
         margin-bottom: 0;
@@ -7,18 +28,22 @@
         color: #012970;
         padding: 10px 0;
     }
-    .content-location{
+
+    .content-location {
         display: flex;
-        .nav-link{
+
+        .nav-link {
             color: #899bbd;
             margin-right: 6px;
-            &:hover{
+
+            &:hover {
                 color: #51678f;
             }
         }
-        span{
+
+        span {
             color: #51678f;
-                font-weight: 600;
+            font-weight: 600;
         }
     }
 }

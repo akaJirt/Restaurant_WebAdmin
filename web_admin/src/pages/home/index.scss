@@ -41,7 +41,9 @@
                 .left-box-3 {
                     margin: 20px 0;
                 }
-
+                .left-box-4 {
+                    margin-bottom: 20px;
+                }
             }
 
             .box-right {
@@ -63,6 +65,16 @@
             .content-home {
                 display: flex;
                 flex-direction: column;
+                .box-left{
+                    .left-box-4{
+                        margin: 0;
+                    }
+                }
+                .box-right{
+                    .right-box-2{
+                        margin-bottom: 20px;
+                    }
+                }
             }
         }
 

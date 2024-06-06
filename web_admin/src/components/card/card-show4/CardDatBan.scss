@@ -1,3 +1,37 @@
+.content-ban-gan-day.theme {
+    background-color: #1d1933;
+
+    .box-title {
+        .item-text {
+            p {
+                color: #ae1481;
+            }
+
+            span {
+                color: #f8bbd0;
+            }
+        }
+
+        .icon-ellips {
+            color: #f8bbd0;
+        }
+    }
+
+    .box-body {
+        .table-body {
+            thead {
+                tr {
+                    th {
+                        color: #ae1481;
+                    }
+                }
+            }
+
+            color: #fff;
+        }
+    }
+}
+
 .content-ban-gan-day {
     .box-title {
         display: flex;
@@ -24,27 +58,36 @@
             }
         }
     }
-    .box-body{
-        .box-danh-muc{
+
+    .box-body {
+        .box-danh-muc {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            .item-1{
+
+            .item-1 {
                 display: flex;
                 gap: 5px;
                 align-items: center;
-                select{
-                    padding:6px 20px;
+
+                select {
+                    padding: 6px 20px;
+                }
+
+                span {
+                    color: #fff;
                 }
             }
-            .item-2{
-                input{
+
+            .item-2 {
+                input {
                     padding: 6px 7px;
                     width: 250px;
                 }
             }
         }
-        .table-body{
+
+        .table-body {
             width: 100%;
             margin-top: 10px;
         }

@@ -4,19 +4,21 @@ import { Card } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import product from "../../../images/product-2.jpg";
-
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 const CardMenu = (props) => {
   console.log("render CardMenu");
+  const theme = useSelector(getThemeState);
   return (
     <Card
-      className="content-dat-ban"
+      className={`content-dat-ban ${theme ? "theme" : ""}`}
       title={
         <div className="box-title">
           <div className="box-text">
             <p>Menu</p>
             <span>| Hôm nay</span>
           </div>
-          <EllipsisOutlined />
+          <EllipsisOutlined className="icon-ellips" />
         </div>
       }
       bordered={false}

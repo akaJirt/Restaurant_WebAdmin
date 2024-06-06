@@ -10,23 +10,25 @@ import { getThemeState } from "../../../store/selector";
 const HeaderHome = (props) => {
   console.log("render HeaderHome");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  console.log(isMenuOpen, "isMenuOpen");
   const theme = useSelector(getThemeState);
-  console.log(theme, "theme");
   const handleClickOpenMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <header
-      className={`header-content ${
-        isMenuOpen || theme ? "menu-open theme" : ""
+      className={`header-content ${theme ? "theme" : ""} ${
+        isMenuOpen ? "menu-open" : ""
       }`}
     >
-      <NavLink to={"/home"} className="logo-text">
-        <img src={logo} alt="logo" />
-        <span>NiceAdmin</span>
+      <div className="logo-text">
+        <NavLink to={"/home"} className={"nav-link"}>
+          <img src={logo} alt="logo" />
+          <span>NiceAdmin</span>
+        </NavLink>
         <MenuOutlined className="icon-menu" onClick={handleClickOpenMenu} />
-      </NavLink>
+      </div>
       {/*---------------- Nav Link Body------------- */}
       <NavLinkHeaderHomeB />
       {/*---------------- Nav Link Footer------------- */}

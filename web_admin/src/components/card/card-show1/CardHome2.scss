@@ -4,44 +4,47 @@
     .content-title {
         .content-title-box-1 {
             .text-banHang {
-                color: #FFFFFF;
+                color: #ae1481;
             }
 
             .text-homNay {
-                color: #A6C8FF;
+                color: #f8bbd0;
             }
         }
 
         .icon-ellips {
-            color: #A6C8FF;
+            color: #f8bbd0;
         }
     }
 
-        .content-body-2 {
-            .icon-dollar {
-                border: 1px solid #38334A;
-                    background: #38334A;
-                .ic {
-                    color: #3ecc75;
-                }
+    .content-body-2 {
+        .icon-dollar {
+            border: 1px solid #38334A;
+            background: #38334A;
+
+            .ic {
+                color: #3ecc75;
             }
-            .content-body-box-2 {
-                .h6 {
-                    color: #FFFFFF;
-                }
-                .span {
-                    span {
-                        &:first-child {
-                            color: #E0E0E0;
-                        }
-    
-                        &:last-child {
-                            color: #68C17E;
-                        }
+        }
+
+        .content-body-box-2 {
+            .h6 {
+                color: #FFFFFF;
+            }
+
+            .span {
+                span {
+                    &:first-child {
+                        color: #E0E0E0;
+                    }
+
+                    &:last-child {
+                        color: #68C17E;
                     }
                 }
             }
         }
+    }
 }
 
 .card-2 {
@@ -109,6 +112,7 @@
             .span {
                 display: flex;
                 gap: 5px;
+
                 span {
                     &:first-child {
                         color: #595c5f;

@@ -2,20 +2,21 @@ import React from "react";
 import "./CardDatBan.scss";
 import { Card, Tag } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
-
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 const CardDatBan = (props) => {
   console.log("render CardDatBan");
-
+  const theme = useSelector(getThemeState);
   return (
     <Card
-      className="content-ban-gan-day"
+      className={`content-ban-gan-day ${theme ? "theme" : ""}`}
       title={
         <div className="box-title">
           <div className="item-text">
             <p>Khách đặt bàn</p>
             <span>| Hôm nay</span>
           </div>
-          <EllipsisOutlined />
+          <EllipsisOutlined className="icon-ellips" />
         </div>
       }
       bordered={false}
@@ -51,7 +52,7 @@ const CardDatBan = (props) => {
               <td>2</td>
               <td>$200</td>
               <td>
-                <Tag color="#108ee9">success</Tag>
+                <Tag color={"#108ee9"}>success</Tag>
               </td>
             </tr>
           </tbody>

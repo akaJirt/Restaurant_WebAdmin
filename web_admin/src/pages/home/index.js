@@ -83,7 +83,7 @@ const Home = (props) => {
         <FloatButton
           onClick={handleClickScrollTop}
           icon={<CaretUpOutlined />}
-          type="primary"
+          type={`primary`}
           style={{ right: 24 }}
         />
       )}

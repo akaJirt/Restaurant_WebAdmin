@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-function NavLinkHeaderHomeB(props) {
+function NavLinkHeaderHomeB() {
   console.log("render NavLinkHeaderHomeB");
   return (
-    <div className="box-2">
+    <div className={"box-2"}>
       <ul className="box-ul">
         <li className="item-li">
           <NavLink end className={"item-nav"} to="home">

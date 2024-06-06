@@ -7,7 +7,7 @@ import {
   SunOutlined,
   MoonOutlined,
 } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setHideHeader } from "../../../store/headerShow/actions";
 import { getThemeState } from "../../../store/selector";
@@ -53,9 +53,9 @@ const NavLinkHeaderHomeF = (props) => {
           <ul className="ul-con">
             <li className="li-con text-center">Phùng Lộc</li>
             <li className="li-con" onClick={handleClickProfile}>
-              <NavLink to={"/profile"} className={"nav-con"} end>
+              <Link to={"/profile"} className={"nav-con"} end>
                 <UserOutlined className="icon-con" /> My Profile
-              </NavLink>
+              </Link>
             </li>
             <li className="li-con li-sign-out">
               <LogoutOutlined className="icon-con" />

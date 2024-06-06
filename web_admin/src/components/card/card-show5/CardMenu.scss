@@ -1,3 +1,46 @@
+.content-dat-ban.theme {
+    background-color: #1d1933;
+
+    .box-title {
+        .box-text {
+            p {
+                color: #ae1481;
+            }
+
+            span {
+                color: #f8bbd0;
+            }
+        }
+
+        .icon-ellips {
+            color: #f8bbd0;
+        }
+    }
+
+    .box-body {
+        table {
+            width: 100%;
+
+            thead {
+                tr {
+                    th {
+                        color: #ae1481;
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+                    td {
+                        color: #fff;
+                    }
+                }
+            }
+
+        }
+    }
+}
+
 .content-dat-ban {
     .box-title {
         display: flex;
@@ -35,8 +78,8 @@
             tbody {
                 tr {
                     th {
-                        .img{
-                            img{
+                        .img {
+                            img {
                                 max-width: 100px;
                                 border-radius: 10px;
                             }

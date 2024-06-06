@@ -3,13 +3,14 @@ import { Card } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import "./CardChart.scss";
 import LineChart from "../../chart/LineChart";
-
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 const CardChart = (props) => {
   console.log("render CardChart");
-
+  const theme = useSelector(getThemeState);
   return (
     <Card
-      className="cart-chart"
+      className={`cart-chart ${theme ? "theme" : ""}`}
       title={
         <div className="box-title">
           <div className="box-text">
