@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ErrorPage.scss";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setShowSlider } from "../../store/sliderShow/acttions";
 const ErrorPage = (props) => {
   console.log("render ErrorPage");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setShowSlider(false));
+  }, [dispatch]);
   return (
     <div className="content-error-page">
       <h1 className="h1 text-center">404</h1>

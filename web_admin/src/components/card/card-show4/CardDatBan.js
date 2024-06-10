@@ -2,14 +2,12 @@ import React from "react";
 import "./CardDatBan.scss";
 import { Card, Tag } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { getThemeState } from "../../../store/selector";
+
 const CardDatBan = (props) => {
   console.log("render CardDatBan");
-  const theme = useSelector(getThemeState);
   return (
     <Card
-      className={`content-ban-gan-day ${theme ? "theme" : ""}`}
+      className={`content-ban-gan-day`}
       title={
         <div className="box-title">
           <div className="item-text">

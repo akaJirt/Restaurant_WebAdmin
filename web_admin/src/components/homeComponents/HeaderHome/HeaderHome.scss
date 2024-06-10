@@ -1,0 +1,72 @@
+.header-home.theme {
+    box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+    background-color: #111025;
+    .button {
+        color: #fff;
+    }
+    .box-logo {
+        span {
+            color: #FFF;
+        }
+    }
+        .avatar {
+            span {
+                color: #fff;
+            }
+        }
+}
+
+.header-home {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
+    background-color: #fff;
+
+    .button {
+        font-size: 16px;
+        width: 64;
+        height: 64;
+        color: #012970;
+    }
+
+    .box-logo {
+        display: flex;
+        gap: 10px;
+
+        .logo {
+
+            img {
+                max-width: 26px;
+            }
+        }
+
+        span {
+            display: block;
+            font-size: 26px;
+            font-weight: 700;
+            color: #012970;
+            font-family: sans-serif;
+        }
+
+    }
+
+    .avatar {
+        .icon-sun {
+            color: orange;
+            font-size: 26px;
+        }
+
+        .icon-moon {
+            display: block;
+            color: #ADD8E6;
+            font-size: 26px;
+        }
+
+        span {
+            font-size: 14px;
+            color: #012970;
+            font-weight: 600;
+        }
+    }
+}

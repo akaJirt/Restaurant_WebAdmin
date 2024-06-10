@@ -2,15 +2,13 @@ import React from "react";
 import { Card } from "antd";
 import { EllipsisOutlined, SmileFilled } from "@ant-design/icons";
 import "./CardBan.scss";
-import { useSelector } from "react-redux";
-import { getThemeState } from "../../../store/selector";
+
 import qr from "../../../images/QR_code.png";
 const CardBan = (props) => {
   console.log("render CardBan");
-  const theme = useSelector(getThemeState);
   return (
     <Card
-      className={`card-ban ${theme ? "theme" : ""}`}
+      className={`card-ban`}
       title={
         <div className="box-title">
           <div className="box-text">

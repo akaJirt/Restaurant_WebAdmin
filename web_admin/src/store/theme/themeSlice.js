@@ -1,4 +1,4 @@
-import { HIDE_THEME, SHOW_THEME } from "../../utils/contants";
+import { SHOW_THEME } from "../../utils/contants";
 
 export const initState = {
   showTheme: false,
@@ -9,14 +9,8 @@ const themeSlice = (state = initState, action) => {
     case SHOW_THEME:
       return {
         ...state,
-        showTheme: true,
+        showTheme: action.payload,
       };
-    case HIDE_THEME:
-      return {
-        ...state,
-        showTheme: false,
-      };
-
     default:
       return state;
   }

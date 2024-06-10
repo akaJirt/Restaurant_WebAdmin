@@ -1,8 +1,14 @@
 import React from "react";
-
-function User(props) {
+import "./User.scss";
+import { Layout } from "antd";
+const User = (props) => {
   console.log("render User");
-  return <div></div>;
-}
+  const { Content } = Layout;
+  return (
+    <Layout className="layout-user">
+      <Content>User</Content>
+    </Layout>
+  );
+};
 
 export default User;

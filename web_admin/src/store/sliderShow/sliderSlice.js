@@ -1,7 +1,7 @@
-import { HIDE_SLIDER, SHOW_SLIDER } from "../../utils/contants";
+import { SHOW_SLIDER } from "../../utils/contants";
 
 export const initState = {
-  showSlider: true,
+  showSlider: false,
 };
 
 const sliderSlice = (state = initState, action) => {
@@ -9,14 +9,8 @@ const sliderSlice = (state = initState, action) => {
     case SHOW_SLIDER:
       return {
         ...state,
-        showSlider: true,
+        showSlider: action.payload,
       };
-    case HIDE_SLIDER:
-      return {
-        ...state,
-        showSlider: false,
-      };
-
     default:
       return state;
   }
