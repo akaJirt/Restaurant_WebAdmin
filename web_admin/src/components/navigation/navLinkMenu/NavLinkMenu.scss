@@ -1,0 +1,64 @@
+.box-menu.theme {
+    background-color: #110f23;
+
+    .content-menu {
+        background-color: #18162a;
+        box-shadow: 0rem 0.125rem 1.25rem rgba(0, 0, 0, 0.5);
+
+        .box-ul {
+            .item-li {
+                .item-nav.active {
+                    color: #fff;
+                    background-color: #ae1481;
+                }
+
+                .item-nav {
+                    color: #F5F5F5;
+
+                    .icon-menu {
+                        color: #F5F5F5;
+                    }
+
+                    &:hover {
+                        color: #fff;
+                        background-color: #ae1481;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.box-menu {
+    display: flex;
+    padding-top: 60px;
+    background-color: #f0f5fb;
+
+    .content-menu.none {
+        left: -300px;
+    }
+
+    .content-menu {
+        border-bottom-right-radius: 20px;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        height: 100%;
+        width: 300px;
+    }
+        .routes.none{
+            margin-left: 0px;
+        }
+    .routes {
+        flex: 1;
+        margin-left: 300px;
+    }
+}
+
+@media (max-width:1198px) {
+    .box-menu {
+        .content-menu {
+            display: none;
+        }
+    }
+}

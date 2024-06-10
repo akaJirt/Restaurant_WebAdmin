@@ -16,6 +16,7 @@ import { FloatButton } from "antd";
 import CardDatBan from "../../components/card/card-show4/CardDatBan";
 import CardMenu from "../../components/card/card-show5/CardMenu";
 import CardKhuyenMaiVaThongBao from "../../components/card/card-show6/CardKhuyenMaiVaThongBao";
+import CardBan from "../../components/card/card-show7/CardBan";
 
 const Home = (props) => {
   console.log("render Home");
@@ -50,7 +51,7 @@ const Home = (props) => {
   }, []);
   return (
     <div className={`content-container ${theme ? "theme" : ""}`}>
-      <div className="container">
+      <div className="container1">
         <h1>Home</h1>
         <div className="content-home">
           <div className="box-left">
@@ -76,6 +77,9 @@ const Home = (props) => {
             <div className="right-box-2">
               <CardKhuyenMaiVaThongBao />
             </div>
+            <div className="right-box-3">
+              <CardBan />
+            </div>
           </div>
         </div>
       </div>
@@ -91,4 +95,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default React.memo(Home);

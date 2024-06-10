@@ -53,7 +53,7 @@ const NavLinkHeaderHomeF = (props) => {
           <ul className="ul-con">
             <li className="li-con text-center">Phùng Lộc</li>
             <li className="li-con" onClick={handleClickProfile}>
-              <Link to={"/profile"} className={"nav-con"} end>
+              <Link to={"/profile"} className={"nav-con"}>
                 <UserOutlined className="icon-con" /> My Profile
               </Link>
             </li>

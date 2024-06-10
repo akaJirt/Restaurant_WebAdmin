@@ -1,36 +1,39 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import "./HeaderHome.scss";
 import logo from "../../../images/logo.png";
 import { MenuOutlined } from "@ant-design/icons";
-import NavLinkHeaderHomeB from "../../navigation/navLinkHeaderHome-B/NavLinkHeaderHomeB";
 import NavLinkHeaderHomeF from "../../navigation/navLinkHeaderHome-F/NavLinkHeaderHomeF";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getThemeState } from "../../../store/selector";
+import {
+  setHideSlider,
+  setShowSlider,
+} from "../../../store/sliderShow/acttions";
 const HeaderHome = (props) => {
   console.log("render HeaderHome");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log(isMenuOpen, "isMenuOpen");
+  const [slider, setSlider] = useState(false);
   const theme = useSelector(getThemeState);
-  const handleClickOpenMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const dispatch = useDispatch();
+  const handleClickOpenMenu = useCallback(() => {
+    if (slider) {
+      setSlider(false);
+      dispatch(setShowSlider());
+    } else {
+      setSlider(true);
+      dispatch(setHideSlider());
+    }
+  }, [dispatch, slider]);
 
   return (
-    <header
-      className={`header-content ${theme ? "theme" : ""} ${
-        isMenuOpen ? "menu-open" : ""
-      }`}
-    >
+    <header className={`header-content ${theme ? "theme" : ""}`}>
+      <MenuOutlined className="icon-menu" onClick={handleClickOpenMenu} />
       <div className="logo-text">
         <NavLink to={"/home"} className={"nav-link"}>
           <img src={logo} alt="logo" />
           <span>NiceAdmin</span>
         </NavLink>
-        <MenuOutlined className="icon-menu" onClick={handleClickOpenMenu} />
       </div>
-      {/*---------------- Nav Link Body------------- */}
-      <NavLinkHeaderHomeB />
       {/*---------------- Nav Link Footer------------- */}
       <NavLinkHeaderHomeF />
     </header>

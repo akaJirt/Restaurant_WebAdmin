@@ -18,15 +18,21 @@
     }
 
     .box-body {
+        .box-danh-muc {
+            .item-1 {
+                span{
+                    color: #fff;
+                }
+            }
+        }
         .table-body {
-            thead {
-                tr {
-                    th {
-                        color: #ae1481;
+            thead{
+                tr{
+                    th{
+                color: #ae1481;
                     }
                 }
             }
-
             color: #fff;
         }
     }
@@ -63,6 +69,7 @@
         .box-danh-muc {
             display: flex;
             align-items: center;
+            gap: 5px;
             justify-content: space-between;
 
             .item-1 {
@@ -75,14 +82,15 @@
                 }
 
                 span {
-                    color: #fff;
+                color: #012970;
                 }
             }
 
             .item-2 {
+                flex: 1;
                 input {
                     padding: 6px 7px;
-                    width: 250px;
+                    width: 100%;
                 }
             }
         }

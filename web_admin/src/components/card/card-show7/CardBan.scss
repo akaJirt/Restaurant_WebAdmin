@@ -1,0 +1,99 @@
+.card-ban.theme {
+    background-color: #1d1933;
+
+    .box-title {
+        .box-text {
+            p {
+                color: #ae1481;
+            }
+
+            span {
+                color: #f8bbd0;
+            }
+        }
+
+        .icon-ellips {
+            color: #f8bbd0;
+        }
+    }
+        .box-body {
+            .item-ban {
+                .so-ban{
+                    color: #ae1481;
+                }
+            }
+            .item-status {
+                    background-color: #fff;
+            }
+        }
+}
+
+.card-ban {
+    .box-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .box-text {
+            display: flex;
+            align-items: center;
+
+            p {
+                font-size: 1.125rem;
+                /* Adjust as needed (18px = 1.125rem) */
+                font-weight: 500;
+                color: rgb(1, 41, 112);
+                font-family: Poppins, sans-serif;
+                margin: 0;
+            }
+
+            span {
+                color: rgb(137, 155, 189);
+                font-size: 0.875rem;
+                /* Adjust as needed (14px = 0.875rem) */
+                font-weight: 400;
+                margin-left: 0.375rem;
+                /* Adjust as needed (6px = 0.375rem) */
+            }
+
+            .icon-ellips {
+                color: rgb(137, 155, 189);
+            }
+        }
+    }
+
+    .box-body {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+
+        .item-ban {
+            flex: 1;
+            height: 80px;
+            cursor: pointer;
+            border-radius: 80px;
+            box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.3);
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: center;
+            .so-ban {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: #012970;
+            }
+            .icon-smile{
+                font-size: 20px;
+                color: #31a24c;
+            }
+        }
+
+        .item-status {         
+                img {
+                    max-width: 90px;
+                }
+           
+        }
+    }
+}

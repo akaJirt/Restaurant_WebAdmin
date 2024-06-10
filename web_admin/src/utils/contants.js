@@ -9,3 +9,6 @@ export const SHOW_LOCATION = "show_location";
 //----------------THEME---------------------
 export const SHOW_THEME = "show_theme";
 export const HIDE_THEME = "hide_theme";
+//----------------SLIDER---------------------
+export const SHOW_SLIDER = "show_slider";
+export const HIDE_SLIDER = "hide_slider";

@@ -1,17 +1,17 @@
 .content-container.theme {
     background-color: #110f23;
-
-    .container {
+    .container1 {
         h1 {
             color: #F5F5F5;
         }
     }
 }
 .content-container {
-    background-color: #f0f5fb;
-    margin-top: 61px;
-
-    .container {
+    display: flex;
+    .container1 {
+        padding: 0 20px;
+        width: 100%;
+        
         h1 {
             font-size: 24px;
             margin-bottom: 0;
@@ -21,13 +21,11 @@
         }
 
         .content-home {
+            flex: 1;
             display: flex;
             gap: 20px;
-            flex-wrap: wrap;
-
             .box-left {
                 flex: 2;
-
                 .left-box-1 {
                     display: flex;
                     gap: 20px;
@@ -48,11 +46,32 @@
 
             .box-right {
                 flex: 1;
-
                 .right-box-1 {}
 
                 .right-box-2 {
                     margin-top: 20px;
+                }
+                .right-box-3{
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+}
+@media (max-width: 1199px) {
+    .content-container {
+        .box-menu{
+            display: none;
+        }
+        .container1{
+            .content-home{
+                display: flex;
+                .box-left{
+                    flex: 2;
+                }
+                .box-right{
+                    flex: 1;
                 }
             }
         }
@@ -61,9 +80,10 @@
 
 @media (max-width: 991px) {
     .content-container {
-        .container {
+        .container1 {
             .content-home {
                 display: flex;
+                flex-wrap: wrap;
                 flex-direction: column;
                 .box-left{
                     .left-box-4{

@@ -6,3 +6,5 @@ export const getHeaderState = (state) => state.header.showHeader;
 export const getLocationState = (state) => state.location.showLocation;
 //-----------------THEME-----------------
 export const getThemeState = (state) => state.theme.showTheme;
+//-----------------SLIDER-----------------
+export const getSliderState = (state) => state.slider.showSlider;

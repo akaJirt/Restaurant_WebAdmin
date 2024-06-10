@@ -13,7 +13,7 @@ const CardDatBan = (props) => {
       title={
         <div className="box-title">
           <div className="item-text">
-            <p>Khách đặt bàn</p>
+            <p>Đặt bàn online</p>
             <span>| Hôm nay</span>
           </div>
           <EllipsisOutlined className="icon-ellips" />
@@ -41,7 +41,6 @@ const CardDatBan = (props) => {
               <th>Id</th>
               <th>Khách hàng</th>
               <th>Bàn đặt</th>
-              <th>Giá cọc trước</th>
               <th>Trạng thái</th>
             </tr>
           </thead>
@@ -49,8 +48,7 @@ const CardDatBan = (props) => {
             <tr>
               <td>1</td>
               <td>Mr Tỏn</td>
-              <td>2</td>
-              <td>$200</td>
+              <td>1</td>
               <td>
                 <Tag color={"#108ee9"}>success</Tag>
               </td>
