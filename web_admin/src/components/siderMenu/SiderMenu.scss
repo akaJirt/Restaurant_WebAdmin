@@ -1,0 +1,59 @@
+.custom-sider {
+    background-color: #f9fafc;
+
+    .menu.theme {
+        background-color: #18172b;
+
+        .item-menu {
+            color: #fff;
+
+            &:hover {
+                color: #fff !important;
+                background-color: #b0127b !important;
+            }
+
+            .item-icon {}
+
+            .item-link {
+                text-decoration: none;
+            }
+        }
+
+        .ant-menu-item-selected {
+            color: #fff !important;
+            background-color: #b0127b !important;
+
+            .item-link {}
+
+            .item-icon {}
+        }
+    }
+
+    .menu {
+        background-color: #f9fafc;
+        padding: 5px;
+
+        .item-menu {
+            color: #012970;
+
+            &:hover {
+                color: #4154f1 !important;
+                background-color: #f6f9ff !important;
+            }
+
+            .item-icon {}
+
+            .item-link {
+                text-decoration: none;
+            }
+        }
+
+        .ant-menu-item-selected {
+            color: #4154f1 !important;
+
+            .item-link {}
+
+            .item-icon {}
+        }
+    }
+}

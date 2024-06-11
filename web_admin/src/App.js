@@ -1,12 +1,19 @@
 import "./App.scss";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navigation from "./components/navigation/Naviagtion";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Layout } from "antd";
+import SiderMenu from "./components/siderMenu/SiderMenu";
+import AppHeader from "./components/appHeader/AppHeader";
+import AppContent from "./components/appContent/AppContent";
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="*" element={<Navigation />} />
-      </Routes>
+      <Layout>
+        <SiderMenu />
+        <Layout>
+          <AppHeader />
+          <AppContent />
+        </Layout>
+      </Layout>
     </Router>
   );
 }
