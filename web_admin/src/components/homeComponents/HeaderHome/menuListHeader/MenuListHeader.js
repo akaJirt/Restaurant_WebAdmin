@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Menu } from "antd";
 import {
   HomeFilled,
@@ -12,32 +12,13 @@ import {
   BoxPlotFilled,
 } from "@ant-design/icons";
 import { Layout } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { getSliderState, getThemeState } from "../../store/selector";
-import "./Menu.scss";
+import "./MenuListHeader.scss";
 import { Link, useLocation } from "react-router-dom";
-import { setShowSlider } from "../../store/sliderShow/acttions";
 
-const MenuList = () => {
+const MenuListHeader = ({ collapsed, className, className2, className3 }) => {
   const { Sider } = Layout;
-  const slider = useSelector(getSliderState);
   const location = useLocation();
-  const theme = useSelector(getThemeState);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1200) {
-        dispatch(setShowSlider(true));
-      } else {
-        dispatch(setShowSlider(false));
-      }
-    };
 
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Kiểm tra ngay khi component được mount
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, [dispatch]);
   const items = [
     {
       className: "box-item",
@@ -139,24 +120,23 @@ const MenuList = () => {
     },
   ];
   return (
-    <Layout className="layout-menu-list">
+    <Layout className={className}>
       <Sider
         trigger={null}
         collapsible
-        collapsed={slider.payload}
-        className={`slider-menu ${theme ? "theme" : ""}`}
-        style={{ height: "100%" }}
+        collapsed={collapsed}
+        className={className2}
       >
         <Menu
-          className={`content-menu`}
+          className={className3}
           defaultSelectedKeys={location.pathname ? location.pathname : "/home"}
           selectedKeys={[location.pathname]}
           mode="inline"
           items={items}
-        ></Menu>
+        />
       </Sider>
     </Layout>
   );
 };
 
-export default MenuList;
+export default MenuListHeader;

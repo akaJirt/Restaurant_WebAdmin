@@ -4,12 +4,14 @@ import "./CardBanChayNhat.scss";
 import { EllipsisOutlined } from "@ant-design/icons";
 import product from "../../../images/product-2.jpg";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 function CardBanChayNhat(props) {
   console.log("render CardBanChayNhat");
+  const theme = useSelector(getThemeState);
   return (
     <Card
-      className={`content-ban-chay-nhat`}
+      className={`content-ban-chay-nhat ${theme ? "theme" : ""}`}
       title={
         <div className="box-title">
           <div className="box-text">

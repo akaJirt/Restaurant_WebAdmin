@@ -13,6 +13,7 @@ import Report from "../../pages/report/Report";
 import ErrorPage from "../../pages/error/ErrorPage";
 import HeaderHome from "../homeComponents/HeaderHome/HeaderHome";
 import "./Navigation.scss";
+
 const Navigation = () => {
   let error = useLocation();
   const path = error.pathname;
@@ -40,11 +41,10 @@ const Navigation = () => {
     // Tùy chỉnh xử lý khi đường dẫn không hợp lệ ở đây
     return <ErrorPage />;
   }
-  console.log(error);
   return (
     <>
       <HeaderHome />
-      <div className="content-nav">
+      <div className={`content-nav`}>
         <MenuList />
         <Routes>
           <Route path="/home" element={<Home />} />

@@ -10,18 +10,26 @@ import CardDatBan from "../../components/card/card-show4/CardDatBan";
 import CardMenu from "../../components/card/card-show5/CardMenu";
 import CardKM from "../../components/card/card-show6/CardKhuyenMaiVaThongBao";
 import CardBan from "../../components/card/card-show7/CardBan";
-
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../store/selector";
 const Home = (props) => {
   const { Content } = Layout;
+  const theme = useSelector(getThemeState);
   return (
-    <Layout className="layout-home">
+    <Layout className={`layout-home ${theme ? "theme" : ""}`}>
       <Content>
         <div className="row">
           <div className="col-8">
             <div className="left-cart-1">
-              <CardHome1 />
-              <CardHome2 />
-              <CardHome3 />
+              <div className="box-1">
+                <CardHome1 />
+              </div>
+              <div className="box-2">
+                <CardHome2 />
+              </div>
+              <div className="box-3">
+                <CardHome3 />
+              </div>
             </div>
             <div className="left-cart-2">
               <CardChart />

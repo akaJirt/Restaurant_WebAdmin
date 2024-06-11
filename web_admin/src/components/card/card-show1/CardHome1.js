@@ -2,12 +2,14 @@ import React from "react";
 import { EllipsisOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import "./CardHome1.scss";
-
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 function CardHome1(props) {
   console.log("render CardHome1");
+  const theme = useSelector(getThemeState);
   return (
     <Card
-      className={`card-1 `}
+      className={`card-1 ${theme ? "theme" : ""}`}
       title={
         <div className="content-title">
           <div className="content-title-box-1">

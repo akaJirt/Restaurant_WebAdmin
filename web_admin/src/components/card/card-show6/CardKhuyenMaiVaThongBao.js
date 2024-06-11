@@ -3,13 +3,15 @@ import { Card } from "antd";
 import { EllipsisOutlined, SwapRightOutlined } from "@ant-design/icons";
 import "./CardKhuyenMaiVaThongBao.scss";
 import product from "../../../images/product-2.jpg";
-
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 const CardKhuyenMaiVaThongBao = (props) => {
   console.log("render cardKhuyenMaiVaThongBao");
+  const theme = useSelector(getThemeState);
 
   return (
     <Card
-      className={`content-km-tb`}
+      className={`content-km-tb ${theme ? "theme" : ""}`}
       title={
         <div className="box-title">
           <div className="box-text">

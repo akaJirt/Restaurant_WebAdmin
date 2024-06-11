@@ -1,8 +1,5 @@
 import { createAction } from "redux-actions";
-import { SHOW_THEME } from "../../utils/contants";
+import { HIDE_THEME, SHOW_THEME } from "../../utils/contants";
 
-export const setShowTheme = createAction(SHOW_THEME, (payload) => {
-  return {
-    payload,
-  };
-});
+export const setShowTheme = createAction(SHOW_THEME);
+export const setHideTheme = createAction(HIDE_THEME);

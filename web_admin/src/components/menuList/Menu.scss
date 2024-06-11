@@ -1,21 +1,49 @@
 .layout-menu-list {
-
+    .slider-menu.theme {
+        background-color: #18172b;
+        .content-menu {
+                background-color: #18172b;
+        
+                .ant-menu-item-selected {
+                    background-color: #b0127b;
+                }
+        
+                .box-item {
+                    color: #fff;
+        
+                    &:hover {
+                        color: #fff;
+                        background-color: #b0127b;
+                    }
+                }
+        
+            }
+    }
     .slider-menu {
         background-color: #f7f8fa;
         height: 100vh;
         padding: 20px 10px;
 
+        
+
         .content-menu {
             padding: 5px;
+
             .box-item {
-                &:hover{
+                &:hover {
                     color: #4154f1;
                     background: #f6f9ff;
                 }
             }
+            
             .item-link {
                 text-decoration: none;
+
             }
         }
     }
+}
+/* Điện thoại di động (trung bình) */
+@media (max-width: 768px) {
+   
 }
