@@ -1,20 +1,33 @@
 import "./App.scss";
-import { BrowserRouter as Router } from "react-router-dom";
 import { Layout } from "antd";
 import SiderMenu from "./components/siderMenu/SiderMenu";
 import AppHeader from "./components/appHeader/AppHeader";
 import AppContent from "./components/appContent/AppContent";
+import { useLocation } from "react-router-dom";
 function App() {
+  const location = useLocation();
+  const path = [
+    "/home",
+    "/users",
+    "/reviews",
+    "/promotions",
+    "/order",
+    "/tables",
+    "/menu",
+    "/report",
+    "/categories",
+    "/Profile",
+    "/logout",
+  ];
+  let checkPath = path.includes(location.pathname);
   return (
-    <Router>
+    <Layout>
+      {checkPath ? <SiderMenu /> : ""}
       <Layout>
-        <SiderMenu />
-        <Layout>
-          <AppHeader />
-          <AppContent />
-        </Layout>
+        {checkPath ? <AppHeader /> : ""}
+        <AppContent />
       </Layout>
-    </Router>
+    </Layout>
   );
 }
 

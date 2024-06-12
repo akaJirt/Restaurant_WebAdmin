@@ -1,5 +1,4 @@
 .Row.theme {
-
     .left-col {
         .nice-admin {
             color: #fff;
@@ -10,8 +9,9 @@
         .icon-sun {
             color: orange;
         }
-        .item-box{
-            
+
+        .item-box {
+
             .item-span {
                 color: #fff;
             }
@@ -20,7 +20,6 @@
 }
 
 .Row {
-
     .left-col {
         display: flex;
         justify-content: flex-end;
@@ -53,37 +52,112 @@
             display: block;
             color: #FFD700;
         }
-        .item-box{
+
+        .item-box {
             display: flex;
             align-items: center;
             gap: 10px;
-            border: 1px solid red;
+            cursor: pointer;
+
             .item-span {
                 color: #012970;
                 font-weight: bold;
+                position: relative;
+            }
+
+        }
+
+    }
+}
+
+.menu.theme {
+    background-color: #18172b;
+
+    ul {
+
+        li {
+            color: #fff
+        }
+
+        .item-link {
+            color: #fff;
+
+            .item-icon {
+                color: #fff;
             }
         }
     }
 }
-//MOBILE
-@media (max-width: 768px){
-    .Row {
-            .left-col {
-                display: flex;
-                justify-content: flex-start;
-                margin-left: 20px;
-                .nice-admin {
-                        display: none;
-                    }
-            }
-    
-            .right-col {
-                .item-span {
-                    display: none;
+
+.menu {
+    position: absolute;
+    z-index: 2;
+    margin: 0 !important;
+    top: 63px;
+    right: 20px;
+    width: 200px;
+    background-color: #ffffffff;
+    box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+
+    ul {
+        margin: 0;
+        padding: 0;
+
+        .menu-name {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid #d2d2d2;
+            color: #012970;
+        }
+
+        .item-profile {
+            border-bottom: 1px solid #d2d2d2;
+        }
+
+        li {
+
+            list-style: none;
+            padding: 10px;
+            border-radius: 5px;
+
+            .item-link {
+                text-decoration: none;
+                color: #012970;
+                display: block;
+
+                span {
+                    margin-left: 10px;
                 }
             }
-    
+
+            .item-icon {
+                color: #012970;
+            }
         }
+    }
+}
+
+//MOBILE
+@media (max-width: 768px) {
+    .Row {
+        .left-col {
+            display: flex;
+            justify-content: flex-start;
+            margin-left: 20px;
+
+            .nice-admin {
+                display: none;
+            }
+        }
+
+        .right-col {
+            .item-span {
+                display: none;
+            }
+        }
+
+    }
 }
 
 //TABLE
