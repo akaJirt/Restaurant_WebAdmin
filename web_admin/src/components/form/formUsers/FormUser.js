@@ -1,6 +1,8 @@
 import React from "react";
 
 const FormUser = () => {
+  console.log("render FormUser");
+
   return (
     <div className="form mt-3 mb-3">
       <h1 className="text-h1 text-center mt-3 mb-3">Create User</h1>
@@ -42,7 +44,7 @@ const FormUser = () => {
       </div>
       <div className="form-group">
         <label className="form-label mt-3">Role</label>
-        <select className="form-control">
+        <select className="form-control ic-arrow">
           <option>Admin</option>
           <option>Nhân viên</option>
           <option>Khách hàng</option>

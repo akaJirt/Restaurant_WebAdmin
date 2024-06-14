@@ -1,5 +1,6 @@
-import React from "react";
-import { Layout } from "antd";
+import React, { useCallback, useEffect } from "react";
+import { Layout, FloatButton } from "antd";
+import { CaretUpOutlined } from "@ant-design/icons";
 import Home from "../../pages/home";
 import User from "../../pages/users/User";
 import Review from "../../pages/reviews/Review";
@@ -13,9 +14,33 @@ import Category from "../../pages/categories/Category";
 import ErrorPage from "../../pages/error/ErrorPage";
 import { Routes, Route } from "react-router-dom";
 import { NavPrivate, NavPublic } from "../navigation/Navigation";
+import Profile from "../../pages/profiles/Profile";
+import { useDispatch, useSelector } from "react-redux";
+import { getScrollState } from "../../store/selector";
+import { hideScrollTop, showScrollTop } from "../../store/scrollTop/actions";
 const AppContent = () => {
   console.log("render App Content");
+  const dispatch = useDispatch();
+  const scroll = useSelector(getScrollState);
   const { Content } = Layout;
+  const handleScroll = useCallback(() => {
+    if (window.scrollY > 200) {
+      dispatch(showScrollTop());
+    } else {
+      dispatch(hideScrollTop());
+    }
+  }, [dispatch]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
+  const handleClickScroll = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <Content
@@ -43,14 +68,22 @@ const AppContent = () => {
             <Route path="/tables" element={<Tables />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/report" element={<Report />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/categories" element={<Category />} />
             {/* Route mặc định để bắt các đường dẫn không khớp */}
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
       </div>
+      {scroll && (
+        <FloatButton
+          onClick={handleClickScroll}
+          icon={<CaretUpOutlined />}
+          type="primary"
+        />
+      )}
     </Content>
   );
 };
 
-export default AppContent;
+export default React.memo(AppContent);

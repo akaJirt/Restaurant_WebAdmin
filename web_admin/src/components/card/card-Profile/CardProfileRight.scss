@@ -1,0 +1,32 @@
+.card-profile2 {
+    .ant-card-head {
+        padding-top: 20px;
+        border-bottom: none;
+
+        .box-title {
+            display: flex;
+            color: #2c384e;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-start;
+            border-bottom: 2px solid #ebeef4;
+
+            .li {
+                list-style: none;
+                padding-bottom: 10px;
+            }
+
+            .li.click {
+
+                background-color: #fff;
+                color: #4154f1;
+                border-bottom: 2px solid #4154f1;
+
+
+
+            }
+        }
+    }
+
+
+}

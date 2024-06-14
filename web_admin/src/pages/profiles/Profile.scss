@@ -1,0 +1,53 @@
+.layout-profile.theme {
+    background-color: #111025;
+
+    .text-h1 {
+        color: #fff;
+    }
+
+
+
+}
+
+.layout-profile {
+    padding: 0 20px;
+    .text-h1 {
+        font-size: 24px;
+        margin-bottom: 0;
+        padding: 5px 20px;
+        font-weight: 600;
+        color: #012970;
+    }
+
+    .card-profile {
+        display: flex;
+        gap: 20px;
+        .card-profile-left {
+            width: 350px;
+        }
+
+        .card-profile-right {
+            flex: 1;
+        }
+    }
+
+}
+
+@media (max-width: 540px) {
+    .layout-profile {
+        .form {
+            margin: 0 20px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .layout-profile {
+
+        /* CSS cho thiết bị dưới 576px */
+        .text-h1 {
+            text-align: center;
+        }
+    }
+
+}

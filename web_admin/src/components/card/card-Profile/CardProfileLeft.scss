@@ -1,0 +1,25 @@
+.card-profile-1 {
+    .ant-card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .p {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c384e;
+            font-family: sans-serif;
+            margin: 0 40px;
+        }
+        .box-icon{
+            gap: 10px;
+            display: flex;
+            .ic-footer{
+                font-size: 20px;
+                color: rgba(1, 41, 112, 0.5);
+            }
+        }
+    }
+
+}

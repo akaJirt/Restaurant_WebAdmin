@@ -1,4 +1,159 @@
-.layout-promotion{
-    width: 100%;
-    border: 1px solid pink;
+.layout-promotion.theme {
+    background-color: #111025;
+
+    .text-h1 {
+        color: #fff;
+    }
+
+    .form {
+        background-color: #1d1933;
+
+        .form-group {
+            .form-label {
+                color: #fff;
+            }
+
+            .ic-arrow {
+                background-color: #fff;
+            }
+
+        }
+
+        .text-center {
+            .btn {
+                background-color: #b0127b;
+                outline: none;
+                border: none;
+            }
+        }
+    }
+
+    .table-users {
+        background-color: #1d1933;
+
+        h1 {
+            color: #FFF;
+        }
+
+        .table {
+
+            thead {
+                tr {
+                    th {
+                        background-color: #1d1933;
+                        color: #b0127b;
+                    }
+                }
+            }
+
+            tbody {
+                tr {
+                    td {
+                        background-color: #1d1933;
+                        color: #FFF;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.layout-promotion {
+    .text-h1 {
+        font-size: 24px;
+        margin-bottom: 0;
+        padding: 5px 20px;
+        font-weight: 600;
+        color: #012970;
+    }
+
+    .form {
+        box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.1);
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 500px;
+        margin: 0 auto;
+
+        .form-group {
+            .form-label {
+                color: #012970;
+                font-weight: bold;
+                font-size: 1rem;
+            }
+
+            .ic-arrow {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background: url('data:image/svg+xml;utf8,<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>') no-repeat right 1rem center;
+                background-size: 1rem;
+                padding-right: 2.5rem;
+            }
+
+        }
+
+        .text-center {
+            .btn {
+                width: 100%;
+            }
+        }
+    }
+
+    .table-users {
+        margin-right: 20px;
+        margin-left: 20px;
+
+        h1 {
+            padding: 10px 0;
+            font-size: 24px;
+            margin-bottom: 0;
+            font-weight: 600;
+            color: #012970;
+        }
+
+        tbody {
+            tr {
+                td {
+                    text-align: center;
+                }
+
+                .bt {
+                    .btn-danger {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+
+        .avatar {
+            max-width: 50px;
+            max-height: 50px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+}
+
+@media (max-width: 540px) {
+    .layout-promotion {
+        .form {
+            margin: 0 20px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .layout-promotion {
+
+        /* CSS cho thiết bị dưới 576px */
+        .text-h1 {
+            text-align: center;
+        }
+    }
+
 }

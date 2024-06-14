@@ -12,3 +12,7 @@ export const HIDE_THEME = "hide_theme";
 //----------------SLIDER---------------------
 export const SHOW_SLIDER = "show_slider";
 export const HIDE_SLIDER = "hide_slider";
+//-----------------RENDER PROFILE RIGHT------------------
+export const OVERVIEW = "overview";
+export const EDIT_PROFILE = "edit_profile";
+export const CHANGE_PASSWORD = "change_password";

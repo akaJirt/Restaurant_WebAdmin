@@ -107,8 +107,8 @@ const SiderMenu = () => {
       key: "/profile",
       icon: <ProfileFilled className="item-icon" />,
       label: (
-        <Link to="/categories" className="item-link">
-          Categories
+        <Link to="/profile" className="item-link">
+          Profile
         </Link>
       ),
     },

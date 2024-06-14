@@ -4,6 +4,7 @@ import SiderMenu from "./components/siderMenu/SiderMenu";
 import AppHeader from "./components/appHeader/AppHeader";
 import AppContent from "./components/appContent/AppContent";
 import { useLocation } from "react-router-dom";
+
 function App() {
   const location = useLocation();
   const path = [
@@ -16,8 +17,7 @@ function App() {
     "/menu",
     "/report",
     "/categories",
-    "/Profile",
-    "/logout",
+    "/profile",
   ];
   let checkPath = path.includes(location.pathname);
   return (

@@ -12,4 +12,4 @@ function Report(props) {
   );
 }
 
-export default Report;
+export default React.memo(Report);

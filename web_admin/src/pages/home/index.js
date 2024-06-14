@@ -15,6 +15,7 @@ import { getThemeState } from "../../store/selector";
 const Home = (props) => {
   const { Content } = Layout;
   const theme = useSelector(getThemeState);
+
   return (
     <Layout className={`layout-home ${theme ? "theme" : ""}`}>
       <Content>

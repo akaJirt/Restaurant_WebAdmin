@@ -20,4 +20,4 @@ const User = (props) => {
   );
 };
 
-export default User;
+export default React.memo(User);
