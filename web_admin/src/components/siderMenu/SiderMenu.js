@@ -6,7 +6,6 @@ import {
   TagFilled,
   DropboxSquareFilled,
   BoxPlotFilled,
-  PieChartFilled,
   SettingFilled,
   ShopFilled,
   ProfileFilled,
@@ -89,16 +88,6 @@ const SiderMenu = () => {
       label: (
         <Link to="/menu" className="item-link">
           Menu
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/report",
-      icon: <PieChartFilled className="item-icon" />,
-      label: (
-        <Link to="/report" className="item-link">
-          Report
         </Link>
       ),
     },

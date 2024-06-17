@@ -11,6 +11,7 @@
 
 .layout-profile {
     padding: 0 20px;
+    height: 100%;
     .text-h1 {
         font-size: 24px;
         margin-bottom: 0;
@@ -50,4 +51,30 @@
         }
     }
 
+}
+
+@media (max-width: 992px) {
+    .layout-profile {
+
+        .card-profile {
+            display: flex;
+            flex-direction: column;
+            .card-profile-left{
+                width: 100%;
+            }
+        }
+    }
+}
+@media (max-width: 1200px) {
+    .layout-profile {
+        height: 100vh;
+    }
+}
+
+/* Máy tính để bàn (lớn) */
+@media (min-width: 1200px) {
+    /* CSS cho thiết bị từ 1200px trở lên */
+    .layout-profile {
+        height: 100vh;
+    }
 }

@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import { Card } from "antd";
 import "./CardProfileRight.scss";
 import RenderProfileRight from "./renderProfileRight/RenderProfileRight";
-import {
-  CHANGE_PASSWORD,
-  EDIT_PROFILE,
-  OVERVIEW,
-} from "../../../utils/contants";
-
+import { EDIT_PROFILE, OVERVIEW } from "../../../utils/contants";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 const CardProfileRight = () => {
   console.log("render CardProfileRight");
+  const theme = useSelector(getThemeState);
   const [changeTab, setChangeTab] = useState(OVERVIEW);
   return (
     <Card
-      className="card-profile2"
+      className={`card-profile2 ${theme ? "theme" : ""}`}
       title={
         <ul className="box-title">
           <li
@@ -27,12 +25,6 @@ const CardProfileRight = () => {
             className={`li ${changeTab === EDIT_PROFILE ? "click" : ""}`}
           >
             Edit Profile
-          </li>
-          <li
-            onClick={() => setChangeTab(CHANGE_PASSWORD)}
-            className={`li ${changeTab === CHANGE_PASSWORD ? "click" : ""}`}
-          >
-            Change Password
           </li>
         </ul>
       }

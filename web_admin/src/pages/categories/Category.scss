@@ -176,4 +176,16 @@
         }
     }
 
+
+}
+
+@media (max-width: 1200px) {
+    .layout-category {
+            height: 100vh;
+        }
+}
+@media (min-width: 1200px) {
+    .layout-category {
+        height: 100vh;
+    }
 }

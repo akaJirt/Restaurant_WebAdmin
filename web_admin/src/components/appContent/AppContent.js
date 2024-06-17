@@ -9,7 +9,6 @@ import Order from "../../pages/orders/Order";
 import Tables from "../../pages/tables/Tables";
 import Login from "../../pages/login/Login";
 import Menu from "../../pages/menu/Menu";
-import Report from "../../pages/report/Report";
 import Category from "../../pages/categories/Category";
 import ErrorPage from "../../pages/error/ErrorPage";
 import { Routes, Route } from "react-router-dom";
@@ -67,7 +66,6 @@ const AppContent = () => {
             <Route path="/order" element={<Order />} />
             <Route path="/tables" element={<Tables />} />
             <Route path="/menu" element={<Menu />} />
-            <Route path="/report" element={<Report />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/categories" element={<Category />} />
             {/* Route mặc định để bắt các đường dẫn không khớp */}

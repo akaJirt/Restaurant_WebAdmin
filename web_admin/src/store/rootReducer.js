@@ -4,6 +4,7 @@ import headerSlice from "./headerShow/headerSlice";
 import locationSlice from "./location/locationSlice";
 import themeSlice from "./theme/themeSlice";
 import sliderSlice from "./sliderShow/sliderSlice";
+import lightBoxSlice from "./lightBoxImage/lightBoxSlice";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -11,5 +12,6 @@ const rootReducer = combineReducers({
   location: locationSlice,
   theme: themeSlice,
   slider: sliderSlice,
+  lightBox: lightBoxSlice,
 });
 export default rootReducer;

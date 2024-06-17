@@ -1,3 +1,16 @@
+.card-profile-1.theme{
+    background-color: #1d1933;
+    .ant-card-body {
+        .p {
+            color: #fff;
+        }
+        .box-icon {
+            .ic-footer {
+                color: #fff;
+            }
+        }
+    }
+}
 .card-profile-1 {
     .ant-card-body {
         display: flex;

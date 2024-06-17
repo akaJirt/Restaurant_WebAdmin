@@ -7,11 +7,11 @@ const FormUser = () => {
     <div className="form mt-3 mb-3">
       <h1 className="text-h1 text-center mt-3 mb-3">Create User</h1>
       <div className="form-group">
-        <label className="form-label">PhoneNumber</label>
+        <label className="form-label">Email</label>
         <input
-          type="number"
+          type="text"
           className="form-control"
-          placeholder="Nhập phone number ..."
+          placeholder="Nhập Email ..."
         />
       </div>
       <div className="form-group mt-3">

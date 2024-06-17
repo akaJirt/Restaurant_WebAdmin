@@ -8,3 +8,5 @@ export const getLocationState = (state) => state.location.showLocation;
 export const getThemeState = (state) => state.theme.showTheme;
 //-----------------SLIDER-----------------
 export const getSliderState = (state) => state.slider.showSlider;
+//-----------------LIGHT-BOX-----------------
+export const getLightBoxState = (state) => state.lightBox.showLightBox;

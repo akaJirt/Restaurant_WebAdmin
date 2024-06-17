@@ -12,7 +12,7 @@ const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["scroll", "header", "slider"],
+  blacklist: ["scroll", "header", "slider", "showLightBox"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

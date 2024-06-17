@@ -1,4 +1,28 @@
+.card-profile2.theme {
+    background-color: #1d1933;
+
+    .ant-card-head {
+
+
+        .box-title {
+            border-bottom: 2px solid #ae1481;
+            color: #fff;
+            .li.click {
+                color: #f602ac;
+                border-bottom: 2px solid #ae1481;
+                background-color: #1d1933;
+                
+
+
+
+            }
+        }
+    }
+}
+
 .card-profile2 {
+    margin-bottom: 20px;
+
     .ant-card-head {
         padding-top: 20px;
         border-bottom: none;
