@@ -12,7 +12,7 @@ import Menu from "../../pages/menu/Menu";
 import Category from "../../pages/categories/Category";
 import ErrorPage from "../../pages/error/ErrorPage";
 import { Routes, Route } from "react-router-dom";
-import { NavPrivate, NavPublic } from "../navigation/Navigation";
+import ProtectedRoute from "../navigation/Navigation";
 import Profile from "../../pages/profiles/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { getScrollState } from "../../store/selector";
@@ -55,11 +55,10 @@ const AppContent = () => {
         }}
       >
         <Routes>
-          <Route element={<NavPublic />}>
-            <Route path="/login" element={<Login />} />
-          </Route>
-          <Route element={<NavPrivate />}>
-            <Route path="/home" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<ErrorPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Home />} />
             <Route path="/users" element={<User />} />
             <Route path="/reviews" element={<Review />} />
             <Route path="/promotions" element={<Promotion />} />
@@ -68,8 +67,6 @@ const AppContent = () => {
             <Route path="/menu" element={<Menu />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/categories" element={<Category />} />
-            {/* Route mặc định để bắt các đường dẫn không khớp */}
-            <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
       </div>

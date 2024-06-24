@@ -8,7 +8,6 @@ import {
   BoxPlotFilled,
   SettingFilled,
   ShopFilled,
-  ProfileFilled,
 } from "@ant-design/icons";
 import "./SiderMenu.scss";
 import { Layout, Menu } from "antd";
@@ -23,10 +22,10 @@ const SiderMenu = () => {
   const items = [
     {
       className: "item-menu",
-      key: "/home",
+      key: "/",
       icon: <HomeFilled className="item-icon" />,
       label: (
-        <Link to="/home" className="item-link">
+        <Link to="/" className="item-link">
           Home
         </Link>
       ),
@@ -37,7 +36,7 @@ const SiderMenu = () => {
       icon: <UserOutlined className="item-icon" />,
       label: (
         <Link to="/users" className="item-link">
-          User
+          Quản lý người dùng
         </Link>
       ),
     },
@@ -47,7 +46,7 @@ const SiderMenu = () => {
       icon: <StarFilled className="item-icon" />,
       label: (
         <Link to="/reviews" className="item-link">
-          Reviews
+          Quản lý đánh giá
         </Link>
       ),
     },
@@ -57,7 +56,7 @@ const SiderMenu = () => {
       icon: <TagFilled className="item-icon" />,
       label: (
         <Link to="/promotions" className="item-link">
-          Promotions
+          Quản lý khuyến mãi
         </Link>
       ),
     },
@@ -67,7 +66,7 @@ const SiderMenu = () => {
       icon: <DropboxSquareFilled className="item-icon" />,
       label: (
         <Link to="/order" className="item-link">
-          Order
+          Quản lý đơn hàng
         </Link>
       ),
     },
@@ -77,7 +76,7 @@ const SiderMenu = () => {
       icon: <BoxPlotFilled className="item-icon" />,
       label: (
         <Link to="/tables" className="item-link">
-          Tables
+          Quản lý bàn
         </Link>
       ),
     },
@@ -87,17 +86,7 @@ const SiderMenu = () => {
       icon: <ShopFilled className="item-icon" />,
       label: (
         <Link to="/menu" className="item-link">
-          Menu
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/profile",
-      icon: <ProfileFilled className="item-icon" />,
-      label: (
-        <Link to="/profile" className="item-link">
-          Profile
+          Quản lý thực đơn
         </Link>
       ),
     },
@@ -107,7 +96,7 @@ const SiderMenu = () => {
       icon: <SettingFilled className="item-icon" />,
       label: (
         <Link to="/categories" className="item-link">
-          Categories
+          Quản lý danh mục
         </Link>
       ),
     },
@@ -118,6 +107,7 @@ const SiderMenu = () => {
       style={{ background: theme ? "#18172b" : "#f9fafc" }}
       breakpoint="lg"
       collapsedWidth="0"
+      width={200}
       onBreakpoint={(broken) => {
         console.log(broken);
       }}
@@ -128,7 +118,7 @@ const SiderMenu = () => {
       <Menu
         className={`menu ${theme ? "theme" : ""}`}
         mode="inline"
-        defaultSelectedKeys={location.pathname ? location.pathname : ["/home"]}
+        defaultSelectedKeys={location.pathname ? location.pathname : ["/"]}
         selectedKeys={location.pathname}
         items={items}
       />

@@ -1,6 +1,5 @@
 import React from "react";
 import "./User.scss";
-import FormUser from "../../components/form/formUsers/FormUser";
 import TableUser from "../../components/tables/TableUsers/TableUser";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../store/selector";
@@ -12,8 +11,7 @@ const User = (props) => {
   return (
     <Layout className={`layout-user ${theme ? "theme" : ""}`}>
       <Content>
-        <h1 className="text-h1">Users</h1>
-        <FormUser />
+        <h1 className="text-h1">Quản Lí Khách hàng</h1>
         <TableUser />
       </Content>
     </Layout>

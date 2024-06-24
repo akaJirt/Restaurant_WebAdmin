@@ -32,7 +32,7 @@ export const QuanLiBanOnlineSlice = () => {
     <>
       <h1 className="h1">Quản Lí Bàn Online</h1>
       <div className="content-location">
-        <NavLink to={"/home"} end className={"nav-link"}>
+        <NavLink to={"/"} end className={"nav-link"}>
           {locationNameHome}
         </NavLink>
         <span>{` ${locationPath} ${nameBanOnline.toLocaleUpperCase()}`}</span>
@@ -63,7 +63,7 @@ export const QuanLiBanSlice = () => {
     <>
       <h1 className="h1">Quản Lí Bàn</h1>
       <div className="content-location">
-        <NavLink to={"/home"} end className={"nav-link"}>
+        <NavLink to={"/"} end className={"nav-link"}>
           {locationNameHome}
         </NavLink>
         <span>{` ${locationPath} ${nameQuanLiBan.toLocaleUpperCase()}`}</span>
@@ -94,7 +94,7 @@ export const QuanLiMenuSlice = () => {
     <>
       <h1 className="h1">Quản Lí Menu</h1>
       <div className="content-location">
-        <NavLink to={"/home"} end className={"nav-link"}>
+        <NavLink to={"/"} end className={"nav-link"}>
           {locationNameHome}
         </NavLink>
         <span>{` ${locationPath} ${nameQuanLiBan.toLocaleUpperCase()}`}</span>
@@ -126,7 +126,7 @@ export const QuanLiUserSlice = () => {
     <>
       <h1 className="h1">Quản Lí Users</h1>
       <div className="content-location">
-        <NavLink to={"/home"} end className={"nav-link"}>
+        <NavLink to={"/"} end className={"nav-link"}>
           {locationNameHome}
         </NavLink>
         <span>{` ${locationPath} ${nameUser.toLocaleUpperCase()}`}</span>
@@ -162,7 +162,7 @@ export const QuanLiThongKeVaBaoCaoSlice = () => {
     <>
       <h1 className="h1">Quản Lí Thống Kê</h1>
       <div className="content-location">
-        <NavLink to={"/home"} end className={"nav-link"}>
+        <NavLink to={"/"} end className={"nav-link"}>
           {locationNameHome}
         </NavLink>
         <span>{` ${locationPath} ${nameThongKe.toLocaleUpperCase()}`}</span>
@@ -198,7 +198,7 @@ export const QuanLiKhuyenMaiSlice = () => {
     <>
       <h1 className="h1">Quản Lí Thống Kê</h1>
       <div className="content-location">
-        <NavLink to={"/home"} end className={"nav-link"}>
+        <NavLink to={"/"} end className={"nav-link"}>
           {locationNameHome}
         </NavLink>
         <span>{` ${locationPath} ${nameKhuyenMai.toLocaleUpperCase()}`}</span>

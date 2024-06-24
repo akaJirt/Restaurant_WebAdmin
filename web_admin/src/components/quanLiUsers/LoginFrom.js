@@ -33,4 +33,4 @@ const LoginFrom = (props) => {
   );
 };
 
-export default LoginFrom;
+export default React.memo(LoginFrom);

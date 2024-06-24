@@ -12,15 +12,19 @@ import {
 import avatar from "../../images/messages-1.jpg";
 import logo from "../../images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getThemeState } from "../../store/selector";
+import { getLoginState, getThemeState } from "../../store/selector";
 import { setHideTheme, setShowTheme } from "../../store/theme/actions";
 import { Link } from "react-router-dom";
+import { typeActionLogins } from "../../store/auth/login/actions";
 const AppHeader = () => {
   console.log("render App Header");
   const [dropdown, setDropdown] = useState(false);
   const { Header } = Layout;
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
+  const login = useSelector(getLoginState);
+  const { isLogin } = login;
+  console.log(isLogin, "<<<<<<<<HEADER");
   const menuRef = useRef(null);
   const handleClickDropdown = () => {
     setDropdown(!dropdown);
@@ -41,6 +45,10 @@ const AppHeader = () => {
       window.removeEventListener("mousedown", handleMouseDown);
     };
   }, [dropdown]);
+
+  const handleClickLogout = () => {
+    dispatch(typeActionLogins.fetchLogoutRequest(isLogin?.DT?.accessToken));
+  };
   return (
     <>
       <Header
@@ -74,9 +82,21 @@ const AppHeader = () => {
                 />
               )}
               <div className="item-box" onClick={handleClickDropdown}>
-                <Avatar size={36} src={<img src={avatar} alt="avatar" />} />
+                <Avatar
+                  size={36}
+                  src={
+                    <img
+                      src={isLogin?.DT?.userWithLogin?.avatar || avatar}
+                      alt="avatar"
+                    />
+                  }
+                />
                 <div className="item-span">
-                  <span>Phùng Hưng</span>
+                  <span>
+                    {`xin chào : ${
+                      isLogin?.DT?.userWithLogin?.userName || "Tên Demo"
+                    }`}
+                  </span>
                   <CaretDownOutlined />
                 </div>
               </div>
@@ -87,15 +107,18 @@ const AppHeader = () => {
       {dropdown && (
         <div className={`menu ${theme ? "theme" : ""}`} ref={menuRef}>
           <ul>
-            <li className="menu-name">Phùng Hưng</li>
+            <li className="menu-name">
+              {" "}
+              {` ${isLogin?.DT?.userWithLogin?.userName || "Tên Demo"}`}
+            </li>
             <li className="item-profile">
               <Link to={"/profile"} className="item-link">
                 <UserOutlined className="item-icon" />
                 <span>My Profile</span>
               </Link>
             </li>
-            <li>
-              <Link to={"/logout"} className="item-link">
+            <li onClick={handleClickLogout}>
+              <Link className="item-link">
                 <LogoutOutlined className="item-icon" /> <span>Log out</span>
               </Link>
             </li>

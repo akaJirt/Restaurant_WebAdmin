@@ -18,3 +18,6 @@ export const EDIT_PROFILE = "edit_profile";
 //-----------------LIGHT BOX IMAGE------------------
 export const SHOW_LIGHT_BOX = "show_light_box";
 export const HIDE_LIGHT_BOX = "hide_light_box";
+
+//----------------ACCESS-TOKEN-------------------
+export const SET_ACCESS_TOKEN = "set_access_token";

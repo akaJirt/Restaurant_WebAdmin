@@ -16,7 +16,7 @@ const ErrorPage = (props) => {
         The page you are looking for doesn't exist.
       </h2>
       <div className="text-center">
-        <NavLink to={"/home"} end>
+        <NavLink to={"/"} end>
           <button>Back to home</button>
         </NavLink>
       </div>

@@ -27,11 +27,14 @@
 
             .item-icon {}
         }
+    }   
+    .ant-menu{
+        width: 100%;
     }
 
     .menu {
         background-color: #f9fafc;
-        padding: 5px;
+        // padding: 5px;
         border: none!important;
         .item-menu {
             margin-left: 23px !important;

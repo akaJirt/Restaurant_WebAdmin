@@ -9,6 +9,7 @@ const CardProfileRight = () => {
   console.log("render CardProfileRight");
   const theme = useSelector(getThemeState);
   const [changeTab, setChangeTab] = useState(OVERVIEW);
+
   return (
     <Card
       className={`card-profile2 ${theme ? "theme" : ""}`}

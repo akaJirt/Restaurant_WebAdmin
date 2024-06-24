@@ -99,6 +99,7 @@
             }
         }
     }
+    
 
     .table-users {
         margin-right: 20px;
@@ -132,6 +133,8 @@
 
             img {
                 width: 100%;
+                object-fit: cover;
+                image-rendering: auto;
                 height: 100%;
             }
         }
@@ -155,4 +158,16 @@
         }
     }
 
+}
+@media (max-width:1200px) {
+    .layout-user {
+
+        height: 100vh;
+    }
+}
+@media (min-width:1200px) {
+    .layout-user {
+    
+            height: 100vh;
+        }
 }
