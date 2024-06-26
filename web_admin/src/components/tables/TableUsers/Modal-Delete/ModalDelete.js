@@ -1,12 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./ModalDelete.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { typeActionDeleteUser } from "../../../../store/auth/deleteUser/actions";
-import { getDeleteUserState, getLoginState } from "../../../../store/selector";
-import { useCallback, useEffect } from "react";
-import { toast } from "react-toastify";
-import { typeActionAllUser } from "../../../../store/auth/getAllUser/actions";
+
 const ModalDelete = ({
   show,
   handleClose,
@@ -16,52 +11,7 @@ const ModalDelete = ({
   size,
   setCurrentPage,
 }) => {
-  console.log(currentPage, size, "LOC");
-  console.log(item, "item");
-  const dispatch = useDispatch();
-  const login = useSelector(getLoginState);
-  const { isLogin } = login;
-  const deleteUser = useSelector(getDeleteUserState);
-  const { isDeleteUser } = deleteUser;
-  const handleClickXacNhan = () => {
-    const payload = {
-      id: item.id,
-      accessToken: isLogin?.DT?.accessToken,
-    };
-    dispatch(typeActionDeleteUser.fetchDeleteUserRequest(payload));
-  };
-  const stateDelete = useCallback(() => {
-    if (isDeleteUser) {
-      if (isDeleteUser?.DT === 1 || isDeleteUser?.EC === 0) {
-        toast.success(isDeleteUser?.EM);
-        setShow(false);
-
-        setCurrentPage(1);
-
-        const payload = {
-          page: currentPage,
-          size: size,
-          accessToken: isLogin?.DT?.accessToken,
-        };
-        dispatch(typeActionAllUser.fetchAllUserRequest(payload));
-      } else {
-        toast.error(isDeleteUser?.EM);
-      }
-    }
-    dispatch(typeActionDeleteUser.fetchResetUserFailed(null));
-  }, [
-    isDeleteUser,
-    setShow,
-    dispatch,
-    size,
-    currentPage,
-    isLogin?.DT?.accessToken,
-    setCurrentPage,
-  ]);
-  useEffect(() => {
-    stateDelete();
-  }, [stateDelete]);
-
+  const handleClickXacNhan = () => {};
   return (
     <>
       <Modal show={show} onHide={handleClose} className="modal-delete">

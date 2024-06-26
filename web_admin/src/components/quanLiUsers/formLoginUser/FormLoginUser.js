@@ -1,46 +1,33 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Checkbox } from "antd";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginState } from "../../../store/selector";
-import { toast } from "react-toastify";
 import { LoadingOutlined } from "@ant-design/icons";
-import { typeActionLogins } from "../../../store/auth/login/actions";
-import { setAccessToken } from "../../../store/accessToken/actions";
+import { Login } from "../../../api/call_api/auth/fetchApiAuth";
+import { useNavigate } from "react-router-dom";
 const FormLoginUser = (props) => {
   console.log("render FormLoginUser");
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let navigate = useNavigate();
   const dispatch = useDispatch();
   const input1 = useRef();
   const login = useSelector(getLoginState);
-  const { isLoading, isError, isLogin } = login;
+  const { isLoading } = login;
+  const navigate = useNavigate();
 
-  const handleClickLogin = (e) => {
+  const handleClickLogin = async (e) => {
     e.preventDefault();
-    const payload = { userName, password };
-    dispatch(typeActionLogins.fetchRequest(payload));
+    const payload = { email, password };
+    await Login(payload, dispatch, setEmail, setPassword, navigate);
   };
-  const stateLogin = useCallback(() => {
-    if (isLogin) {
-      if (isLogin?.EC === 0 || isLogin?.DT) {
-        toast.success(isLogin.EM);
-        dispatch(setAccessToken(isLogin?.DT?.accessToken));
-        input1.current.focus();
-        navigate("/");
-      } else {
-        toast.error(isLogin?.EM);
-      }
-    } else if (isError) {
-      toast.error("An error occurred during login.");
+
+  const handleCheckBox = (e) => {
+    const check = e.target.checked;
+    if (check) {
+      setEmail("phungloc6102003@gmail.com");
+      setPassword("123456aA");
     }
-  }, [isLogin, isError, navigate, dispatch]);
-  useEffect(() => {
-    console.log("start");
-    stateLogin();
-    console.log("end");
-  }, [stateLogin]);
+  };
   return (
     <div>
       <div className="form-group mb-3">
@@ -50,8 +37,8 @@ const FormLoginUser = (props) => {
           type="text"
           className="form-control"
           placeholder="enter phone..."
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div className="form-group mb-3">
@@ -65,7 +52,9 @@ const FormLoginUser = (props) => {
         />
       </div>
       <div className="form-group">
-        <Checkbox className="text-checkbox">Remember me</Checkbox>
+        <Checkbox className="text-checkbox" onChange={handleCheckBox}>
+          Remember me
+        </Checkbox>
       </div>
       <div className="text-center button mt-3">
         <button onClick={handleClickLogin} className="btn btn-primary">

@@ -2,8 +2,8 @@ import { getType, typeActionLogins } from "./actions";
 
 export const initState = {
   isLoading: false,
-  isError: false,
-  isLogin: {},
+  isLogin: "",
+  error: null,
 };
 
 const loginSlice = (state = initState, action) => {
@@ -12,35 +12,31 @@ const loginSlice = (state = initState, action) => {
       return {
         ...state,
         isLoading: true,
-        isError: false,
       };
     case getType(typeActionLogins.fetchSuccess):
       return {
         ...state,
         isLoading: false,
-        isError: false,
         isLogin: action.payload,
       };
     case getType(typeActionLogins.fetchFailed):
       return {
         ...state,
         isLoading: false,
-        isError: true,
+        error: action.payload,
       };
+
+    case getType(typeActionLogins.fetchReset):
+      return {
+        ...state,
+        error: null,
+      };
+
     case getType(typeActionLogins.fetchLogoutRequest):
       return {
         ...state,
-        isLoading: true,
-      };
-    case getType(typeActionLogins.fetchLogoutSuccess):
-      return {
-        ...state,
-        isLogin: {},
-      };
-    case getType(typeActionLogins.fetchLogoutFailed):
-      return {
-        ...state,
-        isError: true,
+        isLoading: false,
+        isLogin: "",
       };
 
     default:

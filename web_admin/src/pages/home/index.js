@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Layout } from "antd";
 import "./index.scss";
 import CardHome1 from "../../components/card/card-show1/CardHome1";
@@ -10,24 +10,22 @@ import CardDatBan from "../../components/card/card-show4/CardDatBan";
 import CardMenu from "../../components/card/card-show5/CardMenu";
 import CardKM from "../../components/card/card-show6/CardKhuyenMaiVaThongBao";
 import CardBan from "../../components/card/card-show7/CardBan";
-import { useSelector } from "react-redux";
-import { getLoginState, getThemeState } from "../../store/selector";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAccessTokenState, getThemeState } from "../../store/selector";
+import { getMe } from "../../api/call_api/auth/fetchApiAuth";
 const Home = () => {
   const { Content } = Layout;
   const theme = useSelector(getThemeState);
-  const navigate = useNavigate();
-  const login = useSelector(getLoginState);
-  const { isLogin } = login;
-  const stateLogin = useCallback(() => {
-    if (!isLogin || Object.keys(isLogin).length === 0) {
-      navigate("/login");
-    }
-  }, [navigate, isLogin]);
+  const token = useSelector(getAccessTokenState);
+  console.log(token, "TOKEN HOME");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    stateLogin();
-  }, [stateLogin]);
+    const getMeStatus = async () => {
+      await getMe(dispatch);
+    };
+    getMeStatus();
+  }, [dispatch]);
 
   return (
     <Layout className={`layout-home ${theme ? "theme" : ""}`}>

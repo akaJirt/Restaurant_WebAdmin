@@ -5,11 +5,10 @@ export const getType = (typeAction) => {
 };
 
 export const typeActionLogins = createActions({
-  fetchRequest: (payload) => payload,
+  fetchRequest: undefined,
   fetchSuccess: (payload) => payload,
   fetchFailed: (payload) => payload,
+  fetchReset: undefined,
   //LOGOUT
   fetchLogoutRequest: (payload) => payload,
-  fetchLogoutSuccess: (payload) => payload,
-  fetchLogoutFailed: (payload) => payload,
 });

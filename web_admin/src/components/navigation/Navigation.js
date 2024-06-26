@@ -1,15 +1,23 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getLoginState } from "../../store/selector";
+import { Navigate, Outlet } from "react-router-dom";
+import { getAccessTokenState } from "../../store/selector";
 
-const ProtectedRoute = () => {
-  const loginState = useSelector(getLoginState);
-  console.log(loginState);
-  if (!loginState.isLogin || Object.keys(loginState.isLogin).length === 0) {
+const PublicNavigation = () => {
+  const accessToken = useSelector(getAccessTokenState);
+  console.log(accessToken, "<<<<<<<<<<<<<<<<<<");
+  if (accessToken) {
+    return <Navigate to="/" />;
+  }
+  return <Outlet />;
+};
+const PrivateNavigation = () => {
+  const accessToken = useSelector(getAccessTokenState);
+  console.log(accessToken, "<<<<<<<<<<<<<<<<<<");
+  if (!accessToken) {
     return <Navigate to="/login" />;
   }
   return <Outlet />;
 };
 
-export default ProtectedRoute;
+export { PublicNavigation, PrivateNavigation };

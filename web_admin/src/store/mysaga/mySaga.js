@@ -1,10 +1,12 @@
-import { takeLatest, put, call } from "redux-saga/effects";
-import { api } from "../../api/AxiosInstall";
+import { takeLatest, put, call, takeEvery } from "redux-saga/effects";
 import { typeActionLogins } from "../auth/login/actions";
-import { typeActionAllUser } from "../auth/getAllUser/actions";
-import { typeActionDeleteUser } from "../auth/deleteUser/actions";
-import { typeActionRefreshToken } from "../refreshToken/actions";
-
+import { typeActionGetMes } from "../auth/getMe/actions";
+import { api, apiTables } from "../../api/AxiosInstall";
+import { typeActionGetTables } from "../tables/getTables/actions";
+import { typeActionCreateTables } from "../tables/createTable/actions";
+import { typeActionUpdateTables } from "../tables/updateTable/actions";
+import { typeActionDeleteTables } from "../tables/deleteTable/actions";
+//LOGIN
 function* fetchLogin(action) {
   try {
     const res = yield call(api.loginUser, action.payload);
@@ -14,64 +16,77 @@ function* fetchLogin(action) {
     yield put(typeActionLogins.fetchFailed(error));
   }
 }
-
-function* fetchAllUser(action) {
+//GET ME
+function* fetchGetMe() {
   try {
-    const { accessToken, page, size, role } = action.payload;
-    const res = yield call(api.getUser, accessToken, page, size, role);
-    if (res.data) {
-      yield put(typeActionAllUser.fetchAllUserSuccess(res.data));
-    }
+    const res = yield call(api.getMe);
+    yield put(typeActionGetMes.fetchGetMeSuccess(res.data.data));
   } catch (error) {
     console.log(error);
-    yield put(typeActionAllUser.fetchAllUserFailed(error));
+    yield put(typeActionGetMes.fetchGetMeFailed(error));
   }
 }
-
-function* fetchDeleteUser(action) {
+//GET TABLE
+function* fetchGetTable() {
   try {
-    const { accessToken, id } = action.payload;
-    const res = yield call(api.deleteUSer, accessToken, id);
-    if (res?.data) {
-      yield put(typeActionDeleteUser.fetchDeleteUserSuccess(res.data));
-    }
+    const res = yield call(apiTables.getTable);
+    yield put(typeActionGetTables.fetchGetTableSuccess(res.data));
   } catch (error) {
     console.log(error);
-    yield put(
-      typeActionDeleteUser.fetchDeleteUserFailed(error?.response?.data)
+    yield put(typeActionGetTables.fetchGetTableFailed(error));
+  }
+}
+//CREATE TABLE
+function* fetchCreateTable(action) {
+  try {
+    const res = yield call(
+      apiTables.createTable,
+      parseInt(action.payload.tableNumber)
     );
+    yield put(typeActionCreateTables.fetchCreateTableSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+    yield put(typeActionCreateTables.fetchCreateTableFailed(error));
+  }
+}
+function* fetchUpdateTable(action) {
+  try {
+    const res = yield call(
+      apiTables.updateTable,
+      action.payload.id,
+      parseInt(action.payload.tableNumber)
+    );
+    yield put(typeActionUpdateTables.fetchUpdateTableSuccess(res.data));
+  } catch (error) {
+    yield put(typeActionUpdateTables.fetchUpdateTableFailed(error));
   }
 }
 
-function* fetchLogoutUser(action) {
+function* fetchDeleteTable(action) {
   try {
-    const res = yield call(api.logoutUser, action.payload);
-    yield put(typeActionLogins.fetchLogoutSuccess(res.data));
+    const res = yield call(apiTables.deleteTable, action.payload);
+    yield put(typeActionDeleteTables.fetchDeleteTableSuccess(res.data));
+    yield put(typeActionGetTables.fetchGetTableRequest());
   } catch (error) {
-    yield put(typeActionLogins.fetchLogoutFailed(error));
-  }
-}
-
-function* fetchRefreshToken() {
-  try {
-    const res = yield call(api.refreshToken);
-    console.log(res, "[REFRESH-TOKEN]");
-  } catch (error) {
-    yield put(typeActionRefreshToken.fetchRefreshTokenFailed(error));
+    yield put(typeActionDeleteTables.fetchDeleteTableFailed(error));
   }
 }
 
 function* mySaga() {
-  yield takeLatest(typeActionLogins.fetchRequest, fetchLogin);
-  yield takeLatest(typeActionAllUser.fetchAllUserRequest, fetchAllUser);
-  yield takeLatest(
-    typeActionDeleteUser.fetchDeleteUserRequest,
-    fetchDeleteUser
+  yield takeEvery(typeActionLogins.fetchRequest, fetchLogin);
+  yield takeLatest(typeActionGetMes.fetchGetMeRequest, fetchGetMe);
+  yield takeLatest(typeActionGetTables.fetchGetTableRequest, fetchGetTable);
+  yield takeEvery(
+    typeActionCreateTables.fetchCreateTableRequest,
+    fetchCreateTable
   );
-  yield takeLatest(typeActionLogins.fetchLogoutRequest, fetchLogoutUser);
   yield takeLatest(
-    typeActionRefreshToken.fetchRefreshTokenRequest,
-    fetchRefreshToken
+    typeActionUpdateTables.fetchUpdateTableRequest,
+    fetchUpdateTable
+  );
+  yield takeEvery(
+    typeActionDeleteTables.fetchDeleteTableRequest,
+    fetchDeleteTable
   );
 }
 

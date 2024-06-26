@@ -1,36 +1,41 @@
 import axios from "axios";
-const baseUrl = `http://localhost:8000/auth/api/v1`;
-const baseUrl2 = `https://pro2052-restaurant-api.onrender.com/v1/users/`;
-const token = "abc";
-const installAxios = axios.create({
-  baseURL: baseUrl2,
-  headers: { Authorization: `Bearer ${token}` },
+import { store } from "../store/store";
+const baseUrl = `https://pro2052-restaurant-api.onrender.com/v1/`;
+
+const axiosInstance = axios.create({
+  baseURL: baseUrl,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-//LOGIN
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const state = store.getState();
+    const token = state.accessToken.getAccessToken.payload;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+export default axiosInstance;
+
 const api = {
-  loginUser: (payload) => axios.post(`${baseUrl}/login`, payload),
-
-  getUser: (token, page, size, role) =>
-    axios.get(`${baseUrl}/user?page=${page}&size=${size}&role=${role}`, {
-      headers: { token: `Bearer ${token}` },
-    }),
-
-  deleteUSer: (token, id) =>
-    axios.delete(`${baseUrl}/delete/${id}`, {
-      headers: { token: `Bearer ${token}` },
-    }),
-
-  logoutUser: (token) =>
-    axios.post(
-      `${baseUrl}/logout`,
-      {},
-      {
-        headers: { token: `Bearer ${token}` },
-      }
-    ),
-
-  refreshToken: () => installAxios.post(`/refresh`),
+  loginUser: (payload) => axiosInstance.post(`users/login`, payload),
+  getMe: () => axiosInstance.get(`users/me`),
 };
 
-export { api };
+const apiTables = {
+  getTable: () => axiosInstance.get("tables"),
+  createTable: (tableNumber) => axiosInstance.post("tables", { tableNumber }),
+  updateTable: (id, tableNumber) =>
+    axiosInstance.patch(`tables/${id}`, { tableNumber }),
+  deleteTable: (id) => axiosInstance.delete(`tables/${id}`),
+};
+
+export { api, apiTables };

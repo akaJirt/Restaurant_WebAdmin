@@ -1,13 +1,8 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import rootReducer from "./rootReducer";
 import { composeWithDevTools } from "@redux-devtools/extension";
-import createSagaMiddleware from "redux-saga";
-import mySaga from "./mysaga/mySaga";
-
-// create the saga middleware
-const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {
   key: "root",
@@ -17,23 +12,22 @@ const persistConfig = {
     "header",
     "slider",
     "showLightBox",
+    "getMe",
+    "table",
     "login",
-    "allUser",
-    "deleteUser",
-    "accessToken",
-    "refreshToken",
+    "createTable",
+    "updateTable",
+    "statusTable",
+    "deleteTable",
+    "notification",
   ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const store = createStore(
-  persistedReducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
-);
+const store = createStore(persistedReducer, composeWithDevTools());
 let persistor = persistStore(store);
 
 // then run the saga
-sagaMiddleware.run(mySaga);
 
 export { store, persistor };

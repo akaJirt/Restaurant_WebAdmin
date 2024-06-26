@@ -6,10 +6,14 @@ import themeSlice from "./theme/themeSlice";
 import sliderSlice from "./sliderShow/sliderSlice";
 import lightBoxSlice from "./lightBoxImage/lightBoxSlice";
 import loginSlice from "./auth/login/loginSlice";
-import getAllUserSlice from "./auth/getAllUser/getAllUserSlice";
-import deleteUserSlice from "./auth/deleteUser/deleteUserSlice";
 import accessTokenSlice from "./accessToken/accessTokenSlice";
-import refreshTokenSlice from "./refreshToken/refreshTokenSlice";
+import getMeSlice from "./auth/getMe/getMeSlice";
+import getTableSlice from "./tables/getTables/getTableSlice";
+import CreateTableSlice from "./tables/createTable/createTableSlice";
+import updateTableSlice from "./tables/updateTable/updateTableSlice";
+import setStatusSlice from "./tables/setStatus/setStatusSlice";
+import deleteTableSlice from "./tables/deleteTable/deleteTableSlice";
+import notificationSlice from "./notification/notifications";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -19,9 +23,13 @@ const rootReducer = combineReducers({
   slider: sliderSlice,
   lightBox: lightBoxSlice,
   login: loginSlice,
-  allUser: getAllUserSlice,
-  deleteUser: deleteUserSlice,
   accessToken: accessTokenSlice,
-  refreshToken: refreshTokenSlice,
+  getMe: getMeSlice,
+  table: getTableSlice,
+  createTable: CreateTableSlice,
+  updateTable: updateTableSlice,
+  statusTable: setStatusSlice,
+  deleteTable: deleteTableSlice,
+  notification: notificationSlice,
 });
 export default rootReducer;

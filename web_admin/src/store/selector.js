@@ -12,13 +12,21 @@ export const getSliderState = (state) => state.slider.showSlider;
 export const getLightBoxState = (state) => state.lightBox.showLightBox;
 //-----------------LOGIN-----------------
 export const getLoginState = (state) => state.login;
-//-----------------GET-ALL-USER-----------------
-export const getAllUserState = (state) => state.allUser;
-//-----------------DELETE-USER-----------------
-export const getDeleteUserState = (state) => state.deleteUser;
-
 //-----------------ACCESS-TOKEN-----------------
 export const getAccessTokenState = (state) =>
   state.accessToken.getAccessToken.payload;
-//-----------------REFRESH-TOKEN-----------------
-export const getRefreshTokenState = (state) => state.refreshToken;
+//-----------------GET-ME-----------------
+export const getMeState = (state) => state.getMe;
+//-----------------GET-Tables-----------------
+export const getTableState = (state) => state.table;
+//-----------------CREATE-Tables-----------------
+export const getCreateTableState = (state) => state.createTable;
+//-----------------UPDATE-Tables-----------------
+export const getUpdateTableState = (state) => state.updateTable;
+//------------------STATUS-TABLE---------------
+export const getStatusState = (state) => state.statusTable.status;
+//------------------DELETE-TABLE---------------
+export const getDeleteTableState = (state) => state.deleteTable;
+
+//*************************************NOTIFICATION *********************************************************/
+export const getNotificationState = (state) => state.notification.success;

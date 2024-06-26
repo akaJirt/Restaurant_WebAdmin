@@ -1,57 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getAccessTokenState,
-  getAllUserState,
-  getThemeState,
-} from "../../../store/selector";
-import LoadingUser from "./LoadingUser";
 import ReactPaginate from "react-paginate";
-import { typeActionAllUser } from "../../../store/auth/getAllUser/actions";
 import "./TableUser.scss";
 import ModalDelete from "./Modal-Delete/ModalDelete";
-import { toast } from "react-toastify";
-import { typeActionRefreshToken } from "../../../store/refreshToken/actions";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 const TableUser = () => {
+  const [currentPage, setCurrentPage] = useState(false);
   const [show, setShow] = useState(false);
   const [item, setItem] = useState({});
-  const [role, setRole] = useState("admin");
-  console.log(role, "role");
-  const [currentPage, setCurrentPage] = useState(1);
-  const getAllState = useSelector(getAllUserState);
+  const [role, setRole] = useState("Admin");
   const theme = useSelector(getThemeState);
-  const dispatch = useDispatch();
-  const { isAllUser, error } = getAllState;
-  console.log(error, "ERROR STATE");
-  const accessToken = useSelector(getAccessTokenState);
-  let dataError = error?.response?.data?.EM;
-
-  const totalPage = isAllUser?.DT?.totalPages;
-  const size = 2;
-  const users = isAllUser?.DT?.data;
-  const requestAllUser = useCallback(() => {
-    if (accessToken) {
-      const payload = {
-        page: currentPage,
-        size: size,
-        role: role,
-        accessToken: accessToken,
-      };
-      dispatch(typeActionAllUser.fetchAllUserRequest(payload));
-    }
-    console.log("xuns day");
-    if (dataError) {
-      toast.error(dataError);
-      dispatch(typeActionRefreshToken.fetchRefreshTokenRequest());
-    } else {
-      dispatch(typeActionAllUser.fetchAllUserReset());
-    }
-  }, [dispatch, currentPage, accessToken, role, dataError]);
-
-  useEffect(() => {
-    requestAllUser();
-  }, [requestAllUser]);
+  const totalPage = 20;
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected + 1);
@@ -78,7 +38,6 @@ const TableUser = () => {
         item={item}
         setShow={setShow}
         currentPage={currentPage}
-        size={size}
         setCurrentPage={setCurrentPage}
       />
       <Table striped bordered hover responsive>
@@ -95,14 +54,14 @@ const TableUser = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(users) &&
+          {/* {Array.isArray(users) &&
             users.map((item, index) => (
               <LoadingUser
                 key={index}
                 item={item}
                 handleClickXoa={() => handleClickXoa(item)}
               />
-            ))}
+            ))} */}
         </tbody>
       </Table>
       <ReactPaginate

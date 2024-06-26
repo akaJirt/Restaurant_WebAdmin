@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { Layout, FloatButton } from "antd";
-import { CaretUpOutlined } from "@ant-design/icons";
+import React from "react";
+import { Layout } from "antd";
 import Home from "../../pages/home";
 import User from "../../pages/users/User";
 import Review from "../../pages/reviews/Review";
@@ -12,34 +11,15 @@ import Menu from "../../pages/menu/Menu";
 import Category from "../../pages/categories/Category";
 import ErrorPage from "../../pages/error/ErrorPage";
 import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from "../navigation/Navigation";
 import Profile from "../../pages/profiles/Profile";
-import { useDispatch, useSelector } from "react-redux";
-import { getScrollState } from "../../store/selector";
-import { hideScrollTop, showScrollTop } from "../../store/scrollTop/actions";
+import {
+  PublicNavigation,
+  PrivateNavigation,
+} from "../../components/navigation/Navigation";
 const AppContent = () => {
   console.log("render App Content");
-  const dispatch = useDispatch();
-  const scroll = useSelector(getScrollState);
+
   const { Content } = Layout;
-  const handleScroll = useCallback(() => {
-    if (window.scrollY > 200) {
-      dispatch(showScrollTop());
-    } else {
-      dispatch(hideScrollTop());
-    }
-  }, [dispatch]);
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [handleScroll]);
-
-  const handleClickScroll = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
 
   return (
     <Content
@@ -55,9 +35,12 @@ const AppContent = () => {
         }}
       >
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route element={<PublicNavigation />}>
+            <Route path="/login" element={<Login />} />
+          </Route>
           <Route path="*" element={<ErrorPage />} />
-          <Route element={<ProtectedRoute />}>
+
+          <Route element={<PrivateNavigation />}>
             <Route path="/" element={<Home />} />
             <Route path="/users" element={<User />} />
             <Route path="/reviews" element={<Review />} />
@@ -70,13 +53,6 @@ const AppContent = () => {
           </Route>
         </Routes>
       </div>
-      {scroll && (
-        <FloatButton
-          onClick={handleClickScroll}
-          icon={<CaretUpOutlined />}
-          type="primary"
-        />
-      )}
     </Content>
   );
 };

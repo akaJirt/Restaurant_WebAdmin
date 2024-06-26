@@ -12,19 +12,20 @@ import {
 import avatar from "../../images/messages-1.jpg";
 import logo from "../../images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoginState, getThemeState } from "../../store/selector";
+import { getMeState, getThemeState } from "../../store/selector";
 import { setHideTheme, setShowTheme } from "../../store/theme/actions";
 import { Link } from "react-router-dom";
-import { typeActionLogins } from "../../store/auth/login/actions";
+import { setAccessToken } from "../../store/accessToken/actions";
+
 const AppHeader = () => {
   console.log("render App Header");
   const [dropdown, setDropdown] = useState(false);
   const { Header } = Layout;
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
-  const login = useSelector(getLoginState);
-  const { isLogin } = login;
-  console.log(isLogin, "<<<<<<<<HEADER");
+  const getMe = useSelector(getMeState);
+  const { isDataMe } = getMe;
+
   const menuRef = useRef(null);
   const handleClickDropdown = () => {
     setDropdown(!dropdown);
@@ -47,7 +48,7 @@ const AppHeader = () => {
   }, [dropdown]);
 
   const handleClickLogout = () => {
-    dispatch(typeActionLogins.fetchLogoutRequest(isLogin?.DT?.accessToken));
+    dispatch(setAccessToken(""));
   };
   return (
     <>
@@ -86,17 +87,15 @@ const AppHeader = () => {
                   size={36}
                   src={
                     <img
-                      src={isLogin?.DT?.userWithLogin?.avatar || avatar}
+                      src={isDataMe?.img_avatar_url || avatar}
                       alt="avatar"
                     />
                   }
                 />
                 <div className="item-span">
-                  <span>
-                    {`xin chào : ${
-                      isLogin?.DT?.userWithLogin?.userName || "Tên Demo"
-                    }`}
-                  </span>
+                  <span>{`xin chào : ${
+                    isDataMe?.fullName || "Tên Demo"
+                  }`}</span>
                   <CaretDownOutlined />
                 </div>
               </div>
@@ -109,7 +108,7 @@ const AppHeader = () => {
           <ul>
             <li className="menu-name">
               {" "}
-              {` ${isLogin?.DT?.userWithLogin?.userName || "Tên Demo"}`}
+              {` ${isDataMe?.fullName || "Tên Demo"}`}
             </li>
             <li className="item-profile">
               <Link to={"/profile"} className="item-link">
