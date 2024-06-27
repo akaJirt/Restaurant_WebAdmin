@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCreateTableState,
   getStatusState,
   getUpdateTableState,
+  getValueTableState,
 } from "../../../store/selector";
 import { LoadingOutlined } from "@ant-design/icons";
 import {
   postTable,
   putTable,
 } from "../../../api/call_api/tables/fetchApiTable";
+import { valueFormTable } from "../../../store/valueForm/tables/actions";
+
 const FormTable = () => {
   console.log("render FormTable");
-  const [tableNumber, setTableNumber] = useState("");
+  const tableNumber = useSelector(getValueTableState);
   const statusState = useSelector(getStatusState);
-  console.log(statusState, "STATUS-TABLE");
   const getCreateTableSuccess = useSelector(getCreateTableState);
-  console.log(getCreateTableSuccess, "getCreateTableState");
   const { isLoading } = getCreateTableSuccess;
   const getUpdateTableSuccess = useSelector(getUpdateTableState);
   const { isLoadingUpdate } = getUpdateTableSuccess;
@@ -25,20 +26,15 @@ const FormTable = () => {
 
   const handleClickAddTable = async () => {
     if (statusState[0] !== "update" || statusState[0] === "create") {
-      await postTable(dispatch, parseInt(tableNumber), setTableNumber);
+      await postTable(dispatch, parseInt(tableNumber));
     } else {
       console.log("update table..........");
-      await putTable(
-        dispatch,
-        statusState[1],
-        parseInt(tableNumber),
-        setTableNumber
-      );
+      await putTable(dispatch, statusState[1], parseInt(tableNumber));
     }
   };
 
   const handleChangInput = (e) => {
-    setTableNumber(e.target.value);
+    dispatch(valueFormTable.setTableNumber(e.target.value));
   };
 
   return (

@@ -11,25 +11,25 @@ const getMeSlice = (state = initState, action) => {
   switch (action.type) {
     case getType(typeActionGetMes.fetchGetMeRequest):
       return {
-        ...state,
         isLoading: true,
+        isError: null,
+        isLogin: null,
       };
     case getType(typeActionGetMes.fetchGetMeSuccess):
       return {
-        ...state,
         isLoading: false,
         isDataMe: action.payload,
+        isError: null,
       };
     case getType(typeActionGetMes.fetchGetMeFailed):
       return {
-        ...state,
         isLoading: false,
         isError: action.payload,
+        isLogin: null,
       };
 
     default:
       return state;
   }
 };
-
 export default getMeSlice;

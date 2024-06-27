@@ -16,6 +16,7 @@ import { getMeState, getThemeState } from "../../store/selector";
 import { setHideTheme, setShowTheme } from "../../store/theme/actions";
 import { Link } from "react-router-dom";
 import { setAccessToken } from "../../store/accessToken/actions";
+import { getMe } from "../../api/call_api/auth/fetchApiAuth";
 
 const AppHeader = () => {
   console.log("render App Header");
@@ -23,8 +24,9 @@ const AppHeader = () => {
   const { Header } = Layout;
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
-  const getMe = useSelector(getMeState);
-  const { isDataMe } = getMe;
+  const getMeNeState = useSelector(getMeState);
+  console.log(getMeState, "<<<<<<<<<<<,GET ME");
+  const { isDataMe } = getMeNeState;
 
   const menuRef = useRef(null);
   const handleClickDropdown = () => {
@@ -36,6 +38,13 @@ const AppHeader = () => {
       setDropdown(false);
     }
   };
+
+  useEffect(() => {
+    const fetchGetMe = async () => {
+      await getMe(dispatch);
+    };
+    fetchGetMe();
+  }, [dispatch]);
   useEffect(() => {
     if (dropdown) {
       window.addEventListener("mousedown", handleMouseDown);

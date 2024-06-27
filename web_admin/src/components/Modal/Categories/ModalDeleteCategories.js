@@ -1,16 +1,16 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import "./ModalDeleteTable.scss";
+import "../../Modal/Tables/ModalDeleteTable";
 import { useDispatch, useSelector } from "react-redux";
-import { getDeleteTableState } from "../../../store/selector";
-import { destroyTable } from "../../../api/call_api/tables/fetchApiTable";
+import { getDeleteCategoryState } from "../../../store/selector";
 import { LoadingOutlined } from "@ant-design/icons";
-const ModalDeleteTable = ({ show, handleClose, itemTable, setShow }) => {
-  console.log(itemTable);
-  const getStateDelete = useSelector(getDeleteTableState);
+import { deleteCategory } from "../../../api/call_api/categories/fetchApiCategory";
+const ModalDeleteCategories = ({ show, handleClose, dataItem, setShow }) => {
+  const getStateDelete = useSelector(getDeleteCategoryState);
+  console.log(getStateDelete, "<<<<<<<<getStateDelete");
   const dispatch = useDispatch();
   const handleClickDelete = async () => {
-    await destroyTable(dispatch, itemTable._id, setShow);
+    await deleteCategory(dispatch, dataItem._id, setShow);
   };
 
   return (
@@ -22,8 +22,8 @@ const ModalDeleteTable = ({ show, handleClose, itemTable, setShow }) => {
         <Modal.Body className="modal-body">
           {
             <>
-              <span>Bạn có chắc chắn là muốn xóa bàn số</span>
-              <span className="span"> {itemTable.tableNumber}</span>
+              <span>Bạn có chắc chắn là muốn xóa category</span>
+              <span className="span"> {dataItem?.name}</span>
               <span> này không ?</span>
             </>
           }
@@ -33,7 +33,11 @@ const ModalDeleteTable = ({ show, handleClose, itemTable, setShow }) => {
             Close
           </Button>
           <Button variant="primary" onClick={handleClickDelete}>
-            {getStateDelete.isLoading ? <LoadingOutlined /> : "Delete"}
+            {getStateDelete?.isLoadingDeleteCategory ? (
+              <LoadingOutlined />
+            ) : (
+              "Delete"
+            )}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -41,4 +45,4 @@ const ModalDeleteTable = ({ show, handleClose, itemTable, setShow }) => {
   );
 };
 
-export default ModalDeleteTable;
+export default ModalDeleteCategories;

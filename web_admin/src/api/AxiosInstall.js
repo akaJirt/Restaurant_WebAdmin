@@ -36,6 +36,16 @@ const apiTables = {
   updateTable: (id, tableNumber) =>
     axiosInstance.patch(`tables/${id}`, { tableNumber }),
   deleteTable: (id) => axiosInstance.delete(`tables/${id}`),
+  updateStatusTable: (id, status) =>
+    axiosInstance.patch(`tables/update-status/${id}`, { status }),
 };
 
-export { api, apiTables };
+const apiCategories = {
+  getCategories: () => axiosInstance.get(`categories`),
+  createCategory: (name) => axiosInstance.post(`categories`, { name }),
+  updateCategory: (id, name) =>
+    axiosInstance.patch(`categories/${id}`, { name }),
+  deleteCategory: (id) => axiosInstance.delete(`categories/${id}`),
+};
+
+export { api, apiTables, apiCategories };

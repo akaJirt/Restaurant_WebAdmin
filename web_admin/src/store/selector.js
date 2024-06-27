@@ -28,5 +28,16 @@ export const getStatusState = (state) => state.statusTable.status;
 //------------------DELETE-TABLE---------------
 export const getDeleteTableState = (state) => state.deleteTable;
 
-//*************************************NOTIFICATION *********************************************************/
-export const getNotificationState = (state) => state.notification.success;
+//*************************************VALUE FORM TABLES *********************************************************/
+export const getValueTableState = (state) => state.valueTable.tableNumber;
+export const getSetTableState = (state) => state.valueTable.status;
+//*************************************VALUE FORM TABLES *********************************************************/
+export const getNameState = (state) => state.valueCategories.name;
+
+//*************************************CATEGORIES*********************************************************/
+export const getCategoriesState = (state) => state.categories;
+export const getCreateCategoryState = (state) => state.createCategory;
+export const getUpdateCategoryState = (state) => state.updateCategory;
+export const getDeleteCategoryState = (state) => state.deleteCategory;
+export const getStatusCategoryState = (state) =>
+  state.statusCategory.dataStatus;

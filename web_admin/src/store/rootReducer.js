@@ -7,13 +7,20 @@ import sliderSlice from "./sliderShow/sliderSlice";
 import lightBoxSlice from "./lightBoxImage/lightBoxSlice";
 import loginSlice from "./auth/login/loginSlice";
 import accessTokenSlice from "./accessToken/accessTokenSlice";
-import getMeSlice from "./auth/getMe/getMeSlice";
 import getTableSlice from "./tables/getTables/getTableSlice";
 import CreateTableSlice from "./tables/createTable/createTableSlice";
 import updateTableSlice from "./tables/updateTable/updateTableSlice";
 import setStatusSlice from "./tables/setStatus/setStatusSlice";
 import deleteTableSlice from "./tables/deleteTable/deleteTableSlice";
-import notificationSlice from "./notification/notifications";
+import getMeSlice from "./auth/getMe/getMeSlice";
+import valueFormTableSlice from "./valueForm/tables/valueFormTableSlice";
+import updateStatusTableSlice from "./tables/updateStatusTable/updateStatusTableSlice";
+import categoriesSlice from "./categories/getCategories/categoriesSlice";
+import valueFormCategoriesSlice from "./valueForm/categories/valueFormCategoriesSlice";
+import createCategorySlice from "./categories/createCategory/createCategorySlice";
+import deleteCategorySlice from "./categories/deleteCategory/deleteCategorySlice";
+import updateCategorySlice from "./categories/updateCategory/updateCategorySlice";
+import setStatusSliceCategorySlice from "./categories/setStatus/setStatusSliceCategorySlice.js";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -30,6 +37,13 @@ const rootReducer = combineReducers({
   updateTable: updateTableSlice,
   statusTable: setStatusSlice,
   deleteTable: deleteTableSlice,
-  notification: notificationSlice,
+  valueTable: valueFormTableSlice,
+  updateStatusTable: updateStatusTableSlice,
+  categories: categoriesSlice,
+  createCategory: createCategorySlice,
+  deleteCategory: deleteCategorySlice,
+  updateCategory: updateCategorySlice,
+  valueCategories: valueFormCategoriesSlice,
+  statusCategory: setStatusSliceCategorySlice,
 });
 export default rootReducer;

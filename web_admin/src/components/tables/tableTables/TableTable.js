@@ -5,10 +5,16 @@ import ReactPaginate from "react-paginate";
 import "./TableTable.scss";
 import ModalDeleteTable from "../../Modal/Tables/ModalDeleteTable";
 import { getTableState } from "../../../store/selector";
-import { getAllTable } from "../../../api/call_api/tables/fetchApiTable";
+import {
+  getAllTable,
+  patchStatusTable,
+} from "../../../api/call_api/tables/fetchApiTable";
 import { LoadingOutlined } from "@ant-design/icons";
 import { typeActionSetStatus } from "../../../store/tables/setStatus/actions";
-
+import { valueFormTable } from "../../../store/valueForm/tables/actions";
+import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
+import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
+import IconButton from "@mui/material/IconButton";
 const TableTable = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [show, setShow] = useState(false);
@@ -28,7 +34,6 @@ const TableTable = () => {
     .slice(offset, offset + itemsPerPage);
 
   const itemCount = data?.filter((item) => item?.status === status).length;
-  console.log(itemCount, "<<<<<<<<,,ITEM COUNT");
   const pageCount = Math.ceil(itemCount / itemsPerPage);
 
   const handleStatusChange = (e) => {
@@ -58,26 +63,42 @@ const TableTable = () => {
   //----------------------------Update------------------------------------
 
   const handleClickUpdateTable = async (id, tableNumber) => {
-    dispatch(typeActionSetStatus.setStatusTable(["update", id, tableNumber]));
+    dispatch(typeActionSetStatus.setStatusTable(["update", id]));
+    dispatch(valueFormTable.setTableNumber(tableNumber));
   };
   useEffect(() => {
     if (currentPage >= pageCount && currentPage > 0) {
-      console.log(
-        currentPage,
-        ">=",
-        pageCount,
-        "&&",
-        currentPage,
-        "<>CCCCCCCCCCCCCCCCCCCCCCCCCCCCC<>"
-      );
-
       setCurrentPage(pageCount - 1);
     }
   }, [pageCount, currentPage]);
+  /**********************************TOGGLE ***************************** */
+
+  const handleClickLock = async (e, id) => {
+    const statusTable = e.currentTarget.getAttribute("data-name");
+    const status = statusTable === "lock" ? "open" : "lock";
+    e.currentTarget.setAttribute("data-status", status);
+    console.log(status);
+    await patchStatusTable(dispatch, id, status);
+  };
+
+  const handleClickOpen = async (e, id) => {
+    const statusTable = e.currentTarget.getAttribute("data-name");
+    const status = statusTable === "open" ? "lock" : "open";
+    e.currentTarget.setAttribute("data-status", status);
+
+    console.log(status);
+    await patchStatusTable(dispatch, id, status);
+  };
+
   return (
     <div className="mt-3 mb-3 table-users">
       {isLoading ? (
-        <LoadingOutlined />
+        <LoadingOutlined
+          style={{
+            color: "white",
+            textAlign: "center",
+          }}
+        />
       ) : (
         <>
           <div className="box-h1-span mb-2">
@@ -98,8 +119,7 @@ const TableTable = () => {
               </tr>
             </thead>
             <tbody>
-              {currentItems &&
-                currentItems?.length > 0 &&
+              {currentItems && currentItems?.length > 0 ? (
                 currentItems.map((item, index) => {
                   return (
                     <tr key={index}>
@@ -107,11 +127,34 @@ const TableTable = () => {
                         <>
                           <td>{item.tableNumber}</td>
                           <td
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
                             className={
                               item?.status === "open" ? "open" : "close"
                             }
                           >
-                            {item.status}
+                            <div>{item.status}</div>
+                            <IconButton>
+                              {status === "open" || item.status === "open" ? (
+                                <ToggleOnOutlinedIcon
+                                  style={{
+                                    fontSize: "32px",
+                                    color: "lawngreen",
+                                  }}
+                                  data-name={item.status}
+                                  onClick={(e) => handleClickOpen(e, item._id)}
+                                />
+                              ) : (
+                                <ToggleOffOutlinedIcon
+                                  data-name={item.status}
+                                  style={{ fontSize: "32px", color: "red" }}
+                                  onClick={(e) => handleClickLock(e, item._id)}
+                                />
+                              )}
+                            </IconButton>
                           </td>
                           <td>
                             <button
@@ -136,31 +179,40 @@ const TableTable = () => {
                       )}
                     </tr>
                   );
-                })}
+                })
+              ) : (
+                <tr>
+                  <td className="col-span" colSpan={3}>
+                    No Data
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
-          <ReactPaginate
-            className={`pagination`}
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageChange}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-            pageClassName="page-tem"
-            pageLinkClassName="page-link"
-            previousClassName="page-item"
-            previousLinkClassName="page-link"
-            nextClassName="page-item"
-            nextLinkClassName="page-link"
-            breakLinkClassName="page-link"
-            forcePage={currentPage}
-          />
+          {currentItems?.length > 0 ? (
+            <ReactPaginate
+              className={`pagination`}
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageChange}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+              pageClassName="page-tem"
+              pageLinkClassName="page-link"
+              previousClassName="page-item"
+              previousLinkClassName="page-link"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              breakLinkClassName="page-link"
+              forcePage={currentPage}
+            />
+          ) : null}
         </>
       )}
 

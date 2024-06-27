@@ -7,20 +7,22 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: [
-    "scroll",
-    "header",
-    "slider",
-    "showLightBox",
-    "getMe",
-    "table",
-    "login",
-    "createTable",
-    "updateTable",
-    "statusTable",
-    "deleteTable",
-    "notification",
-  ],
+  whitelist: ["accessToken", "theme"],
+  // blacklist: [
+  //   "scroll",
+  //   "header",
+  //   "slider",
+  //   "showLightBox",
+  //   "getMe",
+  //   "table",
+  //   "login",
+  //   "createTable",
+  //   "updateTable",
+  //   "statusTable",
+  //   "deleteTable",
+  //   "location",
+  //   "valueTable",
+  // ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

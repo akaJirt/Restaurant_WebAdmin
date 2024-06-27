@@ -3,6 +3,7 @@ import { typeActionGetMes } from "../../../store/auth/getMe/actions";
 import { typeActionLogins } from "../../../store/auth/login/actions";
 import { api } from "../../AxiosInstall";
 import { toast } from "react-toastify";
+/******************************LOGIN***************************** */
 
 const Login = async (payload, dispatch, setEmail, setPassword, navigate) => {
   dispatch(typeActionLogins.fetchRequest());
@@ -23,6 +24,7 @@ const Login = async (payload, dispatch, setEmail, setPassword, navigate) => {
     toast.error(error?.response?.data?.status);
   }
 };
+/******************************GET ME***************************** */
 
 const getMe = async (dispatch) => {
   dispatch(typeActionGetMes.fetchGetMeRequest());

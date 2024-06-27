@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Layout } from "antd";
 import "./index.scss";
 import CardHome1 from "../../components/card/card-show1/CardHome1";
@@ -10,22 +10,12 @@ import CardDatBan from "../../components/card/card-show4/CardDatBan";
 import CardMenu from "../../components/card/card-show5/CardMenu";
 import CardKM from "../../components/card/card-show6/CardKhuyenMaiVaThongBao";
 import CardBan from "../../components/card/card-show7/CardBan";
-import { useDispatch, useSelector } from "react-redux";
-import { getAccessTokenState, getThemeState } from "../../store/selector";
-import { getMe } from "../../api/call_api/auth/fetchApiAuth";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../store/selector";
+
 const Home = () => {
   const { Content } = Layout;
   const theme = useSelector(getThemeState);
-  const token = useSelector(getAccessTokenState);
-  console.log(token, "TOKEN HOME");
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const getMeStatus = async () => {
-      await getMe(dispatch);
-    };
-    getMeStatus();
-  }, [dispatch]);
 
   return (
     <Layout className={`layout-home ${theme ? "theme" : ""}`}>

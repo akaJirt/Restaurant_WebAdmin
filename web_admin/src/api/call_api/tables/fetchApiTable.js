@@ -5,6 +5,9 @@ import { typeActionCreateTables } from "../../../store/tables/createTable/action
 import { typeActionUpdateTables } from "../../../store/tables/updateTable/actions";
 import { typeActionDeleteTables } from "../../../store/tables/deleteTable/actions";
 import { typeActionSetStatus } from "../../../store/tables/setStatus/actions";
+import { valueFormTable } from "../../../store/valueForm/tables/actions";
+import { typeActionUpdateStatusTables } from "../../../store/tables/updateStatusTable/actions";
+/******************************GET ALL TABLE***************************** */
 const getAllTable = async (dispatch) => {
   dispatch(typeActionGetTables.fetchGetTableRequest());
   try {
@@ -13,13 +16,15 @@ const getAllTable = async (dispatch) => {
       dispatch(typeActionGetTables.fetchGetTableSuccess(res?.data));
     }
   } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
     dispatch(typeActionGetTables.fetchFailed(error));
-    console.log(error, "<<<<<<<<<<<<<<<<<");
-    toast.error(error?.response?.data?.status);
+    toast.error(status || message);
   }
 };
+/******************************POST TABLE***************************** */
 
-const postTable = async (dispatch, tableName, setTableNumber) => {
+const postTable = async (dispatch, tableName) => {
   dispatch(typeActionCreateTables.fetchCreateTableRequest());
   try {
     const res = await apiTables.createTable(tableName);
@@ -27,45 +32,74 @@ const postTable = async (dispatch, tableName, setTableNumber) => {
     if (res?.data?.status) {
       dispatch(typeActionCreateTables.fetchCreateTableSuccess(res?.data));
       toast.success(res?.data?.status);
-      setTableNumber("");
+      dispatch(valueFormTable.setTableNumber(""));
       await getAllTable(dispatch);
     }
   } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
     dispatch(typeActionCreateTables.fetchCreateTableFailed(error));
-    console.log(error, "<<<<<<<<<<<<<<<<<");
-    toast.error(error?.response?.data?.status);
+    toast.error(status || message);
   }
 };
+/******************************PUT TABLE***************************** */
 
-const putTable = async (dispatch, id, tableNumber, setTableNumber) => {
+const putTable = async (dispatch, id, tableNumber) => {
   dispatch(typeActionUpdateTables.fetchUpdateTableRequest());
   try {
     const res = await apiTables.updateTable(id, tableNumber);
     if (res?.data?.status) {
       dispatch(typeActionUpdateTables.fetchUpdateTableSuccess(res?.data));
       toast.success(res?.data?.status);
-      setTableNumber("");
+      dispatch(valueFormTable.setTableNumber(""));
       dispatch(typeActionSetStatus.setStatusTable(["create"]));
       await getAllTable(dispatch);
     }
   } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+
     dispatch(typeActionUpdateTables.fetchUpdateTableFailed(error));
-    console.log(error, "<<<<<<<<<<<<<<<<<");
-    toast.error(error?.response?.data?.status);
+    toast.error(status || message);
   }
 };
-const destroyTable = async (dispatch, id) => {
+/******************************DESTROY TABLE***************************** */
+
+const destroyTable = async (dispatch, id, setShow) => {
   dispatch(typeActionDeleteTables.fetchDeleteTableRequest());
   try {
     const res = await apiTables.deleteTable(id);
     if (res?.data?.status) {
       dispatch(typeActionDeleteTables.fetchDeleteTableSuccess(res?.data));
+      toast.success(res?.data?.status);
+      setShow(false);
+      await getAllTable(dispatch);
     }
   } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
     dispatch(typeActionDeleteTables.fetchDeleteTableFailed(error));
-    console.log(error, "<<<<<<<<<<<<<<<<<");
-    toast.error(error?.response?.data?.status);
+    toast.error(status || message);
   }
 };
-
-export { getAllTable, postTable, putTable, destroyTable };
+/******************************UPDATE STATUS TABLE***************************** */
+const patchStatusTable = async (dispatch, id, status) => {
+  dispatch(typeActionUpdateStatusTables.fetchUpdateStatusTableRequest());
+  try {
+    const res = await apiTables.updateStatusTable(id, status);
+    if (res?.data?.status) {
+      dispatch(
+        typeActionUpdateStatusTables.fetchUpdateStatusTableSuccess(res?.data)
+      );
+      toast.success(res?.data?.status);
+      await getAllTable(dispatch);
+    }
+  } catch (error) {
+    console.log(error);
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    dispatch(typeActionUpdateStatusTables.fetchUpdateStatusTableFailed(error));
+    toast.error(status || message);
+  }
+};
+export { getAllTable, postTable, putTable, destroyTable, patchStatusTable };

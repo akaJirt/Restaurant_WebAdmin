@@ -8,7 +8,5 @@ export const typeActionLogins = createActions({
   fetchRequest: undefined,
   fetchSuccess: (payload) => payload,
   fetchFailed: (payload) => payload,
-  fetchReset: undefined,
-  //LOGOUT
-  fetchLogoutRequest: (payload) => payload,
+  fetchLogout: (payload) => payload,
 });

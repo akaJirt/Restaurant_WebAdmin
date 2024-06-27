@@ -1,35 +1,134 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategories } from "../../../api/call_api/categories/fetchApiCategory";
+import { getCategoriesState } from "../../../store/selector";
+import { LoadingOutlined } from "@ant-design/icons";
+import ReactPaginate from "react-paginate";
+import ModalDeleteCategories from "../../Modal/Categories/ModalDeleteCategories";
+import { valueFormCategories } from "../../../store/valueForm/categories/actions";
+import { setStatusCategories } from "../../../store/categories/setStatus/actions";
 
 const TableCategory = () => {
+  const [current, setCurrent] = useState(0);
+  const [show, setShow] = useState(false);
+  const [dataItem, setDataItem] = useState({});
+  const dispatch = useDispatch();
+  const getDataState = useSelector(getCategoriesState);
+  const { dataGetCategories, isLoadingGetCategories } = getDataState;
+  const data = dataGetCategories?.data;
+  //*******************************PHAN TRANG ****************************************/
+  const itemPage = 5;
+  const offset = current * itemPage;
+  const newData = data?.slice(offset, offset + itemPage);
+
+  const pageCount = Math.ceil(data?.length / itemPage);
+
+  const handlePageChange = (selectedPage) => {
+    setCurrent(selectedPage.selected);
+  };
+
+  useEffect(() => {
+    if (current >= pageCount && current > 0) {
+      setCurrent(pageCount - 1);
+    }
+  }, [pageCount, current]);
+  //*********************************************************************************** */
+  useEffect(() => {
+    const getCategories = async () => {
+      await getAllCategories(dispatch);
+    };
+    getCategories();
+  }, [dispatch]);
+  //***************************************DELETE******************************************* */
+  const handleClickXoa = (item) => {
+    setShow(true);
+    setDataItem(item);
+  };
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  //***************************************UPDATE******************************************* */
+  const handleClickUpdate = (id, name) => {
+    dispatch(valueFormCategories.setName(name));
+    dispatch(setStatusCategories.setStatus(["update", id, name]));
+  };
   return (
     <div className="mt-3 mb-3 table-users">
-      <h1 className="text-center mb-2">GET CATEGORIES</h1>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Create_At</th>
-            <th>Update_At</th>
-            <th>Option</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Cổ điển</td>
-            <td>Món ăn thời 9x</td>
-            <td>20/2/2025 </td>
-            <td>25/2/2026</td>
-            <td className="bt">
-              <button className="btn btn-danger">Xóa</button>
-              <button className="btn btn-primary">Sửa</button>
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+      <ModalDeleteCategories
+        show={show}
+        dataItem={dataItem}
+        handleClose={handleClose}
+        setShow={setShow}
+      />
+      {isLoadingGetCategories ? (
+        <LoadingOutlined />
+      ) : (
+        <>
+          <div className="box-item mb-2">
+            <span>Total Categories : {dataGetCategories?.totalCategories}</span>
+            <h1 className="text-center">GET CATEGORIES</h1>
+            <span className="sp"></span>
+          </div>
+          <Table striped bordered hover responsive>
+            <thead>
+              <tr>
+                <th>Stt</th>
+                <th>Name</th>
+                <th>Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              {newData?.length > 0 &&
+                newData.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{offset + index + 1}</td>
+                      <td>{item.name}</td>
+                      <td className="bt">
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleClickXoa(item)}
+                        >
+                          Xóa
+                        </button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleClickUpdate(item._id, item.name)}
+                        >
+                          Sửa
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+          <ReactPaginate
+            className={`pagination`}
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageChange}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+            pageClassName="page-tem"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakLinkClassName="page-link"
+            forcePage={current}
+          />
+        </>
+      )}
     </div>
   );
 };
