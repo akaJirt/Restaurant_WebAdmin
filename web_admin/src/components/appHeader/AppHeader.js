@@ -25,9 +25,14 @@ const AppHeader = () => {
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
   const getMeNeState = useSelector(getMeState);
-  console.log(getMeState, "<<<<<<<<<<<,GET ME");
   const { isDataMe } = getMeNeState;
 
+  useEffect(() => {
+    const fetchGetMe = async () => {
+      await getMe(dispatch);
+    };
+    fetchGetMe();
+  }, [dispatch]);
   const menuRef = useRef(null);
   const handleClickDropdown = () => {
     setDropdown(!dropdown);
@@ -39,12 +44,6 @@ const AppHeader = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchGetMe = async () => {
-      await getMe(dispatch);
-    };
-    fetchGetMe();
-  }, [dispatch]);
   useEffect(() => {
     if (dropdown) {
       window.addEventListener("mousedown", handleMouseDown);

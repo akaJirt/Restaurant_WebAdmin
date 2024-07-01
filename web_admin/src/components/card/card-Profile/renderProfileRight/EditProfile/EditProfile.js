@@ -1,30 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./EditProfile.scss";
 import { UploadOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getLightBoxState, getThemeState } from "../../../../../store/selector";
+import {
+  getLightBoxState,
+  getMeState,
+  getThemeState,
+  updateMeState,
+  valueFormAvatarState,
+  valueFormFullNameState,
+} from "../../../../../store/selector";
 import { SlideshowLightbox } from "lightbox.js-react";
 import "lightbox.js-react/dist/index.css";
 import {
   setHideLightBox,
   setShowLightBox,
 } from "../../../../../store/lightBoxImage/actions";
+import avatar from "../../../../../images/messages-1.jpg";
+import { valueFormUsers } from "../../../../../store/valueForm/users/actions";
+import { putMe } from "../../../../../api/call_api/auth/fetchApiAuth";
+import ConvertToBase from "../../../../../utils/convertBase64";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const EditProfile = () => {
   console.log("render editProfile");
-  const [isShowAvatar, setIsShowAvatar] = useState("");
+
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [previousAvatar, setPreviousAvatar] = useState(null);
+  const dispatch = useDispatch();
   const theme = useSelector(getThemeState);
   const lightBox = useSelector(getLightBoxState);
-  const dispatch = useDispatch();
-  const handleClickAvatar = () => {
-    dispatch(setShowLightBox());
-  };
-  const handleChangeImage = (e) => {
-    let file = e.target.files[0];
+  const fullNameState = useSelector(valueFormFullNameState) || "";
+  const avatarState = useSelector(valueFormAvatarState);
+  const getMe = useSelector(getMeState);
+  const updateState = useSelector(updateMeState);
+  const { isLoadingUpdateMe } = updateState;
+
+  useEffect(() => {
+    const getStatus = () => {
+      const currentAvatar = getMe?.isDataMe?.img_avatar_url;
+      dispatch(
+        valueFormUsers.setAvatarUpdateMe(getMe?.isDataMe?.img_avatar_url)
+      );
+      dispatch(valueFormUsers.setFullNameUpdateMe(getMe?.isDataMe?.fullName));
+      setPreviousAvatar(currentAvatar);
+      return;
+    };
+    getStatus();
+  }, [dispatch, getMe?.isDataMe?.fullName, getMe?.isDataMe?.img_avatar_url]);
+
+  const handleChangeImage = async (e) => {
+    const file = e.target.files[0];
     if (file) {
-      let urlImage = URL.createObjectURL(file);
-      setIsShowAvatar(urlImage);
+      setAvatarFile(file);
+      const base64 = await ConvertToBase.getBase64(file);
+      dispatch(valueFormUsers.setAvatarUpdateMe(base64));
+    } else {
+      console.log("file not found");
     }
+  };
+
+  const handleChangeFullName = (e) => {
+    dispatch(valueFormUsers.setFullNameUpdateMe(e.target.value));
+  };
+
+  const handleClick = async () => {
+    const formData = new FormData();
+    formData.append("fullName", fullNameState);
+    formData.append("img_avatar_url", avatarFile);
+    await putMe(dispatch, formData);
+  };
+
+  const handleClickDelete = () => {
+    dispatch(valueFormUsers.setAvatarUpdateMe(previousAvatar));
+    setAvatarFile(null);
   };
   return (
     <div className={`form-profile ${theme ? "theme" : ""}`}>
@@ -32,14 +81,19 @@ const EditProfile = () => {
         <p>Profile Image</p>
         <div className="box-img-edit">
           <div className="img">
-            <img
-              src={isShowAvatar ? isShowAvatar : ""}
-              alt="avatar"
-              onClick={handleClickAvatar}
-            />
-            {isShowAvatar && (
+            {isLoadingUpdateMe ? (
+              <LoadingOutlined className="icon-loading" />
+            ) : (
+              <img
+                src={avatarState || avatar}
+                alt="avatar"
+                style={{ cursor: "pointer" }}
+                onClick={() => dispatch(setShowLightBox())}
+              />
+            )}
+            {avatarState && (
               <SlideshowLightbox
-                images={[{ src: isShowAvatar }]}
+                images={[{ src: avatarState }]}
                 showThumbnails={true}
                 open={lightBox}
                 lightboxIdentifier="lbox1"
@@ -53,19 +107,23 @@ const EditProfile = () => {
           <label htmlFor="file" className="mt-2">
             <UploadOutlined className="ic-upload" />
           </label>
-          <DeleteOutlined className="ic-delete" />
+          <DeleteOutlined className="ic-delete" onClick={handleClickDelete} />
         </div>
       </div>
       <div className="form-group mt-3 mb-3">
-        <p>FirstName</p>
-        <input className="form-control" placeholder="Nhập firstName..." />
-      </div>
-      <div className="form-group">
-        <p>LastName</p>
-        <input className="form-control" placeholder="Nhập lastName..." />
+        <p>Full Name</p>
+        <input
+          className="form-control"
+          placeholder="Nhập firstName..."
+          type="text"
+          onChange={handleChangeFullName}
+          value={fullNameState}
+        />
       </div>
       <div className="text-center mt-3">
-        <button className="btn btn-primary ">Save Profile</button>
+        <button className="btn btn-primary" onClick={handleClick}>
+          Save Profile
+        </button>
       </div>
     </div>
   );

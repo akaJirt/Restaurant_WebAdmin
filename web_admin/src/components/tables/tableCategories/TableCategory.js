@@ -63,7 +63,9 @@ const TableCategory = () => {
         setShow={setShow}
       />
       {isLoadingGetCategories ? (
-        <LoadingOutlined />
+        <div className="dialog">
+          <LoadingOutlined className="loading" />
+        </div>
       ) : (
         <>
           <div className="box-item mb-2">

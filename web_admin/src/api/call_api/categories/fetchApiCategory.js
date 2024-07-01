@@ -6,6 +6,8 @@ import { typeActionUpdateCategory } from "../../../store/categories/updateCatego
 import { valueFormCategories } from "../../../store/valueForm/categories/actions";
 import { apiCategories } from "../../AxiosInstall";
 import { toast } from "react-toastify";
+/******************************GET ALL CATEGORIES***************************** */
+
 const getAllCategories = async (dispatch) => {
   dispatch(typeActionGetCategories.fetchGetCategoriesRequest());
   try {
@@ -21,6 +23,7 @@ const getAllCategories = async (dispatch) => {
     toast.error(status || message);
   }
 };
+/******************************CREATE CATEGORY***************************** */
 
 const createCategory = async (dispatch, name) => {
   dispatch(typeActionCreateCategory.fetchCreateCategoryRequest());
@@ -41,6 +44,7 @@ const createCategory = async (dispatch, name) => {
     toast.error(message || status);
   }
 };
+/******************************DELETE CATEGORY***************************** */
 
 const deleteCategory = async (dispatch, id, setShow) => {
   dispatch(typeActionDeleteCategory.fetchDeleteCategoryRequest());
@@ -51,6 +55,7 @@ const deleteCategory = async (dispatch, id, setShow) => {
       dispatch(
         typeActionDeleteCategory.fetchDeleteCategorySuccess(res?.data?.data)
       );
+      dispatch(valueFormCategories.setName(""));
       setShow(false);
       await getAllCategories(dispatch);
     }
@@ -62,6 +67,7 @@ const deleteCategory = async (dispatch, id, setShow) => {
     toast.error(message || status);
   }
 };
+/******************************UPDATE CATEGORY***************************** */
 
 const updateCategory = async (dispatch, id, name) => {
   dispatch(typeActionUpdateCategory.fetchUpdateCategoryRequest());

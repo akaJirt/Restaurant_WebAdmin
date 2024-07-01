@@ -1,0 +1,23 @@
+.table-users{
+    .box-loading{        
+        .loading{
+            color: #012970;
+            font-size: 50px;
+        }
+                .loading.theme {
+                    color: #fff;}
+    }
+    .box-users{
+        display: flex;
+        align-items: center;
+        h1{
+            flex: 1;
+        }
+        .select{
+            flex: 1;
+            display: flex;
+            align-items: end;
+            justify-content: end;
+        }
+    }
+}

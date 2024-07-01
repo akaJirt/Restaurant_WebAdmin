@@ -6,6 +6,7 @@ import {
   getCreateCategoryState,
   getNameState,
   getStatusCategoryState,
+  getUpdateCategoryState,
 } from "../../../store/selector";
 import {
   createCategory,
@@ -18,6 +19,11 @@ const FromCategory = () => {
   const name = useSelector(getNameState);
   const getCreateState = useSelector(getCreateCategoryState);
   const getStatusCategory = useSelector(getStatusCategoryState);
+  const getUpdateState = useSelector(getUpdateCategoryState);
+  //test
+  const getDataState = useSelector(getCategoriesState);
+  const { dataGetCategories } = getDataState;
+  const data = dataGetCategories?.data;
 
   const dispatch = useDispatch();
   const handleChangName = (e) => {
@@ -30,6 +36,10 @@ const FromCategory = () => {
       getStatusCategory[0] !== "update"
     ) {
       await createCategory(dispatch, name);
+      const newData = data?.reverse();
+      console.log(newData, "NEW -DATA");
+      const newArr = { ...dataGetCategories, data: newData };
+      console.log(newArr, "NEW ARRAY");
     } else {
       await updateCategory(dispatch, getStatusCategory[1], name);
     }
@@ -56,6 +66,8 @@ const FromCategory = () => {
             ) : (
               "Add Category"
             )
+          ) : getUpdateState?.isLoadingUpdateCategory ? (
+            <LoadingOutlined />
           ) : (
             "Update Category"
           )}

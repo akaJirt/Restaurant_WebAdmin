@@ -13,7 +13,7 @@
                 color: #fff;
             }
 
-            .ic-arrow{
+            .ic-arrow {
                 background-color: #fff;
             }
 
@@ -30,6 +30,15 @@
 
     .table-users {
         background-color: #1d1933;
+
+        .dialog {
+
+
+            .loading {
+                color: #FFF;
+
+            }
+        }
 
         h1 {
             color: #FFF;
@@ -59,6 +68,7 @@
 }
 
 .layout-user {
+
     .text-h1 {
         font-size: 24px;
         margin-bottom: 0;
@@ -99,11 +109,42 @@
             }
         }
     }
-    
+
 
     .table-users {
         margin-right: 20px;
         margin-left: 20px;
+
+        .box-h1-select {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            select {
+                display: block;
+                height: 30px;
+            }
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 10px;
+
+        }
+
+        .dialog {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .loading {
+                color: #012970;
+                align-self: center;
+                font-size: 50px;
+            }
+        }
 
         h1 {
             padding: 10px 0;
@@ -115,6 +156,16 @@
 
         tbody {
             tr {
+                .img {
+                    max-width: 50px;
+                    max-height: 50px;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
                 td {
                     text-align: center;
                 }
@@ -159,15 +210,17 @@
     }
 
 }
+
 @media (max-width:1200px) {
     .layout-user {
 
         height: 100vh;
     }
 }
+
 @media (min-width:1200px) {
     .layout-user {
-    
-            height: 100vh;
-        }
+
+        height: 100vh;
+    }
 }

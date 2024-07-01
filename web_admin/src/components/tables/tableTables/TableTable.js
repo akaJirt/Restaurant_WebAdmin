@@ -30,10 +30,12 @@ const TableTable = () => {
   const offset = currentPage * itemsPerPage;
   // Filter currentItems based on status
   const currentItems = data
-    ?.filter((item) => item?.status === status)
+    ?.filter((item) => item?.status === status || status === "all")
     .slice(offset, offset + itemsPerPage);
 
-  const itemCount = data?.filter((item) => item?.status === status).length;
+  const itemCount = data?.filter(
+    (item) => item?.status === status || status === "all"
+  ).length;
   const pageCount = Math.ceil(itemCount / itemsPerPage);
 
   const handleStatusChange = (e) => {
@@ -93,21 +95,21 @@ const TableTable = () => {
   return (
     <div className="mt-3 mb-3 table-users">
       {isLoading ? (
-        <LoadingOutlined
-          style={{
-            color: "white",
-            textAlign: "center",
-          }}
-        />
+        <div className="dialog">
+          <LoadingOutlined className="loading" />
+        </div>
       ) : (
         <>
           <div className="box-h1-span mb-2">
             <span>{`Tổng Bàn: ${dataTable?.totalTables}`}</span>
             <h1 className="text-center ">GET TABLES</h1>
-            <select value={status} onChange={handleStatusChange}>
-              <option value={"open"}>Open</option>
-              <option value={"lock"}>Lock</option>
-            </select>
+            <div className="select">
+              <select value={status} onChange={handleStatusChange}>
+                <option value={"all"}>All</option>
+                <option value={"open"}>Open</option>
+                <option value={"lock"}>Lock</option>
+              </select>
+            </div>
           </div>
 
           <Table striped bordered hover responsive>
@@ -123,60 +125,51 @@ const TableTable = () => {
                 currentItems.map((item, index) => {
                   return (
                     <tr key={index}>
-                      {status === item.status && (
-                        <>
-                          <td>{item.tableNumber}</td>
-                          <td
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                            className={
-                              item?.status === "open" ? "open" : "close"
-                            }
-                          >
-                            <div>{item.status}</div>
-                            <IconButton>
-                              {status === "open" || item.status === "open" ? (
-                                <ToggleOnOutlinedIcon
-                                  style={{
-                                    fontSize: "32px",
-                                    color: "lawngreen",
-                                  }}
-                                  data-name={item.status}
-                                  onClick={(e) => handleClickOpen(e, item._id)}
-                                />
-                              ) : (
-                                <ToggleOffOutlinedIcon
-                                  data-name={item.status}
-                                  style={{ fontSize: "32px", color: "red" }}
-                                  onClick={(e) => handleClickLock(e, item._id)}
-                                />
-                              )}
-                            </IconButton>
-                          </td>
-                          <td>
-                            <button
-                              className="btn btn-danger mx-2"
-                              onClick={() => handleClickDelete(item)}
-                            >
-                              Xóa
-                            </button>
-                            <button
-                              className="btn btn-primary"
-                              onClick={() =>
-                                handleClickUpdateTable(
-                                  item._id,
-                                  item.tableNumber
-                                )
-                              }
-                            >
-                              Sửa
-                            </button>
-                          </td>
-                        </>
-                      )}
+                      <td>{item.tableNumber}</td>
+                      <td
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                        className={item?.status === "open" ? "open" : "close"}
+                      >
+                        <div>{item.status}</div>
+                        <IconButton defaultValue={""}>
+                          {status === "open" || item.status === "open" ? (
+                            <ToggleOnOutlinedIcon
+                              style={{
+                                fontSize: "32px",
+                                color: "lawngreen",
+                              }}
+                              data-name={item.status}
+                              onClick={(e) => handleClickOpen(e, item._id)}
+                            />
+                          ) : (
+                            <ToggleOffOutlinedIcon
+                              data-name={item.status}
+                              style={{ fontSize: "32px", color: "red" }}
+                              onClick={(e) => handleClickLock(e, item._id)}
+                            />
+                          )}
+                        </IconButton>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-danger mx-2"
+                          onClick={() => handleClickDelete(item)}
+                        >
+                          Xóa
+                        </button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() =>
+                            handleClickUpdateTable(item._id, item.tableNumber)
+                          }
+                        >
+                          Sửa
+                        </button>
+                      </td>
                     </tr>
                   );
                 })
@@ -190,28 +183,30 @@ const TableTable = () => {
             </tbody>
           </Table>
           {currentItems?.length > 0 ? (
-            <ReactPaginate
-              className={`pagination`}
-              previousLabel={"previous"}
-              nextLabel={"next"}
-              breakLabel={"..."}
-              breakClassName={"break-me"}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={handlePageChange}
-              containerClassName={"pagination"}
-              subContainerClassName={"pages pagination"}
-              activeClassName={"active"}
-              pageClassName="page-tem"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakLinkClassName="page-link"
-              forcePage={currentPage}
-            />
+            <div className="text-center">
+              <ReactPaginate
+                className={`pagination`}
+                previousLabel={"previous"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageChange}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+                pageClassName="page-tem"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakLinkClassName="page-link"
+                forcePage={currentPage}
+              />
+            </div>
           ) : null}
         </>
       )}

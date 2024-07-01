@@ -18,7 +18,7 @@ const getAllTable = async (dispatch) => {
   } catch (error) {
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
-    dispatch(typeActionGetTables.fetchFailed(error));
+    dispatch(typeActionGetTables.fetchGetTableFailed(error));
     toast.error(status || message);
   }
 };
@@ -73,6 +73,7 @@ const destroyTable = async (dispatch, id, setShow) => {
       dispatch(typeActionDeleteTables.fetchDeleteTableSuccess(res?.data));
       toast.success(res?.data?.status);
       setShow(false);
+      dispatch(valueFormTable.setTableNumber(""));
       await getAllTable(dispatch);
     }
   } catch (error) {

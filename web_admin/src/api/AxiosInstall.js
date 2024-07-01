@@ -16,6 +16,12 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // Check if the data is FormData, if so, set the appropriate Content-Type
+    if (config.data && config.data instanceof FormData) {
+      config.headers["Content-Type"] = "multipart/form-data";
+    } else {
+      config.headers["Content-Type"] = "application/json";
+    }
     return config;
   },
   (err) => {
@@ -25,10 +31,15 @@ axiosInstance.interceptors.request.use(
 
 export default axiosInstance;
 
+//*******************************USERS********************************* */
 const api = {
   loginUser: (payload) => axiosInstance.post(`users/login`, payload),
   getMe: () => axiosInstance.get(`users/me`),
+  getUser: () => axiosInstance.get(`users`),
+  createUser: (data) => axiosInstance.post(`users/register`, { data }),
+  updateMe: (data) => axiosInstance.patch(`users/update-me`, data),
 };
+//*******************************TABLES********************************* */
 
 const apiTables = {
   getTable: () => axiosInstance.get("tables"),
@@ -39,6 +50,7 @@ const apiTables = {
   updateStatusTable: (id, status) =>
     axiosInstance.patch(`tables/update-status/${id}`, { status }),
 };
+//*******************************CATEGORIES********************************* */
 
 const apiCategories = {
   getCategories: () => axiosInstance.get(`categories`),
@@ -47,5 +59,10 @@ const apiCategories = {
     axiosInstance.patch(`categories/${id}`, { name }),
   deleteCategory: (id) => axiosInstance.delete(`categories/${id}`),
 };
+//*******************************MENU ITEM********************************* */
 
-export { api, apiTables, apiCategories };
+const apiMenuItem = {
+  getMenuItem: () => axiosInstance.get(`menu-items`),
+};
+
+export { api, apiTables, apiCategories, apiMenuItem };

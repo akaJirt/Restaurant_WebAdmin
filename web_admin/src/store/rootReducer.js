@@ -21,6 +21,11 @@ import createCategorySlice from "./categories/createCategory/createCategorySlice
 import deleteCategorySlice from "./categories/deleteCategory/deleteCategorySlice";
 import updateCategorySlice from "./categories/updateCategory/updateCategorySlice";
 import setStatusSliceCategorySlice from "./categories/setStatus/setStatusSliceCategorySlice.js";
+import getAllUsersSlice from "./auth/getUsers/getAllUsersSlice.js";
+import setStatusUsersSlice from "./auth/setStatusUsers/setStatusUsersSlice.js";
+import updateMeSlice from "./auth/updateMe/updateMeSlice.js";
+import valueFormUsersSlice from "./valueForm/users/valueFormUsersSlice.js";
+import menuItemSlice from "./menuItem/menuItemSlice.js";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -30,8 +35,11 @@ const rootReducer = combineReducers({
   slider: sliderSlice,
   lightBox: lightBoxSlice,
   login: loginSlice,
-  accessToken: accessTokenSlice,
   getMe: getMeSlice,
+  updateMe: updateMeSlice,
+  allUser: getAllUsersSlice,
+  valueUsers: valueFormUsersSlice,
+  accessToken: accessTokenSlice,
   table: getTableSlice,
   createTable: CreateTableSlice,
   updateTable: updateTableSlice,
@@ -45,5 +53,8 @@ const rootReducer = combineReducers({
   updateCategory: updateCategorySlice,
   valueCategories: valueFormCategoriesSlice,
   statusCategory: setStatusSliceCategorySlice,
+  statusUsers: setStatusUsersSlice,
+  createUser: createCategorySlice,
+  menuItem: menuItemSlice,
 });
 export default rootReducer;

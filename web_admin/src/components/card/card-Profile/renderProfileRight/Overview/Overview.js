@@ -6,26 +6,26 @@ const Overview = () => {
   console.log("render Overview");
   const theme = useSelector(getThemeState);
   const getMe = useSelector(getMeState);
-  const { isDataMe } = getMe;
-  const data = isDataMe?.user;
   return (
     <div className={`layout-overview ${theme ? "theme" : ""}`}>
       <h5>Chi Tiết Hồ Sơ</h5>
       <div className="p">
         <p>Full Name</p>
-        <p>{data?.fullName || "Phùng Hưng"}</p>
+        <p>{getMe?.isDataMe?.fullName || "Phùng Hưng"}</p>
       </div>
       <div className="p">
         <p>Email</p>
-        <p>{data?.email || "Phungloc6102003@gmail.com"}</p>
+        <p>{getMe?.isDataMe?.email || "Phungloc6102003@gmail.com"}</p>
       </div>
       <div className="p">
         <p>Role</p>
-        <p>{data?.role || "Admin"}</p>
+        <p>{getMe?.isDataMe?.role || "Admin"}</p>
       </div>
       <div className="p">
         <p>Status</p>
-        <p>{data?.isVerified ? "Online" : "Offline" || "demo offline"}</p>
+        <p>
+          {getMe?.isDataMe?.isVerified ? "Online" : "Offline" || "demo offline"}
+        </p>
       </div>
     </div>
   );

@@ -30,15 +30,26 @@
 
     .table-users {
         background-color: #1d1933;
-        .box-item{
-            span{
+
+        .dialog {
+
+
+            .loading {
+                color: #FFF;
+
+            }
+        }
+
+        .box-item {
+            span {
                 color: #FFF;
             }
-                        h1 {
-                            color: #FFF;
-                        }
+
+            h1 {
+                color: #FFF;
+            }
         }
-        
+
 
         .table {
 
@@ -119,17 +130,32 @@
     .table-users {
         margin-right: 20px;
         margin-left: 20px;
-        .box-item{
+
+        .dialog {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .loading {
+                color: #012970;
+                align-self: center;
+                font-size: 50px;
+            }
+        }
+
+        .box-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             span {
-                    font-size: 24px;
-                    margin-bottom: 0;
-                    font-weight: 600;
-                    flex: 1;
-                    color: #012970;
-                }
+                font-size: 24px;
+                margin-bottom: 0;
+                font-weight: 600;
+                flex: 1;
+                color: #012970;
+            }
+
             h1 {
                 font-size: 24px;
                 margin-bottom: 0;
@@ -197,10 +223,10 @@
 
 @media (max-width: 1200px) {
     .layout-category {
-            height: 100%;
-        }
-}
-@media (min-width: 1200px) {
-    .layout-category {
+        height: 100%;
     }
+}
+
+@media (min-width: 1200px) {
+    .layout-category {}
 }

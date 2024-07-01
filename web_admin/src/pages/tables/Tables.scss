@@ -38,6 +38,12 @@
     .table-users {
         background-color: #1d1933;
 
+        .dialog {
+
+            .loading {
+                color: #FFF;
+            }
+        }
 
         .box-h1-span {
 
@@ -77,13 +83,14 @@
                         background-color: #1d1933;
                         color: #FFF;
                     }
-                                         .open {
-                                             color: lawngreen;
-                                         }
-                    
-                                         .close {
-                                             color: red;
-                                         }
+
+                    .open {
+                        color: lawngreen;
+                    }
+
+                    .close {
+                        color: red;
+                    }
                 }
             }
         }
@@ -149,15 +156,30 @@
         margin-right: 20px;
         margin-left: 20px;
 
+        .dialog {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .loading {
+                color: #012970;
+                align-self: center;
+                font-size: 50px;
+            }
+        }
+
         .box-h1-span {
             display: flex;
             align-items: center;
+            justify-content: space-between;
 
             span {
                 color: #012970;
                 font-size: 1.5rem;
                 font-weight: bold;
+                flex: 1;
             }
+
 
             h1 {
                 padding: 0;
@@ -167,6 +189,13 @@
                 flex: 1;
                 color: #012970;
 
+            }
+
+            .select {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
             }
         }
 
@@ -220,13 +249,16 @@
     }
 
 }
+
 /* Máy tính để bàn (lớn) */
 @media (min-width: 1200px) {
+
     /* CSS cho thiết bị từ 1200px trở lên */
-    .layout-table{
+    .layout-table {
         min-height: 100vh;
     }
 }
+
 @media (max-width: 540px) {
     .layout-table {
         .form {

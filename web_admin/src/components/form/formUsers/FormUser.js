@@ -1,57 +1,50 @@
 import React from "react";
-
+import "./FormUser.scss";
 const FormUser = () => {
   console.log("render FormUser");
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value, "<<<<<<<<<<<<<<");
+  };
   return (
     <div className="form mt-3 mb-3">
-      <h1 className="text-h1 text-center mt-3 mb-3">Create User</h1>
       <div className="form-group">
+        <label className="form-label">fullName</label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Nhập full name ..."
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group mt-3">
         <label className="form-label">Email</label>
         <input
-          type="text"
+          type="email"
           className="form-control"
-          placeholder="Nhập Email ..."
-        />
-      </div>
-      <div className="form-group mt-3">
-        <label className="form-label">FirstName</label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Nhập firstName ..."
-        />
-      </div>
-      <div className="form-group mt-3">
-        <label className="form-label">LastName</label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Nhập lastName ..."
+          placeholder="Nhập email ..."
         />
       </div>
       <div className="form-group mt-3">
         <label className="form-label">Password</label>
         <input
-          type="text"
+          type="password"
           className="form-control"
           placeholder="Nhập password ..."
         />
       </div>
       <div className="form-group mt-3">
-        <label className="form-label">Avatar</label>
-        <input type="file" className="form-control" />
-      </div>
-      <div className="form-group">
-        <label className="form-label mt-3">Role</label>
+        <label className="form-label">Role</label>
         <select className="form-control ic-arrow">
           <option>Admin</option>
           <option>Nhân viên</option>
           <option>Khách hàng</option>
         </select>
       </div>
-      <div className="mt-3 text-center">
-        <button className="btn btn-primary">Add User</button>
+
+      <div className="form-group">
+        <label className="form-label mt-3">violations</label>
+        <input type="date" className="form-control" />
       </div>
     </div>
   );

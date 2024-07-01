@@ -1,31 +1,27 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import "./ModalDelete.scss";
+import "./ModalUser.scss";
+import { useSelector } from "react-redux";
+import { getSetStatusUsersState } from "../../../store/selector";
+import FormUser from "../../form/formUsers/FormUser";
 
-const ModalDelete = ({
-  show,
-  handleClose,
-  item,
-  setShow,
-  currentPage,
-  size,
-  setCurrentPage,
-}) => {
+const ModalUsers = ({ show, handleClose, item }) => {
+  const getStatusUsers = useSelector(getSetStatusUsersState);
   const handleClickXacNhan = () => {};
   return (
     <>
       <Modal show={show} onHide={handleClose} className="modal-delete">
         <Modal.Header closeButton>
-          <Modal.Title>Xóa User</Modal.Title>
+          <Modal.Title>
+            {getStatusUsers[0] === "create" ? "Create User" : ""}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-body">
-          {
-            <div className="box">
-              <span>Bạn có chắc chắn là muốn xóa {item.role} </span>
-              <span className="p">{item.email}</span>
-              <span> này không?</span>
+          {getStatusUsers[0] === "create" && (
+            <div>
+              <FormUser />
             </div>
-          }
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -40,4 +36,4 @@ const ModalDelete = ({
   );
 };
 
-export default ModalDelete;
+export default ModalUsers;
