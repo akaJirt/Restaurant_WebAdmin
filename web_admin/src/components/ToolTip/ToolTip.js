@@ -9,4 +9,4 @@ const Tooltip = ({ text, children }) => {
   );
 };
 
-export default Tooltip;
+export default React.memo(Tooltip);

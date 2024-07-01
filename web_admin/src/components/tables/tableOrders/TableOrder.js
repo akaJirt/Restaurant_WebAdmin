@@ -1,6 +1,5 @@
 import Table from "react-bootstrap/Table";
 import React from "react";
-
 const TableOrder = () => {
   return (
     <div className="mt-3 mb-3 table-users">

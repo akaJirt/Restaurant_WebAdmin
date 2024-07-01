@@ -1,4 +1,5 @@
 import Button from "react-bootstrap/Button";
+import React from "react";
 import Modal from "react-bootstrap/Modal";
 import "./ModalDeleteTable.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +34,7 @@ const ModalDeleteTable = ({ show, handleClose, itemTable, setShow }) => {
             Close
           </Button>
           <Button variant="primary" onClick={handleClickDelete}>
-            {getStateDelete.isLoading ? <LoadingOutlined /> : "Delete"}
+            {getStateDelete?.isLoading ? <LoadingOutlined /> : "Delete"}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -41,4 +42,4 @@ const ModalDeleteTable = ({ show, handleClose, itemTable, setShow }) => {
   );
 };
 
-export default ModalDeleteTable;
+export default React.memo(ModalDeleteTable);

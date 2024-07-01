@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
@@ -16,6 +16,7 @@ import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import IconButton from "@mui/material/IconButton";
 const TableTable = () => {
+  console.log("render TableTable");
   const [currentPage, setCurrentPage] = useState(0);
   const [show, setShow] = useState(false);
   const [itemTable, setItemTable] = useState({});
@@ -47,12 +48,12 @@ const TableTable = () => {
   };
   //------------------------------------------------------------------
 
-  useEffect(() => {
-    const fetchDataTable = async () => {
-      await getAllTable(dispatch);
-    };
-    fetchDataTable();
+  const fetchDataTable = useCallback(async () => {
+    await getAllTable(dispatch);
   }, [dispatch]);
+  useEffect(() => {
+    fetchDataTable();
+  }, [fetchDataTable]);
 
   //----------------------------DELETE------------------------------------
   const handleClickDelete = (item) => {

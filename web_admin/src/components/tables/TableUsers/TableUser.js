@@ -8,6 +8,7 @@ import { getAllUsers } from "../../../api/call_api/auth/fetchApiAuth";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
+  console.log("render TableUser");
   const [currentPage, setCurrentPage] = useState(0);
   const [show, setShow] = useState(false);
   const [item, setItem] = useState({});
@@ -17,7 +18,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
   const allUsersState = useSelector(getAllUsersState);
   const { dataGetAllUsers, isLoadingGetAllUsers } = allUsersState;
   const data = dataGetAllUsers?.data?.users;
-  console.log(data, "DATA");
   //*****************************PAGE***************************************** */
   const totalPageCount = 2;
   const offset = currentPage * totalPageCount;

@@ -22,6 +22,7 @@ const setCategoryClass = (className, category) => {
 };
 
 const LoadingTableMenu = ({ item, index, offset, category }) => {
+  console.log("render LoadingTableMenu");
   const [hoverIndex, setHoverIndex] = useState(null);
   console.log(item.category);
 
@@ -41,7 +42,7 @@ const LoadingTableMenu = ({ item, index, offset, category }) => {
         onMouseLeave={() => setHoverIndex(null)}
         onMouseEnter={() => setHoverIndex(index)}
       >
-        <img src={item.image_url || itemMenu} alt="avatar" loading="eager" />
+        <img src={item.image_url || itemMenu} alt="avatar" loading="lazy" />
         {hoverIndex === index && (
           <div className={setCategoryClass("menu", category)}>
             <h1 className="mt-1 mb-1">Options</h1>
@@ -78,4 +79,4 @@ const LoadingTableMenu = ({ item, index, offset, category }) => {
   );
 };
 
-export default LoadingTableMenu;
+export default React.memo(LoadingTableMenu);

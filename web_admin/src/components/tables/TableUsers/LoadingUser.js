@@ -5,6 +5,7 @@ import "./LoadingUser.scss";
 import { SmileFilled, MehFilled } from "@ant-design/icons";
 
 const LoadingUser = ({ item, handleClickXoa }) => {
+  console.log("render LoadingUser");
   const originalTime = item.updatedAt;
   const status = item?.status;
   const formattedTime = moment(originalTime).format("DD-MM-YYYY ~ HH:mm:ss");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMenuItemState, getThemeState } from "../../../store/selector";
@@ -28,21 +28,21 @@ const TableMenu = () => {
   const totalPage = Math?.ceil(pageCount / itemPage);
   console.log(itemList);
 
-  const handlePageChange = (selectedPage) => {
+  const handlePageChange = useCallback((selectedPage) => {
     setCurrentPage(selectedPage.selected);
-  };
+  }, []);
   const handleChangSelect = (e) => {
     setCategory(e.target.value);
     setCurrentPage(0);
   };
   /************************************************************************************* */
 
-  useEffect(() => {
-    const getMenuItem = async () => {
-      await getAllMenuItem(dispatch);
-    };
-    getMenuItem();
+  const getMenuItem = useCallback(async () => {
+    await getAllMenuItem(dispatch);
   }, [dispatch]);
+  useEffect(() => {
+    getMenuItem();
+  }, [getMenuItem]);
 
   return (
     <div className="mt-3 mb-3 table-users">
@@ -125,4 +125,4 @@ const TableMenu = () => {
   );
 };
 
-export default TableMenu;
+export default React.memo(TableMenu);

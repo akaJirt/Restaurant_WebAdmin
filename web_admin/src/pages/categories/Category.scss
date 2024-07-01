@@ -228,5 +228,7 @@
 }
 
 @media (min-width: 1200px) {
-    .layout-category {}
+    .layout-category {
+        height: 100vh;
+    }
 }

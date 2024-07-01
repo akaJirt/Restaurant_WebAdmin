@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   HomeFilled,
   UserOutlined,
@@ -14,93 +14,99 @@ import { Layout, Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../store/selector";
+
 const SiderMenu = () => {
   console.log("render SiderMenu");
   const { Sider } = Layout;
   const location = useLocation();
   const theme = useSelector(getThemeState);
-  const items = [
-    {
-      className: "item-menu",
-      key: "/",
-      icon: <HomeFilled className="item-icon" />,
-      label: (
-        <Link to="/" className="item-link">
-          Home
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/users",
-      icon: <UserOutlined className="item-icon" />,
-      label: (
-        <Link to="/users" className="item-link">
-          Quản lý người dùng
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/reviews",
-      icon: <StarFilled className="item-icon" />,
-      label: (
-        <Link to="/reviews" className="item-link">
-          Quản lý đánh giá
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/promotions",
-      icon: <TagFilled className="item-icon" />,
-      label: (
-        <Link to="/promotions" className="item-link">
-          Quản lý khuyến mãi
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/order",
-      icon: <DropboxSquareFilled className="item-icon" />,
-      label: (
-        <Link to="/order" className="item-link">
-          Quản lý đơn hàng
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/tables",
-      icon: <BoxPlotFilled className="item-icon" />,
-      label: (
-        <Link to="/tables" className="item-link">
-          Quản lý bàn
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/menu",
-      icon: <ShopFilled className="item-icon" />,
-      label: (
-        <Link to="/menu" className="item-link">
-          Quản lý thực đơn
-        </Link>
-      ),
-    },
-    {
-      className: "item-menu",
-      key: "/categories",
-      icon: <SettingFilled className="item-icon" />,
-      label: (
-        <Link to="/categories" className="item-link">
-          Quản lý danh mục
-        </Link>
-      ),
-    },
-  ];
+
+  const items = useMemo(
+    () => [
+      {
+        className: "item-menu",
+        key: "/",
+        icon: <HomeFilled className="item-icon" />,
+        label: (
+          <Link to="/" className="item-link">
+            Home
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/users",
+        icon: <UserOutlined className="item-icon" />,
+        label: (
+          <Link to="/users" className="item-link">
+            Quản lý người dùng
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/reviews",
+        icon: <StarFilled className="item-icon" />,
+        label: (
+          <Link to="/reviews" className="item-link">
+            Quản lý đánh giá
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/promotions",
+        icon: <TagFilled className="item-icon" />,
+        label: (
+          <Link to="/promotions" className="item-link">
+            Quản lý khuyến mãi
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/order",
+        icon: <DropboxSquareFilled className="item-icon" />,
+        label: (
+          <Link to="/order" className="item-link">
+            Quản lý đơn hàng
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/tables",
+        icon: <BoxPlotFilled className="item-icon" />,
+        label: (
+          <Link to="/tables" className="item-link">
+            Quản lý bàn
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/menu",
+        icon: <ShopFilled className="item-icon" />,
+        label: (
+          <Link to="/menu" className="item-link">
+            Quản lý thực đơn
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/categories",
+        icon: <SettingFilled className="item-icon" />,
+        label: (
+          <Link to="/categories" className="item-link">
+            Quản lý danh mục
+          </Link>
+        ),
+      },
+    ],
+    []
+  );
+
   return (
     <Sider
       className="custom-sider"
@@ -118,12 +124,12 @@ const SiderMenu = () => {
       <Menu
         className={`menu ${theme ? "theme" : ""}`}
         mode="inline"
-        defaultSelectedKeys={location.pathname ? location.pathname : ["/"]}
-        selectedKeys={location.pathname}
+        defaultSelectedKeys={[location.pathname]}
+        selectedKeys={[location.pathname]}
         items={items}
       />
     </Sider>
   );
 };
 
-export default SiderMenu;
+export default React.memo(SiderMenu);

@@ -121,7 +121,11 @@ const EditProfile = () => {
         />
       </div>
       <div className="text-center mt-3">
-        <button className="btn btn-primary" onClick={handleClick}>
+        <button
+          className="btn btn-primary"
+          onClick={handleClick}
+          disabled={isLoadingUpdateMe ? true : false}
+        >
           Save Profile
         </button>
       </div>
