@@ -51,7 +51,7 @@ const FormTable = () => {
         />
       </div>
       <div className="mt-3 text-center">
-        <button className="btn btn-primary" onClick={handleClickAddTable}>
+        <button className="btn btn-primary bt2" onClick={handleClickAddTable}>
           {statusState[0] !== "update" || statusState[0] === "create" ? (
             isLoading ? (
               <LoadingOutlined />

@@ -13,7 +13,7 @@ function Order(props) {
     <Layout className={`layout-order ${theme ? "theme" : ""}`}>
       <Content>
         <h1 className="text-h1">Orders</h1>
-        <FormOrder />
+        <button className="mx-3 btn btn-primary bt2">Add New User</button>
         <TableOrder />
       </Content>
     </Layout>

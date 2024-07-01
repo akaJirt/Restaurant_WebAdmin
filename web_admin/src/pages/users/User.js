@@ -28,7 +28,7 @@ const User = (props) => {
       <Content>
         <h1 className="text-h1">Quản Lí {capitalizeFirstLetter(role)}</h1>
         <button
-          className="mx-3 btn btn-primary mt-3 mb-3"
+          className="mx-3 btn btn-primary bt"
           onClick={handleClickAddNewUser}
         >
           Add New User

@@ -13,7 +13,7 @@ function Promotion(props) {
     <Layout className={`layout-promotion ${theme ? "theme" : ""}`}>
       <Content>
         <h1 className="text-h1">Promotions</h1>
-        <FormPromotion />
+        <button className="mx-3 btn btn-primary bt2">Add New User</button>
         <TablePromotion />
       </Content>
     </Layout>

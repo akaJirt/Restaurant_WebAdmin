@@ -1,5 +1,5 @@
 import Button from "react-bootstrap/Button";
-import React from "react";
+import React, { useCallback } from "react";
 import Modal from "react-bootstrap/Modal";
 import "./ModalDeleteTable.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +10,9 @@ const ModalDeleteTable = ({ show, handleClose, itemTable, setShow }) => {
   console.log(itemTable);
   const getStateDelete = useSelector(getDeleteTableState);
   const dispatch = useDispatch();
-  const handleClickDelete = async () => {
+  const handleClickDelete = useCallback(async () => {
     await destroyTable(dispatch, itemTable._id, setShow);
-  };
+  }, [dispatch, itemTable._id, setShow]);
 
   return (
     <>

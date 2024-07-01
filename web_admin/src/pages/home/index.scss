@@ -1,11 +1,16 @@
 .layout-home.theme {
-    background-color: #111025;
+    background-color: #E8900C;
+    border: 1px solid #C55402;
 }
 
 .layout-home {
     width: 100%;
     padding: 20px;
-
+    height: 100vh;
+    .ant-layout-content {
+            height: 100%;
+            /* Ensure the content takes up the full height */
+        }
     .row {
         .col-8 {
             .left-cart-1 {
@@ -131,4 +136,7 @@
 /* Máy tính để bàn (lớn) */
 @media (min-width: 1200px) {
     /* CSS cho thiết bị từ 1200px trở lên */
+    .layout-home {
+        height: 100%;
+    }
 }

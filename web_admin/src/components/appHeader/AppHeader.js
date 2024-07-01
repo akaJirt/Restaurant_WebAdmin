@@ -63,7 +63,8 @@ const AppHeader = () => {
       <Header
         style={{
           padding: 0,
-          background: theme ? "#18172b" : "#fff",
+
+          background: theme ? " #C55402" : "#fff",
         }}
       >
         <Row

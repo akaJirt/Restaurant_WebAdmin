@@ -58,7 +58,10 @@ const FromCategory = () => {
         />
       </div>
       <div className="mt-3 text-center">
-        <button className="btn btn-primary" onClick={handleClickAddCategory}>
+        <button
+          className="btn btn-primary bt2"
+          onClick={handleClickAddCategory}
+        >
           {getStatusCategory[0] === "create" ||
           getStatusCategory[0] !== "update" ? (
             getCreateState?.isLoadingCreateCategory ? (

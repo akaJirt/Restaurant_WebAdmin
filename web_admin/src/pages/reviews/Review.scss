@@ -1,12 +1,21 @@
 .layout-review.theme {
-    background-color: #111025;
+    background-color: #E8900C;
 
     .text-h1 {
         color: #fff;
     }
 
+    .bt2 {
+        background-color: #C55402 !important;
+        border: 1px solid #C55402;
+
+        &:hover {
+            opacity: .5;
+            border: 1px solid #C55402;
+        }
+    }
+
     .form {
-        background-color: #1d1933;
 
         .form-group {
             .form-label {
@@ -29,7 +38,7 @@
     }
 
     .table-users {
-        background-color: #1d1933;
+        background-color: #E8900C;
 
         h1 {
             color: #FFF;
@@ -40,8 +49,8 @@
             thead {
                 tr {
                     th {
-                        background-color: #1d1933;
-                        color: #b0127b;
+                        background-color: #C55402;
+                        color: #fff;
                     }
                 }
             }
@@ -49,7 +58,7 @@
             tbody {
                 tr {
                     td {
-                        background-color: #1d1933;
+                        background-color: #C55402;
                         color: #FFF;
                     }
                 }
@@ -57,84 +66,115 @@
         }
     }
 }
-.layout-review{
-.text-h1 {
+
+.layout-review {
+    height: 100vh;
+
+    .bt2 {
+        background-color: #E8900C !important;
+        border: 1px solid #E8900C;
+
+        &:hover {
+            opacity: .5;
+            border: 1px solid #E8900C;
+        }
+    }
+
+    .ant-layout-content {
+        height: 100%;
+        /* Ensure the content takes up the full height */
+    }
+
+    .text-h1 {
         font-size: 24px;
         margin-bottom: 0;
         padding: 5px 20px;
         font-weight: 600;
-        color: #012970;
+        color: #E8900C;
     }
-        .form {
-            box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.1);
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-    
-            .form-group {
-                .form-label {
-                    color: #012970;
-                    font-weight: bold;
-                    font-size: 1rem;
-                }
-    
-                .ic-arrow {
-                    appearance: none;
-                    -webkit-appearance: none;
-                    -moz-appearance: none;
-                    background: url('data:image/svg+xml;utf8,<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>') no-repeat right 1rem center;
-                    background-size: 1rem;
-                    padding-right: 2.5rem;
-                }
-    
+
+    .form {
+        box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.1);
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 500px;
+        margin: 0 auto;
+
+        .form-group {
+            .form-label {
+                color: #E8900C;
+                font-weight: bold;
+                font-size: 1rem;
             }
-    
-            .text-center {
-                .btn {
-                    width: 100%;
+
+            .ic-arrow {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background: url('data:image/svg+xml;utf8,<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>') no-repeat right 1rem center;
+                background-size: 1rem;
+                padding-right: 2.5rem;
+            }
+
+        }
+
+        .text-center {
+            .btn {
+                width: 100%;
+            }
+        }
+    }
+
+    .table-users {
+        margin-right: 20px;
+        margin-left: 20px;
+
+        h1 {
+            padding: 10px 0;
+            font-size: 24px;
+            margin-bottom: 0;
+            font-weight: 600;
+            color: #E8900C;
+        }
+
+        thead {
+            tr {
+                th {
+                    color: #E8900C;
                 }
             }
         }
-                .table-users {
-                    margin-right: 20px;
-                    margin-left: 20px;
-        
-                    h1 {
-            padding: 10px 0;
-                        font-size: 24px;
-                        margin-bottom: 0;
-                        font-weight: 600;
-                        color: #012970;
-                    }
-        
-                    tbody {
-                        tr {
-                            td {
-                                text-align: center;
-                            }
-        
-                            .bt {
-                                .btn-danger {
-                                    margin-right: 10px;
-                                }
-                            }
-                        }
-                    }
-        
-                    .avatar {
-                        max-width: 50px;
-                        max-height: 50px;
-        
-                        img {
-                            width: 100%;
-                            height: 100%;
-                        }
-                    }
+
+        tbody {
+            tr {
+
+                td {
+                    color: #C9AA05;
+                    text-align: center;
                 }
 
+                .bt {
+                    .btn-danger {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+
+        .avatar {
+            max-width: 50px;
+            max-height: 50px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
 }
+
 /* Máy tính để bàn (lớn) */
 @media (min-width: 1200px) {
 
@@ -143,6 +183,7 @@
         min-height: 100vh;
     }
 }
+
 @media (max-width: 540px) {
     .layout-review {
         .form {

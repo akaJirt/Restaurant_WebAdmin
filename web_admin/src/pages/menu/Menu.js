@@ -12,7 +12,7 @@ function Menu(props) {
     <Layout className={`layout-menu ${theme ? "theme" : ""}`}>
       <Content>
         <h1 className="text-h1">Menu</h1>
-        <button className="mx-3 btn btn-primary mt-3 mb-3">Add New Menu</button>
+        <button className="mx-3 btn btn-primary bt2">Add New Menu</button>
         <TableMenu />
       </Content>
     </Layout>

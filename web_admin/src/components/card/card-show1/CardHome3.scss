@@ -1,26 +1,26 @@
 .card-3.theme {
-    background-color: #1d1933;
+    background-color: #C55402;
 
     .content-title {
         .content-title-box-1 {
             .text-banHang {
-                color: #ae1481;
+                color: #fff;
             }
 
             .text-homNay {
-                color: #f8bbd0;
+                color: #fff;
             }
         }
 
         .icon-ellips {
-            color: #f8bbd0;
+            color: #fff;
         }
     }
 
     .content-body-3 {
         .icon-userGroup {
-            border: 1px solid #38334A;
-            background: #38334A;
+            border: 1px solid #fff;
+            background: #fff;
 
             .ic {
                 color: #FF771D;
@@ -38,11 +38,11 @@
 
                 span {
                     &:first-child {
-                        color: #E0E0E0;
+                        color: #fff;
                     }
 
                     &:last-child {
-                        color: #DC3545;
+                                        color: #FF771D;
                     }
                 }
             }
@@ -68,23 +68,22 @@
             .text-banHang {
                 font-size: 18px;
                 font-weight: 500;
-                color: #012970;
+                color: #E8900C;
                 font-family: "Poppins", sans-serif;
                 margin: 0;
                 padding: 0;
             }
 
             .text-homNay {
-                color: #899bbd;
+                color: #C9AA05;
                 font-size: 14px;
                 font-weight: 400;
             }
         }
 
-        .icon-ellips {
-            color: #899bbd;
-            cursor: pointer;
-        }
+                .icon-ellips {
+                    color: #C9AA05;
+                }
     }
 
     .content-body-3 {
@@ -94,7 +93,7 @@
         .icon-userGroup {
             border: 1px solid #ffecdf;
             background: #ffecdf;
-            padding: 0 11px;
+            padding: 0 20px;
             border-radius: 100%;
 
             .ic {
@@ -107,7 +106,7 @@
         .content-body-box-2 {
             .h6 {
                 font-size: 28px;
-                color: #012970;
+                color: #ff771d;
                 font-weight: 700;
                 margin: 0;
             }
@@ -115,11 +114,11 @@
             .span {
                 span {
                     &:first-child {
-                        color: #595c5f;
+                        color: #ff771d;
                     }
 
                     &:last-child {
-                        color: rgba(220, 53, 69, 1);
+                        color: #ff771d;
                         font-weight: bold;
                     }
                 }

@@ -1,19 +1,19 @@
 .content-ban-chay-nhat.theme {
-    background-color: #1d1933;
+    background-color: #C55402;
 
     .box-title {
         .box-text {
             p {
-                color: #ae1481;
+                color: #fff;
             }
 
             span {
-                color: #f8bbd0;
+                color: #fff;
             }
         }
 
         .icon-ellips {
-            color: #f8bbd0;
+            color: #fff;
         }
     }
 
@@ -23,7 +23,7 @@
             thead {
                 tr {
                     th {
-                        color: #ae1481;
+                        color: #fff;
                     }
                 }
             }
@@ -56,13 +56,13 @@
                 font-size: 1.125rem;
                 /* Adjust as needed (18px = 1.125rem) */
                 font-weight: 500;
-                color: rgb(1, 41, 112);
+                color: #E8900C;
                 font-family: Poppins, sans-serif;
                 margin: 0;
             }
 
             span {
-                color: rgb(137, 155, 189);
+                color: #C9AA05;
                 font-size: 0.875rem;
                 /* Adjust as needed (14px = 0.875rem) */
                 font-weight: 400;
@@ -70,6 +70,9 @@
                 /* Adjust as needed (6px = 0.375rem) */
             }
         }
+                .icon-ellips {
+                    color: #C9AA05;
+                }
     }
 
     .content-body {
@@ -81,6 +84,8 @@
 
             thead {
                 tr {
+                    color: #E8900C;
+
                     th {
                         padding-left: 5px;
                     }
@@ -88,21 +93,22 @@
             }
 
             tbody {
+                text-align: center;
                 tr {
                     .text-mt {
-                        color: #4154f1;
+                        color: #C9AA05;
                         font-weight: bold;
                     }
 
                     .text-da-ban {
-                        color: black;
+                        color: #C9AA05;
                         font-weight: bold;
                     }
 
                     th,
                     td {
                         padding: 5px;
-
+                                color: #C9AA05;
                         .link-img {
                             img {
                                 max-width: 60px;

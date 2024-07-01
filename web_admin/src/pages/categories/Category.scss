@@ -1,12 +1,12 @@
 .layout-category.theme {
-    background-color: #111025;
+    background-color: #E8900C;
 
     .text-h1 {
         color: #fff;
     }
 
     .form {
-        background-color: #1d1933;
+        background-color: #C55402;
 
         .form-group {
             .form-label {
@@ -29,8 +29,14 @@
     }
 
     .table-users {
-        background-color: #1d1933;
+        background-color: #E8900C;
+.active {
 
+        .page-link {
+            background-color: #C55402;
+            border: 1px solid #C55402;
+        }
+    }
         .dialog {
 
 
@@ -56,8 +62,8 @@
             thead {
                 tr {
                     th {
-                        background-color: #1d1933;
-                        color: #b0127b;
+                        background-color: #C55402;
+                        color: #fff;
                     }
                 }
             }
@@ -65,7 +71,7 @@
             tbody {
                 tr {
                     td {
-                        background-color: #1d1933;
+                        background-color: #C55402;
                         color: #FFF;
                     }
                 }
@@ -75,12 +81,26 @@
 }
 
 .layout-category {
+    height: 100vh;
+    
+        .ant-layout-content {
+            height: 100%;
+            /* Ensure the content takes up the full height */
+        }.bt2 {
+            background-color: #E8900C !important;
+            border: 1px solid #E8900C;
+        
+            &:hover {
+                opacity: .5;
+                border: 1px solid #E8900C;
+            }
+        }
     .text-h1 {
         font-size: 24px;
         margin-bottom: 0;
         padding: 5px 20px;
         font-weight: 600;
-        color: #012970;
+            color: #E8900C;
     }
 
     .form {
@@ -104,7 +124,7 @@
 
         .form-group {
             .form-label {
-                color: #012970;
+                        color: #E8900C;
                 font-weight: bold;
                 font-size: 1rem;
             }
@@ -130,14 +150,20 @@
     .table-users {
         margin-right: 20px;
         margin-left: 20px;
+.active {
 
+        .page-link {
+            background-color: #E8900C;
+            border: 1px solid #E8900C;
+        }
+    }
         .dialog {
             display: flex;
             align-items: center;
             justify-content: center;
 
             .loading {
-                color: #012970;
+                    color: #E8900C;
                 align-self: center;
                 font-size: 50px;
             }
@@ -153,7 +179,7 @@
                 margin-bottom: 0;
                 font-weight: 600;
                 flex: 1;
-                color: #012970;
+                        color: #E8900C;
             }
 
             h1 {
@@ -161,10 +187,16 @@
                 margin-bottom: 0;
                 flex: 1;
                 font-weight: 600;
-                color: #012970;
+                        color: #E8900C;
             }
         }
-
+thead{
+    tr{
+        th{
+                        color: #E8900C;
+        }
+    }
+}
         tbody {
             tr {
                 .img-table {
@@ -178,6 +210,7 @@
 
                 td {
                     text-align: center;
+                    color: #C9AA05;
                 }
 
                 .bt {
@@ -229,6 +262,6 @@
 
 @media (min-width: 1200px) {
     .layout-category {
-        height: 100vh;
+        min-height: 100vh;
     }
 }

@@ -7,6 +7,17 @@
         opacity: 1;
     }
 }
+.tooltip-container.theme{
+
+    &:hover .tooltip-text {
+        color: #fff;
+    }
+
+    .tooltip-text {
+        background-color: #E8900C;
+        border: 1px solid #E8900C;
+    }
+}
 
 .tooltip-container {
     position: relative;
@@ -15,10 +26,11 @@
     &:hover .tooltip-text {
         display: block;
         animation: fadeIn 0.8s ease forwards;
-        background-color: lightpink;
+        color: #E8900C;
     }
-
+    
     .tooltip-text {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         position: absolute;
         top: 20px;
         left: 100px;
@@ -26,12 +38,12 @@
         width: 300px;
         z-index: 3;
         display: none;
-        color: #012970;
+        color: #E8900C;
         font-weight: bold;
-        border: 1px solid pink;
+        border: 1px solid white;
         padding: 5px 7px;
-        border-radius: 10px;
-        background-color: pink;
+        border-radius: 5px;
+        background-color: white;
         animation: fadeIn 0.8s ease forwards;
     }
 }

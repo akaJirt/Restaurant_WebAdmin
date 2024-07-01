@@ -1,21 +1,22 @@
 .cart-chart.theme {
-    background-color: #1d1933;
+    background-color: #C55402;
 
     .box-title {
         .box-text {
             .text-baoCao {
-                color: #ae1481;
+                color: #fff;
             }
 
             .text-homNay {
-                color: #f8bbd0;
+                color: #fff;
             }
 
-            
+
         }
-                .icon-ellips {
-                    color: #f8bbd0;
-                }
+
+        .icon-ellips {
+            color: #fff;
+        }
     }
 }
 
@@ -32,19 +33,22 @@
             .text-baoCao {
                 font-size: 18px;
                 font-weight: 500;
-                color: #012970;
+                color: #E8900C;
                 font-family: "Poppins", sans-serif;
                 margin: 0;
 
             }
 
             .text-homNay {
-                color: #899bbd;
+                color: #C9AA05;
                 font-size: 14px;
                 font-weight: 400;
                 margin-left: 6px;
             }
         }
+                .icon-ellips {
+                    color: #C9AA05;
+                }
     }
 
 }

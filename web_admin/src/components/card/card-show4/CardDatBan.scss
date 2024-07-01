@@ -1,39 +1,50 @@
 .content-ban-gan-day.theme {
-    background-color: #1d1933;
+    background-color: #C55402;
 
     .box-title {
         .item-text {
             p {
-                color: #ae1481;
+                color: #fff;
             }
 
             span {
-                color: #f8bbd0;
+                color: #fff;
             }
         }
 
         .icon-ellips {
-            color: #f8bbd0;
+            color: #fff;
         }
     }
 
     .box-body {
         .box-danh-muc {
+           
             .item-1 {
-                span{
+                span {
                     color: #fff;
                 }
             }
+
+           
         }
+
         .table-body {
-            thead{
-                tr{
-                    th{
-                color: #ae1481;
+            thead {
+                tr {
+                    th {
+                        color: #fff;
                     }
                 }
             }
-            color: #fff;
+            tbody{
+                tr{
+                    td{
+
+                        color: #fff;
+                    }
+                }
+            }
         }
     }
 }
@@ -52,16 +63,20 @@
                 margin: 0;
                 font-size: 18px;
                 font-weight: 500;
-                color: rgb(1, 41, 112);
+                color: #E8900C;
                 font-family: Poppins, sans-serif;
             }
 
             span {
                 margin-left: 6px;
-                color: rgb(137, 155, 189);
+                color: #C9AA05;
                 font-size: 14px;
                 font-weight: 400;
             }
+        }
+
+        .icon-ellips {
+            color: #C9AA05;
         }
     }
 
@@ -79,18 +94,26 @@
 
                 select {
                     padding: 6px 20px;
+                    outline: none;
+                    border: 1px solid #E8900C;
+                    color: #E8900C;
+
                 }
 
                 span {
-                color: #012970;
+                    color: #E8900C;
                 }
             }
 
             .item-2 {
                 flex: 1;
+
                 input {
                     padding: 6px 7px;
                     width: 100%;
+                    color: #E8900C;
+                    border: 1px solid #E8900C;
+                    outline: none;
                 }
             }
         }
@@ -98,6 +121,21 @@
         .table-body {
             width: 100%;
             margin-top: 10px;
+
+            thead {
+                tr {
+                    color: #E8900C;
+                }
+            }
+
+            tbody {
+                text-align: center;
+
+                tr {
+                    color: #C9AA05;
+
+                }
+            }
         }
     }
 }

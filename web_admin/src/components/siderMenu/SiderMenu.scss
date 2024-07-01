@@ -2,14 +2,14 @@
     background-color: #f9fafc;
 
     .menu.theme {
-        background-color: #18172b;
+        background-color: #C55402;
 
         .item-menu {
             color: #fff;
 
             &:hover {
                 color: #fff !important;
-                background-color: #b0127b !important;
+                background-color: #E8900C !important;
             }
 
             .item-icon {}
@@ -21,7 +21,7 @@
 
         .ant-menu-item-selected {
             color: #fff !important;
-            background-color: #b0127b !important;
+            background-color: #E8900C !important;
 
             .item-link {}
 
@@ -38,11 +38,11 @@
         border: none!important;
         .item-menu {
             margin-left: 23px !important;
-            color: #012970;
+            color: #E8900C;
 
             &:hover {
-                color: #4154f1 !important;
-                background-color: #f6f9ff !important;
+                color: #E8900C !important;
+                background-color: #fee7c9 !important;
                 margin-left: 23px !important;
             }
 
@@ -54,7 +54,8 @@
         }
 
         .ant-menu-item-selected {
-            color: #4154f1 !important;
+            color: #E8900C !important;
+                background-color: #fee7c9 !important;
             margin-left: 23px !important;
             .item-link {}
 

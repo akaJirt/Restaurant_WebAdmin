@@ -1,12 +1,22 @@
 .layout-user.theme {
-    background-color: #111025;
+    background-color: #E8900C;
 
     .text-h1 {
         color: #fff;
     }
+.bt {
+    background-color: #C55402 !important;
+    border: 1px solid #C55402;
+
+    &:hover {
+        opacity: .5;
+        border: 1px solid #C55402;
+    }
+}
+
 
     .form {
-        background-color: #1d1933;
+        background-color: #C55402;
 
         .form-group {
             .form-label {
@@ -18,18 +28,30 @@
             }
 
         }
-
-        .text-center {
-            .btn {
-                background-color: #b0127b;
-                outline: none;
-                border: none;
-            }
-        }
     }
 
     .table-users {
-        background-color: #1d1933;
+        background-color: #E8900C;
+
+        .active {
+
+            .page-link {
+                background-color: #C55402;
+                border: 1px solid #C55402;
+            }
+        }
+
+        .box-h1-select {
+
+            .text-center {
+                color: #fff;
+            }
+
+            select {
+                border: 1px solid #fff !important;
+                color: #C55402;
+            }
+        }
 
         .dialog {
 
@@ -49,8 +71,8 @@
             thead {
                 tr {
                     th {
-                        background-color: #1d1933;
-                        color: #b0127b;
+                        background-color: #C55402;
+                        color: #fff;
                     }
                 }
             }
@@ -58,7 +80,7 @@
             tbody {
                 tr {
                     td {
-                        background-color: #1d1933;
+                        background-color: #C55402;
                         color: #FFF;
                     }
                 }
@@ -68,14 +90,31 @@
 }
 
 .layout-user {
+    height: 100vh;
+
+    .ant-layout-content {
+        height: 100%;
+        /* Ensure the content takes up the full height */
+    }
+
+    .bt {
+        background-color: #E8900C !important;
+        border: 1px solid #E8900C;
+
+        &:hover {
+            opacity: .5;
+            border: 1px solid #E8900C;
+        }
+    }
 
     .text-h1 {
         font-size: 24px;
         margin-bottom: 0;
         padding: 5px 20px;
         font-weight: 600;
-        color: #012970;
+        color: #E8900C;
     }
+
 
     .form {
         box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.1);
@@ -115,14 +154,29 @@
         margin-right: 20px;
         margin-left: 20px;
 
+        .active {
+
+            .page-link {
+                background-color: #E8900C;
+                border: 1px solid #E8900C;
+            }
+        }
+
         .box-h1-select {
             display: flex;
             justify-content: space-between;
             align-items: center;
 
+            .text-center {
+                color: #E8900C;
+            }
+
             select {
                 display: block;
                 height: 30px;
+                border: 1px solid #E8900C !important;
+                color: #E8900C;
+                outline: none;
             }
         }
 
@@ -140,7 +194,7 @@
             justify-content: center;
 
             .loading {
-                color: #012970;
+                color: #E8900C;
                 align-self: center;
                 font-size: 50px;
             }
@@ -152,6 +206,14 @@
             margin-bottom: 0;
             font-weight: 600;
             color: #012970;
+        }
+
+        thead {
+            tr {
+                th {
+                    color: #E8900C;
+                }
+            }
         }
 
         tbody {
@@ -167,6 +229,7 @@
                 }
 
                 td {
+                    color: #C9AA05;
                     text-align: center;
                 }
 
@@ -211,16 +274,15 @@
 
 }
 
-@media (max-width:1200px) {
-    .layout-user {
+// @media (max-width:1200px) {
+//     .layout-user {
 
-        height: 100vh;
-    }
-}
+//         height: 100vh;
+//     }
+// }
 
 @media (min-width:1200px) {
     .layout-user {
-
-        height: 100vh;
+        min-width: 100vh;
     }
 }

@@ -13,7 +13,7 @@ const Review = (props) => {
     <Layout className={`layout-review ${theme ? "theme" : ""} `}>
       <Content>
         <h1 className="text-h1">Reviews</h1>
-        <FormReview />
+        <button className="mx-3 btn btn-primary bt2">Add New User</button>
         <TableReview />
       </Content>
     </Layout>
