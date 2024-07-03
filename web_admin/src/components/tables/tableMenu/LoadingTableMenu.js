@@ -5,6 +5,8 @@ import LoadingOptions from "./LoadingOptions";
 import Table from "react-bootstrap/Table";
 import { cutString } from "../../../utils/cutValue";
 import Tooltip from "../../ToolTip/ToolTip";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 
 const setCategoryClass = (className, category) => {
   // Tạo một biến để lưu className dựa vào category
@@ -23,6 +25,7 @@ const setCategoryClass = (className, category) => {
 
 const LoadingTableMenu = ({ item, index, offset, category }) => {
   console.log("render LoadingTableMenu");
+  const theme = useSelector(getThemeState);
   const [hoverIndex, setHoverIndex] = useState(null);
   console.log(item.category);
 
@@ -44,8 +47,13 @@ const LoadingTableMenu = ({ item, index, offset, category }) => {
       >
         <img src={item.image_url || itemMenu} alt="avatar" loading="lazy" />
         {hoverIndex === index && (
-          <div className={setCategoryClass("menu", category)}>
-            <h1 className="mt-1 mb-1">Options</h1>
+          <div
+            className={setCategoryClass(
+              `menu ${theme ? "theme" : ""}`,
+              category
+            )}
+          >
+            <h1 className="mt-1 mb-1 h1">Options</h1>
             <Table striped bordered hover responsive>
               <thead>
                 <tr>

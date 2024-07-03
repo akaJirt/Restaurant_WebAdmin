@@ -120,9 +120,9 @@ const EditProfile = () => {
           value={fullNameState}
         />
       </div>
-      <div className="text-center mt-3">
+      <div className="text-center mt-3 div">
         <button
-          className="btn btn-primary"
+          className="btn btn-primary bt2"
           onClick={handleClick}
           disabled={isLoadingUpdateMe ? true : false}
         >

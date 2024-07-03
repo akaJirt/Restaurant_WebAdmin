@@ -30,6 +30,34 @@
             right: 114px;
         }
 
+        .menu.theme {
+            background-color: #C55402;
+
+            h1 {
+                color: #fff;
+
+
+            }
+
+            .table {
+                margin: 0;
+
+                thead {
+                    tr {
+                        th {
+                            color: #fff;
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        .img {}
+                    }
+                }
+            }
+        }
+
         .menu {
             animation: fadeIn 0.9s ease forwards;
             position: absolute;
@@ -43,7 +71,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
             h1 {
-                color: #012970;
+                color: #E8900C;
                 padding: 0;
                 margin: 0;
                 font-size: 1.2rem;
@@ -56,7 +84,7 @@
                 thead {
                     tr {
                         th {
-                            color: #012970;
+                            color: #E8900C;
                         }
                     }
                 }
