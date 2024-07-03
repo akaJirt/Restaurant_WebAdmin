@@ -1,5 +1,6 @@
 import { setAccessToken } from "../../../store/accessToken/actions";
 import { typeActionCreateUser } from "../../../store/auth/createUser/actions";
+import { typeActionDeleteUser } from "../../../store/auth/deleteUser/actions";
 import { typeActionGetMes } from "../../../store/auth/getMe/actions";
 import { typeActionGetAllUsers } from "../../../store/auth/getUsers/actions";
 import { typeActionLogins } from "../../../store/auth/login/actions";
@@ -68,6 +69,7 @@ const createUsers = async (dispatch, data) => {
     toast.error(message || status);
   }
 };
+/******************************UPDATE USERS***************************** */
 
 const putMe = async (dispatch, data) => {
   dispatch(typeActionUpdateMe.fetchUpdateMeRequest());
@@ -86,4 +88,18 @@ const putMe = async (dispatch, data) => {
     toast.error(message || status);
   }
 };
-export { Login, getMe, getAllUsers, createUsers, putMe };
+/******************************DELETE USERS***************************** */
+const destroyUser = async (dispatch, id) => {
+  dispatch(typeActionDeleteUser.fetchDeleteUserRequest());
+  try {
+    const res = await api.deleteUser(id);
+    console.log(res.data, "[DELETE]");
+  } catch (error) {
+    console.log(error);
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    dispatch(typeActionDeleteUser.fetchDeleteUserFailed(error));
+    toast.error(message || status);
+  }
+};
+export { Login, getMe, getAllUsers, createUsers, putMe, destroyUser };

@@ -7,12 +7,11 @@ import { getAllUsersState, getThemeState } from "../../../store/selector";
 import { getAllUsers } from "../../../api/call_api/auth/fetchApiAuth";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
-const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
+import ModalUsers from "../../Modal/Users/ModalUsers";
+import { setStatusUsers } from "../../../store/auth/setStatusUsers/actions";
+const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   console.log("render TableUser");
   const [currentPage, setCurrentPage] = useState(0);
-  const [show, setShow] = useState(false);
-  const [item, setItem] = useState({});
-  console.log(role);
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
   const allUsersState = useSelector(getAllUsersState);
@@ -22,9 +21,13 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
   const totalPageCount = 2;
   const offset = currentPage * totalPageCount;
   const itemCount = data
-    ?.filter((item) => item.role === role)
+    ?.filter(
+      (item) => item.role === role || item.isVerified.toString() === role
+    )
     .slice(offset, offset + totalPageCount);
-  const itemPage = data?.filter((item) => item.role === role).length;
+  const itemPage = data?.filter(
+    (item) => item.role === role || item.isVerified.toString() === role
+  ).length;
   const totalPage = Math.ceil(itemPage / totalPageCount);
   const handleChange = (e) => {
     setRole(e.target.value);
@@ -36,9 +39,10 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
   };
   //********************************************************************** */
 
-  const handleClickXoa = (item) => {
+  const handleClickXoa = (item, e) => {
+    e.preventDefault();
+    dispatch(setStatusUsers.setStatus(["delete", item]));
     setShow(true);
-    setItem(item);
   };
 
   useEffect(() => {
@@ -49,6 +53,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
   }, [dispatch]);
   return (
     <div className="mt-3 mb-3 table-users">
+      <ModalUsers />
       {isLoadingGetAllUsers ? (
         <div className="dialog">
           <LoadingOutlined className="loading" />
@@ -58,14 +63,20 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
           <div className="box-h1-select">
             <h1></h1>
             <h1 className="text-center mb-2">
-              {role === "admin" || role === "staff" || role === "client"
-                ? capitalizeFirstLetter(role)
+              {role === "admin" ||
+              role === "staff" ||
+              role === "client" ||
+              role === "true"
+                ? capitalizeFirstLetter(role) === "True"
+                  ? "Đã xác thực"
+                  : capitalizeFirstLetter(role)
                 : "Quản Lí Người Dùng"}
             </h1>
             <select value={role} onChange={handleChange}>
               <option value={"admin"}>Admin</option>
               <option value={"staff"}>Nhân Viên</option>
               <option value={"client"}>Khách Hàng</option>
+              <option value={"true"}>Đã xác thực</option>
             </select>
           </div>
           <Table striped bordered hover responsive>
@@ -85,7 +96,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
                 itemCount?.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td>{index + 1}</td>
+                      <td>{offset + index + 1}</td>
                       <td>{item.fullName}</td>
                       <td>{item.email}</td>
                       <td className="img">
@@ -99,7 +110,13 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
                         )}
                       </td>
                       <td>
-                        <button className="btn btn-danger mx-2">Xóa</button>
+                        <button
+                          className="btn btn-danger mx-2"
+                          onClick={(e) => handleClickXoa(item, e)}
+                          disabled={item.isVerified === true ? true : false}
+                        >
+                          Xóa
+                        </button>
                         <button className="btn btn-primary">Sửa</button>
                       </td>
                     </tr>
@@ -107,7 +124,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter }) => {
                 })
               ) : (
                 <tr>
-                  <td>No data</td>
+                  <td colSpan={7}>No data</td>
                 </tr>
               )}
             </tbody>

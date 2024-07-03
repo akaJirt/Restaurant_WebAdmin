@@ -38,6 +38,7 @@ const api = {
   getUser: () => axiosInstance.get(`users`),
   createUser: (data) => axiosInstance.post(`users/register`, { data }),
   updateMe: (data) => axiosInstance.patch(`users/update-me`, data),
+  deleteUser: (id) => axiosInstance.delete(`/users/delete-user/${id}`),
 };
 //*******************************TABLES********************************* */
 
