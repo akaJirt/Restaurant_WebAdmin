@@ -2,11 +2,17 @@ import React, { useRef, useState } from "react";
 import { Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginState } from "../../../store/selector";
-import { LoadingOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  LoadingOutlined,
+  EyeInvisibleOutlined,
+} from "@ant-design/icons";
 import { Login } from "../../../api/call_api/auth/fetchApiAuth";
 import { useNavigate } from "react-router-dom";
+import "./FormLoginUser.scss";
 const FormLoginUser = (props) => {
   console.log("render FormLoginUser");
+  const [isEye, setIsEye] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -43,13 +49,23 @@ const FormLoginUser = (props) => {
       </div>
       <div className="form-group mb-3">
         <label className="mb-2">Password</label>
-        <input
-          type="password"
-          className="form-control"
-          placeholder="enter password..."
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="box-ip-ic">
+          <input
+            type={isEye ? "text" : "password"}
+            className="form-control"
+            placeholder="enter password..."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {isEye ? (
+            <EyeOutlined className="icon-eye" onClick={() => setIsEye(false)} />
+          ) : (
+            <EyeInvisibleOutlined
+              className="icon-eye"
+              onClick={() => setIsEye(true)}
+            />
+          )}
+        </div>
       </div>
       <div className="form-group">
         <Checkbox className="text-checkbox" onChange={handleCheckBox}>

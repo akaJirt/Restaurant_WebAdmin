@@ -1,4 +1,4 @@
-import { getType } from "../auth/login/actions";
+import { getType } from "../../auth/login/actions";
 import { typeActionMenuItem } from "./actions";
 
 export const initState = {

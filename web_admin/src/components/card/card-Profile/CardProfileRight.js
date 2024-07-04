@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Card } from "antd";
 import "./CardProfileRight.scss";
 import RenderProfileRight from "./renderProfileRight/RenderProfileRight";
-import { EDIT_PROFILE, OVERVIEW } from "../../../utils/contants";
+import {
+  CHANGE_PROFILE,
+  EDIT_PROFILE,
+  OVERVIEW,
+} from "../../../utils/contants";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../../store/selector";
 const CardProfileRight = () => {
@@ -26,6 +30,12 @@ const CardProfileRight = () => {
             className={`li ${changeTab === EDIT_PROFILE ? "click" : ""}`}
           >
             Edit Profile
+          </li>
+          <li
+            onClick={() => setChangeTab(CHANGE_PROFILE)}
+            className={`li ${changeTab === CHANGE_PROFILE ? "click" : ""}`}
+          >
+            Change Password
           </li>
         </ul>
       }

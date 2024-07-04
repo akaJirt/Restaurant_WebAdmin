@@ -39,9 +39,25 @@ export const getCreateUserState = (state) => state.createUser;
 export const getAccessTokenState = (state) =>
   state.accessToken.getAccessToken.payload;
 export const getSetStatusUsersState = (state) => state.statusUsers.statusUsers;
+export const getUpdatePasswordState = (state) => state.updatePassword;
 //value
 export const valueFormFullNameState = (state) =>
   state.valueUsers.fullNameUpdateMe;
 export const valueFormAvatarState = (state) => state.valueUsers.avatarUpdateMe;
 //*************************************MENU ITEM*********************************************************/
 export const getAllMenuItemState = (state) => state.menuItem;
+export const getStatusMenuItemState = (state) =>
+  state.statusMenuItem.statusItemSlice;
+export const getCreateMenuItemState = (state) => state.createMenuItem;
+export const getDeleteMenuItemState = (state) => state.deleteMenuItem;
+export const getUpdateMenuItemState = (state) => state.updateMenuItem;
+
+//value
+export const getValueNameState = (state) => state.valueMenu.getName;
+export const getValueEngNameState = (state) => state.valueMenu.getEngName;
+export const getValueDescriptionState = (state) =>
+  state.valueMenu.getDescription;
+export const getValuePriceState = (state) => state.valueMenu.getPrice;
+export const getValueImageState = (state) => state.valueMenu.getImage;
+export const getValueCategoryIdState = (state) => state.valueMenu.getCategoryId;
+export const getValueOptionsState = (state) => state.valueMenu.getOptions;

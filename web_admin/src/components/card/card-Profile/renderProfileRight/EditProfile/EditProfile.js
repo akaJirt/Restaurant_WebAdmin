@@ -110,7 +110,7 @@ const EditProfile = () => {
           <DeleteOutlined className="ic-delete" onClick={handleClickDelete} />
         </div>
       </div>
-      <div className="form-group mt-3 mb-3">
+      <div className="form-group mt-3 mb-3 form-2">
         <p>Full Name</p>
         <input
           className="form-control"

@@ -39,6 +39,11 @@ const api = {
   createUser: (data) => axiosInstance.post(`users/register`, { data }),
   updateMe: (data) => axiosInstance.patch(`users/update-me`, data),
   deleteUser: (id) => axiosInstance.delete(`/users/delete-user/${id}`),
+  updatePassword: (currentPassword, newPassword) =>
+    axiosInstance.patch(`users/update-password`, {
+      currentPassword,
+      newPassword,
+    }),
 };
 //*******************************TABLES********************************* */
 
@@ -64,6 +69,9 @@ const apiCategories = {
 
 const apiMenuItem = {
   getMenuItem: () => axiosInstance.get(`menu-items`),
+  createMenuItem: (data) => axiosInstance.post(`menu-items`, data),
+  deleteMenuItem: (id) => axiosInstance.delete(`menu-items/${id}`),
+  putMenuItem: (id, data) => axiosInstance.patch(`menu-items/${id}`, data),
 };
 
 export { api, apiTables, apiCategories, apiMenuItem };

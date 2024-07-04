@@ -15,6 +15,7 @@ export const HIDE_SLIDER = "hide_slider";
 //-----------------RENDER PROFILE RIGHT------------------
 export const OVERVIEW = "overview";
 export const EDIT_PROFILE = "edit_profile";
+export const CHANGE_PROFILE = "change_profile";
 //-----------------LIGHT BOX IMAGE------------------
 export const SHOW_LIGHT_BOX = "show_light_box";
 export const HIDE_LIGHT_BOX = "hide_light_box";

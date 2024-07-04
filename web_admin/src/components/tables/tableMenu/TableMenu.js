@@ -1,23 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMenuItemState, getThemeState } from "../../../store/selector";
+import {
+  getAllMenuItemState,
+  getCategoriesState,
+  getThemeState,
+} from "../../../store/selector";
 import { getAllMenuItem } from "../../../api/call_api/menuItem/fetchApiMenuItem";
 import "./TableMenu.scss";
 import LoadingTableMenu from "./LoadingTableMenu";
 import { LoadingOutlined } from "@ant-design/icons";
 import ReactPaginate from "react-paginate";
 
-const TableMenu = () => {
+const TableMenu = ({ setShow }) => {
   console.log("TABLE MENU");
-  const [category, setCategory] = useState("Món chính");
-  console.log(category);
+  const [category, setCategory] = useState("Món khai vị");
   const [currentPage, setCurrentPage] = useState(0);
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
   const getMenuItemState = useSelector(getAllMenuItemState);
   const { dataMenuItem, isLoadingMenuItem } = getMenuItemState;
   const data = dataMenuItem?.data;
+  const categoriesState = useSelector(getCategoriesState);
+  const { dataGetCategories } = categoriesState;
   /************************************* PHAN TRANG************************************** */
   const itemPage = 5;
   const offset = currentPage * itemPage;
@@ -26,7 +31,6 @@ const TableMenu = () => {
     .slice(offset, offset + itemPage);
   const pageCount = data?.filter((item) => category === item.category).length;
   const totalPage = Math?.ceil(pageCount / itemPage);
-  console.log(itemList);
 
   const handlePageChange = useCallback((selectedPage) => {
     setCurrentPage(selectedPage.selected);
@@ -35,11 +39,17 @@ const TableMenu = () => {
     setCategory(e.target.value);
     setCurrentPage(0);
   };
+  useEffect(() => {
+    if (currentPage >= totalPage && currentPage > 0) {
+      setCurrentPage(totalPage - 1);
+    }
+  }, [totalPage, currentPage]);
   /************************************************************************************* */
 
   const getMenuItem = useCallback(async () => {
     await getAllMenuItem(dispatch);
   }, [dispatch]);
+
   useEffect(() => {
     getMenuItem();
   }, [getMenuItem]);
@@ -57,11 +67,14 @@ const TableMenu = () => {
             <h1 className="text-center">GET MENUS</h1>
             <div className="select">
               <select value={category} onChange={handleChangSelect}>
-                <option value={"Món chính"}>Món Chính</option>
-                <option value={"Món khai vị"}>Món Khai Vị</option>
-                <option value={"Món tráng miệng"}>Món Tráng Miệng</option>
-                <option value={"Món phụ"}>Món Phụ</option>
-                <option value={"Thức uống"}>Thức Uống</option>
+                {dataGetCategories?.data?.length > 0 &&
+                  dataGetCategories?.data?.map((item, index) => {
+                    return (
+                      <option value={item.name} key={index}>
+                        {item.name}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
           </div>
@@ -88,6 +101,7 @@ const TableMenu = () => {
                     index={index}
                     offset={offset}
                     category={category}
+                    setShow={setShow}
                   />
                 ))
               ) : (

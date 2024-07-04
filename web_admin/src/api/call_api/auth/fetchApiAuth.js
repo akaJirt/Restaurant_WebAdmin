@@ -5,6 +5,7 @@ import { typeActionGetMes } from "../../../store/auth/getMe/actions";
 import { typeActionGetAllUsers } from "../../../store/auth/getUsers/actions";
 import { typeActionLogins } from "../../../store/auth/login/actions";
 import { typeActionUpdateMe } from "../../../store/auth/updateMe/actions";
+import { typeActionUpdatePassword } from "../../../store/auth/updatePassword/actions";
 import { api } from "../../AxiosInstall";
 import { toast } from "react-toastify";
 /******************************LOGIN***************************** */
@@ -102,4 +103,46 @@ const destroyUser = async (dispatch, id) => {
     toast.error(message || status);
   }
 };
-export { Login, getMe, getAllUsers, createUsers, putMe, destroyUser };
+/******************************UPDATE CHANGE PASSWORD USERS***************************** */
+const updatePassword = async (
+  dispatch,
+  currentPassword,
+  newPassword,
+  setCurrentPassword,
+  setNewPassword,
+  setReNewPassword,
+  setIsEye,
+  setIsEye2,
+  setIsEye3
+) => {
+  dispatch(typeActionUpdatePassword.fetchUpdatePasswordRequest());
+  try {
+    const res = await api.updatePassword(currentPassword, newPassword);
+    if (res?.data?.status) {
+      dispatch(typeActionUpdatePassword.fetchUpdatePasswordSuccess(res?.data));
+      toast.success(res?.data?.status);
+      setCurrentPassword("");
+      setNewPassword("");
+      setReNewPassword("");
+      setIsEye(false);
+      setIsEye2(false);
+      setIsEye3(false);
+    }
+    console.log(res.data, "[UPDATE PASSWORD]");
+  } catch (error) {
+    console.log(error);
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    dispatch(typeActionUpdatePassword.fetchUpdatePasswordFailed(error));
+    toast.error(message || status);
+  }
+};
+export {
+  Login,
+  getMe,
+  getAllUsers,
+  createUsers,
+  putMe,
+  destroyUser,
+  updatePassword,
+};

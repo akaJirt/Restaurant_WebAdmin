@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import itemMenu from "../../../images/test.jpg";
 import "./LoadingTableMenu.scss";
 import LoadingOptions from "./LoadingOptions";
 import Table from "react-bootstrap/Table";
 import { cutString } from "../../../utils/cutValue";
 import Tooltip from "../../ToolTip/ToolTip";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getThemeState } from "../../../store/selector";
+import { setStatusMenuItem } from "../../../store/menuItem/setStatusMenuItem/actions";
+import { valueFormMenu } from "../../../store/valueForm/menu/actions";
 
 const setCategoryClass = (className, category) => {
   // Tạo một biến để lưu className dựa vào category
@@ -23,12 +25,36 @@ const setCategoryClass = (className, category) => {
   return menuClassName;
 };
 
-const LoadingTableMenu = ({ item, index, offset, category }) => {
+const LoadingTableMenu = ({ item, index, offset, category, setShow }) => {
   console.log("render LoadingTableMenu");
   const theme = useSelector(getThemeState);
   const [hoverIndex, setHoverIndex] = useState(null);
-  console.log(item.category);
+  const dispatch = useDispatch();
+  const handleMouseEnter = useCallback((index) => {
+    setHoverIndex(index);
+  }, []);
 
+  const handleMouseLeave = useCallback(() => {
+    setHoverIndex(null);
+  }, []);
+
+  const handleClickXoaMenuItem = (itemMenuItem) => {
+    dispatch(setStatusMenuItem.setStatus(["delete", itemMenuItem]));
+    setShow(true);
+  };
+
+  const handleClickSuaMenuITem = (itemMenuItem) => {
+    console.log(itemMenuItem, "LOG.......................");
+    dispatch(setStatusMenuItem.setStatus(["update", itemMenuItem]));
+    setShow(true);
+    dispatch(valueFormMenu.setName(itemMenuItem.name));
+    dispatch(valueFormMenu.setEngName(itemMenuItem.engName));
+    dispatch(valueFormMenu.setDescription(itemMenuItem.description));
+    dispatch(valueFormMenu.setPrice(itemMenuItem.price));
+    dispatch(valueFormMenu.setImage(itemMenuItem.image_url));
+    dispatch(valueFormMenu.setCategoryId(itemMenuItem.category_id._id));
+    dispatch(valueFormMenu.setOptions(itemMenuItem.options));
+  };
   return (
     <tr className="loadingTableMenu">
       <td>{offset + index + 1}</td>
@@ -42,8 +68,8 @@ const LoadingTableMenu = ({ item, index, offset, category }) => {
       <td>{item.price}</td>
       <td
         className="img-table"
-        onMouseLeave={() => setHoverIndex(null)}
-        onMouseEnter={() => setHoverIndex(index)}
+        onMouseLeave={() => handleMouseLeave()}
+        onMouseEnter={() => handleMouseEnter(index)}
       >
         <img src={item.image_url || itemMenu} alt="avatar" loading="lazy" />
         {hoverIndex === index && (
@@ -80,8 +106,18 @@ const LoadingTableMenu = ({ item, index, offset, category }) => {
       <td>{item.rating}</td>
       <td>{item.category}</td>
       <td className="bt">
-        <button className="btn btn-danger">Xóa</button>
-        <button className="btn btn-primary">Sửa</button>
+        <button
+          className="btn btn-danger"
+          onClick={() => handleClickXoaMenuItem(item)}
+        >
+          Xóa
+        </button>
+        <button
+          className="btn btn-primary"
+          onClick={() => handleClickSuaMenuITem(item)}
+        >
+          Sửa
+        </button>
       </td>
     </tr>
   );

@@ -25,7 +25,13 @@ import getAllUsersSlice from "./auth/getUsers/getAllUsersSlice.js";
 import setStatusUsersSlice from "./auth/setStatusUsers/setStatusUsersSlice.js";
 import updateMeSlice from "./auth/updateMe/updateMeSlice.js";
 import valueFormUsersSlice from "./valueForm/users/valueFormUsersSlice.js";
-import menuItemSlice from "./menuItem/menuItemSlice.js";
+import menuItemSlice from "./menuItem/getAllMenuItem/menuItemSlice.js";
+import updatePasswordSlice from "./auth/updatePassword/updatePasswordSlice.js";
+import setStatusMenuItemSlice from "./menuItem/setStatusMenuItem/setStatusMenuItemSlice.js";
+import valueFormMenuSlice from "./valueForm/menu/valueFormMenuSlice.js";
+import createMenuItemSlice from "./menuItem/createMenuItem/createMenuItemSlice.js";
+import deleteMenuItemSlice from "./menuItem/deleteMenuItem/deleteMenuItemSlice.js";
+import updateMenuItemSlice from "./menuItem/updateMenuItem/updateMenuItemSlice.js";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -56,5 +62,11 @@ const rootReducer = combineReducers({
   statusUsers: setStatusUsersSlice,
   createUser: createCategorySlice,
   menuItem: menuItemSlice,
+  updatePassword: updatePasswordSlice,
+  statusMenuItem: setStatusMenuItemSlice,
+  valueMenu: valueFormMenuSlice,
+  createMenuItem: createMenuItemSlice,
+  deleteMenuItem: deleteMenuItemSlice,
+  updateMenuItem: updateMenuItemSlice,
 });
 export default rootReducer;
