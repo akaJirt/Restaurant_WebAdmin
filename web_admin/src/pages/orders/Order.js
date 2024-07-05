@@ -1,7 +1,6 @@
 import { Layout } from "antd";
 import React from "react";
 import "./Order.scss";
-import FormOrder from "../../components/form/formOrders/FormOrder";
 import TableOrder from "../../components/tables/tableOrders/TableOrder";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../store/selector";

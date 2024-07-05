@@ -1,15 +1,15 @@
 .custom-sider {
     background-color: #f9fafc;
-
+        overflow: auto; // Cho phép cuộn nội dung nếu chiều cao vượt quá 100vh
     .menu.theme {
-        background-color: #C55402;
+        background-color: #1e1e2e;
 
         .item-menu {
             color: #fff;
 
             &:hover {
                 color: #fff !important;
-                background-color: #E8900C !important;
+                background-color: #2e2e3e !important;
             }
 
             .item-icon {}
@@ -21,7 +21,7 @@
 
         .ant-menu-item-selected {
             color: #fff !important;
-            background-color: #E8900C !important;
+            background-color: #2e2e3e !important;
 
             .item-link {}
 
@@ -61,5 +61,13 @@
 
             .item-icon {}
         }
+    }
+}
+
+@media (min-width: 1200px) {
+
+    /* CSS cho thiết bị từ 1200px trở lên */
+    .layout-table {
+        height: 100%;
     }
 }

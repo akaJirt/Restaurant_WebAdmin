@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Layout } from "antd";
 import "./AppHeader.scss";
 import { Avatar, Space, Col, Row } from "antd";
@@ -16,7 +16,10 @@ import { getMeState, getThemeState } from "../../store/selector";
 import { setHideTheme, setShowTheme } from "../../store/theme/actions";
 import { Link } from "react-router-dom";
 import { setAccessToken } from "../../store/accessToken/actions";
-import { getMe } from "../../api/call_api/auth/fetchApiAuth";
+import { getAllUsers, getMe } from "../../api/call_api/auth/fetchApiAuth";
+import { getAllCategories } from "../../api/call_api/categories/fetchApiCategory";
+import { getAllTable } from "../../api/call_api/tables/fetchApiTable";
+import { getAllMenuItem } from "../../api/call_api/menuItem/fetchApiMenuItem";
 
 const AppHeader = () => {
   console.log("render App Header");
@@ -27,12 +30,16 @@ const AppHeader = () => {
   const getMeNeState = useSelector(getMeState);
   const { isDataMe } = getMeNeState;
 
-  useEffect(() => {
-    const fetchGetMe = async () => {
-      await getMe(dispatch);
-    };
-    fetchGetMe();
+  const fetchGetMe = useCallback(async () => {
+    await getMe(dispatch);
+    await getAllCategories(dispatch);
+    await getAllTable(dispatch);
+    await getAllMenuItem(dispatch);
+    await getAllUsers(dispatch);
   }, [dispatch]);
+  useEffect(() => {
+    fetchGetMe();
+  }, [fetchGetMe]);
   const menuRef = useRef(null);
   const handleClickDropdown = () => {
     setDropdown(!dropdown);
@@ -64,7 +71,7 @@ const AppHeader = () => {
         style={{
           padding: 0,
 
-          background: theme ? " #C55402" : "#fff",
+          background: theme ? " #1e1e2e" : "#fff",
         }}
       >
         <Row

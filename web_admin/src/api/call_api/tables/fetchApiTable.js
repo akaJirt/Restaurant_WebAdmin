@@ -28,7 +28,6 @@ const postTable = async (dispatch, tableName) => {
   dispatch(typeActionCreateTables.fetchCreateTableRequest());
   try {
     const res = await apiTables.createTable(tableName);
-    console.log(res.data, "[POST]");
     if (res?.data?.status) {
       dispatch(typeActionCreateTables.fetchCreateTableSuccess(res?.data));
       toast.success(res?.data?.status);
@@ -80,7 +79,7 @@ const destroyTable = async (dispatch, id, setShow) => {
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionDeleteTables.fetchDeleteTableFailed(error));
-    toast.error(status || message);
+    toast.error(message || status);
   }
 };
 /******************************UPDATE STATUS TABLE***************************** */

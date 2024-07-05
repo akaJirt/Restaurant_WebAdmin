@@ -2,10 +2,11 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./ModalUser.scss";
 import { useSelector } from "react-redux";
-import { getSetStatusUsersState } from "../../../store/selector";
+import { getSetStatusUsersState, getThemeState } from "../../../store/selector";
 import FormUser from "../../form/formUsers/FormUser";
 
 const ModalUsers = ({ show, handleClose }) => {
+  const theme = useSelector(getThemeState);
   console.log("render modal users");
   const getStatusUsers = useSelector(getSetStatusUsersState);
   const userItem = getStatusUsers[1];
@@ -13,7 +14,11 @@ const ModalUsers = ({ show, handleClose }) => {
   const handleClickXacNhan = () => {};
   return (
     <>
-      <Modal show={show} onHide={handleClose} className="modal-delete">
+      <Modal
+        show={show}
+        onHide={handleClose}
+        className={`modal-delete ${theme ? "theme" : ""}`}
+      >
         <Modal.Header closeButton>
           <Modal.Title>
             {getStatusUsers[0] === "create"

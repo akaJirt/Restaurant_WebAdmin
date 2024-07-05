@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategories } from "../../../api/call_api/categories/fetchApiCategory";
 import { getCategoriesState } from "../../../store/selector";
 import { LoadingOutlined } from "@ant-design/icons";
 import ReactPaginate from "react-paginate";
@@ -34,12 +33,7 @@ const TableCategory = () => {
     }
   }, [pageCount, current]);
   //*********************************************************************************** */
-  useEffect(() => {
-    const getCategories = async () => {
-      await getAllCategories(dispatch);
-    };
-    getCategories();
-  }, [dispatch]);
+
   //***************************************DELETE******************************************* */
   const handleClickXoa = (item) => {
     setShow(true);

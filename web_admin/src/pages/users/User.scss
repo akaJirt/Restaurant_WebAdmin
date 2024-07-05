@@ -1,22 +1,22 @@
 .layout-user.theme {
-    background-color: #E8900C;
+    background-color: #2e2e3e;
 
     .text-h1 {
         color: #fff;
     }
 .bt {
-    background-color: #C55402 !important;
-    border: 1px solid #C55402;
+    background-color: #1e1e2e !important;
+    border: 1px solid #1e1e2e;
 
     &:hover {
         opacity: .5;
-        border: 1px solid #C55402;
+        border: 1px solid #1e1e2e;
     }
 }
 
 
     .form {
-        background-color: #C55402;
+        background-color: #1e1e2e;
 
         .form-group {
             .form-label {
@@ -31,13 +31,13 @@
     }
 
     .table-users {
-        background-color: #E8900C;
+        background-color: #1e1e2e;
 
         .active {
 
             .page-link {
-                background-color: #C55402;
-                border: 1px solid #C55402;
+                background-color: #2e2e3e;
+                border: 1px solid #2e2e3e;
             }
         }
 
@@ -49,7 +49,7 @@
 
             select {
                 border: 1px solid #fff !important;
-                color: #C55402;
+                color: #2e2e3e;
             }
         }
 
@@ -71,7 +71,7 @@
             thead {
                 tr {
                     th {
-                        background-color: #C55402;
+                        background-color: #1e1e2e;
                         color: #fff;
                     }
                 }
@@ -80,7 +80,7 @@
             tbody {
                 tr {
                     td {
-                        background-color: #C55402;
+                        background-color: #1e1e2e;
                         color: #FFF;
                     }
                 }
@@ -91,11 +91,15 @@
 
 .layout-user {
     height: 100vh;
-
-    .ant-layout-content {
-        height: 100%;
-        /* Ensure the content takes up the full height */
-    }
+        overflow: hidden;
+        /* Đảm bảo không có tràn ngoài */
+    
+        .ant-layout-content {
+            height: 100%;
+            overflow: auto;
+            overflow: hidden;
+            /* Đảm bảo nội dung có thể cuộn */
+        }
 
     .bt {
         background-color: #E8900C !important;
@@ -274,12 +278,6 @@
 
 }
 
-// @media (max-width:1200px) {
-//     .layout-user {
-
-//         height: 100vh;
-//     }
-// }
 
 @media (min-width:1200px) {
     .layout-user {

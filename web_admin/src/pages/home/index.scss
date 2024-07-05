@@ -1,15 +1,18 @@
 .layout-home.theme {
-    background-color: #E8900C;
-    border: 1px solid #C55402;
+    background-color: #2e2e3e;
 }
 
 .layout-home {
-    width: 100%;
-    padding: 20px;
     height: 100vh;
-    .ant-layout-content {
+        overflow: hidden;
+        padding: 20px;
+        /* Đảm bảo không có tràn ngoài */
+    
+        .ant-layout-content {
             height: 100%;
-            /* Ensure the content takes up the full height */
+            overflow: auto;
+            overflow: hidden;
+            /* Đảm bảo nội dung có thể cuộn */
         }
     .row {
         .col-8 {

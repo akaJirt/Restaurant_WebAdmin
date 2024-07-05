@@ -110,7 +110,7 @@ const SiderMenu = () => {
   return (
     <Sider
       className="custom-sider"
-      style={{ background: theme ? "#C55402" : "#f9fafc" }}
+      style={{ background: theme ? "#1e1e2e" : "#f9fafc" }}
       breakpoint="lg"
       collapsedWidth="0"
       width={200}

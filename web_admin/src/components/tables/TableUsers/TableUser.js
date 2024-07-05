@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import ReactPaginate from "react-paginate";
 import "./TableUser.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsersState, getThemeState } from "../../../store/selector";
-import { getAllUsers } from "../../../api/call_api/auth/fetchApiAuth";
 import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 import ModalUsers from "../../Modal/Users/ModalUsers";
@@ -44,13 +43,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
     dispatch(setStatusUsers.setStatus(["delete", item]));
     setShow(true);
   };
-
-  useEffect(() => {
-    const getUsers = async () => {
-      await getAllUsers(dispatch);
-    };
-    getUsers();
-  }, [dispatch]);
   return (
     <div className="mt-3 mb-3 table-users">
       <ModalUsers />
@@ -61,7 +53,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
       ) : (
         <>
           <div className="box-h1-select">
-            <h1></h1>
+            <span></span>
             <h1 className="text-center mb-2">
               {role === "admin" ||
               role === "staff" ||

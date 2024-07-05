@@ -1,16 +1,16 @@
 .layout-order.theme {
-    background-color: #E8900C;
+    background-color: #2e2e3e;
 
     .text-h1 {
         color: #fff;
     }
 .bt2 {
-    background-color: #C55402 !important;
-    border: 1px solid #C55402;
+    background-color: #1e1e2e !important;
+    border: 1px solid #1e1e2e;
 
     &:hover {
         opacity: .5;
-        border: 1px solid #C55402;
+        border: 1px solid #1e1e2e;
     }
 }
     .form {
@@ -37,7 +37,7 @@
     }
 
     .table-users {
-        background-color: #E8900C;
+        background-color: #1e1e2e;
 
         h1 {
             color: #FFF;
@@ -48,7 +48,7 @@
             thead {
                 tr {
                     th {
-                        background-color: #C55402;
+                        background-color: #1e1e2e;
                         color: #fff;
                     }
                 }
@@ -57,7 +57,7 @@
             tbody {
                 tr {
                     td {
-                        background-color: #C55402;
+                        background-color: #1e1e2e;
                         color: #FFF;
                     }
                 }
@@ -68,6 +68,15 @@
 
 .layout-order {
     height: 100vh;
+        overflow: hidden;
+        /* Đảm bảo không có tràn ngoài */
+    
+        .ant-layout-content {
+            height: 100%;
+            overflow: auto;
+            overflow: hidden;
+            /* Đảm bảo nội dung có thể cuộn */
+        }
     
         .bt2 {
             background-color: #E8900C !important;
@@ -79,10 +88,7 @@
             }
         }
     
-        .ant-layout-content {
-            height: 100%;
-            /* Ensure the content takes up the full height */
-        }
+        
     .text-h1 {
         font-size: 24px;
         margin-bottom: 0;

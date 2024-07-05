@@ -15,6 +15,7 @@
     "antd": "^5.17.4",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
+    "buffer": "^6.0.3",
     "jwt-decode": "^4.0.0",
     "lightbox.js-react": "^1.0.8",
     "moment": "^2.30.1",

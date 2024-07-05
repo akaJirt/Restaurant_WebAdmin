@@ -1,20 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
 import "./TableTable.scss";
 import ModalDeleteTable from "../../Modal/Tables/ModalDeleteTable";
 import { getTableState } from "../../../store/selector";
-import {
-  getAllTable,
-  patchStatusTable,
-} from "../../../api/call_api/tables/fetchApiTable";
 import { LoadingOutlined } from "@ant-design/icons";
 import { typeActionSetStatus } from "../../../store/tables/setStatus/actions";
 import { valueFormTable } from "../../../store/valueForm/tables/actions";
-import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
-import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
-import IconButton from "@mui/material/IconButton";
+import LoadingTable from "./LoadingTable";
+
 const TableTable = () => {
   console.log("render TableTable");
   const [currentPage, setCurrentPage] = useState(0);
@@ -46,14 +41,6 @@ const TableTable = () => {
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
   };
-  //------------------------------------------------------------------
-
-  const fetchDataTable = useCallback(async () => {
-    await getAllTable(dispatch);
-  }, [dispatch]);
-  useEffect(() => {
-    fetchDataTable();
-  }, [fetchDataTable]);
 
   //----------------------------DELETE------------------------------------
   const handleClickDelete = (item) => {
@@ -75,23 +62,6 @@ const TableTable = () => {
     }
   }, [pageCount, currentPage]);
   /**********************************TOGGLE ***************************** */
-
-  const handleClickLock = async (e, id) => {
-    const statusTable = e.currentTarget.getAttribute("data-name");
-    const status = statusTable === "lock" ? "open" : "lock";
-    e.currentTarget.setAttribute("data-status", status);
-    console.log(status);
-    await patchStatusTable(dispatch, id, status);
-  };
-
-  const handleClickOpen = async (e, id) => {
-    const statusTable = e.currentTarget.getAttribute("data-name");
-    const status = statusTable === "open" ? "lock" : "open";
-    e.currentTarget.setAttribute("data-status", status);
-
-    console.log(status);
-    await patchStatusTable(dispatch, id, status);
-  };
 
   return (
     <div className="mt-3 mb-3 table-users">
@@ -117,63 +87,22 @@ const TableTable = () => {
             <thead>
               <tr>
                 <th>Table number</th>
+                <th>Img QR</th>
                 <th>Status</th>
                 <th>Option</th>
               </tr>
             </thead>
             <tbody>
               {currentItems && currentItems?.length > 0 ? (
-                currentItems.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{item.tableNumber}</td>
-                      <td
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                        className={item?.status === "open" ? "open" : "close"}
-                      >
-                        <div>{item.status}</div>
-                        <IconButton defaultValue={""}>
-                          {status === "open" || item.status === "open" ? (
-                            <ToggleOnOutlinedIcon
-                              style={{
-                                fontSize: "32px",
-                                color: "lawngreen",
-                              }}
-                              data-name={item.status}
-                              onClick={(e) => handleClickOpen(e, item._id)}
-                            />
-                          ) : (
-                            <ToggleOffOutlinedIcon
-                              data-name={item.status}
-                              style={{ fontSize: "32px", color: "red" }}
-                              onClick={(e) => handleClickLock(e, item._id)}
-                            />
-                          )}
-                        </IconButton>
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-danger mx-2"
-                          onClick={() => handleClickDelete(item)}
-                        >
-                          Xóa
-                        </button>
-                        <button
-                          className="btn btn-primary"
-                          onClick={() =>
-                            handleClickUpdateTable(item._id, item.tableNumber)
-                          }
-                        >
-                          Sửa
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
+                currentItems.map((item, index) => (
+                  <LoadingTable
+                    key={index}
+                    item={item}
+                    handleClickDelete={handleClickDelete}
+                    handleClickUpdateTable={handleClickUpdateTable}
+                    status={status}
+                  />
+                ))
               ) : (
                 <tr>
                   <td className="col-span" colSpan={3}>

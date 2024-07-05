@@ -28,7 +28,6 @@ const FormTable = () => {
     if (statusState[0] !== "update" || statusState[0] === "create") {
       await postTable(dispatch, parseInt(tableNumber));
     } else {
-      console.log("update table..........");
       await putTable(dispatch, statusState[1], parseInt(tableNumber));
     }
   };
@@ -43,7 +42,7 @@ const FormTable = () => {
       <div className="form-group">
         <label className="form-label">Table number</label>
         <input
-          type="number"
+          type="text"
           placeholder="Nhập số bàn"
           onChange={handleChangInput}
           className="form-control"

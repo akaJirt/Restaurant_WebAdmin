@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getAllMenuItemState,
   getCategoriesState,
   getThemeState,
 } from "../../../store/selector";
-import { getAllMenuItem } from "../../../api/call_api/menuItem/fetchApiMenuItem";
 import "./TableMenu.scss";
 import LoadingTableMenu from "./LoadingTableMenu";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -17,7 +16,6 @@ const TableMenu = ({ setShow }) => {
   const [category, setCategory] = useState("Món khai vị");
   const [currentPage, setCurrentPage] = useState(0);
   const theme = useSelector(getThemeState);
-  const dispatch = useDispatch();
   const getMenuItemState = useSelector(getAllMenuItemState);
   const { dataMenuItem, isLoadingMenuItem } = getMenuItemState;
   const data = dataMenuItem?.data;
@@ -45,14 +43,6 @@ const TableMenu = ({ setShow }) => {
     }
   }, [totalPage, currentPage]);
   /************************************************************************************* */
-
-  const getMenuItem = useCallback(async () => {
-    await getAllMenuItem(dispatch);
-  }, [dispatch]);
-
-  useEffect(() => {
-    getMenuItem();
-  }, [getMenuItem]);
 
   return (
     <div className="mt-3 mb-3 table-users">

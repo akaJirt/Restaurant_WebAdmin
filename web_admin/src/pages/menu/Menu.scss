@@ -1,20 +1,22 @@
 .layout-menu.theme {
-    background-color: #E8900C;
+    background-color: #2e2e3e;
 
     .text-h1 {
         color: #fff;
-    }.bt2 {
-        background-color: #C55402 !important;
-        border: 1px solid #C55402;
-    
+    }
+
+    .bt2 {
+        background-color: #1e1e2e !important;
+        border: 1px solid #1e1e2e;
+
         &:hover {
             opacity: .5;
-            border: 1px solid #C55402;
+            border: 1px solid #1e1e2e;
         }
     }
 
     .form {
-        background-color: #C55402;
+        background-color: #1e1e2e;
 
         .form-group {
             .form-label {
@@ -37,14 +39,26 @@
     }
 
     .table-users {
-        background-color: #E8900C;
-.active {
+        background-color: #1e1e2e;
+.box-users {
 
-        .page-link {
-            background-color: #C55402;
-            border: 1px solid #C55402;
+        .select {
+ 
+
+            select {
+                color: #2e2e3e;
+                border: 1px solid #2e2e3e;
+            }
         }
     }
+        .active {
+
+            .page-link {
+                background-color: #2e2e3e;
+                border: 1px solid #2e2e3e;
+            }
+        }
+
         h1 {
             color: #FFF;
         }
@@ -54,7 +68,7 @@
             thead {
                 tr {
                     th {
-                        background-color: #C55402;
+                        background-color: #1e1e2e;
                         color: #fff;
                     }
                 }
@@ -63,7 +77,7 @@
             tbody {
                 tr {
                     td {
-                        background-color: #C55402;
+                        background-color: #1e1e2e;
                         color: #FFF;
                     }
                 }
@@ -74,20 +88,26 @@
 
 .layout-menu {
     height: 100vh;
+        overflow: hidden;
+        /* Đảm bảo không có tràn ngoài */
     
         .ant-layout-content {
             height: 100%;
-            /* Ensure the content takes up the full height */
+            overflow: auto;
+            overflow: hidden;
+            /* Đảm bảo nội dung có thể cuộn */
         }
+
     .bt2 {
-            background-color: #E8900C !important;
+        background-color: #E8900C !important;
+        border: 1px solid #E8900C;
+
+        &:hover {
+            opacity: .5;
             border: 1px solid #E8900C;
-    
-            &:hover {
-                opacity: .5;
-                border: 1px solid #E8900C;
-            }
         }
+    }
+
     .text-h1 {
         font-size: 24px;
         margin-bottom: 0;
@@ -117,7 +137,7 @@
 
         .form-group {
             .form-label {
-                        color: #E8900C;
+                color: #E8900C;
                 font-weight: bold;
                 font-size: 1rem;
             }
@@ -143,36 +163,42 @@
     .table-users {
         margin-right: 20px;
         margin-left: 20px;
-.active {
 
-        .page-link {
-            background-color: #E8900C;
-            border: 1px solid #E8900C;
+        .active {
+
+            .page-link {
+                background-color: #E8900C;
+                border: 1px solid #E8900C;
+            }
         }
-    }
+
         h1 {
             padding: 10px 0;
             font-size: 24px;
             margin-bottom: 0;
             font-weight: 600;
-                color: #E8900C;
+            color: #E8900C;
         }
-        thead{
-            tr{
-                th{
-                color: #E8900C;
+
+        thead {
+            tr {
+                th {
+                    color: #E8900C;
                 }
             }
         }
+
         tbody {
             tr {
                 .img-table {
-                        cursor: pointer;
-                        img {
-                            max-width: 80px;
-                            max-height: 80px;
-                        }
+                    cursor: pointer;
+
+                    img {
+                        max-width: 80px;
+                        max-height: 80px;
                     }
+                }
+
                 td {
                     text-align: center;
                     color: #C9AA05;
@@ -198,13 +224,16 @@
     }
 
 }
+
 /* Máy tính để bàn (lớn) */
 @media (min-width: 1200px) {
+
     /* CSS cho thiết bị từ 1200px trở lên */
     .layout-menu {
         min-height: 100vh;
     }
 }
+
 @media (max-width: 540px) {
     .layout-menu {
         .form {

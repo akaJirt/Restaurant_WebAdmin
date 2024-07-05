@@ -7,6 +7,7 @@ import {
   getCreateMenuItemState,
   getDeleteMenuItemState,
   getStatusMenuItemState,
+  getThemeState,
   getUpdateMenuItemState,
   getValueCategoryIdState,
   getValueDescriptionState,
@@ -23,7 +24,9 @@ import {
   patchMenuItem,
   postMenuItem,
 } from "../../../api/call_api/menuItem/fetchApiMenuItem";
+import "./ModalMenuItem.scss";
 const ModalMenuItem = ({ show, handleClose, setShow }) => {
+  const theme = useSelector(getThemeState);
   const getStatusMenuItem = useSelector(getStatusMenuItemState);
   const statusCreateItem = useSelector(getCreateMenuItemState);
   const { isLoadingCreateMenuItem } = statusCreateItem;
@@ -75,9 +78,13 @@ const ModalMenuItem = ({ show, handleClose, setShow }) => {
   };
   return (
     <>
-      <Modal show={show} onHide={handleClose} className="modal-delete">
-        <Modal.Header closeButton>
-          <Modal.Title>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        className={`modal-delete ${theme ? "theme" : ""}`}
+      >
+        <Modal.Header closeButton className="modal-header">
+          <Modal.Title className="modal-title">
             {getStatusMenuItem[0] === "create"
               ? "Create Menu Item"
               : getStatusMenuItem[0] === "delete"
@@ -106,7 +113,7 @@ const ModalMenuItem = ({ show, handleClose, setShow }) => {
             ""
           )}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="modal-footer">
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>

@@ -116,7 +116,7 @@ const FormMenu = () => {
       </div>
       <div className="img mb-3 img-menu">
         <img
-          alt="product"
+          alt="hinh anh"
           src={isBase64 ? isBase64 : image}
           onClick={() => {
             setIsOpen(true);
