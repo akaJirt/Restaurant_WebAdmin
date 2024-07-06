@@ -4,6 +4,7 @@ import { forgotPasswordAuth } from "../../api/call_api/auth/fetchApiAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { dataForgotPasswordState } from "../../store/selector";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const dataForgot = useSelector(dataForgotPasswordState);
@@ -36,6 +37,11 @@ const ForgotPassword = () => {
           >
             {isLoadingForgotPassword ? <LoadingOutlined /> : "Reset Password"}
           </button>
+        </div>
+        <div className="text-center mt-1">
+          <Link to={"/login"} style={{ color: "#E8900C" }}>
+            Back
+          </Link>
         </div>
       </div>
     </div>

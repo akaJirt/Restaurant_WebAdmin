@@ -1,4 +1,11 @@
 .form-group{
+    label{
+        color: #E8900C;
+    }
+    .form-control{
+        color: #E8900C;
+        border: 1px solid #E8900C;
+    }
     .box-ip-ic{
         position: relative;
         .icon-eye{
@@ -15,6 +22,6 @@
     align-items: center;
     justify-content: space-between;
     .link{
-        text-decoration: none;
+        color: #E8900C;
     }
 }

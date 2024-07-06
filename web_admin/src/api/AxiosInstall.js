@@ -46,8 +46,8 @@ const api = {
     }),
   forgotPassword: (email) =>
     axiosInstance.post(`users/forgot-password`, { email }),
-  resetPassword: (token) =>
-    axiosInstance.patch(`users/reset-password/${token}`),
+  resetPassword: (token, password) =>
+    axiosInstance.patch(`users/reset-password/${token}`, { password }),
 };
 //*******************************TABLES********************************* */
 

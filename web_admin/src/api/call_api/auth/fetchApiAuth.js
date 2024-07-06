@@ -5,6 +5,7 @@ import { typeActionForgotPassword } from "../../../store/auth/forgotPassword/act
 import { typeActionGetMes } from "../../../store/auth/getMe/actions";
 import { typeActionGetAllUsers } from "../../../store/auth/getUsers/actions";
 import { typeActionLogins } from "../../../store/auth/login/actions";
+import { typeActionResetPassword } from "../../../store/auth/resetPassword/actions";
 import { typeActionUpdateMe } from "../../../store/auth/updateMe/actions";
 import { typeActionUpdatePassword } from "../../../store/auth/updatePassword/actions";
 import { api } from "../../AxiosInstall";
@@ -157,6 +158,32 @@ const forgotPasswordAuth = async (dispatch, email, setEmail) => {
   }
 };
 
+const resetPasswordAuth = async (
+  dispatch,
+  token,
+  newPassword,
+  setNewPassword,
+  setRePassword,
+  navigate
+) => {
+  dispatch(typeActionResetPassword.fetchResetPasswordRequest());
+  try {
+    const res = await api.resetPassword(token, newPassword);
+    if (res?.data?.status) {
+      toast.success(res?.data?.message);
+      dispatch(typeActionResetPassword.fetchResetPasswordSuccess(res?.data));
+      setNewPassword("");
+      setRePassword("");
+      navigate("/login");
+    }
+  } catch (error) {
+    console.log(error);
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    dispatch(typeActionResetPassword.fetchResetPasswordFailed(error));
+    toast.error(message || status);
+  }
+};
 export {
   Login,
   getMe,
@@ -166,4 +193,5 @@ export {
   destroyUser,
   updatePassword,
   forgotPasswordAuth,
+  resetPasswordAuth,
 };

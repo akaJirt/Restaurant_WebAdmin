@@ -16,7 +16,7 @@
         h3 {
             font-size: 26px;
             font-weight: 700;
-            color: #012970;
+            color: #E8900C;
             font-family: sans-serif;
         }
     }
@@ -26,7 +26,7 @@
         width: 100%;
         padding: 0 20px 20px 20px;
         border-radius: 7px;
-        box-shadow: 1px 2px 1px 2px #012970;
+        box-shadow: 1px 2px 1px 2px #E8900C;
 
         .box-title {
             padding-top: 35px;
@@ -34,12 +34,13 @@
             h5 {
                 font-size: 1.5rem;
                 font-weight: 500;
-                color: #012970;
+                color: #E8900C;
                 font-family: "Poppins", sans-serif;
             }
 
             p {
                 font-size: .875rem;
+                color: #E8900C;
             }
         }
 
@@ -47,9 +48,9 @@
             .text-checkbox {
                 font-size: 1rem;
 
-                .span {
+                span {
 
-                    color: #4154f1;
+                    color: #E8900C;
 
                 }
             }
@@ -58,6 +59,12 @@
         .button {
             button {
                 width: 100%;
+                background-color: #E8900C;
+                    border: 1px solid #E8900C;
+                &:hover{
+                    border: 1px solid #E8900C;
+                    opacity: .5;
+                }
             }
         }
 
@@ -66,10 +73,15 @@
             gap: 5px;
 
             span {
-                &:last-child {
-                    color: #4154f1;
+                    color: #E8900C;
+                    &:last-child{
+                        text-decoration: underline;
+                        cursor: pointer;
+                        &:hover{
+                        text-decoration: none;
+                        }
+                    }
                 }
-            }
         }
     }
 }

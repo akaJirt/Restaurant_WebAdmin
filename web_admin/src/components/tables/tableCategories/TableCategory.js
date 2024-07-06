@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesState } from "../../../store/selector";
-import { LoadingOutlined } from "@ant-design/icons";
 import ReactPaginate from "react-paginate";
 import ModalDeleteCategories from "../../Modal/Categories/ModalDeleteCategories";
 import { valueFormCategories } from "../../../store/valueForm/categories/actions";
 import { setStatusCategories } from "../../../store/categories/setStatus/actions";
+import SkeletonCategory from "../../../utils/skeleton/SkeletonCategory";
 
 const TableCategory = () => {
   const [current, setCurrent] = useState(0);
@@ -56,17 +56,16 @@ const TableCategory = () => {
         handleClose={handleClose}
         setShow={setShow}
       />
+
+      <div className="box-item mb-2">
+        <span>Total Categories : {dataGetCategories?.totalCategories}</span>
+        <h1 className="text-center">GET CATEGORIES</h1>
+        <span className="sp"></span>
+      </div>
       {isLoadingGetCategories ? (
-        <div className="dialog">
-          <LoadingOutlined className="loading" />
-        </div>
+        <SkeletonCategory />
       ) : (
         <>
-          <div className="box-item mb-2">
-            <span>Total Categories : {dataGetCategories?.totalCategories}</span>
-            <h1 className="text-center">GET CATEGORIES</h1>
-            <span className="sp"></span>
-          </div>
           <Table striped bordered hover responsive>
             <thead>
               <tr>

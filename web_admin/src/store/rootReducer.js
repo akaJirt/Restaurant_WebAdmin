@@ -33,6 +33,7 @@ import createMenuItemSlice from "./menuItem/createMenuItem/createMenuItemSlice.j
 import deleteMenuItemSlice from "./menuItem/deleteMenuItem/deleteMenuItemSlice.js";
 import updateMenuItemSlice from "./menuItem/updateMenuItem/updateMenuItemSlice.js";
 import forgotPasswordSlice from "./auth/forgotPassword/forgotPasswordSlice.js";
+import resetPasswordSlice from "./auth/resetPassword/resetPasswordSlice.js";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -70,5 +71,6 @@ const rootReducer = combineReducers({
   deleteMenuItem: deleteMenuItemSlice,
   updateMenuItem: updateMenuItemSlice,
   forgotPassword: forgotPasswordSlice,
+  resetPassword: resetPasswordSlice,
 });
 export default rootReducer;
