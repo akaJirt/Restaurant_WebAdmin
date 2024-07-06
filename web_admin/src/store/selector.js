@@ -44,6 +44,8 @@ export const getUpdatePasswordState = (state) => state.updatePassword;
 export const valueFormFullNameState = (state) =>
   state.valueUsers.fullNameUpdateMe;
 export const valueFormAvatarState = (state) => state.valueUsers.avatarUpdateMe;
+//forgot password
+export const dataForgotPasswordState = (state) => state.forgotPassword;
 //*************************************MENU ITEM*********************************************************/
 export const getAllMenuItemState = (state) => state.menuItem;
 export const getStatusMenuItemState = (state) =>

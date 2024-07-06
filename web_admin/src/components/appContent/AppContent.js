@@ -16,6 +16,8 @@ import {
   PublicNavigation,
   PrivateNavigation,
 } from "../../components/navigation/Navigation";
+import ForgotPassword from "../../pages/forgotPassword/ForgotPassword";
+import ResetPassword from "../../pages/resetPassword/ResetPassword";
 const AppContent = () => {
   console.log("render App Content");
 
@@ -37,8 +39,9 @@ const AppContent = () => {
         <Routes>
           <Route element={<PublicNavigation />}>
             <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
           </Route>
-          <Route path="*" element={<ErrorPage />} />
 
           <Route element={<PrivateNavigation />}>
             <Route path="/" element={<Home />} />
@@ -51,6 +54,7 @@ const AppContent = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/categories" element={<Category />} />
           </Route>
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </Content>

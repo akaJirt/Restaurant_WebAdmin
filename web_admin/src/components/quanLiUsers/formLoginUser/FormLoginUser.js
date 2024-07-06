@@ -8,7 +8,7 @@ import {
   EyeInvisibleOutlined,
 } from "@ant-design/icons";
 import { Login } from "../../../api/call_api/auth/fetchApiAuth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./FormLoginUser.scss";
 const FormLoginUser = (props) => {
   console.log("render FormLoginUser");
@@ -67,10 +67,13 @@ const FormLoginUser = (props) => {
           )}
         </div>
       </div>
-      <div className="form-group">
+      <div className="form-group box-forgot-password">
         <Checkbox className="text-checkbox" onChange={handleCheckBox}>
           Remember me
         </Checkbox>
+        <Link className="link" to={"/forgot-password"}>
+          Forgot Password?
+        </Link>
       </div>
       <div className="text-center button mt-3">
         <button onClick={handleClickLogin} className="btn btn-primary">

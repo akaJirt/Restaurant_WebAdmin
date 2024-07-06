@@ -15,6 +15,7 @@ import {
   getValuePriceState,
 } from "../../../store/selector";
 import { valueFormMenu } from "../../../store/valueForm/menu/actions";
+import { Tag } from "antd";
 
 const FormMenu = () => {
   console.log("render FormMenu");
@@ -154,20 +155,21 @@ const FormMenu = () => {
             ))}
         </select>
       </div>
-      {option?.length > 0 &&
-        option?.map((item, index) => {
-          return (
-            <div key={index}>
-              <span>{item.name}</span>
+      {option?.length > 0 && (
+        <div className="opt">
+          {option?.map((item, index) => (
+            <Tag key={index} color="purple" className="tag">
+              {item.name}
               <span
-                style={{ color: "red", cursor: "pointer" }}
+                style={{ fontSize: "1.2rem", cursor: "pointer" }}
                 onClick={() => handleClickRemoveOption(item)}
               >
-                {"X"}
+                {` x`}
               </span>
-            </div>
-          );
-        })}
+            </Tag>
+          ))}
+        </div>
+      )}
       <div className="form-group mt-3 mb-3">
         <label className="form-label">Options</label>
         <select

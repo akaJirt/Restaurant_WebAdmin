@@ -1,6 +1,7 @@
 import { setAccessToken } from "../../../store/accessToken/actions";
 import { typeActionCreateUser } from "../../../store/auth/createUser/actions";
 import { typeActionDeleteUser } from "../../../store/auth/deleteUser/actions";
+import { typeActionForgotPassword } from "../../../store/auth/forgotPassword/actions";
 import { typeActionGetMes } from "../../../store/auth/getMe/actions";
 import { typeActionGetAllUsers } from "../../../store/auth/getUsers/actions";
 import { typeActionLogins } from "../../../store/auth/login/actions";
@@ -137,6 +138,25 @@ const updatePassword = async (
     toast.error(message || status);
   }
 };
+/******************************Forgot Password***************************** */
+const forgotPasswordAuth = async (dispatch, email, setEmail) => {
+  dispatch(typeActionForgotPassword.fetchForgotPasswordRequest());
+  try {
+    const res = await api.forgotPassword(email);
+    if (res?.data?.status) {
+      toast.success(res?.data?.message);
+      dispatch(typeActionForgotPassword.fetchForgotPasswordSuccess(res?.data));
+      setEmail("");
+    }
+  } catch (error) {
+    console.log(error);
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    dispatch(typeActionForgotPassword.fetchForgotPasswordFailed(error));
+    toast.error(message || status);
+  }
+};
+
 export {
   Login,
   getMe,
@@ -145,4 +165,5 @@ export {
   putMe,
   destroyUser,
   updatePassword,
+  forgotPasswordAuth,
 };
