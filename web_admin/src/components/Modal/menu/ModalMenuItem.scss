@@ -1,20 +1,46 @@
-.modal-delete.theme{
-    .modal-header{
+.modal-delete.theme {
+    .modal-header {
         background-color: #2e2e3e;
-        .modal-title{
+
+        .modal-title {
 
             color: #fff;
         }
-        .btn-close{
+
+        .btn-close {
             color: #fff !important;
         }
     }
-    .modal-body{
+
+    .modal-body {
         background-color: #2e2e3e;
-            color: #fff;
+        color: #fff;
+
+        .form {
+
+            .form-group {
+                
+                .form-label {
+                    color: #fff;
+                }   
+                .form-control{
+                    border: 1px solid #fff;
+                }
+
+                .ic-arrow {
+                    background-color: #fff;
+                }
+                select{
+                    border: 1px solid #fff;
+                    color: #343333dd;
+                }
+
+            }
+        }
     }
-    .modal-footer{
+
+    .modal-footer {
         background-color: #2e2e3e;
-            color: #fff;
+        color: #fff;
     }
 }

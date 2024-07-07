@@ -1,20 +1,31 @@
 import React from "react";
 import "./FormUser.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { valueFormUsers } from "../../../store/valueForm/users/actions";
+import {
+  emailState,
+  fullNameState,
+  passwordState,
+  roleState,
+} from "../../../store/selector";
 const FormUser = () => {
   console.log("render FormUser");
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name, value, "<<<<<<<<<<<<<<");
-  };
+  const dispatch = useDispatch();
+  const fullName = useSelector(fullNameState);
+  const email = useSelector(emailState);
+  const password = useSelector(passwordState);
+  const role = useSelector(roleState);
+
   return (
-    <div className="form mt-3 mb-3">
+    <div className={`form  mt-3 mb-3`}>
       <div className="form-group">
         <label className="form-label">fullName</label>
         <input
           type="text"
           className="form-control"
           placeholder="Nhập full name ..."
-          onChange={handleChange}
+          value={fullName}
+          onChange={(e) => dispatch(valueFormUsers.setFullName(e.target.value))}
         />
       </div>
       <div className="form-group mt-3">
@@ -23,6 +34,8 @@ const FormUser = () => {
           type="email"
           className="form-control"
           placeholder="Nhập email ..."
+          onChange={(e) => dispatch(valueFormUsers.setEmail(e.target.value))}
+          value={email}
         />
       </div>
       <div className="form-group mt-3">
@@ -31,20 +44,21 @@ const FormUser = () => {
           type="password"
           className="form-control"
           placeholder="Nhập password ..."
+          value={password}
+          onChange={(e) => dispatch(valueFormUsers.setPassword(e.target.value))}
         />
       </div>
       <div className="form-group mt-3">
         <label className="form-label">Role</label>
-        <select className="form-control ic-arrow">
-          <option>Admin</option>
-          <option>Nhân viên</option>
-          <option>Khách hàng</option>
+        <select
+          onChange={(e) => dispatch(valueFormUsers.setRole(e.target.value))}
+          value={role}
+          className="form-control ic-arrow"
+        >
+          <option value={"admin"}>Admin</option>
+          <option value={"staff"}>Nhân viên</option>
+          <option value={"client"}>Khách hàng</option>
         </select>
-      </div>
-
-      <div className="form-group">
-        <label className="form-label mt-3">violations</label>
-        <input type="date" className="form-control" />
       </div>
     </div>
   );

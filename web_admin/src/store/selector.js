@@ -42,11 +42,15 @@ export const getSetStatusUsersState = (state) => state.statusUsers.statusUsers;
 export const getUpdatePasswordState = (state) => state.updatePassword;
 export const dataForgotPasswordState = (state) => state.forgotPassword;
 export const resetPasswordState = (state) => state.resetPassword;
-
+export const createUserState = (state) => state.createUser;
 //value
 export const valueFormFullNameState = (state) =>
   state.valueUsers.fullNameUpdateMe;
 export const valueFormAvatarState = (state) => state.valueUsers.avatarUpdateMe;
+export const fullNameState = (state) => state.valueUsers.fullName;
+export const emailState = (state) => state.valueUsers.email;
+export const passwordState = (state) => state.valueUsers.password;
+export const roleState = (state) => state.valueUsers.role;
 
 //*************************************MENU ITEM*********************************************************/
 export const getAllMenuItemState = (state) => state.menuItem;

@@ -33,6 +33,8 @@ const User = (props) => {
           Quản Lí{" "}
           {capitalizeFirstLetter(role) === "True"
             ? "Users Đã xác thực"
+            : capitalizeFirstLetter(role) === "False"
+            ? "Users Chưa xác thực"
             : capitalizeFirstLetter(role)}
         </h1>
         <button
@@ -41,7 +43,7 @@ const User = (props) => {
         >
           Add New User
         </button>
-        <ModalUsers show={show} handleClose={handleClose} />
+        <ModalUsers show={show} handleClose={handleClose} setShow={setShow} />
         <TableUser
           role={role}
           setRole={setRole}

@@ -58,9 +58,12 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
               {role === "admin" ||
               role === "staff" ||
               role === "client" ||
-              role === "true"
+              role === "true" ||
+              role === "false"
                 ? capitalizeFirstLetter(role) === "True"
                   ? "Đã xác thực"
+                  : capitalizeFirstLetter(role) === "False"
+                  ? "Chưa xác thực"
                   : capitalizeFirstLetter(role)
                 : "Quản Lí Người Dùng"}
             </h1>
@@ -69,6 +72,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
               <option value={"staff"}>Nhân Viên</option>
               <option value={"client"}>Khách Hàng</option>
               <option value={"true"}>Đã xác thực</option>
+              <option value={"false"}>Chưa xác thực</option>
             </select>
           </div>
           <Table striped bordered hover responsive>

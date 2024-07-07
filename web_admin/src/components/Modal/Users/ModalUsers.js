@@ -1,17 +1,43 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./ModalUser.scss";
-import { useSelector } from "react-redux";
-import { getSetStatusUsersState, getThemeState } from "../../../store/selector";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  emailState,
+  fullNameState,
+  getSetStatusUsersState,
+  getThemeState,
+  passwordState,
+  roleState,
+} from "../../../store/selector";
 import FormUser from "../../form/formUsers/FormUser";
+import { destroyUser, postUser } from "../../../api/call_api/auth/fetchApiAuth";
 
-const ModalUsers = ({ show, handleClose }) => {
-  const theme = useSelector(getThemeState);
+const ModalUsers = ({ show, handleClose, setShow }) => {
   console.log("render modal users");
+  const fullName = useSelector(fullNameState);
+  const email = useSelector(emailState);
+  const password = useSelector(passwordState);
+  const role = useSelector(roleState);
+  const theme = useSelector(getThemeState);
   const getStatusUsers = useSelector(getSetStatusUsersState);
+  const dispatch = useDispatch();
   const userItem = getStatusUsers[1];
   console.log(getStatusUsers, userItem, "STATE USERS");
-  const handleClickXacNhan = () => {};
+  const handleClickXacNhan = async () => {
+    if (getStatusUsers[0] === "create") {
+      const data = {
+        fullName,
+        email,
+        password,
+        role,
+      };
+      await postUser(dispatch, data, setShow);
+    }
+    if (getStatusUsers[0] === "delete") {
+      await destroyUser(dispatch, userItem._id);
+    }
+  };
   return (
     <>
       <Modal

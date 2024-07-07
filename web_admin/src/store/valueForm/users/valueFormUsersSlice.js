@@ -5,7 +5,7 @@ export const initState = {
   fullName: "",
   email: "",
   password: "",
-  role: "",
+  role: "client",
   fullNameUpdateMe: "",
   avatarUpdateMe: "",
 };
@@ -21,6 +21,26 @@ const valueFormUsersSlice = (state = initState, action) => {
       return {
         ...state,
         avatarUpdateMe: action.payload,
+      };
+    case getType(valueFormUsers.setFullName):
+      return {
+        ...state,
+        fullName: action.payload,
+      };
+    case getType(valueFormUsers.setEmail):
+      return {
+        ...state,
+        email: action.payload,
+      };
+    case getType(valueFormUsers.setPassword):
+      return {
+        ...state,
+        password: action.payload,
+      };
+    case getType(valueFormUsers.setRole):
+      return {
+        ...state,
+        role: action.payload,
       };
 
     default:

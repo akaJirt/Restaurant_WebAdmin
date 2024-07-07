@@ -8,6 +8,7 @@ import { typeActionLogins } from "../../../store/auth/login/actions";
 import { typeActionResetPassword } from "../../../store/auth/resetPassword/actions";
 import { typeActionUpdateMe } from "../../../store/auth/updateMe/actions";
 import { typeActionUpdatePassword } from "../../../store/auth/updatePassword/actions";
+import { valueFormUsers } from "../../../store/valueForm/users/actions";
 import { api } from "../../AxiosInstall";
 import { toast } from "react-toastify";
 /******************************LOGIN***************************** */
@@ -59,11 +60,20 @@ const getAllUsers = async (dispatch) => {
   }
 };
 /******************************CREATE USERS***************************** */
-const createUsers = async (dispatch, data) => {
+const postUser = async (dispatch, data, setShow) => {
   dispatch(typeActionCreateUser.fetchCreateUserRequest());
   try {
     const res = await api.createUser(data);
     console.log(res.data, "[POST]");
+    if (res?.data?.status) {
+      dispatch(typeActionCreateUser.fetchCreateUserSuccess(res?.data));
+      dispatch(valueFormUsers.setFullName(""));
+      dispatch(valueFormUsers.setEmail(""));
+      dispatch(valueFormUsers.setPassword(""));
+      dispatch(valueFormUsers.setRole(""));
+      setShow(false);
+      await getAllUsers(dispatch);
+    }
   } catch (error) {
     console.log(error);
     const status = error?.response?.data?.status;
@@ -188,7 +198,7 @@ export {
   Login,
   getMe,
   getAllUsers,
-  createUsers,
+  postUser,
   putMe,
   destroyUser,
   updatePassword,

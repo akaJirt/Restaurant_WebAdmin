@@ -36,9 +36,9 @@ const api = {
   loginUser: (payload) => axiosInstance.post(`users/login`, payload),
   getMe: () => axiosInstance.get(`users/me`),
   getUser: () => axiosInstance.get(`users`),
-  createUser: (data) => axiosInstance.post(`users/register`, { data }),
+  createUser: (data) => axiosInstance.post(`users/register`, data),
   updateMe: (data) => axiosInstance.patch(`users/update-me`, data),
-  deleteUser: (id) => axiosInstance.delete(`/users/delete-user/${id}`),
+  deleteUser: (id) => axiosInstance.delete(`users/delete-user/${id}`),
   updatePassword: (currentPassword, newPassword) =>
     axiosInstance.patch(`users/update-password`, {
       currentPassword,
