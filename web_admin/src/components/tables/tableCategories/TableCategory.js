@@ -6,7 +6,7 @@ import ReactPaginate from "react-paginate";
 import ModalDeleteCategories from "../../Modal/Categories/ModalDeleteCategories";
 import { valueFormCategories } from "../../../store/valueForm/categories/actions";
 import { setStatusCategories } from "../../../store/categories/setStatus/actions";
-import SkeletonCategory from "../../../utils/skeleton/SkeletonCategory";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const TableCategory = () => {
   const [current, setCurrent] = useState(0);
@@ -57,15 +57,17 @@ const TableCategory = () => {
         setShow={setShow}
       />
 
-      <div className="box-item mb-2">
-        <span>Total Categories : {dataGetCategories?.totalCategories}</span>
-        <h1 className="text-center">GET CATEGORIES</h1>
-        <span className="sp"></span>
-      </div>
       {isLoadingGetCategories ? (
-        <SkeletonCategory />
+        <div className="dialog">
+          <LoadingOutlined className="loading" />
+        </div>
       ) : (
         <>
+          <div className="box-item mb-2">
+            <span>Total Categories : {dataGetCategories?.totalCategories}</span>
+            <h1 className="text-center">GET CATEGORIES</h1>
+            <span className="sp"></span>
+          </div>
           <Table striped bordered hover responsive>
             <thead>
               <tr>
