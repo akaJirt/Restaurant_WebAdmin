@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import ToggleOnOutlinedIcon from "@mui/icons-material/ToggleOnOutlined";
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import { useDispatch } from "react-redux";
 import { patchStatusTable } from "../../../api/call_api/tables/fetchApiTable";
 import "./LoadingTable.scss";
-import { convertBase64ToFile } from "../../../utils/convertFiles";
-import ConvertToBase from "../../../utils/convertBase64";
 import { SlideshowLightbox } from "lightbox.js-react";
 const LoadingTable = ({
   item,
@@ -58,33 +56,34 @@ const LoadingTable = ({
           )}
         </div>
       </td>
-      <td
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        className={item?.status === "open" ? "open" : "close"}
-      >
-        <div>{item.status}</div>
-        <IconButton>
-          {status === "open" || item.status === "open" ? (
-            <ToggleOnOutlinedIcon
-              data-name={item.status}
-              style={{
-                fontSize: "32px",
-                color: "lawngreen",
-              }}
-              onClick={(e) => handleClickOpen(e, item._id)}
-            />
-          ) : (
-            <ToggleOffOutlinedIcon
-              data-name={item.status}
-              style={{ fontSize: "32px", color: "red" }}
-              onClick={(e) => handleClickLock(e, item._id)}
-            />
-          )}
-        </IconButton>
+      <td className={item?.status === "open" ? "open" : "close"}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <div>{item.status}</div>
+          <IconButton>
+            {status === "open" || item.status === "open" ? (
+              <ToggleOnOutlinedIcon
+                data-name={item.status}
+                style={{
+                  fontSize: "32px",
+                  color: "lawngreen",
+                }}
+                onClick={(e) => handleClickOpen(e, item._id)}
+              />
+            ) : (
+              <ToggleOffOutlinedIcon
+                data-name={item.status}
+                style={{ fontSize: "32px", color: "red" }}
+                onClick={(e) => handleClickLock(e, item._id)}
+              />
+            )}
+          </IconButton>
+        </div>
       </td>
       <td>
         <button

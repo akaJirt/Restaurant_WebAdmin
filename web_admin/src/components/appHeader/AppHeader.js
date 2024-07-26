@@ -16,10 +16,8 @@ import { getMeState, getThemeState } from "../../store/selector";
 import { setHideTheme, setShowTheme } from "../../store/theme/actions";
 import { Link } from "react-router-dom";
 import { setAccessToken } from "../../store/accessToken/actions";
-import { getAllUsers, getMe } from "../../api/call_api/auth/fetchApiAuth";
+import { getMe } from "../../api/call_api/auth/fetchApiAuth";
 import { getAllCategories } from "../../api/call_api/categories/fetchApiCategory";
-import { getAllTable } from "../../api/call_api/tables/fetchApiTable";
-import { getAllMenuItem } from "../../api/call_api/menuItem/fetchApiMenuItem";
 
 const AppHeader = () => {
   console.log("render App Header");
@@ -33,9 +31,6 @@ const AppHeader = () => {
   const fetchGetMe = useCallback(async () => {
     await getMe(dispatch);
     await getAllCategories(dispatch);
-    await getAllTable(dispatch);
-    await getAllMenuItem(dispatch);
-    await getAllUsers(dispatch);
   }, [dispatch]);
   useEffect(() => {
     fetchGetMe();
@@ -70,7 +65,6 @@ const AppHeader = () => {
       <Header
         style={{
           padding: 0,
-
           background: theme ? " #1e1e2e" : "#fff",
         }}
       >
@@ -79,7 +73,7 @@ const AppHeader = () => {
           align={"middle"}
           className={`Row ${theme ? "theme" : ""}`}
         >
-          <Col flex={"auto"} className={`left-col`}>
+          <Col flex={"auto"} style={{ flex: "2" }} className={`left-col`}>
             <Space size={12}>
               <img src={logo} alt="logo" className="img" />
               <span className="nice-admin">Nice Admin</span>

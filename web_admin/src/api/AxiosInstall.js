@@ -1,7 +1,7 @@
 import axios from "axios";
+
 import { store } from "../store/store";
 const baseUrl = `https://pro2052-restaurant-api.onrender.com/v1/`;
-
 const axiosInstance = axios.create({
   baseURL: baseUrl,
   headers: {
@@ -77,5 +77,17 @@ const apiMenuItem = {
   deleteMenuItem: (id) => axiosInstance.delete(`menu-items/${id}`),
   putMenuItem: (id, data) => axiosInstance.patch(`menu-items/${id}`, data),
 };
-
-export { api, apiTables, apiCategories, apiMenuItem };
+//*******************************Orders********************************* */
+const apiOrder = {
+  getOrderTableId: (id) =>
+    axiosInstance.get(`orders/get-order-by-tableId-for-client/${id}`),
+};
+//*******************************Promotions********************************* */
+const apiPromotion = {
+  getApiPromotion: () => axiosInstance.get(`promotions`),
+  postApiPromotion: (data) => axiosInstance.post(`promotions`, data),
+  deleteApiPromotion: (id) => axiosInstance.delete(`promotions/${id}`),
+  updateApiPromotion: (id, data) =>
+    axiosInstance.patch(`promotions/${id}`, data),
+};
+export { api, apiTables, apiCategories, apiMenuItem, apiOrder, apiPromotion };

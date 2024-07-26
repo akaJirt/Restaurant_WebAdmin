@@ -16,11 +16,9 @@ import {
   setHideLightBox,
   setShowLightBox,
 } from "../../../../../store/lightBoxImage/actions";
-import avatar from "../../../../../images/messages-1.jpg";
 import { valueFormUsers } from "../../../../../store/valueForm/users/actions";
 import { putMe } from "../../../../../api/call_api/auth/fetchApiAuth";
 import ConvertToBase from "../../../../../utils/convertBase64";
-import { LoadingOutlined } from "@ant-design/icons";
 
 const EditProfile = () => {
   console.log("render editProfile");
@@ -81,16 +79,12 @@ const EditProfile = () => {
         <p>Profile Image</p>
         <div className="box-img-edit">
           <div className="img">
-            {isLoadingUpdateMe ? (
-              <LoadingOutlined className="icon-loading" />
-            ) : (
-              <img
-                src={avatarState || avatar}
-                alt="avatar"
-                style={{ cursor: "pointer" }}
-                onClick={() => dispatch(setShowLightBox())}
-              />
-            )}
+            <img
+              src={avatarState}
+              alt="avatar"
+              style={{ cursor: "pointer" }}
+              onClick={() => dispatch(setShowLightBox())}
+            />
             {avatarState && (
               <SlideshowLightbox
                 images={[{ src: avatarState }]}

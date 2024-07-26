@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useSelector, useDispatch } from "react-redux";
 import ReactPaginate from "react-paginate";
@@ -9,6 +9,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { typeActionSetStatus } from "../../../store/tables/setStatus/actions";
 import { valueFormTable } from "../../../store/valueForm/tables/actions";
 import LoadingTable from "./LoadingTable";
+import { getAllTable } from "../../../api/call_api/tables/fetchApiTable";
 
 const TableTable = () => {
   console.log("render TableTable");
@@ -20,6 +21,13 @@ const TableTable = () => {
   const { isLoading, dataTable } = table;
   let data = dataTable?.data;
   const dispatch = useDispatch();
+  const getApiTable = useCallback(async () => {
+    await getAllTable(dispatch);
+  }, [dispatch]);
+
+  useEffect(() => {
+    getApiTable();
+  }, [getApiTable]);
 
   //XU LI PHAN TRANG
   const itemsPerPage = 5;
@@ -64,7 +72,7 @@ const TableTable = () => {
   /**********************************TOGGLE ***************************** */
 
   return (
-    <div className="mt-3 mb-3 table-users">
+    <div className="mt-3 mb-3 layout">
       {isLoading ? (
         <div className="dialog">
           <LoadingOutlined className="loading" />

@@ -15,6 +15,7 @@ const FormUser = () => {
   const email = useSelector(emailState);
   const password = useSelector(passwordState);
   const role = useSelector(roleState);
+  console.log(role, "role");
 
   return (
     <div className={`form  mt-3 mb-3`}>
@@ -55,9 +56,9 @@ const FormUser = () => {
           value={role}
           className="form-control ic-arrow"
         >
-          <option value={"admin"}>Admin</option>
-          <option value={"staff"}>Nhân viên</option>
           <option value={"client"}>Khách hàng</option>
+          <option value={"staff"}>Nhân viên</option>
+          <option value={"admin"}>Admin</option>
         </select>
       </div>
     </div>

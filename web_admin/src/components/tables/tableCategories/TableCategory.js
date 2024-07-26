@@ -16,6 +16,7 @@ const TableCategory = () => {
   const getDataState = useSelector(getCategoriesState);
   const { dataGetCategories, isLoadingGetCategories } = getDataState;
   const data = dataGetCategories?.data;
+
   //*******************************PHAN TRANG ****************************************/
   const itemPage = 5;
   const offset = current * itemPage;

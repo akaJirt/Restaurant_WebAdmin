@@ -7,4 +7,5 @@ export const valueFormUsers = createActions({
   setRole: (payload) => payload,
   setFullNameUpdateMe: (payload) => payload,
   setAvatarUpdateMe: (payload) => payload,
+  setCheckBox: (payload) => payload,
 });

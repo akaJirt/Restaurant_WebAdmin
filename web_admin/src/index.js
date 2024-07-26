@@ -9,8 +9,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
+import "nprogress/nprogress.css";
 import "react-toastify/dist/ReactToastify.css";
+import "react-perfect-scrollbar/dist/css/styles.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(

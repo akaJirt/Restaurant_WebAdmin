@@ -5,16 +5,22 @@ import { typeActionCreateMenuItem } from "../../../store/menuItem/createMenuItem
 import { valueFormMenu } from "../../../store/valueForm/menu/actions";
 import { typeActionDeleteMenuItem } from "../../../store/menuItem/deleteMenuItem/actions";
 import { typeActionUpdateMenuItem } from "../../../store/menuItem/updateMenuItem/actions";
-
+import NProgress from "nprogress";
+NProgress.configure({
+  showSpinner: false,
+  trickleSpeed: 300,
+});
 const getAllMenuItem = async (dispatch) => {
+  NProgress.start();
   dispatch(typeActionMenuItem.fetchMenuItemRequest());
   try {
     const res = await apiMenuItem.getMenuItem();
     if (res?.data?.success) {
+      NProgress.done();
       dispatch(typeActionMenuItem.fetchMenuItemSuccess(res?.data));
     }
   } catch (error) {
-    console.log(error);
+    NProgress.done();
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionMenuItem.fetchMenuItemFailed(error));
@@ -40,7 +46,6 @@ const postMenuItem = async (dispatch, data, setShow) => {
       await getAllMenuItem(dispatch);
     }
   } catch (error) {
-    console.log(error);
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionCreateMenuItem.fetchCreateMenuItemFailed(error));
@@ -59,7 +64,6 @@ const destroyMenuItem = async (dispatch, id, setShow) => {
       await getAllMenuItem(dispatch);
     }
   } catch (error) {
-    console.log(error);
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionDeleteMenuItem.fetchDeleteMenuItemFailed(error));
@@ -85,7 +89,6 @@ const patchMenuItem = async (dispatch, id, data, setShow) => {
       await getAllMenuItem(dispatch);
     }
   } catch (error) {
-    console.log(error);
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionUpdateMenuItem.fetchUpdateMenuItemFailed(error));

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAllMenuItemState,
   getCategoriesState,
@@ -10,6 +10,7 @@ import "./TableMenu.scss";
 import LoadingTableMenu from "./LoadingTableMenu";
 import { LoadingOutlined } from "@ant-design/icons";
 import ReactPaginate from "react-paginate";
+import { getAllMenuItem } from "../../../api/call_api/menuItem/fetchApiMenuItem";
 
 const TableMenu = ({ setShow }) => {
   console.log("TABLE MENU");
@@ -21,6 +22,15 @@ const TableMenu = ({ setShow }) => {
   const data = dataMenuItem?.data;
   const categoriesState = useSelector(getCategoriesState);
   const { dataGetCategories } = categoriesState;
+  const dispatch = useDispatch();
+
+  const getApiMenuItem = useCallback(async () => {
+    await getAllMenuItem(dispatch);
+  }, [dispatch]);
+  useEffect(() => {
+    getApiMenuItem();
+  }, [getApiMenuItem]);
+
   /************************************* PHAN TRANG************************************** */
   const itemPage = 5;
   const offset = currentPage * itemPage;

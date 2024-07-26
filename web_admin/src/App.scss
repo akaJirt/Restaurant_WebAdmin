@@ -1,22 +1,10 @@
-.app{
-  display: flex;
-  padding-top: 61px;
-  background-color: #f6f9ff;
-  .navlink-b.none{
-    display: none;
-  }
-  .navlink-b{
-    position: fixed;
-    z-index: 3;
-    top:61px;
-    bottom: 0;
-  }
-  .routes.routesNone {
-    margin-left: 0;
 
-  }
-  .routes{
-    // flex: 1;
-    margin-left: 301px;
-    }
+/* Ẩn thanh cuộn ngang và dọc */
+html,
+body {
+  overflow: hidden;
+}
+
+.ant-layout{
+  padding: 0;
 }

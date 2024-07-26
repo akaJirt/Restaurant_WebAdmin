@@ -38,7 +38,14 @@
 
     .table-users {
         background-color: #1e1e2e;
-
+        .box-top-order {
+        
+                span {
+                    color: #fff;
+                }
+        
+               
+            }
         h1 {
             color: #FFF;
         }
@@ -133,7 +140,28 @@
     .table-users {
         margin-right: 20px;
         margin-left: 20px;
+.box-top-order {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
+        span {
+            flex: 1;
+            color: #E8900C;
+            font-size: 1.2rem;
+        }
+
+        h1 {
+            flex: 1;
+        }
+
+        .select {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+    }
         h1 {
             padding: 10px 0;
             font-size: 24px;

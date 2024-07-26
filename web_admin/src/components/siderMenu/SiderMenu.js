@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import {
   HomeFilled,
   UserOutlined,
@@ -8,10 +8,12 @@ import {
   BoxPlotFilled,
   SettingFilled,
   ShopFilled,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import "./SiderMenu.scss";
-import { Layout, Menu } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Layout, Menu, Button } from "antd";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../store/selector";
 
@@ -19,16 +21,43 @@ const SiderMenu = () => {
   console.log("render SiderMenu");
   const { Sider } = Layout;
   const location = useLocation();
+  const navigate = useNavigate();
   const theme = useSelector(getThemeState);
+  const [collapsed, setCollapsed] = useState(false);
+
+  const handleClick = useCallback(
+    (path) => {
+      navigate(path);
+    },
+    [navigate]
+  );
+
+  // Check screen size and adjust collapsed state
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 992) {
+        setCollapsed(true);
+      } else {
+        setCollapsed(false);
+      }
+    };
+
+    handleResize(); // Initial check
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const items = useMemo(
     () => [
       {
         className: "item-menu",
         key: "/",
-        icon: <HomeFilled className="item-icon" />,
+        icon: (
+          <HomeFilled className="item-icon" onClick={() => handleClick("/")} />
+        ),
         label: (
-          <Link to="/" className="item-link">
+          <Link to="/" className={`item-link ${collapsed ? "collapsed" : ""}`}>
             Home
           </Link>
         ),
@@ -36,9 +65,17 @@ const SiderMenu = () => {
       {
         className: "item-menu",
         key: "/users",
-        icon: <UserOutlined className="item-icon" />,
+        icon: (
+          <UserOutlined
+            className="item-icon"
+            onClick={() => handleClick("/users")}
+          />
+        ),
         label: (
-          <Link to="/users" className="item-link">
+          <Link
+            to="/users"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
             Quản lý người dùng
           </Link>
         ),
@@ -46,9 +83,17 @@ const SiderMenu = () => {
       {
         className: "item-menu",
         key: "/reviews",
-        icon: <StarFilled className="item-icon" />,
+        icon: (
+          <StarFilled
+            className="item-icon"
+            onClick={() => handleClick("/reviews")}
+          />
+        ),
         label: (
-          <Link to="/reviews" className="item-link">
+          <Link
+            to="/reviews"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
             Quản lý đánh giá
           </Link>
         ),
@@ -56,9 +101,17 @@ const SiderMenu = () => {
       {
         className: "item-menu",
         key: "/promotions",
-        icon: <TagFilled className="item-icon" />,
+        icon: (
+          <TagFilled
+            className="item-icon"
+            onClick={() => handleClick("/promotions")}
+          />
+        ),
         label: (
-          <Link to="/promotions" className="item-link">
+          <Link
+            to="/promotions"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
             Quản lý khuyến mãi
           </Link>
         ),
@@ -66,9 +119,17 @@ const SiderMenu = () => {
       {
         className: "item-menu",
         key: "/order",
-        icon: <DropboxSquareFilled className="item-icon" />,
+        icon: (
+          <DropboxSquareFilled
+            className="item-icon"
+            onClick={() => handleClick("/order")}
+          />
+        ),
         label: (
-          <Link to="/order" className="item-link">
+          <Link
+            to="/order"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
             Quản lý đơn hàng
           </Link>
         ),
@@ -76,9 +137,17 @@ const SiderMenu = () => {
       {
         className: "item-menu",
         key: "/tables",
-        icon: <BoxPlotFilled className="item-icon" />,
+        icon: (
+          <BoxPlotFilled
+            className="item-icon"
+            onClick={() => handleClick("/tables")}
+          />
+        ),
         label: (
-          <Link to="/tables" className="item-link">
+          <Link
+            to="/tables"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
             Quản lý bàn
           </Link>
         ),
@@ -86,9 +155,17 @@ const SiderMenu = () => {
       {
         className: "item-menu",
         key: "/menu",
-        icon: <ShopFilled className="item-icon" />,
+        icon: (
+          <ShopFilled
+            className="item-icon"
+            onClick={() => handleClick("/menu")}
+          />
+        ),
         label: (
-          <Link to="/menu" className="item-link">
+          <Link
+            to="/menu"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
             Quản lý thực đơn
           </Link>
         ),
@@ -96,31 +173,48 @@ const SiderMenu = () => {
       {
         className: "item-menu",
         key: "/categories",
-        icon: <SettingFilled className="item-icon" />,
+        icon: (
+          <SettingFilled
+            className="item-icon"
+            onClick={() => handleClick("/categories")}
+          />
+        ),
         label: (
-          <Link to="/categories" className="item-link">
+          <Link
+            to="/categories"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
             Quản lý danh mục
           </Link>
         ),
       },
     ],
-    []
+    [collapsed, handleClick] // Updated dependencies
   );
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
 
   return (
     <Sider
-      className="custom-sider"
+      className={`custom-sider ${collapsed ? "collapsed" : ""}`}
       style={{ background: theme ? "#1e1e2e" : "#f9fafc" }}
-      breakpoint="lg"
-      collapsedWidth="0"
+      collapsible
+      collapsed={collapsed}
+      onCollapse={setCollapsed}
       width={200}
-      onBreakpoint={(broken) => {
-        console.log(broken);
-      }}
-      onCollapse={(collapsed, type) => {
-        console.log(collapsed, type);
-      }}
+      trigger={null} // Disable default trigger
     >
+      <div className="toggle-button">
+        <Button
+          type="primary"
+          onClick={toggleCollapsed}
+          style={{ marginBottom: 16 }}
+        >
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </Button>
+      </div>
       <Menu
         className={`menu ${theme ? "theme" : ""}`}
         mode="inline"

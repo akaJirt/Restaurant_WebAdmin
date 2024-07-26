@@ -8,6 +8,7 @@ export const initState = {
   role: "client",
   fullNameUpdateMe: "",
   avatarUpdateMe: "",
+  checkbox: false,
 };
 
 const valueFormUsersSlice = (state = initState, action) => {
@@ -41,6 +42,11 @@ const valueFormUsersSlice = (state = initState, action) => {
       return {
         ...state,
         role: action.payload,
+      };
+    case getType(valueFormUsers.setCheckBox):
+      return {
+        ...state,
+        checkbox: action.payload,
       };
 
     default:

@@ -1,4 +1,3 @@
-import { Layout } from "antd";
 import React, { useState } from "react";
 import "./Menu.scss";
 import TableMenu from "../../components/tables/tableMenu/TableMenu";
@@ -9,7 +8,6 @@ import ModalMenuItem from "../../components/Modal/menu/ModalMenuItem";
 import { valueFormMenu } from "../../store/valueForm/menu/actions";
 function Menu(props) {
   console.log("render Menu");
-  const { Content } = Layout;
   const [show, setShow] = useState(false);
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
@@ -30,19 +28,17 @@ function Menu(props) {
     dispatch(valueFormMenu.setOptions([]));
   };
   return (
-    <Layout className={`layout-menu ${theme ? "theme" : ""}`}>
+    <div className={`layout-menu ${theme ? "theme" : ""}`}>
       <ModalMenuItem show={show} handleClose={handleClose} setShow={setShow} />
-      <Content>
-        <h1 className="text-h1">Menu</h1>
-        <button
-          className="mx-3 btn btn-primary bt2"
-          onClick={handleClickAddNewMenu}
-        >
-          Add New Menu
-        </button>
-        <TableMenu setShow={setShow} />
-      </Content>
-    </Layout>
+      <h1 className="text-h1">Menu</h1>
+      <button
+        className="mx-3 btn btn-primary bt2"
+        onClick={handleClickAddNewMenu}
+      >
+        Add New Menu
+      </button>
+      <TableMenu setShow={setShow} />
+    </div>
   );
 }
 

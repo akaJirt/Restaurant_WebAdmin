@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
 import { Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoginState } from "../../../store/selector";
+import {
+  emailState,
+  getLoginState,
+  passwordState,
+} from "../../../store/selector";
 import {
   EyeOutlined,
   LoadingOutlined,
@@ -10,11 +14,12 @@ import {
 import { Login } from "../../../api/call_api/auth/fetchApiAuth";
 import { Link, useNavigate } from "react-router-dom";
 import "./FormLoginUser.scss";
+import { valueFormUsers } from "../../../store/valueForm/users/actions";
 const FormLoginUser = (props) => {
   console.log("render FormLoginUser");
   const [isEye, setIsEye] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const email = useSelector(emailState);
+  const password = useSelector(passwordState);
   const dispatch = useDispatch();
   const input1 = useRef();
   const login = useSelector(getLoginState);
@@ -24,14 +29,13 @@ const FormLoginUser = (props) => {
   const handleClickLogin = async (e) => {
     e.preventDefault();
     const payload = { email, password };
-    await Login(payload, dispatch, setEmail, setPassword, navigate);
+    await Login(payload, dispatch, navigate);
   };
 
   const handleCheckBox = (e) => {
-    const check = e.target.checked;
-    if (check) {
-      setEmail("phungloc6102003@gmail.com");
-      setPassword("123456aA");
+    if (e.target.checked) {
+      dispatch(valueFormUsers.setEmail("phungloc6102003@gmail.com"));
+      dispatch(valueFormUsers.setPassword("123456Tri"));
     }
   };
   return (
@@ -44,7 +48,7 @@ const FormLoginUser = (props) => {
           className="form-control"
           placeholder="enter phone..."
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => dispatch(valueFormUsers.setEmail(e.target.value))}
         />
       </div>
       <div className="form-group mb-3">
@@ -55,7 +59,9 @@ const FormLoginUser = (props) => {
             className="form-control"
             placeholder="enter password..."
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              dispatch(valueFormUsers.setPassword(e.target.value))
+            }
           />
           {isEye ? (
             <EyeOutlined className="icon-eye" onClick={() => setIsEye(false)} />

@@ -51,6 +51,7 @@ export const fullNameState = (state) => state.valueUsers.fullName;
 export const emailState = (state) => state.valueUsers.email;
 export const passwordState = (state) => state.valueUsers.password;
 export const roleState = (state) => state.valueUsers.role;
+export const checkboxState = (state) => state.valueUsers.checkbox;
 
 //*************************************MENU ITEM*********************************************************/
 export const getAllMenuItemState = (state) => state.menuItem;
@@ -69,3 +70,7 @@ export const getValuePriceState = (state) => state.valueMenu.getPrice;
 export const getValueImageState = (state) => state.valueMenu.getImage;
 export const getValueCategoryIdState = (state) => state.valueMenu.getCategoryId;
 export const getValueOptionsState = (state) => state.valueMenu.getOptions;
+
+//*************************************ORDERS*********************************************************/
+
+export const orderByTableIdState = (state) => state.orderByTableId;

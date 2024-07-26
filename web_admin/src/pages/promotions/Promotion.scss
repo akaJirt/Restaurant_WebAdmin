@@ -1,6 +1,21 @@
 .layout-promotion.theme {
     background-color: #2e2e3e;
-.bt2 {
+
+    .nav-item {
+        .nav-link {
+            color: white;
+
+            &.active {
+                background-color: #1e1e2e;
+                border: 1px solid #1e1e2e;
+                color: white;
+                border-bottom: 1px solid white;
+            }
+        }
+
+    }
+
+    .bt2 {
         background-color: #1e1e2e !important;
         border: 1px solid #1e1e2e;
 
@@ -9,6 +24,7 @@
             border: 1px solid #1e1e2e;
         }
     }
+
     .text-h1 {
         color: #fff;
     }
@@ -39,6 +55,17 @@
     .table-users {
         background-color: #1e1e2e;
 
+        .box-select {
+
+
+            span {
+                color: white;
+
+            }
+
+
+        }
+
         h1 {
             color: #FFF;
         }
@@ -67,16 +94,28 @@
 }
 
 .layout-promotion {
-    height: 100vh;
-        overflow: hidden;
-        /* Đảm bảo không có tràn ngoài */
-    
-        .ant-layout-content {
-            height: 100%;
-            overflow: auto;
-            overflow: hidden;
-            /* Đảm bảo nội dung có thể cuộn */
+    min-height: 100%;
+
+    overflow: hidden;
+
+    /* Đảm bảo không có tràn ngoài */
+    .nav-item {
+        .nav-link {
+            color: #2e2e3e;
+
+            &.active {
+                color: #E8900C;
+            }
         }
+
+    }
+
+    .ant-layout-content {
+        height: 100%;
+        overflow: auto;
+        overflow: hidden;
+        /* Đảm bảo nội dung có thể cuộn */
+    }
 
     .bt2 {
         background-color: #E8900C !important;
@@ -133,6 +172,37 @@
     .table-users {
         margin-right: 20px;
         margin-left: 20px;
+
+        .box-select {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            span {
+                color: #E8900C;
+                font-size: 1.2rem;
+                font-weight: bold;
+                flex: 1;
+            }
+
+            h1 {
+                flex: 1;
+            }
+
+            .select {
+                flex: 1;
+                display: flex;
+                align-items: flex-end;
+                justify-content: flex-end;
+
+                select {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: flex-end;
+                    text-align: center;
+                }
+            }
+        }
 
         h1 {
             padding: 10px 0;

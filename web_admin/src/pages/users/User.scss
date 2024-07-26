@@ -90,16 +90,7 @@
 }
 
 .layout-user {
-    height: 100vh;
-        overflow: hidden;
-        /* Đảm bảo không có tràn ngoài */
-    
-        .ant-layout-content {
-            height: 100%;
-            overflow: auto;
-            overflow: hidden;
-            /* Đảm bảo nội dung có thể cuộn */
-        }
+    min-height: 100%;
 
     .bt {
         background-color: #E8900C !important;

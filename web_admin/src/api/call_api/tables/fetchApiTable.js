@@ -7,15 +7,26 @@ import { typeActionDeleteTables } from "../../../store/tables/deleteTable/action
 import { typeActionSetStatus } from "../../../store/tables/setStatus/actions";
 import { valueFormTable } from "../../../store/valueForm/tables/actions";
 import { typeActionUpdateStatusTables } from "../../../store/tables/updateStatusTable/actions";
+import NProgress from "nprogress";
+NProgress.configure({
+  showSpinner: false,
+  trickleSpeed: 300,
+});
 /******************************GET ALL TABLE***************************** */
 const getAllTable = async (dispatch) => {
+  NProgress.start();
+
   dispatch(typeActionGetTables.fetchGetTableRequest());
   try {
     const res = await apiTables.getTable();
     if (res?.data?.success || res?.data?.data) {
+      NProgress.done();
+
       dispatch(typeActionGetTables.fetchGetTableSuccess(res?.data));
     }
   } catch (error) {
+    NProgress.done();
+
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionGetTables.fetchGetTableFailed(error));
@@ -26,6 +37,7 @@ const getAllTable = async (dispatch) => {
 
 const postTable = async (dispatch, tableName) => {
   dispatch(typeActionCreateTables.fetchCreateTableRequest());
+
   try {
     const res = await apiTables.createTable(tableName);
     if (res?.data?.status) {
@@ -66,6 +78,7 @@ const putTable = async (dispatch, id, tableNumber) => {
 
 const destroyTable = async (dispatch, id, setShow) => {
   dispatch(typeActionDeleteTables.fetchDeleteTableRequest());
+
   try {
     const res = await apiTables.deleteTable(id);
     if (res?.data?.status) {
@@ -95,7 +108,6 @@ const patchStatusTable = async (dispatch, id, status) => {
       await getAllTable(dispatch);
     }
   } catch (error) {
-    console.log(error);
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionUpdateStatusTables.fetchUpdateStatusTableFailed(error));

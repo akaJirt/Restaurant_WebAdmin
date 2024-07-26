@@ -11,37 +11,49 @@ import { typeActionUpdatePassword } from "../../../store/auth/updatePassword/act
 import { valueFormUsers } from "../../../store/valueForm/users/actions";
 import { api } from "../../AxiosInstall";
 import { toast } from "react-toastify";
+import NProgress from "nprogress";
+NProgress.configure({
+  showSpinner: false,
+  trickleSpeed: 300,
+});
 /******************************LOGIN***************************** */
 
-const Login = async (payload, dispatch, setEmail, setPassword, navigate) => {
+const Login = async (payload, dispatch, navigate) => {
   dispatch(typeActionLogins.fetchRequest());
+  NProgress.start();
   try {
     const res = await api.loginUser(payload);
     if (res?.data?.status) {
+      NProgress.done();
+
       dispatch(typeActionLogins.fetchSuccess(res?.data?.data));
       dispatch(setAccessToken(res?.data?.data?.token));
       toast.success(res?.data?.status);
-      setEmail("");
-      setPassword("");
+      dispatch(valueFormUsers.setEmail(""));
+      dispatch(valueFormUsers.setPassword(""));
       navigate("/");
     }
   } catch (error) {
+    NProgress.done();
+    const message = error?.response?.data?.message;
+    const status = error?.response?.data?.status;
     dispatch(typeActionLogins.fetchFailed(error));
-    console.log(error, "<<<<<<<<<<<<<<<<<");
-    toast.error(error?.response?.data?.status);
+    toast.error(message || status);
   }
 };
 /******************************GET ME***************************** */
 
 const getMe = async (dispatch) => {
   dispatch(typeActionGetMes.fetchGetMeRequest());
+  NProgress.start();
   try {
     const res = await api.getMe();
-    if (res?.data?.status || res?.data?.data) {
+    if (res?.data?.status && res?.data?.data) {
+      NProgress.done();
       dispatch(typeActionGetMes.fetchGetMeSuccess(res?.data?.data?.user));
     }
   } catch (error) {
-    console.log(error);
+    NProgress.done();
     dispatch(typeActionLogins.fetchFailed(error));
     toast.error(error?.response?.data?.status);
   }
@@ -49,12 +61,15 @@ const getMe = async (dispatch) => {
 /******************************GET ALL USERS***************************** */
 const getAllUsers = async (dispatch) => {
   dispatch(typeActionGetAllUsers.fetchGetAllUsersRequest());
+  NProgress.start();
   try {
     const res = await api.getUser();
     if (res?.data?.status) {
+      NProgress.done();
       dispatch(typeActionGetAllUsers.fetchGetAllUsersSuccess(res?.data));
     }
   } catch (error) {
+    NProgress.done();
     console.log(error);
     dispatch(typeActionGetAllUsers.fetchGetAllUsersFailed(error));
   }
@@ -64,18 +79,16 @@ const postUser = async (dispatch, data, setShow) => {
   dispatch(typeActionCreateUser.fetchCreateUserRequest());
   try {
     const res = await api.createUser(data);
-    console.log(res.data, "[POST]");
     if (res?.data?.status) {
       dispatch(typeActionCreateUser.fetchCreateUserSuccess(res?.data));
       dispatch(valueFormUsers.setFullName(""));
       dispatch(valueFormUsers.setEmail(""));
       dispatch(valueFormUsers.setPassword(""));
-      dispatch(valueFormUsers.setRole(""));
+      dispatch(valueFormUsers.setRole("client"));
       setShow(false);
       await getAllUsers(dispatch);
     }
   } catch (error) {
-    console.log(error);
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionCreateUser.fetchCreateUserFailed(error));
@@ -89,12 +102,11 @@ const putMe = async (dispatch, data) => {
   try {
     const res = await api.updateMe(data);
     if (res?.data?.status) {
-      toast.success(res?.data?.status);
       dispatch(typeActionUpdateMe.fetchUpdateMeSuccess(res?.data));
       await getMe(dispatch);
+      toast.success(res?.data?.status);
     }
   } catch (error) {
-    console.log(error);
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionUpdateMe.fetchUpdateMeFailed(error));
@@ -108,7 +120,6 @@ const destroyUser = async (dispatch, id) => {
     const res = await api.deleteUser(id);
     console.log(res.data, "[DELETE]");
   } catch (error) {
-    console.log(error);
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionDeleteUser.fetchDeleteUserFailed(error));
@@ -128,9 +139,12 @@ const updatePassword = async (
   setIsEye3
 ) => {
   dispatch(typeActionUpdatePassword.fetchUpdatePasswordRequest());
+  NProgress.start();
+
   try {
     const res = await api.updatePassword(currentPassword, newPassword);
     if (res?.data?.status) {
+      NProgress.done();
       dispatch(typeActionUpdatePassword.fetchUpdatePasswordSuccess(res?.data));
       toast.success(res?.data?.status);
       setCurrentPassword("");
@@ -140,9 +154,8 @@ const updatePassword = async (
       setIsEye2(false);
       setIsEye3(false);
     }
-    console.log(res.data, "[UPDATE PASSWORD]");
   } catch (error) {
-    console.log(error);
+    NProgress.done();
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionUpdatePassword.fetchUpdatePasswordFailed(error));
@@ -152,15 +165,17 @@ const updatePassword = async (
 /******************************Forgot Password***************************** */
 const forgotPasswordAuth = async (dispatch, email, setEmail) => {
   dispatch(typeActionForgotPassword.fetchForgotPasswordRequest());
+  NProgress.start();
   try {
     const res = await api.forgotPassword(email);
     if (res?.data?.status) {
+      NProgress.done();
       toast.success(res?.data?.message);
       dispatch(typeActionForgotPassword.fetchForgotPasswordSuccess(res?.data));
       setEmail("");
     }
   } catch (error) {
-    console.log(error);
+    NProgress.done();
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionForgotPassword.fetchForgotPasswordFailed(error));
@@ -177,9 +192,11 @@ const resetPasswordAuth = async (
   navigate
 ) => {
   dispatch(typeActionResetPassword.fetchResetPasswordRequest());
+  NProgress.start();
   try {
     const res = await api.resetPassword(token, newPassword);
     if (res?.data?.status) {
+      NProgress.done();
       toast.success(res?.data?.message);
       dispatch(typeActionResetPassword.fetchResetPasswordSuccess(res?.data));
       setNewPassword("");
@@ -187,7 +204,7 @@ const resetPasswordAuth = async (
       navigate("/login");
     }
   } catch (error) {
-    console.log(error);
+    NProgress.done();
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionResetPassword.fetchResetPasswordFailed(error));
