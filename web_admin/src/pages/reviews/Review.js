@@ -8,8 +8,6 @@ const Review = (props) => {
   const theme = useSelector(getThemeState);
   return (
     <div className={`layout-review ${theme ? "theme" : ""} `}>
-      <h1 className="text-h1">Reviews</h1>
-      <button className="mx-3 btn btn-primary bt2">Add New User</button>
       <TableReview />
     </div>
   );

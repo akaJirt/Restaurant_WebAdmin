@@ -182,6 +182,7 @@ const forgotPasswordAuth = async (dispatch, email, setEmail) => {
     toast.error(message || status);
   }
 };
+/******************************RESET PASSWORD***************************** */
 
 const resetPasswordAuth = async (
   dispatch,
@@ -211,6 +212,20 @@ const resetPasswordAuth = async (
     toast.error(message || status);
   }
 };
+
+/******************************HISTORY PAYMENT***************************** */
+const historyPaymentUser = async (id, setData) => {
+  try {
+    const res = await api.historyUser(id);
+    if (res && res.data && res.data.status === "success") {
+      setData(res.data.data);
+    }
+  } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    toast.error(message || status);
+  }
+};
 export {
   Login,
   getMe,
@@ -221,4 +236,5 @@ export {
   updatePassword,
   forgotPasswordAuth,
   resetPasswordAuth,
+  historyPaymentUser,
 };

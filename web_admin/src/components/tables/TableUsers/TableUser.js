@@ -10,8 +10,11 @@ import { setStatusUsers } from "../../../store/auth/setStatusUsers/actions";
 import { getAllUsers } from "../../../api/call_api/auth/fetchApiAuth";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import _ from "lodash";
+import ModalHistoryUser from "./ModalUser/ModalHistoryUser";
 const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   console.log("render TableUser");
+  const [showHistory, setShowHistory] = useState(false);
+  const [item, setItem] = useState({});
   const [currentPage, setCurrentPage] = useState(0);
   const [isClick, setIsClick] = useState("up");
   const theme = useSelector(getThemeState);
@@ -87,8 +90,18 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
       return;
     }
   };
+
+  const handleClickView = (item) => {
+    setItem(item);
+    setShowHistory(true);
+  };
   return (
     <div className="mt-3 mb-3 table-users">
+      <ModalHistoryUser
+        show={showHistory}
+        setShow={setShowHistory}
+        item={item}
+      />
       <ModalUsers />
       <div>
         <div className="box-h1-select">
@@ -155,6 +168,12 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
                       )}
                     </td>
                     <td>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => handleClickView(item)}
+                      >
+                        View
+                      </button>
                       <button
                         className="btn btn-danger mx-2"
                         onClick={(e) => handleClickXoa(item, e)}

@@ -48,6 +48,8 @@ const api = {
     axiosInstance.post(`users/forgot-password`, { email }),
   resetPassword: (token, password) =>
     axiosInstance.patch(`users/reset-password/${token}`, { password }),
+  historyUser: (id) =>
+    axiosInstance.get(`payments/payments-history?userId=${id}`),
 };
 //*******************************TABLES********************************* */
 

@@ -39,7 +39,6 @@ function Promotion(props) {
       setEndDate("");
     }
   };
-  console.log(listDataPromotion, "check <<<<<<<<<<<<<<<<<<<<<<DATA");
   return (
     <div className={`layout-promotion ${theme ? "theme" : ""}`}>
       <ModalPromotion

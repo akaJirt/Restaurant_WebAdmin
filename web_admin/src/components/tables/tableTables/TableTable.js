@@ -16,7 +16,7 @@ const TableTable = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [show, setShow] = useState(false);
   const [itemTable, setItemTable] = useState({});
-  const [status, setStatus] = useState("open");
+  const [status, setStatus] = useState("all");
   const table = useSelector(getTableState);
   const { isLoading, dataTable } = table;
   let data = dataTable?.data;
@@ -70,7 +70,8 @@ const TableTable = () => {
     }
   }, [pageCount, currentPage]);
   /**********************************TOGGLE ***************************** */
-
+  const dataTitle = [...new Set(data?.map((item) => item.status))];
+  console.log(dataTitle, "check<<<<<<");
   return (
     <div className="mt-3 mb-3 layout">
       {isLoading ? (
@@ -81,12 +82,21 @@ const TableTable = () => {
         <>
           <div className="box-h1-span mb-2">
             <span>{`Tổng Bàn: ${dataTable?.totalTables}`}</span>
-            <h1 className="text-center ">GET TABLES</h1>
+            <h1 className="text-center ">
+              {dataTitle.length > 1
+                ? "Tất Cả Bàn"
+                : dataTitle[0] === "open"
+                ? "Bàn Đang Mở"
+                : dataTitle[1] === "lock"
+                ? "Bàn Đang Đóng"
+                : "Bàn DEMO"}
+            </h1>
             <div className="select">
               <select value={status} onChange={handleStatusChange}>
                 <option value={"all"}>All</option>
-                <option value={"open"}>Open</option>
-                <option value={"lock"}>Lock</option>
+                {dataTitle.map((item) => (
+                  <option>{item}</option>
+                ))}
               </select>
             </div>
           </div>

@@ -31,19 +31,11 @@ const User = (props) => {
   };
   return (
     <div className={`layout-user ${theme ? "theme" : ""}`}>
-      <h1 className="text-h1">
-        Quản Lí{" "}
-        {capitalizeFirstLetter(role) === "True"
-          ? "Users Đã xác thực"
-          : capitalizeFirstLetter(role) === "False"
-          ? "Users Chưa xác thực"
-          : capitalizeFirstLetter(role)}
-      </h1>
       <button
-        className="mx-3 btn btn-primary bt"
+        className="mx-3 btn btn-primary bt mt-3"
         onClick={handleClickAddNewUser}
       >
-        Add New User
+        Thêm Người Dùng
       </button>
       <ModalUsers show={show} handleClose={handleClose} setShow={setShow} />
       <TableUser
