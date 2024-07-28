@@ -86,11 +86,11 @@ const ModalMenuItem = ({ show, handleClose, setShow }) => {
         <Modal.Header closeButton className="modal-header">
           <Modal.Title className="modal-title">
             {getStatusMenuItem[0] === "create"
-              ? "Create Menu Item"
+              ? "Tạo món mới"
               : getStatusMenuItem[0] === "delete"
-              ? "Delete Menu Item"
+              ? "Xóa món mới"
               : getStatusMenuItem[0] === "update"
-              ? "Update Menu Item"
+              ? "Cập nhật món mới"
               : ""}
           </Modal.Title>
         </Modal.Header>
@@ -115,21 +115,21 @@ const ModalMenuItem = ({ show, handleClose, setShow }) => {
         </Modal.Body>
         <Modal.Footer className="modal-footer">
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Hủy
           </Button>
           <Button variant="primary" onClick={handleClickCreateMenuItem}>
             {isLoadingCreateMenuItem ? (
               <LoadingOutlined />
             ) : getStatusMenuItem[0] === "create" ? (
-              "create"
+              "Tạo"
             ) : isLoadingDeleteMenuItem ? (
               <LoadingOutlined />
             ) : getStatusMenuItem[0] === "delete" ? (
-              "Delete"
+              "Xóa"
             ) : isLoadingUpdateMenuItem ? (
               <LoadingOutlined />
             ) : getStatusMenuItem[0] === "update" ? (
-              "Update"
+              "Cập nhật"
             ) : (
               ""
             )}

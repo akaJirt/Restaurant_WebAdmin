@@ -36,6 +36,7 @@ import forgotPasswordSlice from "./auth/forgotPassword/forgotPasswordSlice.js";
 import resetPasswordSlice from "./auth/resetPassword/resetPasswordSlice.js";
 import createUserSlice from "./auth/createUser/createUserSlice.js";
 import orderByTableIdSlice from "./orders/getOrderByTableId/orderByTableIdSlice.js";
+import menuOptionSlice from "./menuItem/menuOption/menuOptionSlice.js";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -75,5 +76,6 @@ const rootReducer = combineReducers({
   resetPassword: resetPasswordSlice,
   createUser: createUserSlice,
   orderByTableId: orderByTableIdSlice,
+  menuOption: menuOptionSlice,
 });
 export default rootReducer;

@@ -24,6 +24,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   const data = dataGetAllUsers?.data?.users;
   const [itemCount, setItemCount] = useState([]);
 
+  console.log(role, "check role");
   const getApiUsers = useCallback(async () => {
     await getAllUsers(dispatch);
   }, [dispatch]);
@@ -63,6 +64,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   ).length;
 
   const totalPage = Math.ceil(itemPage / totalPageCount);
+  console.log(totalPage, "<<<<<<<<<<<<<<<<<<<<<");
   const handleChange = (e) => {
     setRole(e.target.value);
     setCurrentPage(0);
@@ -107,16 +109,16 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
         <div className="box-h1-select">
           <span></span>
           <h1 className="text-center mb-2">
-            {role === "admin" ||
-            role === "staff" ||
-            role === "client" ||
-            role === "true" ||
-            role === "false"
-              ? capitalizeFirstLetter(role) === "True"
-                ? "Đã xác thực"
-                : capitalizeFirstLetter(role) === "False"
-                ? "Chưa xác thực"
-                : capitalizeFirstLetter(role)
+            {role === "admin"
+              ? "Quản Lí"
+              : role === "staff"
+              ? "Nhân Viên"
+              : role === "client"
+              ? "Khách Hàng"
+              : role === "true"
+              ? "Đã Xác Thực"
+              : role === "false"
+              ? "Chưa Xác Thực"
               : "Quản Lí Người Dùng"}
           </h1>
           <select value={role} onChange={handleChange}>
@@ -132,7 +134,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
             <tr>
               <th>Stt</th>
               <th className="th">
-                Full Name
+                Họ và tên
                 <span className="ic-swap" onClick={handleClickSort}>
                   <AiOutlineSwapRight
                     className={`ic-up ${isClick === "up" ? "click" : ""}`}
@@ -143,10 +145,10 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
                 </span>
               </th>
               <th>Email</th>
-              <th>Avatar</th>
-              <th>Role</th>
-              <th>Create_At</th>
-              <th>Option</th>
+              <th>Ảnh</th>
+              <th>Vai trò</th>
+              <th>Ngày tạo</th>
+              <th>Lựa chọn</th>
             </tr>
           </thead>
           <tbody>
@@ -160,7 +162,15 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
                     <td className="img">
                       <img alt="h1" src={item.img_avatar_url} />
                     </td>
-                    <td>{item.role}</td>
+                    <td>
+                      {item.role === "client"
+                        ? "Khách Hàng"
+                        : item.role === "staff"
+                        ? "Nhân Viên"
+                        : item.role === "admin"
+                        ? "Quản Lí"
+                        : item.role}
+                    </td>
 
                     <td>
                       {moment(item.violations.violation_date).format(
@@ -172,7 +182,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
                         className="btn btn-secondary"
                         onClick={() => handleClickView(item)}
                       >
-                        View
+                        Chi Tiết
                       </button>
                       <button
                         className="btn btn-danger mx-2"

@@ -81,8 +81,7 @@ const apiMenuItem = {
 };
 //*******************************Orders********************************* */
 const apiOrder = {
-  getOrderTableId: (id) =>
-    axiosInstance.get(`orders/get-order-by-tableId-for-client/${id}`),
+  getOrder: () => axiosInstance.get(`payments/payments-history`),
 };
 //*******************************Promotions********************************* */
 const apiPromotion = {

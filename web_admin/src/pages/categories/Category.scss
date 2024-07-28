@@ -93,12 +93,8 @@
 }
 
 .layout-category {
-    height: 100vh;
-
-    .ant-layout-content {
-        height: 100%;
-        /* Ensure the content takes up the full height */
-    }
+   min-height: 100%;
+   padding-top: 20px;
 
     .bt2 {
         background-color: #E8900C !important;

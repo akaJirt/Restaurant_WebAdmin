@@ -6,9 +6,12 @@ import { getThemeState } from "../../store/selector";
 import { setStatusMenuItem } from "../../store/menuItem/setStatusMenuItem/actions";
 import ModalMenuItem from "../../components/Modal/menu/ModalMenuItem";
 import { valueFormMenu } from "../../store/valueForm/menu/actions";
+import ModalOption from "../../components/tables/tableMenu/ModalOption";
 function Menu(props) {
   console.log("render Menu");
   const [show, setShow] = useState(false);
+  const [showOption, setShowOption] = useState(false);
+
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
   const handleClickAddNewMenu = (e) => {
@@ -30,14 +33,14 @@ function Menu(props) {
   return (
     <div className={`layout-menu ${theme ? "theme" : ""}`}>
       <ModalMenuItem show={show} handleClose={handleClose} setShow={setShow} />
-      <h1 className="text-h1">Menu</h1>
+      <ModalOption show={showOption} setShow={setShowOption} />
       <button
-        className="mx-3 btn btn-primary bt2"
+        className="mt-3 mx-3 btn btn-primary bt2"
         onClick={handleClickAddNewMenu}
       >
-        Add New Menu
+        Tạo Món Ăn
       </button>
-      <TableMenu setShow={setShow} />
+      <TableMenu setShow={setShow} setShowOption={setShowOption} />
     </div>
   );
 }

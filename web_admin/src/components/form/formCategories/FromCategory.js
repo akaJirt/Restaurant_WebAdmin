@@ -46,11 +46,11 @@ const FromCategory = () => {
   };
   return (
     <div className="form">
-      <h1 className="text-h1 text-center mt-3 mb-3">Create Category</h1>
+      <h1 className="text-h1 text-center mt-3 mb-3">Tạo Mới Thể Loại</h1>
       <div className="form-group">
-        <label className="form-label">Name</label>
+        <label className="form-label">tên thể loại</label>
         <input
-          placeholder="Nhập name..."
+          placeholder="Nhập thể loại..."
           type="text"
           className="form-control"
           value={name}

@@ -12,14 +12,14 @@ function Tables(props) {
   return (
     <div className={`layout-table ${theme ? "theme" : ""}`}>
       <Tabs
-        defaultActiveKey="Table"
+        defaultActiveKey="Bàn"
         id="uncontrolled-tab-example"
         className="mb-3 mx-3"
       >
-        <Tab eventKey="Table" title="Table">
+        <Tab eventKey="Bàn" title="Bàn">
           <TableTable />
         </Tab>
-        <Tab eventKey="createTable" title="createTable">
+        <Tab eventKey="Tạo Bàn" title="Tạo Bàn">
           <FormTable />
         </Tab>
       </Tabs>

@@ -60,7 +60,7 @@ export const getStatusMenuItemState = (state) =>
 export const getCreateMenuItemState = (state) => state.createMenuItem;
 export const getDeleteMenuItemState = (state) => state.deleteMenuItem;
 export const getUpdateMenuItemState = (state) => state.updateMenuItem;
-
+export const menuOptionState = (state) => state.menuOption.options.payload;
 //value
 export const getValueNameState = (state) => state.valueMenu.getName;
 export const getValueEngNameState = (state) => state.valueMenu.getEngName;

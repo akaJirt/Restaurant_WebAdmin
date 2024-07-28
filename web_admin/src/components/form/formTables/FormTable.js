@@ -38,9 +38,9 @@ const FormTable = () => {
 
   return (
     <div className="form">
-      <h1 className="text-h1 text-center mt-3 mb-3">Create Table</h1>
+      <h1 className="text-h1 text-center mt-3 mb-3">Tạo Bàn</h1>
       <div className="form-group">
-        <label className="form-label">Table number</label>
+        <label className="form-label">Bàn số</label>
         <input
           type="text"
           placeholder="Nhập số bàn"
@@ -55,12 +55,12 @@ const FormTable = () => {
             isLoading ? (
               <LoadingOutlined />
             ) : (
-              "Create"
+              "Tạo"
             )
           ) : isLoadingUpdate ? (
             <LoadingOutlined />
           ) : (
-            "Update"
+            "Cập Nhật"
           )}
         </button>
       </div>

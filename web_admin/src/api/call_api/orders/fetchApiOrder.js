@@ -1,4 +1,3 @@
-import { typeActionGetOrderByTableId } from "../../../store/orders/getOrderByTableId/actions";
 import { toast } from "react-toastify";
 import { apiOrder } from "../../AxiosInstall";
 import NProgress from "nprogress";
@@ -8,24 +7,22 @@ NProgress.configure({
   trickleSpeed: 100,
 });
 
-const getOrderTable = async (dispatch, id) => {
-  dispatch(typeActionGetOrderByTableId.fetchGetOrderByTableIdRequest());
+const getAllOrder = async (setListDataOrder) => {
   NProgress.start();
   try {
-    const res = await apiOrder.getOrderTableId(id);
-    if (res?.data?.success) {
+    const res = await apiOrder.getOrder();
+    if (res && res.data && res.data.status === "success") {
       NProgress.done();
-      dispatch(
-        typeActionGetOrderByTableId.fetchGetOrderByTableIdSuccess(res?.data)
-      );
+      setListDataOrder(res.data.data);
+    } else {
+      setListDataOrder([]);
     }
   } catch (error) {
     NProgress.done();
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
-    dispatch(typeActionGetOrderByTableId.fetchGetOrderByTableIdFailed(error));
     toast.error(message || status);
   }
 };
 
-export { getOrderTable };
+export { getAllOrder };

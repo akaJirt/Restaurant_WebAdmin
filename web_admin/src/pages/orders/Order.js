@@ -8,8 +8,6 @@ function Order(props) {
   const theme = useSelector(getThemeState);
   return (
     <div className={`layout-order ${theme ? "theme" : ""}`}>
-      <h1 className="text-h1">Orders</h1>
-      <button className="mx-3 btn btn-primary bt2">Add New User</button>
       <TableOrder />
     </div>
   );

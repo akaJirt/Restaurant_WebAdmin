@@ -8,7 +8,7 @@ import { typeActionUpdateMenuItem } from "../../../store/menuItem/updateMenuItem
 import NProgress from "nprogress";
 NProgress.configure({
   showSpinner: false,
-  trickleSpeed: 300,
+  trickleSpeed: 500,
 });
 const getAllMenuItem = async (dispatch) => {
   NProgress.start();

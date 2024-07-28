@@ -1,32 +1,47 @@
-import React from "react";
-import moment from "moment";
+import React, { useState } from "react";
+import ConvertMoney from "../../../utils/convertMoney";
+import FormatDay from "../../../utils/FormDay";
+import ModalOrder from "./ModalOrders/ModalOrder";
 const LoadingTableOrder = ({ item, index }) => {
-  console.log(item, "item ne");
+  const [show, setShow] = useState(false);
+  const [listDataItem, setListDataItem] = useState([]);
+
+  const handleClickView = (item) => {
+    setShow(true);
+    if (item && item.items && item.items.length > 0) {
+      setListDataItem(item.items);
+    } else {
+      setListDataItem([]);
+    }
+  };
   return (
     <>
-      {item.items.length > 0 ? (
-        item.items.map((item, index) => {
-          return (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{item.options}</td>
-              <td>{item.quantity}</td>
-              <td>{item.status}</td>
-              <td>{item.note}</td>
-              <td>{moment(item.createdAt).format("DD-MM-YYYY ~ HH:mm:ss")}</td>
-              <td className="bt">
-                <button className="btn btn-secondary">View</button>
-                <button className="btn btn-danger mx-2">Xóa</button>
-                <button className="btn btn-primary">Sửa</button>
-              </td>
-            </tr>
-          );
-        })
-      ) : (
-        <tr>
-          <td colSpan={6}>No data</td>
-        </tr>
-      )}
+      <ModalOrder show={show} setShow={setShow} listDataItem={listDataItem} />
+      <tr key={index}>
+        <td>{index + 1}</td>
+        <td>{item.tableNumber}</td>
+        <td>{ConvertMoney(item.amount)}</td>
+        <td>{item.userPay.fullName}</td>
+        <td>
+          {item.paymentMethod === "Cash"
+            ? "Tiền mặt"
+            : item.paymentMethod === "ZaloPay"
+            ? "Chuyển Khoản"
+            : ""}
+        </td>
+        <td className="img_avatar">
+          <img alt="img_avatar" src={item.userPay.img_avatar_url} />
+        </td>
+        <td>{FormatDay(item.createdAt)}</td>
+        <td className="bt">
+          <button
+            className="btn btn-secondary"
+            onClick={() => handleClickView(item)}
+          >
+            View
+          </button>
+        </td>
+      </tr>
     </>
   );
 };

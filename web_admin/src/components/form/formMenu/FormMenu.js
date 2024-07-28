@@ -66,9 +66,9 @@ const FormMenu = () => {
   return (
     <div className="form">
       <div className="form-group">
-        <label className="form-label">Name</label>
+        <label className="form-label">Tên món</label>
         <input
-          placeholder="Nhập name..."
+          placeholder="Nhập tên món..."
           type="text"
           className="form-control"
           value={name}
@@ -76,9 +76,9 @@ const FormMenu = () => {
         />
       </div>
       <div className="form-group mt-3 mb-3">
-        <label className="form-label">EngName</label>
+        <label className="form-label">Tên tiếng anh</label>
         <input
-          placeholder="Nhập eng name..."
+          placeholder="Nhập tên tiếng anh..."
           type="text"
           className="form-control"
           onChange={(e) => dispatch(valueFormMenu.setEngName(e.target.value))}
@@ -86,9 +86,9 @@ const FormMenu = () => {
         />
       </div>
       <div className="form-group">
-        <label className="form-label">Description</label>
+        <label className="form-label">Mô tả</label>
         <input
-          placeholder="Nhập description..."
+          placeholder="Nhập mô tả..."
           type="text"
           className="form-control"
           onChange={(e) =>
@@ -98,9 +98,9 @@ const FormMenu = () => {
         />
       </div>
       <div className="form-group">
-        <label className="form-label">Price</label>
+        <label className="form-label">Giá tiền</label>
         <input
-          placeholder="Nhập price..."
+          placeholder="Nhập giá tiền..."
           type="text"
           className="form-control"
           onChange={(e) => dispatch(valueFormMenu.setPrice(e.target.value))}
@@ -108,7 +108,7 @@ const FormMenu = () => {
         />
       </div>
       <div className="form-group mt-3 mb-1">
-        <label className="form-label">Image</label>
+        <label className="form-label">Ảnh món</label>
         <input
           type="file"
           className="form-control"
@@ -136,7 +136,7 @@ const FormMenu = () => {
         )}
       </div>
       <div className="form-group mt-3 mb-3">
-        <label className="form-label">CategoryId</label>
+        <label className="form-label">Thể loại</label>
         <select
           value={category_id}
           className="form-control"
@@ -145,7 +145,7 @@ const FormMenu = () => {
           }
         >
           <option value="" disabled>
-            Chose...
+            Chọn...
           </option>
           {dataGetCategories?.data?.length > 0 &&
             dataGetCategories?.data?.map((item, index) => (
@@ -171,7 +171,7 @@ const FormMenu = () => {
         </div>
       )}
       <div className="form-group mt-3 mb-3">
-        <label className="form-label">Options</label>
+        <label className="form-label">Món phụ</label>
         <select
           className="form-control ic-arrow"
           value={option.map((opt) => opt.value)}

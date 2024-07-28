@@ -4,6 +4,7 @@ import { getPromotion } from "../../../api/call_api/promotions/fetchApiPromotion
 import ToolTip from "../../ToolTip/ToolTip";
 import { cutString } from "../../../utils/cutValue";
 import { toast } from "react-toastify";
+import ReactPaginate from "react-paginate";
 
 const TablePromotion = ({
   listDataPromotion,
@@ -14,6 +15,8 @@ const TablePromotion = ({
 }) => {
   const [filteredPromotions, setFilteredPromotions] = useState([]);
   const [isSelected, setIsSelected] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+
   const getApiPromotions = useCallback(async () => {
     await getPromotion(setListDataPromotion);
   }, [setListDataPromotion]);
@@ -40,6 +43,15 @@ const TablePromotion = ({
     filterPromotions();
   }, [filterPromotions]);
 
+  let limit = 5;
+  let offset = currentPage * limit;
+  let newListData = filteredPromotions.slice(offset, offset + limit);
+  let pageCount = Math.ceil(filteredPromotions.length / limit);
+
+  const handlePageChange = (s) => {
+    setCurrentPage(s.selected);
+  };
+
   const handleChangeOption = (value) => {
     setIsSelected(value);
   };
@@ -65,31 +77,30 @@ const TablePromotion = ({
   };
 
   const newDataFilter = [
-    ...new Set(filteredPromotions.map((item) => item.discountType)),
+    ...new Set(
+      listDataPromotion?.data?.promotions?.map((item) => item.discountType)
+    ),
   ];
-  console.log(newDataFilter);
+  console.log(isSelected, "check isSelected");
   return (
     <div className="mt-3 mb-3 table-users">
       <div className="box-select">
-        <span>
-          Voucher{" "}
-          {newDataFilter.length > 2
-            ? "Khả Dụng"
-            : newDataFilter.map((item) => (
-                <span>{item.toUpperCase()}</span>
-              ))}{" "}
-          : {filteredPromotions.length}
-        </span>
-        <h1 className="text-center">Voucher</h1>
+        <span>Hiện Có :{filteredPromotions.length}</span>
+        <h1 className="text-center">Khuyến Mãi {isSelected.toUpperCase()}</h1>
         <div className="select">
           <select
             value={isSelected}
             onChange={(e) => handleChangeOption(e.target.value)}
           >
-            <option value={""}>Tất cả voucher</option>
-            <option value={"fixed"}>Giảm giá theo món</option>
-            <option value={"percentage"}>Giảm giá tối thiểu </option>
-            <option value={"maxPercentage"}>Giảm giá tối đa</option>
+            <option value={""}>Tất cả</option>
+            {newDataFilter.length > 0 &&
+              newDataFilter.map((item, index) => {
+                return (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                );
+              })}
           </select>
         </div>
       </div>
@@ -107,8 +118,8 @@ const TablePromotion = ({
           </tr>
         </thead>
         <tbody>
-          {filteredPromotions.length > 0 ? (
-            filteredPromotions.map((item, index) => {
+          {newListData.length > 0 ? (
+            newListData.map((item, index) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -124,7 +135,7 @@ const TablePromotion = ({
 
                   <td>{item.usedCount}</td>
                   <td>
-                    <button className="btn btn-secondary">View</button>
+                    <button className="btn btn-secondary">Chi Tiết</button>
                     <button
                       className="btn btn-danger mx-2"
                       onClick={() => handleClickDelete(item._id, item.code)}
@@ -148,6 +159,27 @@ const TablePromotion = ({
           )}
         </tbody>
       </Table>
+      <ReactPaginate
+        previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageChange}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+        pageClassName="page-tem"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLinkClassName="page-link"
+        forcePage={currentPage}
+      />
     </div>
   );
 };

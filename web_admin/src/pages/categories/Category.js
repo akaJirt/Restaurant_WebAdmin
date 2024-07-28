@@ -9,7 +9,6 @@ function Category(props) {
   const theme = useSelector(getThemeState);
   return (
     <div className={`layout-category ${theme ? "theme" : ""}`}>
-      <h1 className="text-h1">Categories</h1>
       <FromCategory />
       <TableCategory />
     </div>

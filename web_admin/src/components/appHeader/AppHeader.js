@@ -32,6 +32,7 @@ const AppHeader = () => {
     await getMe(dispatch);
     await getAllCategories(dispatch);
   }, [dispatch]);
+
   useEffect(() => {
     fetchGetMe();
   }, [fetchGetMe]);

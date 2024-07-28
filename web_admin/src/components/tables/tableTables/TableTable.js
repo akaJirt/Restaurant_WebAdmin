@@ -71,7 +71,6 @@ const TableTable = () => {
   }, [pageCount, currentPage]);
   /**********************************TOGGLE ***************************** */
   const dataTitle = [...new Set(data?.map((item) => item.status))];
-  console.log(dataTitle, "check<<<<<<");
   return (
     <div className="mt-3 mb-3 layout">
       {isLoading ? (
@@ -81,21 +80,21 @@ const TableTable = () => {
       ) : (
         <>
           <div className="box-h1-span mb-2">
-            <span>{`Tổng Bàn: ${dataTable?.totalTables}`}</span>
+            <span>{`Hiện Có ${dataTable?.totalTables} Bàn`}</span>
             <h1 className="text-center ">
-              {dataTitle.length > 1
+              {status === "all"
                 ? "Tất Cả Bàn"
-                : dataTitle[0] === "open"
-                ? "Bàn Đang Mở"
-                : dataTitle[1] === "lock"
-                ? "Bàn Đang Đóng"
-                : "Bàn DEMO"}
+                : status === "open"
+                ? "Bàn đang mở"
+                : "Bàn đang đóng"}
             </h1>
             <div className="select">
               <select value={status} onChange={handleStatusChange}>
-                <option value={"all"}>All</option>
-                {dataTitle.map((item) => (
-                  <option>{item}</option>
+                <option value={"all"}>Tất Cả</option>
+                {dataTitle.map((item, index) => (
+                  <option value={item} key={index}>
+                    {item === "open" ? "Mở" : "Đóng"}
+                  </option>
                 ))}
               </select>
             </div>
@@ -104,10 +103,10 @@ const TableTable = () => {
           <Table striped bordered hover responsive>
             <thead>
               <tr>
-                <th>Table number</th>
-                <th>Img QR</th>
-                <th>Status</th>
-                <th>Option</th>
+                <th>Số Bàn</th>
+                <th>Ảnh QR</th>
+                <th>Trạng Thái</th>
+                <th>Lựa Chọn</th>
               </tr>
             </thead>
             <tbody>

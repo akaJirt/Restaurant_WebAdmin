@@ -12,7 +12,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import ReactPaginate from "react-paginate";
 import { getAllMenuItem } from "../../../api/call_api/menuItem/fetchApiMenuItem";
 
-const TableMenu = ({ setShow }) => {
+const TableMenu = ({ setShow, setShowOption }) => {
   console.log("TABLE MENU");
   const [category, setCategory] = useState("Món khai vị");
   const [currentPage, setCurrentPage] = useState(0);
@@ -63,8 +63,8 @@ const TableMenu = ({ setShow }) => {
       ) : (
         <>
           <div className="box-users">
-            <h1>Total Menu Items : {dataMenuItem?.totalMenuItems}</h1>
-            <h1 className="text-center">GET MENUS</h1>
+            <h1>Hiện có : {pageCount} món ăn</h1>
+            <h1 className="text-center">{category}</h1>
             <div className="select">
               <select value={category} onChange={handleChangSelect}>
                 {dataGetCategories?.data?.length > 0 &&
@@ -82,14 +82,14 @@ const TableMenu = ({ setShow }) => {
             <thead>
               <tr>
                 <th>Stt</th>
-                <th>Name</th>
-                <th>EngName</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Rating</th>
-                <th>Category</th>
-                <th>Option</th>
+                <th>Tên Món</th>
+                <th>Tên Tiếng Anh</th>
+                <th>Mô Tả</th>
+                <th>Giá Tiền</th>
+                <th>Ảnh Món</th>
+                <th>Đánh Giá</th>
+                <th>Thể Loại</th>
+                <th>Lựa chọn</th>
               </tr>
             </thead>
             <tbody>
@@ -102,6 +102,7 @@ const TableMenu = ({ setShow }) => {
                     offset={offset}
                     category={category}
                     setShow={setShow}
+                    setShowOption={setShowOption}
                   />
                 ))
               ) : (
