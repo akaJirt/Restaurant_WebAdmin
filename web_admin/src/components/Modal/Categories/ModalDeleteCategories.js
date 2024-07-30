@@ -17,7 +17,7 @@ const ModalDeleteCategories = ({ show, handleClose, dataItem, setShow }) => {
     <>
       <Modal show={show} onHide={handleClose} className="modal-delete">
         <Modal.Header closeButton>
-          <Modal.Title>Delete Table</Modal.Title>
+          <Modal.Title>Xóa Thể Loại</Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-body">
           {
@@ -30,13 +30,13 @@ const ModalDeleteCategories = ({ show, handleClose, dataItem, setShow }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Không
           </Button>
           <Button variant="primary" onClick={handleClickDelete}>
             {getStateDelete?.isLoadingDeleteCategory ? (
               <LoadingOutlined />
             ) : (
-              "Delete"
+              "Xác Nhận"
             )}
           </Button>
         </Modal.Footer>

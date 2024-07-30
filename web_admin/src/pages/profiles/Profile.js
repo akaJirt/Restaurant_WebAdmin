@@ -9,7 +9,7 @@ const Profile = () => {
   const theme = useSelector(getThemeState);
   return (
     <div className={`layout-profile ${theme ? "theme" : ""}`}>
-      <h1 className="text-h1 mb-3">Profile</h1>
+      <h1 className="text-h1 mb-3">Thông tin cá nhân</h1>
       <div className="card-profile">
         <div className="card-profile-left">
           <CardProfileLeft />

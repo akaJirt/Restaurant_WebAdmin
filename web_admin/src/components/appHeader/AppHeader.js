@@ -21,7 +21,7 @@ import { getAllCategories } from "../../api/call_api/categories/fetchApiCategory
 
 const AppHeader = () => {
   console.log("render App Header");
-  const [dropdown, setDropdown] = useState(false);
+  const [dropdown, setDropdown] = useState(true);
   const { Header } = Layout;
   const theme = useSelector(getThemeState);
   const dispatch = useDispatch();
@@ -115,7 +115,7 @@ const AppHeader = () => {
         </Row>
       </Header>
       {dropdown && (
-        <div className={`menu ${theme ? "theme" : ""}`} ref={menuRef}>
+        <div className={`menu-header ${theme ? "theme" : ""}`} ref={menuRef}>
           <ul>
             <li className="menu-name">
               {" "}

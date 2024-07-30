@@ -14,8 +14,6 @@ function Promotion(props) {
   const [itemPromotion, setItemPromotion] = useState({});
   const theme = useSelector(getThemeState);
   const [statusPromotion, setStatusPromotion] = useState(["create"]);
-  const [code, setCode] = useState("");
-  const [description, setDescription] = useState("");
   const [discount, setDiscount] = useState("");
   const [discountType, setDiscountType] = useState("");
   const [minOrderValue, setMinOrderValue] = useState("");
@@ -23,22 +21,21 @@ function Promotion(props) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [id, setId] = useState("");
+  const [maxUsage, setMaxUsage] = useState("");
 
   const handleSelect = (key) => {
-    console.log("Selected Tab: ", key);
-    // Custom logic can be added here
     if (key === "Khuyến Mãi") {
       setStatusPromotion(["create"]);
-      setCode("");
-      setDescription("");
       setDiscount("");
       setDiscountType("");
       setMinOrderValue("");
       setMaxDiscount("");
       setStartDate("");
       setEndDate("");
+      setMaxUsage("");
     }
   };
+
   return (
     <div className={`layout-promotion ${theme ? "theme" : ""}`}>
       <ModalPromotion
@@ -46,8 +43,6 @@ function Promotion(props) {
         setShow={setShow}
         itemPromotion={itemPromotion}
         statusPromotion={statusPromotion}
-        setCode={setCode}
-        setDescription={setDescription}
         setDiscount={setDiscount}
         setDiscountType={setDiscountType}
         setMinOrderValue={setMinOrderValue}
@@ -55,6 +50,9 @@ function Promotion(props) {
         setStartDate={setStartDate}
         setEndDate={setEndDate}
         setId={setId}
+        setMaxUsage={setMaxUsage}
+        setListDataPromotion={setListDataPromotion}
+        setStatusPromotion={setStatusPromotion}
       />
       <Tabs
         defaultActiveKey="Khuyến Mãi"
@@ -72,29 +70,21 @@ function Promotion(props) {
           />
         </Tab>
         <Tab
-          eventKey={
-            statusPromotion[0] === "update"
-              ? "Update Khuyến Mãi"
-              : "Taọ Khuyến Mãi"
-          }
+          eventKey={"Tạo Khuyến Mãi"}
           title={
             statusPromotion[0] === "update"
               ? "Update Khuyến Mãi"
-              : "Taọ Khuyến Mãi"
+              : "Tạo Khuyến Mãi"
           }
         >
           <FormPromotion
             setListDataPromotion={setListDataPromotion}
-            setCode={setCode}
-            setDescription={setDescription}
             setDiscount={setDiscount}
             setDiscountType={setDiscountType}
             setMinOrderValue={setMinOrderValue}
             setMaxDiscount={setMaxDiscount}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
-            code={code}
-            description={description}
             discount={discount}
             discountType={discountType}
             minOrderValue={minOrderValue}
@@ -104,6 +94,9 @@ function Promotion(props) {
             statusPromotion={statusPromotion}
             listDataPromotion={listDataPromotion}
             id={id}
+            setMaxUsage={setMaxUsage}
+            maxUsage={maxUsage}
+            setStatusPromotion={setStatusPromotion}
           />
         </Tab>
       </Tabs>

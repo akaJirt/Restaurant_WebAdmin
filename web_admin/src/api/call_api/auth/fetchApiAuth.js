@@ -118,7 +118,10 @@ const destroyUser = async (dispatch, id) => {
   dispatch(typeActionDeleteUser.fetchDeleteUserRequest());
   try {
     const res = await api.deleteUser(id);
-    console.log(res.data, "[DELETE]");
+    if (res && res.data && res.data.status === "success") {
+      toast.success(res.data.status);
+      await getMe(dispatch);
+    }
   } catch (error) {
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;

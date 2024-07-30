@@ -65,16 +65,16 @@ const TableCategory = () => {
       ) : (
         <>
           <div className="box-item mb-2">
-            <span>Total Categories : {dataGetCategories?.totalCategories}</span>
-            <h1 className="text-center">GET CATEGORIES</h1>
+            <span>Hiện có : {dataGetCategories?.totalCategories} thể loại</span>
+            <h1 className="text-center">Tất Cả Thể Loại</h1>
             <span className="sp"></span>
           </div>
           <Table striped bordered hover responsive>
             <thead>
               <tr>
                 <th>Stt</th>
-                <th>Name</th>
-                <th>Option</th>
+                <th>Tên</th>
+                <th>Lựa Chọn</th>
               </tr>
             </thead>
             <tbody>

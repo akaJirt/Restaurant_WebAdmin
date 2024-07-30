@@ -88,9 +88,9 @@ const ModalMenuItem = ({ show, handleClose, setShow }) => {
             {getStatusMenuItem[0] === "create"
               ? "Tạo món mới"
               : getStatusMenuItem[0] === "delete"
-              ? "Xóa món mới"
+              ? "Xóa món"
               : getStatusMenuItem[0] === "update"
-              ? "Cập nhật món mới"
+              ? "Cập nhật món"
               : ""}
           </Modal.Title>
         </Modal.Header>

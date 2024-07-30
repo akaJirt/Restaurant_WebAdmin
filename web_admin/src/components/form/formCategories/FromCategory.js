@@ -13,6 +13,7 @@ import {
   updateCategory,
 } from "../../../api/call_api/categories/fetchApiCategory";
 import { LoadingOutlined } from "@ant-design/icons";
+import { setStatusCategories } from "../../../store/categories/setStatus/actions";
 
 const FromCategory = () => {
   console.log("render FormCategory");
@@ -44,6 +45,11 @@ const FromCategory = () => {
       await updateCategory(dispatch, getStatusCategory[1], name);
     }
   };
+
+  const handleClickClose = () => {
+    dispatch(setStatusCategories.setStatus(["create"]));
+    dispatch(valueFormCategories.setName(""));
+  };
   return (
     <div className="form">
       <h1 className="text-h1 text-center mt-3 mb-3">Tạo Mới Thể Loại</h1>
@@ -57,24 +63,49 @@ const FromCategory = () => {
           onChange={handleChangName}
         />
       </div>
-      <div className="mt-3 text-center">
-        <button
-          className="btn btn-primary bt2"
-          onClick={handleClickAddCategory}
-        >
-          {getStatusCategory[0] === "create" ||
-          getStatusCategory[0] !== "update" ? (
-            getCreateState?.isLoadingCreateCategory ? (
+      <div className="mt-3 text-center two-bt">
+        {getStatusCategory[0] === "update" ? (
+          <>
+            <button
+              className="btn btn-primary bt2"
+              onClick={handleClickAddCategory}
+            >
+              {getStatusCategory[0] === "create" ||
+              getStatusCategory[0] !== "update" ? (
+                getCreateState?.isLoadingCreateCategory ? (
+                  <LoadingOutlined />
+                ) : (
+                  "Tạo"
+                )
+              ) : getUpdateState?.isLoadingUpdateCategory ? (
+                <LoadingOutlined />
+              ) : (
+                "Cập Nhật"
+              )}
+            </button>
+            <button className="btn btn-danger bt2" onClick={handleClickClose}>
+              Hủy
+            </button>
+          </>
+        ) : (
+          <button
+            className="btn btn-primary bt2"
+            onClick={handleClickAddCategory}
+          >
+            {getStatusCategory[0] === "create" ||
+            getStatusCategory[0] !== "update" ? (
+              getCreateState?.isLoadingCreateCategory ? (
+                <LoadingOutlined />
+              ) : (
+                "Tạo"
+              )
+            ) : getUpdateState?.isLoadingUpdateCategory ? (
               <LoadingOutlined />
             ) : (
-              "Add Category"
-            )
-          ) : getUpdateState?.isLoadingUpdateCategory ? (
-            <LoadingOutlined />
-          ) : (
-            "Update Category"
-          )}
-        </button>
+              "Cập Nhật"
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

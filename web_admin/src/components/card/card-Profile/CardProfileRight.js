@@ -23,19 +23,19 @@ const CardProfileRight = () => {
             onClick={() => setChangeTab(OVERVIEW)}
             className={`li ${changeTab === OVERVIEW ? "click" : ""}`}
           >
-            Overview
+            Tổng quan
           </li>
           <li
             onClick={() => setChangeTab(EDIT_PROFILE)}
             className={`li ${changeTab === EDIT_PROFILE ? "click" : ""}`}
           >
-            Edit Profile
+            Chỉnh sửa hồ sơ
           </li>
           <li
             onClick={() => setChangeTab(CHANGE_PROFILE)}
             className={`li ${changeTab === CHANGE_PROFILE ? "click" : ""}`}
           >
-            Change Password
+            Đổi mật khẩu
           </li>
         </ul>
       }

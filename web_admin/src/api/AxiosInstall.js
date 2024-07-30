@@ -90,5 +90,7 @@ const apiPromotion = {
   deleteApiPromotion: (id) => axiosInstance.delete(`promotions/${id}`),
   updateApiPromotion: (id, data) =>
     axiosInstance.patch(`promotions/${id}`, data),
+  updateStatusPromotion: (id) =>
+    axiosInstance.patch(`promotions/update-status/${id}`),
 };
 export { api, apiTables, apiCategories, apiMenuItem, apiOrder, apiPromotion };

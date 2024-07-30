@@ -121,7 +121,10 @@
         padding: 20px;
         max-width: 500px;
         margin: 0 auto;
-
+        .two-bt{
+            display: flex;
+            gap: 10px;
+        }
         .img {
             width: 50px;
             cursor: pointer;

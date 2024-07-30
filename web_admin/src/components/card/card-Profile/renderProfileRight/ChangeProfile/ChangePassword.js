@@ -41,7 +41,7 @@ const ChangePassword = () => {
   return (
     <div className={`form-change-password ${theme ? "theme" : ""}`}>
       <div className="form-group">
-        <p>Current Password</p>
+        <p>Mật khẩu cũ</p>
         <div className="box-eye">
           <input
             className="form-control"
@@ -64,7 +64,7 @@ const ChangePassword = () => {
         </div>
       </div>
       <div className="form-group mt-3 mb-2">
-        <p>New Password</p>
+        <p>Mật khẩu mới</p>
         <div className="box-eye">
           <input
             className="form-control"
@@ -87,11 +87,11 @@ const ChangePassword = () => {
         </div>
       </div>
       <div className="form-group">
-        <p>Re-enter New Password</p>
+        <p>Nhập lại mật khẩu mới</p>
         <div className="box-eye">
           <input
             className="form-control"
-            placeholder="Nhập lại password"
+            placeholder="Nhập lại password mới"
             type={isEye3 ? "text" : "password"}
             value={reNewPassword}
             onChange={(e) => setReNewPassword(e.target.value)}
@@ -115,7 +115,7 @@ const ChangePassword = () => {
           onClick={handleClickChangePassword}
           disabled={isLoadingUpdatePassword ? true : false}
         >
-          Change Password
+          Đổi mật khẩu
         </button>
       </div>
     </div>

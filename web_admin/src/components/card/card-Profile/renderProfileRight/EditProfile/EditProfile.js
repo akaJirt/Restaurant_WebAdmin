@@ -76,7 +76,7 @@ const EditProfile = () => {
   return (
     <div className={`form-profile ${theme ? "theme" : ""}`}>
       <div className="form-group">
-        <p>Profile Image</p>
+        <p>hình ảnh</p>
         <div className="box-img-edit">
           <div className="img">
             <img
@@ -105,7 +105,7 @@ const EditProfile = () => {
         </div>
       </div>
       <div className="form-group mt-3 mb-3 form-2">
-        <p>Full Name</p>
+        <p>Họ và tên</p>
         <input
           className="form-control"
           placeholder="Nhập firstName..."
@@ -120,7 +120,7 @@ const EditProfile = () => {
           onClick={handleClick}
           disabled={isLoadingUpdateMe ? true : false}
         >
-          Save Profile
+          lưu thay đổi
         </button>
       </div>
     </div>

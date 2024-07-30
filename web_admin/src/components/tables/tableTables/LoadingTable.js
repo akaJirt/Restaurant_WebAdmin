@@ -64,7 +64,7 @@ const LoadingTable = ({
             justifyContent: "center",
           }}
         >
-          <div>{item.status}</div>
+          <div>{item.status === "open" ? "Mở" : "Đóng"}</div>
           <IconButton>
             {status === "open" || item.status === "open" ? (
               <ToggleOnOutlinedIcon

@@ -1,10 +1,12 @@
 import Table from "react-bootstrap/Table";
 import React, { useCallback, useEffect, useState } from "react";
-import { getPromotion } from "../../../api/call_api/promotions/fetchApiPromotions";
-import ToolTip from "../../ToolTip/ToolTip";
-import { cutString } from "../../../utils/cutValue";
+import {
+  getPromotion,
+  patchStatusPromotion,
+} from "../../../api/call_api/promotions/fetchApiPromotions";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
+import { BiToggleRight, BiToggleLeft } from "react-icons/bi";
 
 const TablePromotion = ({
   listDataPromotion,
@@ -16,6 +18,7 @@ const TablePromotion = ({
   const [filteredPromotions, setFilteredPromotions] = useState([]);
   const [isSelected, setIsSelected] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
+  const [title, setTitle] = useState("Số tiền giảm");
 
   const getApiPromotions = useCallback(async () => {
     await getPromotion(setListDataPromotion);
@@ -30,6 +33,9 @@ const TablePromotion = ({
       const filtered = listDataPromotion.data.promotions.filter((item) => {
         if (isSelected === "") {
           return true;
+        }
+        if (isSelected === "true" || isSelected === "false") {
+          return item.isActive === (isSelected === "true");
         } else {
           return item.discountType === isSelected;
         }
@@ -47,6 +53,12 @@ const TablePromotion = ({
   let offset = currentPage * limit;
   let newListData = filteredPromotions.slice(offset, offset + limit);
   let pageCount = Math.ceil(filteredPromotions.length / limit);
+
+  useEffect(() => {
+    if (currentPage >= pageCount && currentPage > 0) {
+      setCurrentPage(pageCount - 1);
+    }
+  }, [pageCount, currentPage]);
 
   const handlePageChange = (s) => {
     setCurrentPage(s.selected);
@@ -81,18 +93,83 @@ const TablePromotion = ({
       listDataPromotion?.data?.promotions?.map((item) => item.discountType)
     ),
   ];
-  console.log(isSelected, "check isSelected");
+
+  const handleClickView = (item) => {
+    setItemPromotion({ item });
+    setShow(true);
+  };
+  const handleClickResetOpen = async (id, type) => {
+    if (type === "open") {
+      await patchStatusPromotion(id, setListDataPromotion);
+    } else {
+      await patchStatusPromotion(id, setListDataPromotion);
+    }
+  };
+  console.log(newListData, "<<<<<<<<<<");
+
+  const filterTitle = useCallback(() => {
+    let hasFixed = false;
+    let hasPercentage = false;
+    let hasMaxPercentage = false;
+
+    for (let i = 0; i < newListData.length; i++) {
+      const { discountType } = newListData[i];
+
+      if (discountType === "fixed") {
+        hasFixed = true;
+      } else if (discountType === "percentage") {
+        hasPercentage = true;
+      } else if (discountType === "maxPercentage") {
+        hasMaxPercentage = true;
+      }
+    }
+
+    if (hasFixed && hasPercentage && hasMaxPercentage) {
+      setTitle("Giảm tiền & phần trăm");
+      return;
+    } else if (hasFixed && hasPercentage) {
+      setTitle("Giảm tiền & phần trăm");
+      return;
+    } else if (hasFixed && hasMaxPercentage) {
+      setTitle("Giảm tiền & phần trăm");
+      return;
+    } else if (hasFixed) {
+      setTitle("Giảm theo tiền");
+      return;
+    } else if (hasPercentage || hasMaxPercentage) {
+      setTitle("Giảm theo phần trăm");
+      return;
+    }
+  }, [newListData]);
+
+  useEffect(() => {
+    filterTitle();
+  }, [filterTitle]);
+
+  console.log(typeof isSelected, "<<<<<<<<<<<<<<<");
   return (
     <div className="mt-3 mb-3 table-users">
       <div className="box-select">
-        <span>Hiện Có :{filteredPromotions.length}</span>
-        <h1 className="text-center">Khuyến Mãi {isSelected.toUpperCase()}</h1>
+        <span>Hiện có : {filteredPromotions.length} </span>
+        <h1 className="text-center">
+          {isSelected.toUpperCase() === ""
+            ? "Tất cả khuyến mãi"
+            : isSelected === "true"
+            ? "Khuyến mãi khả dụng"
+            : isSelected === "false"
+            ? "Khuyến mãi không khả dụng"
+            : isSelected === "fixed"
+            ? "Khuyến mãi theo tiền"
+            : "Khuyến mãi theo phần trăm"}
+        </h1>
         <div className="select">
           <select
             value={isSelected}
             onChange={(e) => handleChangeOption(e.target.value)}
           >
             <option value={""}>Tất cả</option>
+            <option value={"true"}>Khả dụng</option>
+            <option value={"false"}>Không khả dụng</option>
             {newDataFilter.length > 0 &&
               newDataFilter.map((item, index) => {
                 return (
@@ -109,9 +186,9 @@ const TablePromotion = ({
           <tr>
             <th>STT</th>
             <th>Mã giảm giá</th>
-            <th>Mô tả</th>
+            <th>Trạng thái</th>
             <th>Loại mã</th>
-            <th>Số tiền giảm</th>
+            <th>{title}</th>
             <th>Lượt dùng mã</th>
             <th>đã sử dụng</th>
             <th>Lựa chọn</th>
@@ -125,9 +202,26 @@ const TablePromotion = ({
                   <td>{index + 1}</td>
                   <td>{item.code}</td>
                   <td>
-                    <ToolTip text={item.description}>
-                      {cutString(item.description)}
-                    </ToolTip>
+                    <div>{item.isActive ? "Khả dụng" : "Không khả dụng"}</div>
+                    <div>
+                      {item.isActive ? (
+                        <BiToggleRight
+                          style={{ cursor: "pointer" }}
+                          size={20}
+                          color="#007bff"
+                          onClick={() => handleClickResetOpen(item._id, "open")}
+                        />
+                      ) : (
+                        <BiToggleLeft
+                          style={{ cursor: "pointer" }}
+                          size={20}
+                          color="#FF0000"
+                          onClick={() =>
+                            handleClickResetOpen(item._id, "close")
+                          }
+                        />
+                      )}
+                    </div>
                   </td>
                   <td>{item.discountType}</td>
                   <td>{formatDiscount(item.discount)}</td>
@@ -135,7 +229,12 @@ const TablePromotion = ({
 
                   <td>{item.usedCount}</td>
                   <td>
-                    <button className="btn btn-secondary">Chi Tiết</button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => handleClickView(item)}
+                    >
+                      Chi Tiết
+                    </button>
                     <button
                       className="btn btn-danger mx-2"
                       onClick={() => handleClickDelete(item._id, item.code)}

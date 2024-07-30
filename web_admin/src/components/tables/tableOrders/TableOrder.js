@@ -66,9 +66,13 @@ const TableOrder = () => {
         </h1>
         <div className="select">
           <select value={idOption} onChange={handleChangeOption}>
-            {itemSelect?.map((item, index) => {
-              return <option key={index}>{item}</option>;
-            })}
+            {itemSelect && itemSelect.length > 0 ? (
+              itemSelect?.map((item, index) => {
+                return <option key={index}>{item}</option>;
+              })
+            ) : (
+              <option>Không có dữ liệu</option>
+            )}
           </select>
         </div>
       </div>

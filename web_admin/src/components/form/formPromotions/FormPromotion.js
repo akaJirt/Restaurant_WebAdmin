@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   postPromotion,
   updatePromotions,
 } from "../../../api/call_api/promotions/fetchApiPromotions";
+import FormatDate from "../../../utils/FormatDate";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const FormPromotion = ({
   setListDataPromotion,
   statusPromotion,
-  setCode,
-  setDescription,
   setDiscount,
   setDiscountType,
   setMinOrderValue,
   setMaxDiscount,
   setStartDate,
   setEndDate,
-  code,
-  description,
   discount,
   discountType,
   minOrderValue,
@@ -25,48 +23,88 @@ const FormPromotion = ({
   endDate,
   listDataPromotion,
   id,
+  setMaxUsage,
+  maxUsage,
+  setStatusPromotion,
 }) => {
   console.log("render FormPromotion");
+  const [isLoading, setIsLoading] = useState(false);
   const newSetArray = [
     ...new Set(
       listDataPromotion?.data?.promotions?.map((item) => item.discountType) ||
         []
     ),
   ];
+
   const handleClickCreatePromotion = async () => {
     if (statusPromotion[0] === "create") {
       await postPromotion(
-        code,
-        description,
         parseInt(discount),
         discountType,
+        parseInt(maxUsage),
         parseInt(minOrderValue),
         parseInt(maxDiscount),
+        startDate,
+        endDate,
         setListDataPromotion,
-        setCode,
-        setDescription,
         setDiscount,
         setDiscountType,
         setMinOrderValue,
-        setMaxDiscount
+        setMaxDiscount,
+        setIsLoading
       );
     }
     if (statusPromotion[0] === "update") {
-      console.log(startDate, endDate, "<<<<<<<<<<<<<<");
       await updatePromotions(
         id,
-        code,
-        description,
-        discount,
-        discountType,
-        minOrderValue,
-        maxDiscount,
+        maxUsage,
         startDate,
-        endDate
+        endDate,
+        setListDataPromotion,
+        setStatusPromotion,
+        setDiscountType,
+        setIsLoading
       );
     }
   };
 
+  console.log(statusPromotion, "check statusPromotion");
+  const dataFind = useCallback(() => {
+    if (discountType !== "" && statusPromotion[0] !== "update") {
+      let findItem = listDataPromotion?.data?.promotions?.find(
+        (item) => item.discountType === discountType
+      );
+      if (findItem) {
+        setDiscount(findItem.discount);
+        setMaxUsage(findItem.maxUsage);
+        setStartDate(FormatDate(findItem.startDate));
+        setEndDate(FormatDate(findItem.endDate));
+        setMinOrderValue(findItem.minOrderValue);
+        setMaxDiscount(findItem.maxDiscount);
+      } else {
+        setDiscount("");
+        setMaxUsage("");
+        setStartDate("");
+        setEndDate("");
+        setMinOrderValue("");
+        setMaxDiscount("");
+      }
+    }
+  }, [
+    discountType,
+    listDataPromotion?.data?.promotions,
+    setDiscount,
+    setEndDate,
+    setMaxUsage,
+    setStartDate,
+    setMaxDiscount,
+    setMinOrderValue,
+    statusPromotion,
+  ]);
+
+  useEffect(() => {
+    dataFind();
+  }, [dataFind]);
   return (
     <div className="form mb-3">
       <h1 className="text-h1 text-center mt-3 mb-3">
@@ -74,34 +112,20 @@ const FormPromotion = ({
           ? "Update Khuyến Mãi"
           : "Tạo Khuyến Mãi"}
       </h1>
-      <div className="form-group">
-        <label className="form-label">Mã giảm giá</label>
-        <input
-          placeholder="Nhập Mã giảm giá ..."
-          className="form-control"
-          type="text"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-      </div>
-      <div className="form-group mt-3 mb-3">
-        <label className="form-label">Mô tả</label>
-        <input
-          placeholder="Nhập mô tả ..."
-          className="form-control"
-          type="text"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
-        />
-      </div>
+
       <div className="form-group">
         <label className="form-label">Số tiền giảm</label>
         <input
-          placeholder="Nhập Số tiền giảm ..."
+          placeholder={
+            discountType === "" || discountType !== "fixed"
+              ? "Nhập % cần giảm"
+              : "Nhập số tiền cần giảm"
+          }
           className="form-control"
           onChange={(e) => setDiscount(e.target.value)}
           value={discount}
           type="number"
+          disabled={statusPromotion[0] === "update" ? true : false}
         />
       </div>
       <div className="form-group mt-3">
@@ -110,65 +134,105 @@ const FormPromotion = ({
           value={discountType}
           onChange={(e) => setDiscountType(e.target.value)}
           className="form-control"
+          disabled={statusPromotion[0] === "update" ? true : false}
         >
           <option value={""} disabled>
             Chọn...
           </option>
           {newSetArray.map((item, index) => {
-            return <option key={index}>{item}</option>;
+            return (
+              <option value={item} key={index}>
+                {item}
+              </option>
+            );
           })}
         </select>
       </div>
-      {statusPromotion[0] === "update" ? (
+      <div className="form-group mt-3">
+        <label className="form-label">Số lượt sử dụng</label>
+        <input
+          placeholder="Nhập lượt sử dụng"
+          className="form-control"
+          onChange={(e) => setMaxUsage(e.target.value)}
+          value={maxUsage}
+          type="number"
+        />
+      </div>
+      <div className="form-group mt-3">
+        <label className="form-label">Ngày bắt đầu</label>
+        <input
+          type="date"
+          className="form-control"
+          onChange={(e) => setStartDate(e.target.value)}
+          value={startDate}
+        />
+      </div>
+      <div className="form-group mt-3">
+        <label className="form-label">Ngày kết thúc</label>
+        <input
+          type="date"
+          className="form-control"
+          onChange={(e) => setEndDate(e.target.value)}
+          value={endDate}
+        />
+      </div>
+      {discountType === "" || discountType !== "fixed" ? (
         <>
-          <div className="form-group mt-3">
-            <label className="form-label">Ngày bắt đầu</label>
-            <input
-              type="date"
-              className="form-control"
-              onChange={(e) => setStartDate(e.target.value)}
-              value={startDate}
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label className="form-label">Ngày kết thúc</label>
-            <input
-              type="date"
-              className="form-control"
-              onChange={(e) => setEndDate(e.target.value)}
-              value={endDate}
-            />
-          </div>
+          {discountType === "percentage" ? (
+            <div className="form-group mt-3">
+              <label className="form-label">Số tiền tối thiểu</label>
+              <input
+                type="number"
+                placeholder="Nhập Số tiền tối thiểu ..."
+                className="form-control"
+                onChange={(e) => setMinOrderValue(e.target.value)}
+                value={minOrderValue}
+                disabled={statusPromotion[0] === "update" ? true : false}
+              />
+            </div>
+          ) : (
+            <>
+              <div className="form-group mt-3">
+                <label className="form-label">Số tiền tối thiểu</label>
+                <input
+                  type="number"
+                  placeholder="Nhập Số tiền tối thiểu ..."
+                  className="form-control"
+                  onChange={(e) => setMinOrderValue(e.target.value)}
+                  value={minOrderValue}
+                  disabled={statusPromotion[0] === "update" ? true : false}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <label className="form-label">Số tiền tối đa</label>
+                <input
+                  type="number"
+                  placeholder="Nhập Số tiền tối đa ..."
+                  onChange={(e) => setMaxDiscount(e.target.value)}
+                  className="form-control"
+                  value={maxDiscount}
+                  disabled={statusPromotion[0] === "update" ? true : false}
+                />
+              </div>
+            </>
+          )}
         </>
       ) : (
         <></>
       )}
-      <div className="form-group mt-3">
-        <label className="form-label">Số tiền tối thiểu</label>
-        <input
-          type="number"
-          placeholder="Nhập Số tiền tối thiểu ..."
-          className="form-control"
-          onChange={(e) => setMinOrderValue(e.target.value)}
-          value={minOrderValue}
-        />
-      </div>
-      <div className="form-group mt-3">
-        <label className="form-label">Số tiền tối đa</label>
-        <input
-          type="number"
-          placeholder="Nhập Số tiền tối đa ..."
-          onChange={(e) => setMaxDiscount(e.target.value)}
-          className="form-control"
-          value={maxDiscount}
-        />
-      </div>
       <div className="mt-3 text-center">
         <button
           className="btn btn-primary"
           onClick={handleClickCreatePromotion}
+          disabled={isLoading ? true : false}
         >
-          {statusPromotion[0] === "create" ? "Tạo" : "cập nhật"}
+          {isLoading ? (
+            <LoadingOutlined spin />
+          ) : statusPromotion[0] === "update" ? (
+            "Cập Nhật"
+          ) : (
+            "Tạo"
+          )}
         </button>
       </div>
     </div>

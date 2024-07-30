@@ -14,38 +14,103 @@ const getPromotion = async (setListDataPromotion) => {
 };
 
 const postPromotion = async (
-  code,
-  description,
   discount,
   discountType,
+  maxUsage,
   minOrderValue,
   maxDiscount,
+  startDate,
+  endDate,
   setListDataPromotion,
-  setCode,
-  setDescription,
-  setDiscount,
   setDiscountType,
-  setMinOrderValue,
-  setMaxDiscount
+  setIsLoading
 ) => {
   const data = {
-    code,
-    description,
     discount,
     discountType,
+    maxUsage,
     minOrderValue,
     maxDiscount,
+    startDate,
+    endDate,
   };
   try {
+    setIsLoading(true);
     const res = await apiPromotion.postApiPromotion(data);
     if (res && res?.data && res?.data?.status === "success") {
       toast.success(res?.data?.status);
-      setCode("");
-      setDescription("");
-      setDiscount("");
       setDiscountType("");
-      setMinOrderValue("");
-      setMaxDiscount("");
+      setIsLoading(false);
+      await getPromotion(setListDataPromotion);
+    }
+  } catch (error) {
+    let mess = error?.response?.data?.message;
+    let status = error?.response?.data?.status;
+    toast.error(mess || status);
+    setIsLoading(false);
+  }
+};
+
+const deletePromotion = async (
+  id,
+  setListDataPromotion,
+  handleClose,
+  setIsLoading
+) => {
+  try {
+    setIsLoading(true);
+    const res = await apiPromotion.deleteApiPromotion(id);
+    if (res && res.data && res.data.status === "success") {
+      toast.success(res.data.status);
+      handleClose();
+      setIsLoading(false);
+      await getPromotion(setListDataPromotion);
+    }
+  } catch (error) {
+    let mess = error?.response?.data?.message;
+    let status = error?.response?.data?.status;
+    toast.error(mess || status);
+    setIsLoading(false);
+  }
+};
+const updatePromotions = async (
+  id,
+  maxUsage,
+  startDate,
+  endDate,
+  setListDataPromotion,
+  setStatusPromotion,
+  setDiscountType,
+  setIsLoading
+) => {
+  try {
+    const data = {
+      maxUsage,
+      startDate,
+      endDate,
+    };
+    setIsLoading(true);
+    const res = await apiPromotion.updateApiPromotion(id, data);
+    if (res && res.data && res.data.status === "success") {
+      toast.success(res.data.status);
+      setStatusPromotion(["create"]);
+      setDiscountType("");
+      setIsLoading(false);
+      await getPromotion(setListDataPromotion);
+    }
+  } catch (error) {
+    let mess = error?.response?.data?.message;
+    let status = error?.response?.data?.status;
+    toast.error(mess || status);
+    setIsLoading(false);
+  }
+};
+
+const patchStatusPromotion = async (id, setListDataPromotion) => {
+  try {
+    const res = await apiPromotion.updateStatusPromotion(id);
+    if (res && res.data && res.data.status === "success") {
+      toast.success(res.data.status);
       await getPromotion(setListDataPromotion);
     }
   } catch (error) {
@@ -54,49 +119,10 @@ const postPromotion = async (
     toast.error(mess || status);
   }
 };
-
-const deletePromotion = async (id) => {
-  try {
-    const res = await apiPromotion.deleteApiPromotion(id);
-    console.log(res, "<<<<<<<<<<<<<<");
-    if (res && res.data && res.data.status === "success") {
-      toast.success(res.data.status);
-    }
-  } catch (error) {
-    let mess = error?.response?.data?.message;
-    let status = error?.response?.data?.status;
-    toast.error(mess || status);
-  }
+export {
+  getPromotion,
+  postPromotion,
+  deletePromotion,
+  updatePromotions,
+  patchStatusPromotion,
 };
-const updatePromotions = async (
-  id,
-  code,
-  description,
-  discount,
-  discountType,
-  minOrderValue,
-  maxDiscount,
-  startDate,
-  endDate
-) => {
-  try {
-    const data = {
-      code,
-      description,
-      discount,
-      discountType,
-      minOrderValue,
-      maxDiscount,
-      startDate,
-      endDate,
-    };
-    console.log("form-data", data, "<<<<<<<<<<<<");
-    const res = await apiPromotion.updateApiPromotion(id, data);
-    console.log(res, "check rs<<<<");
-  } catch (error) {
-    let mess = error?.response?.data?.message;
-    let status = error?.response?.data?.status;
-    toast.error(mess || status);
-  }
-};
-export { getPromotion, postPromotion, deletePromotion, updatePromotions };
