@@ -103,6 +103,11 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
     dispatch(valueFormUsers.setFullName(item.fullName));
   };
 
+  const handleClickAuthentication = (item) => {
+    setShow(true);
+    dispatch(setStatusUsers.setStatus(["authentication", item]));
+  };
+
   return (
     <div className="mt-3 mb-3 table-users">
       <ModalHistoryUser
@@ -159,6 +164,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
           <tbody>
             {sortedItemCount?.length > 0 ? (
               sortedItemCount?.map((item, index) => {
+                console.log(item);
                 return (
                   <tr key={index}>
                     <td>{offset + index + 1}</td>
@@ -183,6 +189,14 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
                       )}
                     </td>
                     <td>
+                      {item.isVerified === false && (
+                        <button
+                          className="btn btn-warning mx-2"
+                          onClick={() => handleClickAuthentication(item)}
+                        >
+                          Xác thực
+                        </button>
+                      )}
                       <button
                         className="btn btn-secondary"
                         onClick={() => handleClickView(item)}

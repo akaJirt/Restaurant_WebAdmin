@@ -11,10 +11,25 @@ import {
 } from "../../../store/selector";
 import FormUser from "../../form/formUsers/FormUser";
 import "./ModalUsers.scss";
-import { destroyUser, postUser } from "../../../api/call_api/auth/fetchApiAuth";
+import {
+  destroyUser,
+  postSendVerifyAuthentication,
+  postUser,
+  postVerifyAuthentication,
+} from "../../../api/call_api/auth/fetchApiAuth";
 import { Tag } from "antd";
+import { FloatingLabel, Form } from "react-bootstrap";
+import { useCallback, useState } from "react";
+import { valueFormUsers } from "../../../store/valueForm/users/actions";
 
-const ModalUsers = ({ show, handleClose, setShow }) => {
+const ModalUsers = ({
+  show,
+  handleClose,
+  verifyCode,
+  setVerifyCode,
+  setSend,
+  send,
+}) => {
   console.log("render modal users");
   const fullName = useSelector(fullNameState);
   const email = useSelector(emailState);
@@ -22,24 +37,41 @@ const ModalUsers = ({ show, handleClose, setShow }) => {
   const role = useSelector(roleState);
   const theme = useSelector(getThemeState);
   const getStatusUsers = useSelector(getSetStatusUsersState);
-  console.log(getStatusUsers, "<<<<<<<<<<<<<<<getStatusUsers");
   const dispatch = useDispatch();
   const userItem = getStatusUsers[1];
-  console.log(getStatusUsers, userItem, "STATE USERS");
   const handleClickXacNhan = async () => {
-    if (getStatusUsers[0] === "create") {
-      const data = {
-        fullName,
-        email,
-        password,
-        role,
-      };
-      await postUser(dispatch, data, handleClose);
-    }
-    if (getStatusUsers[0] === "delete") {
-      await destroyUser(dispatch, userItem._id, handleClose);
+    if (send === true) {
+      console.log("1");
+      await postSendVerifyAuthentication(email, setSend, dispatch);
+    } else {
+      console.log("2");
+      if (getStatusUsers[0] === "create") {
+        const data = {
+          fullName,
+          email,
+          password,
+          role,
+        };
+        await postUser(dispatch, data, handleClose);
+      }
+      if (getStatusUsers[0] === "delete") {
+        await destroyUser(dispatch, userItem._id, handleClose);
+      }
+      if (getStatusUsers[0] === "authentication") {
+        await postVerifyAuthentication(
+          getStatusUsers[1].email,
+          verifyCode,
+          handleClose,
+          dispatch
+        );
+      }
     }
   };
+
+  const handleClickSendEmail = async () => {
+    setSend(true);
+  };
+
   return (
     <>
       <Modal
@@ -54,7 +86,11 @@ const ModalUsers = ({ show, handleClose, setShow }) => {
               ? "Tạo mới người dùng"
               : getStatusUsers[0] === "delete"
               ? "Xóa người dùng"
-              : "Cập nhật người dùng"}
+              : getStatusUsers[0] === "update"
+              ? "Cập nhật người dùng"
+              : `Xác thực ${getStatusUsers[1].role && "Nhân viên"} ${
+                  getStatusUsers[1].fullName
+                }`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-body">
@@ -79,7 +115,50 @@ const ModalUsers = ({ show, handleClose, setShow }) => {
               <FormUser />
             </>
           ) : (
-            ""
+            <>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="E-mail"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="email"
+                  placeholder="name@example.com"
+                  disabled={send ? false : true}
+                  value={send ? email : getStatusUsers[1].email}
+                  onChange={
+                    send
+                      ? (e) => dispatch(valueFormUsers.setEmail(e.target.value))
+                      : null
+                  }
+                />
+              </FloatingLabel>
+              {send ? (
+                <></>
+              ) : (
+                <div className="authentication">
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Mã xác nhận của bạn"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="name@example.com"
+                      onChange={(e) => setVerifyCode(e.target.value)}
+                    />
+                  </FloatingLabel>
+
+                  <Tag
+                    color="cyan"
+                    className="tag-verify"
+                    onClick={handleClickSendEmail}
+                  >
+                    gửi lại mã
+                  </Tag>
+                </div>
+              )}
+            </>
           )}
         </Modal.Body>
         <Modal.Footer>
@@ -88,19 +167,27 @@ const ModalUsers = ({ show, handleClose, setShow }) => {
           </Button>
           <Button
             variant={
-              getStatusUsers[0] === "create"
+              send
+                ? "info"
+                : getStatusUsers[0] === "create"
                 ? "primary"
                 : getStatusUsers[0] === "delete"
                 ? "danger"
-                : "primary"
+                : getStatusUsers[0] === "update"
+                ? "primary"
+                : "warning"
             }
             onClick={handleClickXacNhan}
           >
-            {getStatusUsers[0] === "create"
+            {send
+              ? "Send"
+              : getStatusUsers[0] === "create"
               ? "Tạo"
               : getStatusUsers[0] === "delete"
               ? "Xóa"
-              : "Cập nhật"}
+              : getStatusUsers[0] === "update"
+              ? "Cập nhật"
+              : "Xác thực"}
           </Button>
         </Modal.Footer>
       </Modal>

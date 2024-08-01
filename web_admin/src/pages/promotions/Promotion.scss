@@ -54,41 +54,14 @@
 
     .table-users {
         background-color: #1e1e2e;
-        .box-progressBar{
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-            justify-content: space-between;
-            margin: 0 20px;
-            .progressBar{
-                border: 1px solid #007bff;
-                border-radius: 10px;
-                height: 15px;
-                display: flex;
-                position: relative;
-                .totalCount{
-                    color: #E8900C;
-                    font-size: 9px;
-                    position: absolute;
-                    right: 5px;
-                }
-                .run-progressBar{
-                    position: relative;
-                    background-color: #007bff;
-                    height: 100%;
-                    border-radius: 10px;
-                    transition: width 1s ease-in-out;
-                }
-                .total-progressBar{
-                    color: white;
-                    font-size: 9px;
-                    position: absolute;
-                    left: 25%;
-                    font-weight: bold;
+        .select {
+        
+        
+                select {
+                    color: #2e2e3e;
+                    border: 1px solid #2e2e3e;
                 }
             }
-        }
         .box-select {
 
 
@@ -129,7 +102,6 @@
 
 .layout-promotion {
     min-height: 100%;
-
     overflow: hidden;
 
     /* Đảm bảo không có tràn ngoài */
@@ -206,7 +178,58 @@
     .table-users {
         margin-right: 20px;
         margin-left: 20px;
+        .select {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+        
+                select {
+                    padding: 5px 15px;
+                    color: #E8900C;
+                    border: 1px solid #E8900C;
+                    outline: none;
+                }
+            }
+.box-progressBar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+        margin: 0 20px;
 
+        .progressBar {
+            border: 1px solid #007bff;
+            border-radius: 10px;
+            height: 15px;
+            display: flex;
+            position: relative;
+
+            .totalCount {
+                color: #E8900C;
+                font-size: 9px;
+                position: absolute;
+                right: 5px;
+            }
+
+            .run-progressBar {
+                position: relative;
+                background-color: #007bff;
+                height: 100%;
+                border-radius: 10px;
+                transition: width 1s ease-in-out;
+            }
+
+            .total-progressBar {
+                color: white;
+                font-size: 9px;
+                position: absolute;
+                left: 25%;
+                font-weight: bold;
+            }
+        }
+    }
         .box-select {
             display: flex;
             align-items: center;

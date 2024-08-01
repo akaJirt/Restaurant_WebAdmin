@@ -53,7 +53,7 @@ const TableOrder = () => {
     setIdOption(e.target.value);
   };
   return (
-    <div className="table-users">
+    <div className="table-order">
       <div className="box-top-order">
         <span>Hiện có: {listNewDataOrder.length} hóa đơn</span>
         <h1 className="text-center mb-2">

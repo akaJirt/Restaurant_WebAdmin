@@ -1,98 +1,70 @@
 import React, { useState } from "react";
-import { Checkbox } from "antd";
-import { SlideshowLightbox } from "lightbox.js-react";
 import "lightbox.js-react/dist/index.css";
 import "./FormRegister.scss";
+import { postUser } from "../../../api/call_api/auth/fetchApiAuth";
+import { useDispatch } from "react-redux";
+import { api } from "../../../api/AxiosInstall";
+import { toast } from "react-toastify";
 const FormRegisterUser = (props) => {
   console.log("render FormRegisterUser");
-  const [testImg, setTestImg] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const handleChangImg = (e) => {
-    let img = e.target.files[0];
-    let url = URL.createObjectURL(img);
-    setTestImg(url);
-  };
-  const handleClickShowImg = () => {
-    setIsOpen(true);
+  const dispatch = useDispatch();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleClickRegister = async () => {
+    try {
+      const data = { fullName, email, password };
+      const res = await api.createUser(data);
+      if (res && res.data && res.data.status === "success") {
+        toast.success(res.data.message);
+        setEmail("");
+        setPassword("");
+        setFullName("");
+      }
+      console.log(res, "<<<<<<<<<<<<<<<<<<<");
+    } catch (error) {
+      const status = error?.response?.data?.status;
+      const message = error?.response?.data?.message;
+      toast.error(message || status);
+    }
   };
   return (
     <div>
       <div className="form-group mb-3">
-        <label className="mb-2">PhoneNumber</label>
-        <input
-          type="number"
-          className="form-control"
-          placeholder="enter phone..."
-        />
-      </div>
-      <div className="form-group mb-3">
-        <label className="mb-2">FirstName</label>
+        <label className="mb-2">Full Name</label>
         <input
           type="text"
           className="form-control"
-          placeholder="enter firstName..."
+          placeholder="Nhập full name"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
         />
       </div>
       <div className="form-group mb-3">
-        <label className="mb-2">LastName</label>
+        <label className="mb-2">E-mail</label>
         <input
-          type="text"
+          type="email"
+          value={email}
           className="form-control"
-          placeholder="enter lastName..."
+          placeholder="Nhập e-mail"
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <div className="row form-avatar">
-        <div className="col-8">
-          <div className="form-group mb-3">
-            <label className="mb-2">Avatar</label>
-            <input
-              type="file"
-              className="form-control"
-              onChange={handleChangImg}
-            />
-          </div>
-        </div>
-        <div className="col-4">
-          <div className="img" onClick={handleClickShowImg}>
-            <img alt="hinh anh" src={testImg} />
-          </div>
-        </div>
-      </div>
-      {testImg && (
-        <SlideshowLightbox
-          images={[{ src: testImg }]}
-          showThumbnails={true}
-          open={isOpen}
-          lightboxIdentifier="lbox1"
-          onClose={() => {
-            setIsOpen(false);
-          }}
-        ></SlideshowLightbox>
-      )}
       <div className="form-group mb-3">
-        <label className="mb-2">Role</label>
-        <select value={"Admin"} className="form-control">
-          <option value={"a"}>Admin</option>
-          <option value={"k"}>Khách Hàng</option>
-          <option value={"p"}>Phục Vụ</option>
-        </select>
-      </div>
-      <div className="form-group mb-3">
-        <label className="mb-2">Password</label>
+        <label className="mb-2">Mật khẩu</label>
         <input
           type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           className="form-control"
-          placeholder="enter password..."
+          placeholder="Nhập mật khẩu..."
         />
       </div>
-      <div className="form-group">
-        <Checkbox className="text-checkbox">
-          <span>I agree and accept the</span>
-          <span className="span"> terms and conditions</span>
-        </Checkbox>
-      </div>
       <div className="text-center button mt-3">
-        <button className="btn btn-primary">Register</button>
+        <button className="btn btn-primary" onClick={handleClickRegister}>
+          Đăng ký
+        </button>
       </div>
     </div>
   );

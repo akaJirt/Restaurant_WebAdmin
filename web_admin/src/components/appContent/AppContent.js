@@ -18,6 +18,7 @@ import {
 } from "../../components/navigation/Navigation";
 import ForgotPassword from "../../pages/forgotPassword/ForgotPassword";
 import ResetPassword from "../../pages/resetPassword/ResetPassword";
+import RegisterForm from "../quanLiUsers/RegisterForm";
 const AppContent = () => {
   console.log("render App Content");
 
@@ -39,6 +40,7 @@ const AppContent = () => {
         <Routes>
           <Route element={<PublicNavigation />}>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<RegisterForm />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
           </Route>

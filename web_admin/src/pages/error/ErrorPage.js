@@ -1,21 +1,20 @@
 import React from "react";
 import "./ErrorPage.scss";
 import { NavLink } from "react-router-dom";
+import errorPage from "../../images/errorPage.jpg";
 const ErrorPage = (props) => {
   return (
-    <div className="content-error-page">
-      <h1 className="h1 text-center">404</h1>
-      <h2 className="text-center">
-        The page you are looking for doesn't exist.
-      </h2>
+    <div style={{ paddingTop: "100px" }} className="content-error-page">
+      {/* <h1 className="h1 text-center">404</h1> */}
+      <h2 className="text-center">Trang bạn đang tìm kiếm không tồn tại.</h2>
       <div className="text-center">
         <NavLink to={"/"} end>
-          <button>Back to home</button>
+          <button>Quay lại trang chủ</button>
         </NavLink>
       </div>
       <div className="img ">
         <img
-          src="http://127.0.0.1:5500/assets/img/not-found.svg"
+          src="https://img.lovepik.com/photo/45007/5339.jpg_wh860.jpg"
           alt="not-found"
         />
       </div>

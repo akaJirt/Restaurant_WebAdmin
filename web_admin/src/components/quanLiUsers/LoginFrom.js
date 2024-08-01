@@ -20,13 +20,13 @@ const LoginFrom = (props) => {
       </div>
       <div className="form-login">
         <div className="box-title">
-          <h5 className="text-center">Login to You Account</h5>
-          <p className="text-center">Enter your phone & password to login</p>
+          <h5 className="text-center">Đăng nhập vào Tài khoản của bạn</h5>
+          <p className="text-center">Nhập số e-mail và mật khẩu để đăng nhập</p>
         </div>
         <FormLoginUser />
         <div className="text-footer mt-3">
-          <span>Don't have account?</span>
-          <span onClick={handleClickRegister}>Create an account</span>
+          <span>Không có tài khoản?</span>
+          <span onClick={handleClickRegister}>Tạo một tài khoản</span>
         </div>
       </div>
     </div>

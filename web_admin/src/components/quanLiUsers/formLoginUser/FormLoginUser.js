@@ -41,23 +41,23 @@ const FormLoginUser = (props) => {
   return (
     <div>
       <div className="form-group mb-3">
-        <label className="mb-2">PhoneNumber</label>
+        <label className="mb-2">E-mail</label>
         <input
           ref={input1}
-          type="text"
+          type="email"
           className="form-control"
-          placeholder="enter phone..."
+          placeholder="Nhập e-mail"
           value={email}
           onChange={(e) => dispatch(valueFormUsers.setEmail(e.target.value))}
         />
       </div>
       <div className="form-group mb-3">
-        <label className="mb-2">Password</label>
+        <label className="mb-2">Mật khẩu</label>
         <div className="box-ip-ic">
           <input
             type={isEye ? "text" : "password"}
             className="form-control"
-            placeholder="enter password..."
+            placeholder="Nhập mật khẩu"
             value={password}
             onChange={(e) =>
               dispatch(valueFormUsers.setPassword(e.target.value))
@@ -75,10 +75,10 @@ const FormLoginUser = (props) => {
       </div>
       <div className="form-group box-forgot-password">
         <Checkbox className="text-checkbox" onChange={handleCheckBox}>
-          Remember me
+          Ghi nhớ mật khẩu
         </Checkbox>
         <Link className="link" to={"/forgot-password"}>
-          Forgot Password?
+          Quên mật khẩu?
         </Link>
       </div>
       <div className="text-center button mt-3">

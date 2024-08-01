@@ -11,16 +11,13 @@ NProgress.configure({
   trickleSpeed: 500,
 });
 const getAllMenuItem = async (dispatch) => {
-  NProgress.start();
   dispatch(typeActionMenuItem.fetchMenuItemRequest());
   try {
     const res = await apiMenuItem.getMenuItem();
     if (res?.data?.success) {
-      NProgress.done();
       dispatch(typeActionMenuItem.fetchMenuItemSuccess(res?.data));
     }
   } catch (error) {
-    NProgress.done();
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionMenuItem.fetchMenuItemFailed(error));

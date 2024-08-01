@@ -15,6 +15,9 @@ const User = (props) => {
   console.log("render User");
   const [role, setRole] = useState("admin");
   const [show, setShow] = useState(false);
+  const [verifyCode, setVerifyCode] = useState("");
+  const [send, setSend] = useState(false);
+
   const dispatch = useDispatch();
   const theme = useSelector(getThemeState);
   const handleClickAddNewUser = () => {
@@ -23,11 +26,13 @@ const User = (props) => {
   };
 
   const handleClose = () => {
+    setSend(false);
     setShow(false);
     dispatch(valueFormUsers.setFullName(""));
     dispatch(valueFormUsers.setEmail(""));
     dispatch(valueFormUsers.setPassword(""));
     dispatch(valueFormUsers.setRole("staff"));
+    setVerifyCode("");
   };
 
   return (
@@ -38,7 +43,15 @@ const User = (props) => {
       >
         Thêm Người Dùng
       </button>
-      <ModalUsers show={show} handleClose={handleClose} setShow={setShow} />
+      <ModalUsers
+        verifyCode={verifyCode}
+        show={show}
+        handleClose={handleClose}
+        setShow={setShow}
+        setVerifyCode={setVerifyCode}
+        setSend={setSend}
+        send={send}
+      />
       <TableUser
         role={role}
         setRole={setRole}

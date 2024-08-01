@@ -45,15 +45,15 @@ const RegisterForm = (props) => {
       </div>
       <div className="form-login">
         <div className="box-title">
-          <h5 className="text-center">Create an Account</h5>
+          <h5 className="text-center">Tạo tài khoản</h5>
           <p className="text-center">
-            Enter your personal details to create account
+            Nhập thông tin cá nhân của bạn để tạo tài khoản
           </p>
         </div>
         <FormRegisterUser />
         <div className="text-footer mt-3">
-          <span>Already have account?</span>
-          <span onClick={handleClickLogin}>Login</span>
+          <span>Đã có tài khoản?</span>
+          <span onClick={handleClickLogin}>Đăng nhập</span>
         </div>
       </div>
       {scroll && (

@@ -227,6 +227,43 @@ const historyPaymentUser = async (id, setData) => {
     toast.error(message || status);
   }
 };
+
+const postVerifyAuthentication = async (
+  email,
+  verificationCode,
+  handleClose,
+  dispatch
+) => {
+  try {
+    const data = { email, verificationCode };
+    const res = await api.verifyUser(data);
+    if (res && res.data && res.data.status === "success") {
+      toast.success(res.data.message);
+      handleClose();
+      await getAllUsers(dispatch);
+    }
+  } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    toast.error(message || status);
+  }
+};
+
+const postSendVerifyAuthentication = async (email, setSend, dispatch) => {
+  try {
+    const res = await api.sendVerifyUser(email);
+    if (res && res.data && res.data.status === "success") {
+      toast.success(res.data.message);
+      setSend(false);
+      dispatch(valueFormUsers.setEmail(""));
+    }
+  } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    toast.error(message || status);
+  }
+};
+
 export {
   Login,
   getMe,
@@ -238,4 +275,6 @@ export {
   forgotPasswordAuth,
   resetPasswordAuth,
   historyPaymentUser,
+  postVerifyAuthentication,
+  postSendVerifyAuthentication,
 };

@@ -12,4 +12,13 @@
         }
 
     }
+    .authentication{
+        position: relative;
+        .tag-verify{
+            position: absolute;
+            top: 18px;
+            right: 10px;
+            cursor: pointer;
+        }
+    }
 }

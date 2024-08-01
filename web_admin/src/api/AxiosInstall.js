@@ -50,6 +50,9 @@ const api = {
     axiosInstance.patch(`users/reset-password/${token}`, { password }),
   historyUser: (id) =>
     axiosInstance.get(`payments/payments-history?userId=${id}`),
+  verifyUser: (data) => axiosInstance.post(`users/verify`, data),
+  sendVerifyUser: (email) =>
+    axiosInstance.post(`users/resend-verification`, { email }),
 };
 //*******************************TABLES********************************* */
 
