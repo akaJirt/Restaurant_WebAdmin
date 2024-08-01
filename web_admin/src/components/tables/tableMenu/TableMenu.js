@@ -11,6 +11,7 @@ import LoadingTableMenu from "./LoadingTableMenu";
 import { LoadingOutlined } from "@ant-design/icons";
 import ReactPaginate from "react-paginate";
 import { getAllMenuItem } from "../../../api/call_api/menuItem/fetchApiMenuItem";
+import { getAllCategories } from "../../../api/call_api/categories/fetchApiCategory";
 
 const TableMenu = ({ setShow, setShowOption }) => {
   console.log("TABLE MENU");
@@ -30,6 +31,13 @@ const TableMenu = ({ setShow, setShowOption }) => {
   useEffect(() => {
     getApiMenuItem();
   }, [getApiMenuItem]);
+
+  const getApiCategory = useCallback(async () => {
+    await getAllCategories(dispatch);
+  }, [dispatch]);
+  useEffect(() => {
+    getApiCategory();
+  }, [getApiCategory]);
 
   /************************************* PHAN TRANG************************************** */
   const itemPage = 5;

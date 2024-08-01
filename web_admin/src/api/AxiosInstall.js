@@ -92,5 +92,6 @@ const apiPromotion = {
     axiosInstance.patch(`promotions/${id}`, data),
   updateStatusPromotion: (id) =>
     axiosInstance.patch(`promotions/update-status/${id}`),
+  resetAllPromotion: () => axiosInstance.post(`promotions/reset-promotion`),
 };
 export { api, apiTables, apiCategories, apiMenuItem, apiOrder, apiPromotion };

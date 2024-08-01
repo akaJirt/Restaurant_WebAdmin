@@ -14,6 +14,7 @@ import {
 } from "../../../api/call_api/categories/fetchApiCategory";
 import { LoadingOutlined } from "@ant-design/icons";
 import { setStatusCategories } from "../../../store/categories/setStatus/actions";
+import { FloatingLabel, Form } from "react-bootstrap";
 
 const FromCategory = () => {
   console.log("render FormCategory");
@@ -52,17 +53,23 @@ const FromCategory = () => {
   };
   return (
     <div className="form">
-      <h1 className="text-h1 text-center mt-3 mb-3">Tạo Mới Thể Loại</h1>
-      <div className="form-group">
-        <label className="form-label">tên thể loại</label>
-        <input
-          placeholder="Nhập thể loại..."
+      <h1 className="text-h1 text-center mt-3 mb-3">
+        {getStatusCategory[0] === "create"
+          ? "Tạo Mới Thể Loại"
+          : "Cập nhật thể loại"}
+      </h1>
+      <FloatingLabel
+        controlId="floatingInput"
+        label="Tên thể loại"
+        className="mb-3"
+      >
+        <Form.Control
           type="text"
-          className="form-control"
+          placeholder="name@example.com"
           value={name}
           onChange={handleChangName}
         />
-      </div>
+      </FloatingLabel>
       <div className="mt-3 text-center two-bt">
         {getStatusCategory[0] === "update" ? (
           <>

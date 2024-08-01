@@ -19,12 +19,14 @@ import {
 } from "../../../store/selector";
 import { LoadingOutlined } from "@ant-design/icons";
 import FormMenu from "../../form/formMenu/FormMenu";
+import "./ModalMenuItem.scss";
 import {
   destroyMenuItem,
   patchMenuItem,
   postMenuItem,
 } from "../../../api/call_api/menuItem/fetchApiMenuItem";
-import "./ModalMenuItem.scss";
+import { Tag } from "antd";
+
 const ModalMenuItem = ({ show, handleClose, setShow }) => {
   const theme = useSelector(getThemeState);
   const getStatusMenuItem = useSelector(getStatusMenuItemState);
@@ -100,12 +102,10 @@ const ModalMenuItem = ({ show, handleClose, setShow }) => {
           ) : getStatusMenuItem[0] === "delete" ? (
             <>
               <span>Bạn có chắc chắn là muốn xóa món </span>
-              <span
-                style={{ color: "red", fontSize: "1rem", fontWeight: "bold" }}
-              >
+              <Tag color="red" style={{ fontSize: ".9rem" }}>
                 {dataDelete?.name}
-              </span>
-              <span> này không?</span>
+              </Tag>
+              <span>này không?</span>
             </>
           ) : getStatusMenuItem[0] === "update" ? (
             <FormMenu />
@@ -125,7 +125,7 @@ const ModalMenuItem = ({ show, handleClose, setShow }) => {
             ) : isLoadingDeleteMenuItem ? (
               <LoadingOutlined />
             ) : getStatusMenuItem[0] === "delete" ? (
-              "Xóa"
+              "Xác nhận"
             ) : isLoadingUpdateMenuItem ? (
               <LoadingOutlined />
             ) : getStatusMenuItem[0] === "update" ? (

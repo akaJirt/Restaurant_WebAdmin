@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { SlideshowLightbox } from "lightbox.js-react";
-import "./FormMenu.scss";
 import ConvertToBase from "../../../utils/convertBase64";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,6 +15,7 @@ import {
 } from "../../../store/selector";
 import { valueFormMenu } from "../../../store/valueForm/menu/actions";
 import { Tag } from "antd";
+import { FloatingLabel, Form } from "react-bootstrap";
 
 const FormMenu = () => {
   console.log("render FormMenu");
@@ -29,7 +29,6 @@ const FormMenu = () => {
   const getDataMenu = useSelector(getAllMenuItemState);
   const category_id = useSelector(getValueCategoryIdState);
   const image = useSelector(getValueImageState);
-  console.log(category_id, "LOG");
   const { dataMenuItem } = getDataMenu;
   const data = dataMenuItem?.data;
   const dispatch = useDispatch();
@@ -63,89 +62,90 @@ const FormMenu = () => {
     );
   };
 
+  console.log(image, "image", isBase64, "isBase64<<<<<<<<<<<<<<<<");
   return (
     <div className="form">
-      <div className="form-group">
-        <label className="form-label">Tên món</label>
-        <input
-          placeholder="Nhập tên món..."
+      <FloatingLabel controlId="floatingInput" label="Tên món" className="mb-3">
+        <Form.Control
           type="text"
-          className="form-control"
+          placeholder="name@example.com"
           value={name}
           onChange={(e) => dispatch(valueFormMenu.setName(e.target.value))}
         />
-      </div>
-      <div className="form-group mt-3 mb-3">
-        <label className="form-label">Tên tiếng anh</label>
-        <input
-          placeholder="Nhập tên tiếng anh..."
+      </FloatingLabel>
+      <FloatingLabel
+        controlId="floatingInput"
+        label="Tên tiếng anh"
+        className="mb-3"
+      >
+        <Form.Control
           type="text"
-          className="form-control"
+          placeholder="name@example.com"
           onChange={(e) => dispatch(valueFormMenu.setEngName(e.target.value))}
           value={engName}
         />
-      </div>
-      <div className="form-group">
-        <label className="form-label">Mô tả</label>
-        <input
-          placeholder="Nhập mô tả..."
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingInput" label="Mô tả" className="mb-3">
+        <Form.Control
           type="text"
-          className="form-control"
+          placeholder="name@example.com"
           onChange={(e) =>
             dispatch(valueFormMenu.setDescription(e.target.value))
           }
           value={description}
         />
-      </div>
-      <div className="form-group">
-        <label className="form-label">Giá tiền</label>
-        <input
-          placeholder="Nhập giá tiền..."
+      </FloatingLabel>
+      <FloatingLabel
+        controlId="floatingInput"
+        label="Giá tiền"
+        className="mb-3"
+      >
+        <Form.Control
           type="text"
-          className="form-control"
+          placeholder="name@example.com"
           onChange={(e) => dispatch(valueFormMenu.setPrice(e.target.value))}
           value={price}
         />
-      </div>
-      <div className="form-group mt-3 mb-1">
-        <label className="form-label">Ảnh món</label>
-        <input
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingInput" label="Ảnh món" className="mb-3">
+        <Form.Control
           type="file"
-          className="form-control"
+          placeholder="name@example.com"
           onChange={handleChangeImage}
         />
-      </div>
-      <div className="img mb-3 img-menu">
-        <img
-          alt="hinh anh"
-          src={isBase64 ? isBase64 : image}
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        />
-        {isBase64 && (
-          <SlideshowLightbox
-            images={[{ src: isBase64 }]}
-            showThumbnails={true}
-            open={isOpen}
-            lightboxIdentifier="lbox1"
-            onClose={() => {
-              setIsOpen(false);
+      </FloatingLabel>
+      {image && (
+        <div className="img_menu">
+          <img
+            alt="hinh anh"
+            src={isBase64 ? isBase64 : image}
+            onClick={() => {
+              setIsOpen(true);
             }}
-          ></SlideshowLightbox>
-        )}
-      </div>
-      <div className="form-group mt-3 mb-3">
-        <label className="form-label">Thể loại</label>
-        <select
+          />
+          {isBase64 && (
+            <SlideshowLightbox
+              images={[{ src: isBase64 }]}
+              showThumbnails={true}
+              open={isOpen}
+              lightboxIdentifier="lbox1"
+              onClose={() => {
+                setIsOpen(false);
+              }}
+            ></SlideshowLightbox>
+          )}
+        </div>
+      )}
+      <FloatingLabel controlId="floatingSelect" label="Thể loại">
+        <Form.Select
+          aria-label="Floating label select example"
           value={category_id}
-          className="form-control"
           onChange={(e) =>
             dispatch(valueFormMenu.setCategoryId(e.target.value))
           }
         >
           <option value="" disabled>
-            Chọn...
+            Chọn
           </option>
           {dataGetCategories?.data?.length > 0 &&
             dataGetCategories?.data?.map((item, index) => (
@@ -153,30 +153,36 @@ const FormMenu = () => {
                 {item.name}
               </option>
             ))}
-        </select>
+        </Form.Select>
+      </FloatingLabel>
+      <div className="mt-3">
+        {option?.length > 0 && (
+          <div className="opt">
+            {option?.map((item, index) => (
+              <Tag key={index} color="purple" className="tag">
+                {item.name}
+                <span
+                  style={{ fontSize: "1.2rem", cursor: "pointer" }}
+                  onClick={() => handleClickRemoveOption(item)}
+                >
+                  {` x`}
+                </span>
+              </Tag>
+            ))}
+          </div>
+        )}
       </div>
-      {option?.length > 0 && (
-        <div className="opt">
-          {option?.map((item, index) => (
-            <Tag key={index} color="purple" className="tag">
-              {item.name}
-              <span
-                style={{ fontSize: "1.2rem", cursor: "pointer" }}
-                onClick={() => handleClickRemoveOption(item)}
-              >
-                {` x`}
-              </span>
-            </Tag>
-          ))}
-        </div>
-      )}
-      <div className="form-group mt-3 mb-3">
-        <label className="form-label">Món phụ</label>
-        <select
-          className="form-control ic-arrow"
+      <FloatingLabel
+        className="mt-3"
+        controlId="floatingSelect"
+        label="Món phụ"
+      >
+        <Form.Select
+          aria-label="Floating label select example"
           value={option.map((opt) => opt.value)}
           onChange={handleChangOptions}
           multiple
+          style={{ height: "100px" }}
         >
           {data?.length > 0 &&
             data?.map((item, index) => {
@@ -186,8 +192,8 @@ const FormMenu = () => {
                 </option>
               );
             })}
-        </select>
-      </div>
+        </Form.Select>
+      </FloatingLabel>
     </div>
   );
 };

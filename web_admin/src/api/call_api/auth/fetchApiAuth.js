@@ -75,17 +75,14 @@ const getAllUsers = async (dispatch) => {
   }
 };
 /******************************CREATE USERS***************************** */
-const postUser = async (dispatch, data, setShow) => {
+const postUser = async (dispatch, data, handleClose) => {
   dispatch(typeActionCreateUser.fetchCreateUserRequest());
   try {
     const res = await api.createUser(data);
     if (res?.data?.status) {
+      toast.success(res?.data?.status);
       dispatch(typeActionCreateUser.fetchCreateUserSuccess(res?.data));
-      dispatch(valueFormUsers.setFullName(""));
-      dispatch(valueFormUsers.setEmail(""));
-      dispatch(valueFormUsers.setPassword(""));
-      dispatch(valueFormUsers.setRole("client"));
-      setShow(false);
+      handleClose();
       await getAllUsers(dispatch);
     }
   } catch (error) {
@@ -114,13 +111,14 @@ const putMe = async (dispatch, data) => {
   }
 };
 /******************************DELETE USERS***************************** */
-const destroyUser = async (dispatch, id) => {
+const destroyUser = async (dispatch, id, handleClose) => {
   dispatch(typeActionDeleteUser.fetchDeleteUserRequest());
   try {
     const res = await api.deleteUser(id);
     if (res && res.data && res.data.status === "success") {
       toast.success(res.data.status);
-      await getMe(dispatch);
+      handleClose();
+      await getAllUsers(dispatch);
     }
   } catch (error) {
     const status = error?.response?.data?.status;

@@ -1,46 +1,9 @@
-.modal-delete.theme {
-    .modal-header {
-        background-color: #2e2e3e;
+.img_menu {
+    width: 100px;
+    height: 100px;
 
-        .modal-title {
-
-            color: #fff;
-        }
-
-        .btn-close {
-            color: #fff !important;
-        }
-    }
-
-    .modal-body {
-        background-color: #2e2e3e;
-        color: #fff;
-
-        .form {
-
-            .form-group {
-                
-                .form-label {
-                    color: #fff;
-                }   
-                .form-control{
-                    border: 1px solid #fff;
-                }
-
-                .ic-arrow {
-                    background-color: #fff;
-                }
-                select{
-                    border: 1px solid #fff;
-                    color: #343333dd;
-                }
-
-            }
-        }
-    }
-
-    .modal-footer {
-        background-color: #2e2e3e;
-        color: #fff;
+    img {
+        max-width: 100%;
+        max-height: 100%;
     }
 }

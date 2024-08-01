@@ -54,7 +54,41 @@
 
     .table-users {
         background-color: #1e1e2e;
-
+        .box-progressBar{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+            margin: 0 20px;
+            .progressBar{
+                border: 1px solid #007bff;
+                border-radius: 10px;
+                height: 15px;
+                display: flex;
+                position: relative;
+                .totalCount{
+                    color: #E8900C;
+                    font-size: 9px;
+                    position: absolute;
+                    right: 5px;
+                }
+                .run-progressBar{
+                    position: relative;
+                    background-color: #007bff;
+                    height: 100%;
+                    border-radius: 10px;
+                    transition: width 1s ease-in-out;
+                }
+                .total-progressBar{
+                    color: white;
+                    font-size: 9px;
+                    position: absolute;
+                    left: 25%;
+                    font-weight: bold;
+                }
+            }
+        }
         .box-select {
 
 

@@ -5,12 +5,12 @@ import "./TableUser.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsersState, getThemeState } from "../../../store/selector";
 import moment from "moment";
-import ModalUsers from "../../Modal/Users/ModalUsers";
 import { setStatusUsers } from "../../../store/auth/setStatusUsers/actions";
 import { getAllUsers } from "../../../api/call_api/auth/fetchApiAuth";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import _ from "lodash";
 import ModalHistoryUser from "./ModalUser/ModalHistoryUser";
+import { valueFormUsers } from "../../../store/valueForm/users/actions";
 const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   console.log("render TableUser");
   const [showHistory, setShowHistory] = useState(false);
@@ -64,7 +64,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   ).length;
 
   const totalPage = Math.ceil(itemPage / totalPageCount);
-  console.log(totalPage, "<<<<<<<<<<<<<<<<<<<<<");
   const handleChange = (e) => {
     setRole(e.target.value);
     setCurrentPage(0);
@@ -97,6 +96,13 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
     setItem(item);
     setShowHistory(true);
   };
+
+  const handleClickSua = (item) => {
+    setShow(true);
+    dispatch(setStatusUsers.setStatus(["update", item]));
+    dispatch(valueFormUsers.setFullName(item.fullName));
+  };
+
   return (
     <div className="mt-3 mb-3 table-users">
       <ModalHistoryUser
@@ -104,7 +110,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
         setShow={setShowHistory}
         item={item}
       />
-      <ModalUsers />
       <div>
         <div className="box-h1-select">
           <span></span>
@@ -191,7 +196,12 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
                       >
                         Xóa
                       </button>
-                      <button className="btn btn-primary">Sửa</button>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleClickSua(item)}
+                      >
+                        Sửa
+                      </button>
                     </td>
                   </tr>
                 );

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDeleteCategoryState } from "../../../store/selector";
 import { LoadingOutlined } from "@ant-design/icons";
 import { deleteCategory } from "../../../api/call_api/categories/fetchApiCategory";
+import { Tag } from "antd";
 const ModalDeleteCategories = ({ show, handleClose, dataItem, setShow }) => {
   const getStateDelete = useSelector(getDeleteCategoryState);
   console.log(getStateDelete, "<<<<<<<<getStateDelete");
@@ -22,9 +23,11 @@ const ModalDeleteCategories = ({ show, handleClose, dataItem, setShow }) => {
         <Modal.Body className="modal-body">
           {
             <>
-              <span>Bạn có chắc chắn là muốn xóa category</span>
-              <span className="span"> {dataItem?.name}</span>
-              <span> này không ?</span>
+              <span>Bạn có chắc chắn là muốn xóa category </span>
+              <Tag color="red" style={{ fontSize: ".9rem" }}>
+                {dataItem?.name}
+              </Tag>
+              <span>này không ?</span>
             </>
           }
         </Modal.Body>

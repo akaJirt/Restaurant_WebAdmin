@@ -3,11 +3,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
   getPromotion,
   patchStatusPromotion,
+  postResetAllPromotion,
 } from "../../../api/call_api/promotions/fetchApiPromotions";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
 import { BiToggleRight, BiToggleLeft } from "react-icons/bi";
-
+import { BsToggle2On, BsToggle2Off } from "react-icons/bs";
+import ProgressBar from "../../progressBar/ProgressBar";
 const TablePromotion = ({
   listDataPromotion,
   setListDataPromotion,
@@ -105,7 +107,6 @@ const TablePromotion = ({
       await patchStatusPromotion(id, setListDataPromotion);
     }
   };
-  console.log(newListData, "<<<<<<<<<<");
 
   const filterTitle = useCallback(() => {
     let hasFixed = false;
@@ -146,7 +147,15 @@ const TablePromotion = ({
     filterTitle();
   }, [filterTitle]);
 
-  console.log(typeof isSelected, "<<<<<<<<<<<<<<<");
+  const totalUsedCount =
+    listDataPromotion?.data?.promotions?.length > 0 &&
+    listDataPromotion?.data?.promotions?.reduce((a, b) => {
+      return a + b.usedCount;
+    }, 0);
+  const handleClickOn = async () => {
+    await postResetAllPromotion(setListDataPromotion);
+  };
+
   return (
     <div className="mt-3 mb-3 table-users">
       <div className="box-select">
@@ -179,6 +188,25 @@ const TablePromotion = ({
                 );
               })}
           </select>
+        </div>
+      </div>
+      <div className="box-progressBar mb-3">
+        <ProgressBar listDataPromotion={listDataPromotion} />
+        <div>
+          {totalUsedCount > 0 ? (
+            <BsToggle2On
+              size={20}
+              color="#007bff"
+              onClick={handleClickOn}
+              style={{ cursor: "pointer" }}
+            />
+          ) : (
+            <BsToggle2Off
+              size={20}
+              color="#FF0000"
+              style={{ cursor: "pointer" }}
+            />
+          )}
         </div>
       </div>
       <Table striped bordered hover responsive>
@@ -235,9 +263,11 @@ const TablePromotion = ({
                     >
                       Chi Tiết
                     </button>
+
                     <button
                       className="btn btn-danger mx-2"
                       onClick={() => handleClickDelete(item._id, item.code)}
+                      disabled={item.usedCount ? true : false}
                     >
                       Xóa
                     </button>

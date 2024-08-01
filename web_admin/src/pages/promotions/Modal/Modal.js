@@ -8,7 +8,7 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import FormatDay from "../../../utils/FormDay";
 import ConvertMoney from "../../../utils/convertMoney";
-
+import { Tag } from "antd";
 function ModalPromotion({
   show,
   setShow,
@@ -80,7 +80,6 @@ function ModalPromotion({
       );
     }
   };
-
   return (
     <>
       <Modal show={show} onHide={handleClose} backdrop={"static"}>
@@ -94,8 +93,9 @@ function ModalPromotion({
         <Modal.Body>
           {statusPromotion[0] === "delete" ? (
             <>
-              Bạn chắc chắn là muốn xóa Mã giảm giá
-              <b>{itemPromotion?.item?.code || ""} này không</b>
+              <span>Bạn chắc chắn là muốn xóa mã giảm giá </span>
+              <Tag color="red">{itemPromotion.code || ""}</Tag>
+              <span>này không?</span>
             </>
           ) : (
             <fieldset className="border rounded-3 p-3">
@@ -261,7 +261,7 @@ function ModalPromotion({
               {isLoading ? (
                 <Loading3QuartersOutlined spin />
               ) : (
-                statusPromotion[0] === "delete" && "Delete"
+                statusPromotion[0] === "delete" && "Xác nhận"
               )}
             </Button>
           )}

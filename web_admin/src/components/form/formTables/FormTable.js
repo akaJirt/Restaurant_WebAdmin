@@ -12,6 +12,7 @@ import {
   putTable,
 } from "../../../api/call_api/tables/fetchApiTable";
 import { valueFormTable } from "../../../store/valueForm/tables/actions";
+import { FloatingLabel, Form } from "react-bootstrap";
 
 const FormTable = () => {
   console.log("render FormTable");
@@ -39,16 +40,19 @@ const FormTable = () => {
   return (
     <div className="form">
       <h1 className="text-h1 text-center mt-3 mb-3">Tạo Bàn</h1>
-      <div className="form-group">
-        <label className="form-label">Bàn số</label>
-        <input
+      <FloatingLabel
+        controlId="floatingInput"
+        label="Nhập bàn"
+        className="mb-3"
+      >
+        <Form.Control
           type="text"
-          placeholder="Nhập số bàn"
-          onChange={handleChangInput}
-          className="form-control"
+          placeholder="name@example.com"
           value={tableNumber}
+          onChange={handleChangInput}
         />
-      </div>
+      </FloatingLabel>
+
       <div className="mt-3 text-center">
         <button className="btn btn-primary bt2" onClick={handleClickAddTable}>
           {statusState[0] !== "update" || statusState[0] === "create" ? (

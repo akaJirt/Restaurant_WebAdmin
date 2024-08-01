@@ -119,10 +119,25 @@ const patchStatusPromotion = async (id, setListDataPromotion) => {
     toast.error(mess || status);
   }
 };
+
+const postResetAllPromotion = async (setListDataPromotion) => {
+  try {
+    const res = await apiPromotion.resetAllPromotion();
+    if (res && res.data && res.data.status === "success") {
+      toast.success(res.data.message);
+      await getPromotion(setListDataPromotion);
+    }
+  } catch (error) {
+    let mess = error?.response?.data?.message;
+    let status = error?.response?.data?.status;
+    toast.error(mess || status);
+  }
+};
 export {
   getPromotion,
   postPromotion,
   deletePromotion,
   updatePromotions,
   patchStatusPromotion,
+  postResetAllPromotion,
 };

@@ -20,7 +20,6 @@ const LoadingTable = ({
     const statusTable = e.currentTarget.getAttribute("data-name");
     const status = statusTable === "lock" ? "open" : "lock";
     e.currentTarget.setAttribute("data-status", status);
-    console.log(status);
     await patchStatusTable(dispatch, id, status);
   };
 
@@ -28,8 +27,6 @@ const LoadingTable = ({
     const statusTable = e.currentTarget.getAttribute("data-name");
     const status = statusTable === "open" ? "lock" : "open";
     e.currentTarget.setAttribute("data-status", status);
-
-    console.log(status);
     await patchStatusTable(dispatch, id, status);
   };
   return (
@@ -89,6 +86,7 @@ const LoadingTable = ({
         <button
           className="btn btn-danger mx-2"
           onClick={() => handleClickDelete(item)}
+          disabled={item.status === "open" ? true : false}
         >
           Xóa
         </button>

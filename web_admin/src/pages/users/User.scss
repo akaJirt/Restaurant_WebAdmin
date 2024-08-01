@@ -15,20 +15,7 @@
 }
 
 
-    .form {
-        background-color: #1e1e2e;
 
-        .form-group {
-            .form-label {
-                color: #fff;
-            }
-
-            .ic-arrow {
-                background-color: #fff;
-            }
-
-        }
-    }
 
     .table-users {
         background-color: #1e1e2e;
@@ -110,38 +97,26 @@
         color: #E8900C;
     }
 
-
+    
     .form {
-        box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.1);
-        background-color: #fff;
-        border-radius: 10px;
-        padding: 20px;
-        max-width: 500px;
-        margin: 0 auto;
-
-        .form-group {
-            .form-label {
-                color: #012970;
-                font-weight: bold;
-                font-size: 1rem;
+        .custom-floating-label {
+                height: 2.5rem;
+                /* Thay đổi chiều cao theo ý muốn */
             }
-
-            .ic-arrow {
-                appearance: none;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                background: url('data:image/svg+xml;utf8,<svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" fill="currentColor"/></svg>') no-repeat right 1rem center;
-                background-size: 1rem;
-                padding-right: 2.5rem;
+        
+            .custom-floating-label .form-control {
+                height: calc(2.5rem - 1.5rem);
+                /* Điều chỉnh chiều cao của input bên trong */
+                padding-top: 0.75rem;
+                /* Điều chỉnh padding trên */
+                padding-bottom: 0.75rem;
+                /* Điều chỉnh padding dưới */
             }
-
-        }
-
-        .text-center {
-            .btn {
-                width: 100%;
+        
+            .custom-floating-label label {
+                line-height: 2.5rem;
+                /* Điều chỉnh line-height để căn giữa label */
             }
-        }
     }
 
 

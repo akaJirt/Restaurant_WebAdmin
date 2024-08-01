@@ -10,6 +10,7 @@ import { typeActionSetStatus } from "../../../store/tables/setStatus/actions";
 import { valueFormTable } from "../../../store/valueForm/tables/actions";
 import LoadingTable from "./LoadingTable";
 import { getAllTable } from "../../../api/call_api/tables/fetchApiTable";
+import { toast } from "react-toastify";
 
 const TableTable = () => {
   console.log("render TableTable");
@@ -63,6 +64,7 @@ const TableTable = () => {
   const handleClickUpdateTable = async (id, tableNumber) => {
     dispatch(typeActionSetStatus.setStatusTable(["update", id]));
     dispatch(valueFormTable.setTableNumber(tableNumber));
+    toast.success("Vui lòng qua tab để cập nhật");
   };
   useEffect(() => {
     if (currentPage >= pageCount && currentPage > 0) {

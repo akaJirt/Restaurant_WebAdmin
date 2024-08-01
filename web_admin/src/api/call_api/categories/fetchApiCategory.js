@@ -15,17 +15,12 @@ NProgress.configure({
 
 const getAllCategories = async (dispatch) => {
   dispatch(typeActionGetCategories.fetchGetCategoriesRequest());
-  NProgress.start();
   try {
     const res = await apiCategories.getCategories();
     if (res?.data?.success) {
-      NProgress.done();
-
       dispatch(typeActionGetCategories.fetchGetCategoriesSuccess(res?.data));
     }
   } catch (error) {
-    NProgress.done();
-
     const status = error?.response?.data?.status;
     const message = error?.response?.data?.message;
     dispatch(typeActionGetCategories.fetchGetCategoriesFailed(error));

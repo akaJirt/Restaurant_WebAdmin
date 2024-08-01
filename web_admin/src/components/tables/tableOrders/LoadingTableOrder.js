@@ -27,7 +27,7 @@ const LoadingTableOrder = ({ item, index }) => {
             ? "Tiền mặt"
             : item.paymentMethod === "ZaloPay"
             ? "Chuyển Khoản"
-            : ""}
+            : item.paymentMethod}
         </td>
         <td className="img_avatar">
           <img alt="img_avatar" src={item.userPay.img_avatar_url} />
@@ -38,7 +38,7 @@ const LoadingTableOrder = ({ item, index }) => {
             className="btn btn-secondary"
             onClick={() => handleClickView(item)}
           >
-            View
+            Món đặt
           </button>
         </td>
       </tr>

@@ -27,8 +27,9 @@ const User = (props) => {
     dispatch(valueFormUsers.setFullName(""));
     dispatch(valueFormUsers.setEmail(""));
     dispatch(valueFormUsers.setPassword(""));
-    dispatch(valueFormUsers.setRole("client"));
+    dispatch(valueFormUsers.setRole("staff"));
   };
+
   return (
     <div className={`layout-user ${theme ? "theme" : ""}`}>
       <button

@@ -17,7 +17,6 @@ import { setHideTheme, setShowTheme } from "../../store/theme/actions";
 import { Link } from "react-router-dom";
 import { setAccessToken } from "../../store/accessToken/actions";
 import { getMe } from "../../api/call_api/auth/fetchApiAuth";
-import { getAllCategories } from "../../api/call_api/categories/fetchApiCategory";
 
 const AppHeader = () => {
   console.log("render App Header");
@@ -30,7 +29,6 @@ const AppHeader = () => {
 
   const fetchGetMe = useCallback(async () => {
     await getMe(dispatch);
-    await getAllCategories(dispatch);
   }, [dispatch]);
 
   useEffect(() => {

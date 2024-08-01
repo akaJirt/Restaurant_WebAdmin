@@ -55,7 +55,7 @@ const TableOrder = () => {
   return (
     <div className="table-users">
       <div className="box-top-order">
-        <span>Hiện có: {listNewDataOrder.length}</span>
+        <span>Hiện có: {listNewDataOrder.length} hóa đơn</span>
         <h1 className="text-center mb-2">
           Tất Cả Hóa Đơn{" "}
           {idOption === "Cash"

@@ -73,7 +73,7 @@ function Promotion(props) {
           eventKey={"Tạo Khuyến Mãi"}
           title={
             statusPromotion[0] === "update"
-              ? "Update Khuyến Mãi"
+              ? "Cập nhật Khuyến Mãi"
               : "Tạo Khuyến Mãi"
           }
         >
