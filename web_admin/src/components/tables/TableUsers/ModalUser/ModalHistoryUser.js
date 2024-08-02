@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import { Avatar } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { historyPaymentUser } from "../../../../api/call_api/auth/fetchApiAuth";
-import FormatDay from "../../../../utils/FormDay";
+import { FormatDay } from "../../../../utils/FormDay";
 import _ from "lodash";
 import ConvertMoney from "../../../../utils/convertMoney";
 const ModalHistoryUser = ({ show, setShow, item }) => {

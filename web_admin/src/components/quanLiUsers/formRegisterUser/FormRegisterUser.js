@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import "lightbox.js-react/dist/index.css";
 import "./FormRegister.scss";
-import { postUser } from "../../../api/call_api/auth/fetchApiAuth";
-import { useDispatch } from "react-redux";
 import { api } from "../../../api/AxiosInstall";
 import { toast } from "react-toastify";
 const FormRegisterUser = (props) => {
   console.log("render FormRegisterUser");
-  const dispatch = useDispatch();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +19,6 @@ const FormRegisterUser = (props) => {
         setPassword("");
         setFullName("");
       }
-      console.log(res, "<<<<<<<<<<<<<<<<<<<");
     } catch (error) {
       const status = error?.response?.data?.status;
       const message = error?.response?.data?.message;

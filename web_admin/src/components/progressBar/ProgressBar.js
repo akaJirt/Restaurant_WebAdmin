@@ -11,11 +11,13 @@ const ProgressBar = ({ listDataPromotion }) => {
       let newTotal = 0;
       let newTotalCount = 0;
       for (let i = 0; i < data.length; i++) {
-        if (data[i].usedCount) {
-          newTotal += data[i].usedCount;
-        }
-        if (data[i].maxUsage) {
-          newTotalCount += data[i].maxUsage;
+        if (data[i].isActive === true) {
+          if (data[i].usedCount) {
+            newTotal += data[i].usedCount;
+          }
+          if (data[i].maxUsage) {
+            newTotalCount += data[i].maxUsage;
+          }
         }
       }
       setTotal(newTotal);

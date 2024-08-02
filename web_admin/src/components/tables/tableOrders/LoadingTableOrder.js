@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ConvertMoney from "../../../utils/convertMoney";
-import FormatDay from "../../../utils/FormDay";
+import { FormatDay } from "../../../utils/FormDay";
 import ModalOrder from "./ModalOrders/ModalOrder";
 const LoadingTableOrder = ({ item, index }) => {
   const [show, setShow] = useState(false);

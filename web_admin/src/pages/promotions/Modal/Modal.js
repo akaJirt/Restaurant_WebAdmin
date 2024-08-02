@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import FormatDay from "../../../utils/FormDay";
+import { FormatDay, FormatDay3 } from "../../../utils/FormDay";
 import ConvertMoney from "../../../utils/convertMoney";
 import { Tag } from "antd";
 function ModalPromotion({
@@ -23,11 +23,9 @@ function ModalPromotion({
   setId,
   setMaxUsage,
   setListDataPromotion,
-  setStatusPromotion,
 }) {
   console.log(itemPromotion, "check itemPromotion");
   const [isLoading, setIsLoading] = useState(false);
-
   const getDataPromotion = useCallback(() => {
     if (statusPromotion[0] === "update") {
       setId(itemPromotion?.item?._id);
@@ -67,7 +65,6 @@ function ModalPromotion({
 
   const handleClose = () => {
     setShow(false);
-    setStatusPromotion(["create"]);
   };
 
   const handleClickXoa = async () => {
@@ -196,7 +193,7 @@ function ModalPromotion({
                   className="mb-3"
                 >
                   <Form.Control
-                    value={FormatDay(itemPromotion?.item?.startDate) || ""}
+                    value={FormatDay3(itemPromotion?.item?.startDate) || ""}
                     type="text"
                     placeholder="name@example.com"
                     disabled
@@ -211,7 +208,7 @@ function ModalPromotion({
                   className="mb-3"
                 >
                   <Form.Control
-                    value={FormatDay(itemPromotion?.item?.endDate) || ""}
+                    value={FormatDay3(itemPromotion?.item?.endDate) || ""}
                     type="text"
                     placeholder="name@example.com"
                     disabled
@@ -256,7 +253,7 @@ function ModalPromotion({
           <Button variant="secondary" onClick={handleClose}>
             Hủy
           </Button>
-          {statusPromotion[0] !== "create" && (
+          {statusPromotion[0] === "delete" && (
             <Button variant="primary" onClick={handleClickXoa}>
               {isLoading ? (
                 <Loading3QuartersOutlined spin />

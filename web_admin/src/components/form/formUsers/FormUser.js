@@ -75,6 +75,7 @@ const FormUser = () => {
           value={role}
         >
           <option value={"staff"}>Nhân viên</option>
+          <option value={"admin"}>Admin</option>
         </Form.Select>
       </FloatingLabel>
     </div>

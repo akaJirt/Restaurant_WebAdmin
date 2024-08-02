@@ -54,6 +54,7 @@ const TablePromotion = ({
   let limit = 5;
   let offset = currentPage * limit;
   let newListData = filteredPromotions.slice(offset, offset + limit);
+  console.log(newListData, "<<<<<<<<<<<<<<<<<<<<<NEW DATA");
   let pageCount = Math.ceil(filteredPromotions.length / limit);
 
   useEffect(() => {
@@ -98,8 +99,10 @@ const TablePromotion = ({
 
   const handleClickView = (item) => {
     setItemPromotion({ item });
+    setStatusPromotion(["chiTiet"]);
     setShow(true);
   };
+
   const handleClickResetOpen = async (id, type) => {
     if (type === "open") {
       await patchStatusPromotion(id, setListDataPromotion);
@@ -115,7 +118,6 @@ const TablePromotion = ({
 
     for (let i = 0; i < newListData.length; i++) {
       const { discountType } = newListData[i];
-
       if (discountType === "fixed") {
         hasFixed = true;
       } else if (discountType === "percentage") {
@@ -179,14 +181,21 @@ const TablePromotion = ({
             <option value={""}>Tất cả</option>
             <option value={"true"}>Khả dụng</option>
             <option value={"false"}>Không khả dụng</option>
-            {newDataFilter.length > 0 &&
+            {newDataFilter.length > 0 ? (
               newDataFilter.map((item, index) => {
                 return (
                   <option key={index} value={item}>
                     {item}
                   </option>
                 );
-              })}
+              })
+            ) : (
+              <>
+                <option value={"fixed"}>fixed</option>
+                <option value={"percentage"}>percentage</option>
+                <option value={"maxPercentage"}>maxPercentage</option>
+              </>
+            )}
           </select>
         </div>
       </div>
@@ -227,9 +236,13 @@ const TablePromotion = ({
             newListData.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.code}</td>
-                  <td>
+                  <td className={item.isActive ? "" : "isActive"}>
+                    {index + 1}
+                  </td>
+                  <td className={item.isActive ? "" : "isActive"}>
+                    {item.code}
+                  </td>
+                  <td className={item.isActive ? "" : "isActive"}>
                     <div>{item.isActive ? "Khả dụng" : "Không khả dụng"}</div>
                     <div>
                       {item.isActive ? (
@@ -251,11 +264,19 @@ const TablePromotion = ({
                       )}
                     </div>
                   </td>
-                  <td>{item.discountType}</td>
-                  <td>{formatDiscount(item.discount)}</td>
-                  <td>{item.maxUsage ? item.maxUsage : 0}</td>
+                  <td className={item.isActive ? "" : "isActive"}>
+                    {item.discountType}
+                  </td>
+                  <td className={item.isActive ? "" : "isActive"}>
+                    {formatDiscount(item.discount)}
+                  </td>
+                  <td className={item.isActive ? "" : "isActive"}>
+                    {item.maxUsage ? item.maxUsage : 0}
+                  </td>
 
-                  <td>{item.usedCount}</td>
+                  <td className={item.isActive ? "" : "isActive"}>
+                    {item.usedCount}
+                  </td>
                   <td>
                     <button
                       className="btn btn-secondary"
@@ -267,7 +288,7 @@ const TablePromotion = ({
                     <button
                       className="btn btn-danger mx-2"
                       onClick={() => handleClickDelete(item._id, item.code)}
-                      disabled={item.usedCount ? true : false}
+                      disabled={item.usedCount && item.isActive ? true : false}
                     >
                       Xóa
                     </button>

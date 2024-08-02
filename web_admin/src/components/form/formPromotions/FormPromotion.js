@@ -5,6 +5,7 @@ import {
 } from "../../../api/call_api/promotions/fetchApiPromotions";
 import FormatDate from "../../../utils/FormatDate";
 import { LoadingOutlined } from "@ant-design/icons";
+import { FloatingLabel, Form } from "react-bootstrap";
 
 const FormPromotion = ({
   setListDataPromotion,
@@ -26,6 +27,7 @@ const FormPromotion = ({
   setMaxUsage,
   maxUsage,
   setStatusPromotion,
+  setEventKey,
 }) => {
   console.log("render FormPromotion");
   const [isLoading, setIsLoading] = useState(false);
@@ -47,11 +49,15 @@ const FormPromotion = ({
         startDate,
         endDate,
         setListDataPromotion,
-        setDiscount,
         setDiscountType,
+        setIsLoading,
+        setDiscount,
+        setMaxUsage,
+        setStartDate,
+        setEndDate,
+        setEventKey,
         setMinOrderValue,
-        setMaxDiscount,
-        setIsLoading
+        setMaxDiscount
       );
     }
     if (statusPromotion[0] === "update") {
@@ -68,7 +74,6 @@ const FormPromotion = ({
     }
   };
 
-  console.log(statusPromotion, "check statusPromotion");
   const dataFind = useCallback(() => {
     if (discountType !== "" && statusPromotion[0] !== "update") {
       let findItem = listDataPromotion?.data?.promotions?.find(
@@ -112,108 +117,132 @@ const FormPromotion = ({
           ? "Update Khuyến Mãi"
           : "Tạo Khuyến Mãi"}
       </h1>
-
-      <div className="form-group">
-        <label className="form-label">Số tiền giảm</label>
-        <input
+      <FloatingLabel
+        controlId="floatingInput"
+        label="Số tiền giảm"
+        className="mb-3"
+      >
+        <Form.Control
+          type="text"
           placeholder={
             discountType === "" || discountType !== "fixed"
               ? "Nhập % cần giảm"
               : "Nhập số tiền cần giảm"
           }
-          className="form-control"
           onChange={(e) => setDiscount(e.target.value)}
           value={discount}
-          type="number"
           disabled={statusPromotion[0] === "update" ? true : false}
         />
-      </div>
-      <div className="form-group mt-3">
-        <label className="form-label">Loại khuyến mãi</label>
-        <select
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingSelect" label="Loại khuyến mãi">
+        <Form.Select
+          aria-label="Floating label select example"
           value={discountType}
           onChange={(e) => setDiscountType(e.target.value)}
-          className="form-control"
           disabled={statusPromotion[0] === "update" ? true : false}
         >
           <option value={""} disabled>
             Chọn...
           </option>
-          {newSetArray.map((item, index) => {
-            return (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <div className="form-group mt-3">
-        <label className="form-label">Số lượt sử dụng</label>
-        <input
-          placeholder="Nhập lượt sử dụng"
-          className="form-control"
+          {newSetArray.length > 2 ? (
+            newSetArray.map((item, index) => {
+              return (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              );
+            })
+          ) : (
+            <>
+              <option value={"fixed"}>fixed</option>
+              <option value={"percentage"}>percentage</option>
+              <option value={"maxPercentage"}>maxPercentage</option>
+            </>
+          )}
+        </Form.Select>
+      </FloatingLabel>
+
+      <FloatingLabel
+        controlId="floatingInput"
+        label="lượt sử dụng mã"
+        className="mb-3 mt-3"
+      >
+        <Form.Control
+          type="text"
           onChange={(e) => setMaxUsage(e.target.value)}
           value={maxUsage}
-          type="number"
+          placeholder="name@example.com"
         />
-      </div>
-      <div className="form-group mt-3">
-        <label className="form-label">Ngày bắt đầu</label>
-        <input
+      </FloatingLabel>
+      <FloatingLabel
+        controlId="floatingInput"
+        label="Ngày bắt đầu"
+        className="mb-3 mt-3"
+      >
+        <Form.Control
           type="date"
-          className="form-control"
           onChange={(e) => setStartDate(e.target.value)}
           value={startDate}
+          placeholder="name@example.com"
         />
-      </div>
-      <div className="form-group mt-3">
-        <label className="form-label">Ngày kết thúc</label>
-        <input
+      </FloatingLabel>
+      <FloatingLabel
+        controlId="floatingInput"
+        label="Ngày kết thúc"
+        className="mb-3 mt-3"
+      >
+        <Form.Control
           type="date"
-          className="form-control"
           onChange={(e) => setEndDate(e.target.value)}
           value={endDate}
+          placeholder="name@example.com"
         />
-      </div>
+      </FloatingLabel>
+
       {discountType === "" || discountType !== "fixed" ? (
         <>
           {discountType === "percentage" ? (
-            <div className="form-group mt-3">
-              <label className="form-label">Số tiền tối thiểu</label>
-              <input
-                type="number"
-                placeholder="Nhập Số tiền tối thiểu ..."
-                className="form-control"
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Số tiền tối thiểu"
+              className="mb-3 mt-3"
+            >
+              <Form.Control
+                type="text"
                 onChange={(e) => setMinOrderValue(e.target.value)}
                 value={minOrderValue}
                 disabled={statusPromotion[0] === "update" ? true : false}
+                placeholder="name@example.com"
               />
-            </div>
+            </FloatingLabel>
           ) : (
             <>
-              <div className="form-group mt-3">
-                <label className="form-label">Số tiền tối thiểu</label>
-                <input
-                  type="number"
-                  placeholder="Nhập Số tiền tối thiểu ..."
-                  className="form-control"
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Số tiền tối thiểu"
+                className="mb-3 mt-3"
+              >
+                <Form.Control
+                  type="text"
                   onChange={(e) => setMinOrderValue(e.target.value)}
                   value={minOrderValue}
                   disabled={statusPromotion[0] === "update" ? true : false}
+                  placeholder="name@example.com"
                 />
-              </div>
-              <div className="form-group mt-3">
-                <label className="form-label">Số tiền tối đa</label>
-                <input
-                  type="number"
-                  placeholder="Nhập Số tiền tối đa ..."
+              </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Số tiền tối đa"
+                className="mb-3 mt-3"
+              >
+                <Form.Control
+                  type="text"
                   onChange={(e) => setMaxDiscount(e.target.value)}
-                  className="form-control"
                   value={maxDiscount}
                   disabled={statusPromotion[0] === "update" ? true : false}
+                  placeholder="name@example.com"
                 />
-              </div>
+              </FloatingLabel>
             </>
           )}
         </>

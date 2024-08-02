@@ -22,9 +22,10 @@ function Promotion(props) {
   const [endDate, setEndDate] = useState("");
   const [id, setId] = useState("");
   const [maxUsage, setMaxUsage] = useState("");
-
+  const [eventKey, setEventKey] = useState("khuyến mãi");
+  console.log(eventKey, "eventKey");
   const handleSelect = (key) => {
-    if (key === "Khuyến Mãi") {
+    if (key === "khuyến mãi") {
       setStatusPromotion(["create"]);
       setDiscount("");
       setDiscountType("");
@@ -34,6 +35,16 @@ function Promotion(props) {
       setEndDate("");
       setMaxUsage("");
     }
+    if (key === "form khuyến mãi") {
+      if (
+        statusPromotion[0] === "delete" ||
+        statusPromotion[0] === "create" ||
+        statusPromotion[0] === "chiTiet"
+      ) {
+        setStatusPromotion(["create"]);
+      }
+    }
+    setEventKey(key);
   };
 
   return (
@@ -52,28 +63,28 @@ function Promotion(props) {
         setId={setId}
         setMaxUsage={setMaxUsage}
         setListDataPromotion={setListDataPromotion}
-        setStatusPromotion={setStatusPromotion}
       />
       <Tabs
-        defaultActiveKey="Khuyến Mãi"
+        activeKey={eventKey}
         id="uncontrolled-tab-example"
         className="mb-3 mt-3 mx-3"
         onSelect={handleSelect}
       >
-        <Tab eventKey="Khuyến Mãi" title="Khuyến Mãi">
+        <Tab eventKey="khuyến mãi" title="Khuyến Mãi">
           <TablePromotion
             listDataPromotion={listDataPromotion}
             setListDataPromotion={setListDataPromotion}
             setShow={setShow}
             setItemPromotion={setItemPromotion}
             setStatusPromotion={setStatusPromotion}
+            setEventKey={setEventKey}
           />
         </Tab>
         <Tab
-          eventKey={"Tạo Khuyến Mãi"}
+          eventKey={"form khuyến mãi"}
           title={
             statusPromotion[0] === "update"
-              ? "Cập nhật Khuyến Mãi"
+              ? "Cập Nhật Khuyến Mãi"
               : "Tạo Khuyến Mãi"
           }
         >
@@ -97,6 +108,7 @@ function Promotion(props) {
             setMaxUsage={setMaxUsage}
             maxUsage={maxUsage}
             setStatusPromotion={setStatusPromotion}
+            setEventKey={setEventKey}
           />
         </Tab>
       </Tabs>

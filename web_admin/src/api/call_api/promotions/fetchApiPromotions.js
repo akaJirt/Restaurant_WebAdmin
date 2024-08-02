@@ -1,5 +1,7 @@
+import { FormatDay, FormatTimeNow, Regex } from "../../../utils/FormDay";
 import { apiPromotion } from "../../AxiosInstall";
 import { toast } from "react-toastify";
+import moment from "moment";
 const getPromotion = async (setListDataPromotion) => {
   try {
     const res = await apiPromotion.getApiPromotion();
@@ -23,23 +25,39 @@ const postPromotion = async (
   endDate,
   setListDataPromotion,
   setDiscountType,
-  setIsLoading
+  setIsLoading,
+  setDiscount,
+  setMaxUsage,
+  setStartDate,
+  setEndDate,
+  setEventKey,
+  setMinOrderValue,
+  setMaxDiscount
 ) => {
-  const data = {
-    discount,
-    discountType,
-    maxUsage,
-    minOrderValue,
-    maxDiscount,
-    startDate,
-    endDate,
-  };
   try {
+    let timeNow = FormatTimeNow(moment());
+    console.log(typeof timeNow, ">timeNow");
+    const data = {
+      discount,
+      discountType,
+      maxUsage,
+      minOrderValue,
+      maxDiscount,
+      startDate: `${startDate} ${timeNow}`,
+      endDate: `${endDate} ${timeNow}`,
+    };
     setIsLoading(true);
     const res = await apiPromotion.postApiPromotion(data);
     if (res && res?.data && res?.data?.status === "success") {
       toast.success(res?.data?.status);
       setDiscountType("");
+      setDiscount("");
+      setMaxUsage("");
+      setStartDate("");
+      setEndDate("");
+      setEventKey("form khuyến mãi");
+      setMinOrderValue("");
+      setMaxDiscount("");
       setIsLoading(false);
       await getPromotion(setListDataPromotion);
     }
@@ -84,10 +102,12 @@ const updatePromotions = async (
   setIsLoading
 ) => {
   try {
+    let timeNow = FormatTimeNow(moment());
+
     const data = {
       maxUsage,
-      startDate,
-      endDate,
+      startDate: `${startDate} ${timeNow}`,
+      endDate: `${endDate} ${timeNow}`,
     };
     setIsLoading(true);
     const res = await apiPromotion.updateApiPromotion(id, data);
@@ -116,7 +136,15 @@ const patchStatusPromotion = async (id, setListDataPromotion) => {
   } catch (error) {
     let mess = error?.response?.data?.message;
     let status = error?.response?.data?.status;
-    toast.error(mess || status);
+    let newMess = mess.match(Regex());
+    console.log(newMess, "<<<<<<<<<<NESSSSS");
+    toast.error(
+      mess
+        ? `Khuyến mãi đã hết hạn vào ${FormatDay(
+            newMess[0]
+          )}.Vui lòng cập nhật ngày kết thúc`
+        : mess || status
+    );
   }
 };
 

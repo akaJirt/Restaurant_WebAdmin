@@ -1,7 +1,6 @@
 import React from "react";
 import "./ErrorPage.scss";
 import { NavLink } from "react-router-dom";
-import errorPage from "../../images/errorPage.jpg";
 const ErrorPage = (props) => {
   return (
     <div style={{ paddingTop: "100px" }} className="content-error-page">
