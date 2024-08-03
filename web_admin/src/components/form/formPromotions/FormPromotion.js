@@ -6,7 +6,7 @@ import {
 import FormatDate from "../../../utils/FormatDate";
 import { LoadingOutlined } from "@ant-design/icons";
 import { FloatingLabel, Form } from "react-bootstrap";
-
+import _ from "lodash";
 const FormPromotion = ({
   setListDataPromotion,
   statusPromotion,
@@ -28,6 +28,7 @@ const FormPromotion = ({
   maxUsage,
   setStatusPromotion,
   setEventKey,
+  setIsLoadingPromotion,
 }) => {
   console.log("render FormPromotion");
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +58,8 @@ const FormPromotion = ({
         setEndDate,
         setEventKey,
         setMinOrderValue,
-        setMaxDiscount
+        setMaxDiscount,
+        setIsLoadingPromotion
       );
     }
     if (statusPromotion[0] === "update") {
@@ -69,30 +71,37 @@ const FormPromotion = ({
         setListDataPromotion,
         setStatusPromotion,
         setDiscountType,
-        setIsLoading
+        setIsLoading,
+        setIsLoadingPromotion
       );
     }
   };
 
   const dataFind = useCallback(() => {
     if (discountType !== "" && statusPromotion[0] !== "update") {
-      let findItem = listDataPromotion?.data?.promotions?.find(
-        (item) => item.discountType === discountType
-      );
-      if (findItem) {
-        setDiscount(findItem.discount);
-        setMaxUsage(findItem.maxUsage);
-        setStartDate(FormatDate(findItem.startDate));
-        setEndDate(FormatDate(findItem.endDate));
-        setMinOrderValue(findItem.minOrderValue);
-        setMaxDiscount(findItem.maxDiscount);
-      } else {
-        setDiscount("");
-        setMaxUsage("");
-        setStartDate("");
-        setEndDate("");
-        setMinOrderValue("");
-        setMaxDiscount("");
+      let dataClone = _.cloneDeep(listDataPromotion?.data?.promotions);
+      if (dataClone && dataClone.length > 0) {
+        dataClone.reverse();
+        let findItem = dataClone?.find(
+          (item) => item.discountType === discountType
+        );
+        console.log(findItem, "check find");
+
+        if (findItem) {
+          setDiscount(findItem.discount);
+          setMaxUsage(findItem.maxUsage);
+          setStartDate(FormatDate(findItem.startDate));
+          setEndDate(FormatDate(findItem.endDate));
+          setMinOrderValue(findItem.minOrderValue);
+          setMaxDiscount(findItem.maxDiscount);
+        } else {
+          setDiscount("");
+          setMaxUsage("");
+          setStartDate("");
+          setEndDate("");
+          setMinOrderValue("");
+          setMaxDiscount("");
+        }
       }
     }
   }, [

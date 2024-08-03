@@ -54,7 +54,14 @@
 
     .table-users {
         background-color: #1e1e2e;
+.dialog {
 
+
+        .loading {
+            color: #FFF;
+
+        }
+    }
         .isActive {
             opacity: .1;
         }
@@ -198,6 +205,17 @@
                 outline: none;
             }
         }
+                .dialog {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+        
+                    .loading {
+                        color: #E8900C;
+                        align-self: center;
+                        font-size: 50px;
+                    }
+                }
 
         .box-progressBar {
             display: flex;

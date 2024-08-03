@@ -1,17 +1,19 @@
-import { FormatDay, FormatTimeNow, Regex } from "../../../utils/FormDay";
+import { FormatDay, Regex } from "../../../utils/FormDay";
 import { apiPromotion } from "../../AxiosInstall";
 import { toast } from "react-toastify";
-import moment from "moment";
-const getPromotion = async (setListDataPromotion) => {
+const getPromotion = async (setListDataPromotion, setIsLoadingPromotion) => {
   try {
+    setIsLoadingPromotion(true);
     const res = await apiPromotion.getApiPromotion();
     if (res && res.data && res.data.status === "success") {
+      setIsLoadingPromotion(false);
       setListDataPromotion(res.data);
     } else {
       setListDataPromotion([]);
     }
   } catch (error) {
     console.log(error);
+    setIsLoadingPromotion(false);
   }
 };
 
@@ -32,19 +34,18 @@ const postPromotion = async (
   setEndDate,
   setEventKey,
   setMinOrderValue,
-  setMaxDiscount
+  setMaxDiscount,
+  setIsLoadingPromotion
 ) => {
   try {
-    let timeNow = FormatTimeNow(moment());
-    console.log(typeof timeNow, ">timeNow");
     const data = {
       discount,
       discountType,
       maxUsage,
       minOrderValue,
       maxDiscount,
-      startDate: `${startDate} ${timeNow}`,
-      endDate: `${endDate} ${timeNow}`,
+      startDate,
+      endDate,
     };
     setIsLoading(true);
     const res = await apiPromotion.postApiPromotion(data);
@@ -59,7 +60,7 @@ const postPromotion = async (
       setMinOrderValue("");
       setMaxDiscount("");
       setIsLoading(false);
-      await getPromotion(setListDataPromotion);
+      await getPromotion(setListDataPromotion, setIsLoadingPromotion);
     }
   } catch (error) {
     let mess = error?.response?.data?.message;
@@ -73,7 +74,8 @@ const deletePromotion = async (
   id,
   setListDataPromotion,
   handleClose,
-  setIsLoading
+  setIsLoading,
+  setIsLoadingPromotion
 ) => {
   try {
     setIsLoading(true);
@@ -82,7 +84,7 @@ const deletePromotion = async (
       toast.success(res.data.status);
       handleClose();
       setIsLoading(false);
-      await getPromotion(setListDataPromotion);
+      await getPromotion(setListDataPromotion, setIsLoadingPromotion);
     }
   } catch (error) {
     let mess = error?.response?.data?.message;
@@ -99,15 +101,14 @@ const updatePromotions = async (
   setListDataPromotion,
   setStatusPromotion,
   setDiscountType,
-  setIsLoading
+  setIsLoading,
+  setIsLoadingPromotion
 ) => {
   try {
-    let timeNow = FormatTimeNow(moment());
-
     const data = {
       maxUsage,
-      startDate: `${startDate} ${timeNow}`,
-      endDate: `${endDate} ${timeNow}`,
+      startDate,
+      endDate,
     };
     setIsLoading(true);
     const res = await apiPromotion.updateApiPromotion(id, data);
@@ -116,7 +117,7 @@ const updatePromotions = async (
       setStatusPromotion(["create"]);
       setDiscountType("");
       setIsLoading(false);
-      await getPromotion(setListDataPromotion);
+      await getPromotion(setListDataPromotion, setIsLoadingPromotion);
     }
   } catch (error) {
     let mess = error?.response?.data?.message;
@@ -126,18 +127,21 @@ const updatePromotions = async (
   }
 };
 
-const patchStatusPromotion = async (id, setListDataPromotion) => {
+const patchStatusPromotion = async (
+  id,
+  setListDataPromotion,
+  setIsLoadingPromotion
+) => {
   try {
     const res = await apiPromotion.updateStatusPromotion(id);
     if (res && res.data && res.data.status === "success") {
       toast.success(res.data.status);
-      await getPromotion(setListDataPromotion);
+      await getPromotion(setListDataPromotion, setIsLoadingPromotion);
     }
   } catch (error) {
     let mess = error?.response?.data?.message;
     let status = error?.response?.data?.status;
     let newMess = mess.match(Regex());
-    console.log(newMess, "<<<<<<<<<<NESSSSS");
     toast.error(
       mess
         ? `Khuyến mãi đã hết hạn vào ${FormatDay(

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import { FormatDay, FormatDay3 } from "../../../utils/FormDay";
+import { FormatDay } from "../../../utils/FormDay";
 import ConvertMoney from "../../../utils/convertMoney";
 import { Tag } from "antd";
 function ModalPromotion({
@@ -23,6 +23,7 @@ function ModalPromotion({
   setId,
   setMaxUsage,
   setListDataPromotion,
+  setIsLoadingPromotion,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const getDataPromotion = useCallback(() => {
@@ -72,7 +73,8 @@ function ModalPromotion({
         itemPromotion.id,
         setListDataPromotion,
         handleClose,
-        setIsLoading
+        setIsLoading,
+        setIsLoadingPromotion
       );
     }
   };
@@ -192,7 +194,7 @@ function ModalPromotion({
                   className="mb-3"
                 >
                   <Form.Control
-                    value={FormatDay3(itemPromotion?.item?.startDate) || ""}
+                    value={FormatDay(itemPromotion?.item?.startDate) || ""}
                     type="text"
                     placeholder="name@example.com"
                     disabled
@@ -207,7 +209,7 @@ function ModalPromotion({
                   className="mb-3"
                 >
                   <Form.Control
-                    value={FormatDay3(itemPromotion?.item?.endDate) || ""}
+                    value={FormatDay(itemPromotion?.item?.endDate) || ""}
                     type="text"
                     placeholder="name@example.com"
                     disabled

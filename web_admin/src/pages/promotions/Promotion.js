@@ -23,6 +23,7 @@ function Promotion(props) {
   const [id, setId] = useState("");
   const [maxUsage, setMaxUsage] = useState("");
   const [eventKey, setEventKey] = useState("khuyến mãi");
+  const [isLoadingPromotion, setIsLoadingPromotion] = useState(false);
   const handleSelect = (key) => {
     if (key === "khuyến mãi") {
       setStatusPromotion(["create"]);
@@ -77,6 +78,8 @@ function Promotion(props) {
             setItemPromotion={setItemPromotion}
             setStatusPromotion={setStatusPromotion}
             setEventKey={setEventKey}
+            setIsLoadingPromotion={setIsLoadingPromotion}
+            isLoadingPromotion={isLoadingPromotion}
           />
         </Tab>
         <Tab
@@ -108,6 +111,7 @@ function Promotion(props) {
             maxUsage={maxUsage}
             setStatusPromotion={setStatusPromotion}
             setEventKey={setEventKey}
+            setIsLoadingPromotion={setIsLoadingPromotion}
           />
         </Tab>
       </Tabs>

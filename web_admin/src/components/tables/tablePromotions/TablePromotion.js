@@ -10,12 +10,16 @@ import ReactPaginate from "react-paginate";
 import { BiToggleRight, BiToggleLeft } from "react-icons/bi";
 import { BsToggle2On, BsToggle2Off } from "react-icons/bs";
 import ProgressBar from "../../progressBar/ProgressBar";
+import _ from "lodash";
+import { LoadingOutlined } from "@ant-design/icons";
 const TablePromotion = ({
   listDataPromotion,
   setListDataPromotion,
   setShow,
   setItemPromotion,
   setStatusPromotion,
+  setIsLoadingPromotion,
+  isLoadingPromotion,
 }) => {
   const [filteredPromotions, setFilteredPromotions] = useState([]);
   const [isSelected, setIsSelected] = useState("");
@@ -23,8 +27,8 @@ const TablePromotion = ({
   const [title, setTitle] = useState("Số tiền giảm");
 
   const getApiPromotions = useCallback(async () => {
-    await getPromotion(setListDataPromotion);
-  }, [setListDataPromotion]);
+    await getPromotion(setListDataPromotion, setIsLoadingPromotion);
+  }, [setListDataPromotion, setIsLoadingPromotion]);
 
   useEffect(() => {
     getApiPromotions();
@@ -50,6 +54,20 @@ const TablePromotion = ({
   useEffect(() => {
     filterPromotions();
   }, [filterPromotions]);
+
+  useEffect(() => {
+    if (
+      listDataPromotion &&
+      listDataPromotion?.data &&
+      listDataPromotion?.data?.promotions
+    ) {
+      const dataClone = _.cloneDeep(listDataPromotion?.data?.promotions);
+      if (dataClone && dataClone.length > 0) {
+        dataClone.reverse();
+      }
+      setFilteredPromotions(dataClone);
+    }
+  }, [listDataPromotion]);
 
   let limit = 5;
   let offset = currentPage * limit;
@@ -104,9 +122,17 @@ const TablePromotion = ({
 
   const handleClickResetOpen = async (id, type) => {
     if (type === "open") {
-      await patchStatusPromotion(id, setListDataPromotion);
+      await patchStatusPromotion(
+        id,
+        setListDataPromotion,
+        setIsLoadingPromotion
+      );
     } else {
-      await patchStatusPromotion(id, setListDataPromotion);
+      await patchStatusPromotion(
+        id,
+        setListDataPromotion,
+        setIsLoadingPromotion
+      );
     }
   };
 
@@ -153,170 +179,188 @@ const TablePromotion = ({
     listDataPromotion?.data?.promotions?.reduce((a, b) => {
       return a + b.usedCount;
     }, 0);
+
   const handleClickOn = async () => {
     await postResetAllPromotion(setListDataPromotion);
   };
+  console.log(isLoadingPromotion, "<<<<<<<<<<<<<<<<");
 
   return (
     <div className="mt-3 mb-3 table-users">
-      <div className="box-select">
-        <span>Hiện có : {filteredPromotions.length} </span>
-        <h1 className="text-center">
-          {isSelected.toUpperCase() === ""
-            ? "Tất cả khuyến mãi"
-            : isSelected === "true"
-            ? "Khuyến mãi khả dụng"
-            : isSelected === "false"
-            ? "Khuyến mãi không khả dụng"
-            : isSelected === "fixed"
-            ? "Khuyến mãi theo tiền"
-            : "Khuyến mãi theo phần trăm"}
-        </h1>
-        <div className="select">
-          <select
-            value={isSelected}
-            onChange={(e) => handleChangeOption(e.target.value)}
-          >
-            <option value={""}>Tất cả</option>
-            <option value={"true"}>Khả dụng</option>
-            <option value={"false"}>Không khả dụng</option>
-            {newDataFilter.length > 0 ? (
-              newDataFilter.map((item, index) => {
-                return (
-                  <option key={index} value={item}>
-                    {item}
-                  </option>
-                );
-              })
-            ) : (
-              <>
-                <option value={"fixed"}>fixed</option>
-                <option value={"percentage"}>percentage</option>
-                <option value={"maxPercentage"}>maxPercentage</option>
-              </>
+      {isLoadingPromotion ? (
+        <div className="dialog">
+          <LoadingOutlined className="loading" />
+        </div>
+      ) : (
+        <>
+          <div className="box-select">
+            <span>Hiện có : {filteredPromotions.length} </span>
+            <h1 className="text-center">
+              {isSelected.toUpperCase() === ""
+                ? "Tất cả khuyến mãi"
+                : isSelected === "true"
+                ? "Khuyến mãi khả dụng"
+                : isSelected === "false"
+                ? "Khuyến mãi không khả dụng"
+                : isSelected === "fixed"
+                ? "Khuyến mãi theo tiền"
+                : "Khuyến mãi theo phần trăm"}
+            </h1>
+            <div className="select">
+              <select
+                value={isSelected}
+                onChange={(e) => handleChangeOption(e.target.value)}
+              >
+                <option value={""}>Tất cả</option>
+                <option value={"true"}>Khả dụng</option>
+                <option value={"false"}>Không khả dụng</option>
+                {newDataFilter.length > 0 ? (
+                  newDataFilter.map((item, index) => {
+                    return (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <>
+                    <option value={"fixed"}>fixed</option>
+                    <option value={"percentage"}>percentage</option>
+                    <option value={"maxPercentage"}>maxPercentage</option>
+                  </>
+                )}
+              </select>
+            </div>
+          </div>
+          <div className="box-progressBar mb-3">
+            {totalUsedCount > 0 && (
+              <ProgressBar listDataPromotion={listDataPromotion} />
             )}
-          </select>
-        </div>
-      </div>
-      <div className="box-progressBar mb-3">
-        <ProgressBar listDataPromotion={listDataPromotion} />
-        <div>
-          {totalUsedCount > 0 ? (
-            <BsToggle2On
-              size={20}
-              color="#007bff"
-              onClick={handleClickOn}
-              style={{ cursor: "pointer" }}
-            />
-          ) : (
-            <BsToggle2Off
-              size={20}
-              color="#FF0000"
-              style={{ cursor: "pointer" }}
-            />
-          )}
-        </div>
-      </div>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Mã giảm giá</th>
-            <th>Trạng thái</th>
-            <th>Loại mã</th>
-            <th>{title}</th>
-            <th>Lượt dùng mã</th>
-            <th>đã sử dụng</th>
-            <th>Lựa chọn</th>
-          </tr>
-        </thead>
-        <tbody>
-          {newListData.length > 0 ? (
-            newListData.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.code}</td>
-                  <td>
-                    <div>{item.isActive ? "Khả dụng" : "Không khả dụng"}</div>
-                    <div>
-                      {item.isActive ? (
-                        <BiToggleRight
-                          style={{ cursor: "pointer" }}
-                          size={20}
-                          color="#007bff"
-                          onClick={() => handleClickResetOpen(item._id, "open")}
-                        />
-                      ) : (
-                        <BiToggleLeft
-                          style={{ cursor: "pointer" }}
-                          size={20}
-                          color="#FF0000"
-                          onClick={() =>
-                            handleClickResetOpen(item._id, "close")
+            <div>
+              {totalUsedCount > 0 ? (
+                <BsToggle2On
+                  size={20}
+                  color="#007bff"
+                  onClick={handleClickOn}
+                  style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <BsToggle2Off
+                  size={20}
+                  color="#FF0000"
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+            </div>
+          </div>
+          <Table striped bordered hover responsive>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Mã giảm giá</th>
+                <th>Trạng thái</th>
+                <th>Loại mã</th>
+                <th>{title}</th>
+                <th>Lượt dùng mã</th>
+                <th>đã sử dụng</th>
+                <th>Lựa chọn</th>
+              </tr>
+            </thead>
+            <tbody>
+              {newListData.length > 0 ? (
+                newListData.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{item.code}</td>
+                      <td>
+                        <div>
+                          {item.isActive ? "Khả dụng" : "Không khả dụng"}
+                        </div>
+                        <div>
+                          {item.isActive ? (
+                            <BiToggleRight
+                              style={{ cursor: "pointer" }}
+                              size={20}
+                              color="#007bff"
+                              onClick={() =>
+                                handleClickResetOpen(item._id, "open")
+                              }
+                            />
+                          ) : (
+                            <BiToggleLeft
+                              style={{ cursor: "pointer" }}
+                              size={20}
+                              color="#FF0000"
+                              onClick={() =>
+                                handleClickResetOpen(item._id, "close")
+                              }
+                            />
+                          )}
+                        </div>
+                      </td>
+                      <td>{item.discountType}</td>
+                      <td>{formatDiscount(item.discount)}</td>
+                      <td>{item.maxUsage ? item.maxUsage : 0}</td>
+
+                      <td>{item.usedCount}</td>
+                      <td>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => handleClickView(item)}
+                        >
+                          Chi Tiết
+                        </button>
+
+                        <button
+                          className="btn btn-danger mx-2"
+                          onClick={() => handleClickDelete(item._id, item.code)}
+                          disabled={
+                            item.usedCount && item.isActive ? true : false
                           }
-                        />
-                      )}
-                    </div>
-                  </td>
-                  <td>{item.discountType}</td>
-                  <td>{formatDiscount(item.discount)}</td>
-                  <td>{item.maxUsage ? item.maxUsage : 0}</td>
-
-                  <td>{item.usedCount}</td>
-                  <td>
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => handleClickView(item)}
-                    >
-                      Chi Tiết
-                    </button>
-
-                    <button
-                      className="btn btn-danger mx-2"
-                      onClick={() => handleClickDelete(item._id, item.code)}
-                      disabled={item.usedCount && item.isActive ? true : false}
-                    >
-                      Xóa
-                    </button>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => handleClickSua(item)}
-                    >
-                      Sửa
-                    </button>
-                  </td>
+                        >
+                          Xóa
+                        </button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleClickSua(item)}
+                        >
+                          Sửa
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={11}> No Data</td>
                 </tr>
-              );
-            })
-          ) : (
-            <tr>
-              <td colSpan={11}> No Data</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-      <ReactPaginate
-        previousLabel={"previous"}
-        nextLabel={"next"}
-        breakLabel={"..."}
-        breakClassName={"break-me"}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={"pagination"}
-        subContainerClassName={"pages pagination"}
-        activeClassName={"active"}
-        pageClassName="page-tem"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakLinkClassName="page-link"
-        forcePage={currentPage}
-      />
+              )}
+            </tbody>
+          </Table>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageChange}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+            pageClassName="page-tem"
+            pageLinkClassName="page-link"
+            previousClassName="page-item"
+            previousLinkClassName="page-link"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            breakLinkClassName="page-link"
+            forcePage={currentPage}
+          />
+        </>
+      )}
     </div>
   );
 };

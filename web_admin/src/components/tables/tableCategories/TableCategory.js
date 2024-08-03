@@ -7,7 +7,7 @@ import ModalDeleteCategories from "../../Modal/Categories/ModalDeleteCategories"
 import { valueFormCategories } from "../../../store/valueForm/categories/actions";
 import { setStatusCategories } from "../../../store/categories/setStatus/actions";
 import { LoadingOutlined } from "@ant-design/icons";
-
+import _ from "lodash";
 const TableCategory = () => {
   const [current, setCurrent] = useState(0);
   const [show, setShow] = useState(false);
@@ -16,13 +16,24 @@ const TableCategory = () => {
   const getDataState = useSelector(getCategoriesState);
   const { dataGetCategories, isLoadingGetCategories } = getDataState;
   const data = dataGetCategories?.data;
-
+  const [dataSort, setDataSort] = useState([]);
   //*******************************PHAN TRANG ****************************************/
   const itemPage = 5;
   const offset = current * itemPage;
-  const newData = data?.slice(offset, offset + itemPage);
 
-  const pageCount = Math.ceil(data?.length / itemPage);
+  useEffect(() => {
+    if (data && data.length > 0) {
+      let dataClone = _.cloneDeep(data);
+      if (dataClone && dataClone.length > 0) {
+        dataClone.reverse();
+      }
+      setDataSort(dataClone);
+    }
+  }, [data]);
+
+  const newData = dataSort?.slice(offset, offset + itemPage);
+
+  const pageCount = Math.ceil(dataSort?.length / itemPage);
 
   const handlePageChange = (selectedPage) => {
     setCurrent(selectedPage.selected);
