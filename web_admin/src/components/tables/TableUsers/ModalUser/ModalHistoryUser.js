@@ -15,8 +15,6 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
   const [listCash, setListCash] = useState({});
   const [listZaloPay, setlistZaloPay] = useState({});
 
-  console.log(listZaloPay.amount, "listZaloPay");
-
   const getApiHistoryPayment = useCallback(async () => {
     if (item && show === true) {
       await historyPaymentUser(item._id, setData);

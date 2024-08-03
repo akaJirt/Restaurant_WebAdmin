@@ -11,7 +11,8 @@ import { valueFormTable } from "../../../store/valueForm/tables/actions";
 import LoadingTable from "./LoadingTable";
 import { getAllTable } from "../../../api/call_api/tables/fetchApiTable";
 import { toast } from "react-toastify";
-
+import { AiOutlineSwapRight } from "react-icons/ai";
+import _ from "lodash";
 const TableTable = () => {
   console.log("render TableTable");
   const [currentPage, setCurrentPage] = useState(0);
@@ -19,6 +20,8 @@ const TableTable = () => {
   const [itemTable, setItemTable] = useState({});
   const [status, setStatus] = useState("all");
   const table = useSelector(getTableState);
+  const [isClick, setIsClick] = useState("up");
+  const [dataSort, setDataSort] = useState([]);
   const { isLoading, dataTable } = table;
   let data = dataTable?.data;
   const dispatch = useDispatch();
@@ -34,11 +37,24 @@ const TableTable = () => {
   const itemsPerPage = 5;
   const offset = currentPage * itemsPerPage;
   // Filter currentItems based on status
-  const currentItems = data
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      let dataClone = _.cloneDeep(data);
+      if (isClick === "up") {
+        dataClone.sort((a, b) => a.tableNumber - b.tableNumber);
+      } else {
+        dataClone.sort((a, b) => b.tableNumber - a.tableNumber);
+      }
+      setDataSort(dataClone);
+    }
+  }, [data, isClick]);
+
+  const currentItems = dataSort
     ?.filter((item) => item?.status === status || status === "all")
     .slice(offset, offset + itemsPerPage);
 
-  const itemCount = data?.filter(
+  const itemCount = dataSort?.filter(
     (item) => item?.status === status || status === "all"
   ).length;
   const pageCount = Math.ceil(itemCount / itemsPerPage);
@@ -73,6 +89,17 @@ const TableTable = () => {
   }, [pageCount, currentPage]);
   /**********************************TOGGLE ***************************** */
   const dataTitle = [...new Set(data?.map((item) => item.status))];
+
+  const handleClickSort = () => {
+    if (isClick === "up") {
+      setIsClick("down");
+      return;
+    }
+    if (isClick === "down") {
+      setIsClick("up");
+      return;
+    }
+  };
   return (
     <div className="mt-3 mb-3 layout">
       {isLoading ? (
@@ -82,7 +109,7 @@ const TableTable = () => {
       ) : (
         <>
           <div className="box-h1-span mb-2">
-            <span>{`Hiện Có ${dataTable?.totalTables} Bàn`}</span>
+            <span>{`Hiện Có ${itemCount} Bàn`}</span>
             <h1 className="text-center ">
               {status === "all"
                 ? "Tất Cả Bàn"
@@ -105,7 +132,17 @@ const TableTable = () => {
           <Table striped bordered hover responsive>
             <thead>
               <tr>
-                <th>Số Bàn</th>
+                <th>
+                  Số Bàn
+                  <span className="ic-swap" onClick={handleClickSort}>
+                    <AiOutlineSwapRight
+                      className={`ic-up ${isClick === "up" ? "click" : ""}`}
+                    />
+                    <AiOutlineSwapRight
+                      className={`ic-down ${isClick === "down" ? "click" : ""}`}
+                    />
+                  </span>
+                </th>
                 <th>Ảnh QR</th>
                 <th>Trạng Thái</th>
                 <th>Lựa Chọn</th>

@@ -23,7 +23,6 @@ function Promotion(props) {
   const [id, setId] = useState("");
   const [maxUsage, setMaxUsage] = useState("");
   const [eventKey, setEventKey] = useState("khuyến mãi");
-  console.log(eventKey, "eventKey");
   const handleSelect = (key) => {
     if (key === "khuyến mãi") {
       setStatusPromotion(["create"]);

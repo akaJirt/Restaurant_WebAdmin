@@ -24,7 +24,6 @@ function ModalPromotion({
   setMaxUsage,
   setListDataPromotion,
 }) {
-  console.log(itemPromotion, "check itemPromotion");
   const [isLoading, setIsLoading] = useState(false);
   const getDataPromotion = useCallback(() => {
     if (statusPromotion[0] === "update") {

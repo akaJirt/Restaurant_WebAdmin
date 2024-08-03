@@ -5,7 +5,6 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import ConvertMoney from "../../../../utils/convertMoney";
 function ModalOrder({ show, setShow, listDataItem }) {
-  console.log(listDataItem, "check data listDataItem");
   const handleClose = () => setShow(false);
 
   return (

@@ -4,7 +4,6 @@ import { NavLink, useLocation } from "react-router-dom";
 import React from "react";
 //---------------------QUAN LI BAN ONLINE--------------------
 export const QuanLiBanOnlineSlice = () => {
-  console.log("render QuanLiBanOnlineSlice");
   const locationHome = useSelector(getLocationState);
 
   let locationNameHome = locationHome.payload.slice(1, 5).toLocaleUpperCase();
@@ -43,8 +42,6 @@ export const QuanLiBanOnlineSlice = () => {
 
 //---------------------QUAN LI BAN--------------------
 export const QuanLiBanSlice = () => {
-  console.log("render QuanLiBanSlice");
-
   const locationHome = useSelector(getLocationState);
   let locationNameHome = locationHome.payload.slice(1, 5).toLocaleUpperCase();
   const location = useLocation();
@@ -74,8 +71,6 @@ export const QuanLiBanSlice = () => {
 //---------------------QUAN LI MENU --------------------
 
 export const QuanLiMenuSlice = () => {
-  console.log("render QuanLiMenuSlice");
-
   const locationHome = useSelector(getLocationState);
   let locationNameHome = locationHome.payload.slice(1, 5).toLocaleUpperCase();
   const location = useLocation();
@@ -106,8 +101,6 @@ export const QuanLiMenuSlice = () => {
 //---------------------QUAN LI USER--------------------
 
 export const QuanLiUserSlice = () => {
-  console.log("render QuanLiUserSlice");
-
   const locationHome = useSelector(getLocationState);
   let locationNameHome = locationHome.payload.slice(1, 5).toLocaleUpperCase();
   const location = useLocation();
@@ -137,8 +130,6 @@ export const QuanLiUserSlice = () => {
 //---------------------QUAN LI THONG KE VA BAO CAO--------------------
 
 export const QuanLiThongKeVaBaoCaoSlice = () => {
-  console.log("render QuanLiThongKeVaBaoCaoSlice");
-
   const locationHome = useSelector(getLocationState);
   let locationNameHome = locationHome.payload.slice(1, 5).toLocaleUpperCase();
   const location = useLocation();
@@ -173,8 +164,6 @@ export const QuanLiThongKeVaBaoCaoSlice = () => {
 
 //---------------------QUAN LI KHUYEN MAI--------------------
 export const QuanLiKhuyenMaiSlice = () => {
-  console.log("render QuanLiKhuyenMaiSlice");
-
   const locationHome = useSelector(getLocationState);
   let locationNameHome = locationHome.payload.slice(1, 5).toLocaleUpperCase();
   const location = useLocation();

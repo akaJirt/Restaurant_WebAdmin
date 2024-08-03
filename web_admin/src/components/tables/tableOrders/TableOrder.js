@@ -3,12 +3,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import { getAllOrder } from "../../../api/call_api/orders/fetchApiOrder";
 import LoadingTableOrder from "./LoadingTableOrder";
 import ReactPaginate from "react-paginate";
-
+import { AiOutlineSwapRight } from "react-icons/ai";
+import _ from "lodash";
 const TableOrder = () => {
   const [idOption, setIdOption] = useState("Cash");
   const [listDataOrder, setListDataOrder] = useState([]);
   const [listNewDataOrder, setListNewDataOrder] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isClick, setIsClick] = useState("up");
+
   const itemSelect = [
     ...new Set(
       listDataOrder && listDataOrder.length > 0
@@ -42,8 +45,26 @@ const TableOrder = () => {
   let limit = 5;
   let offset = currentPage * limit;
 
+  useEffect(() => {
+    if (listNewDataOrder && listNewDataOrder.length > 0) {
+      let dataClone = _.cloneDeep(listNewDataOrder);
+      if (isClick === "down") {
+        dataClone.sort((a, b) => a.amount - b.amount);
+      } else {
+        dataClone.sort((a, b) => b.amount - a.amount);
+      }
+      setListNewDataOrder(dataClone);
+    }
+  }, [isClick, listNewDataOrder]);
+
   let listDataSlice = listNewDataOrder.slice(offset, offset + limit);
   let pageCount = Math.ceil(listNewDataOrder.length / limit);
+
+  useEffect(() => {
+    if (currentPage >= pageCount && currentPage > 0) {
+      setCurrentPage(pageCount - 1);
+    }
+  }, [pageCount, currentPage]);
 
   const handlePageChange = (s) => {
     setCurrentPage(s.selected);
@@ -51,6 +72,17 @@ const TableOrder = () => {
 
   const handleChangeOption = (e) => {
     setIdOption(e.target.value);
+  };
+
+  const handleClickSort = () => {
+    if (isClick === "up") {
+      setIsClick("down");
+      return;
+    }
+    if (isClick === "down") {
+      setIsClick("up");
+      return;
+    }
   };
   return (
     <div className="table-order">
@@ -81,7 +113,17 @@ const TableOrder = () => {
           <tr>
             <th>Stt</th>
             <th>Số bàn</th>
-            <th>Tổng tiền</th>
+            <th>
+              Tổng tiền
+              <span className="ic-swap" onClick={handleClickSort}>
+                <AiOutlineSwapRight
+                  className={`ic-up ${isClick === "up" ? "click" : ""}`}
+                />
+                <AiOutlineSwapRight
+                  className={`ic-down ${isClick === "down" ? "click" : ""}`}
+                />
+              </span>
+            </th>
             <th>Tên</th>
             <th>Phương thức thanh toán</th>
             <th>Hình ảnh</th>

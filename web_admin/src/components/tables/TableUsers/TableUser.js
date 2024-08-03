@@ -24,7 +24,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   const data = dataGetAllUsers?.data?.users;
   const [itemCount, setItemCount] = useState([]);
 
-  console.log(role, "check role");
   const getApiUsers = useCallback(async () => {
     await getAllUsers(dispatch);
   }, [dispatch]);
@@ -48,7 +47,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
     listData();
   }, [data, offset, role]);
 
-  // Memoized sorted itemCount
   const sortedItemCount = useMemo(() => {
     const sortedData = _.cloneDeep(itemCount);
     if (isClick === "up") {
@@ -80,7 +78,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
     setShow(true);
   };
 
-  console.log(isClick, "check");
   const handleClickSort = () => {
     if (isClick === "up") {
       setIsClick("down");
@@ -164,7 +161,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
           <tbody>
             {sortedItemCount?.length > 0 ? (
               sortedItemCount?.map((item, index) => {
-                console.log(item);
                 return (
                   <tr key={index}>
                     <td>{offset + index + 1}</td>

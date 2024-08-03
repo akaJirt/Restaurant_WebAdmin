@@ -54,7 +54,6 @@ const TablePromotion = ({
   let limit = 5;
   let offset = currentPage * limit;
   let newListData = filteredPromotions.slice(offset, offset + limit);
-  console.log(newListData, "<<<<<<<<<<<<<<<<<<<<<NEW DATA");
   let pageCount = Math.ceil(filteredPromotions.length / limit);
 
   useEffect(() => {
@@ -236,13 +235,9 @@ const TablePromotion = ({
             newListData.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td className={item.isActive ? "" : "isActive"}>
-                    {index + 1}
-                  </td>
-                  <td className={item.isActive ? "" : "isActive"}>
-                    {item.code}
-                  </td>
-                  <td className={item.isActive ? "" : "isActive"}>
+                  <td>{index + 1}</td>
+                  <td>{item.code}</td>
+                  <td>
                     <div>{item.isActive ? "Khả dụng" : "Không khả dụng"}</div>
                     <div>
                       {item.isActive ? (
@@ -264,19 +259,11 @@ const TablePromotion = ({
                       )}
                     </div>
                   </td>
-                  <td className={item.isActive ? "" : "isActive"}>
-                    {item.discountType}
-                  </td>
-                  <td className={item.isActive ? "" : "isActive"}>
-                    {formatDiscount(item.discount)}
-                  </td>
-                  <td className={item.isActive ? "" : "isActive"}>
-                    {item.maxUsage ? item.maxUsage : 0}
-                  </td>
+                  <td>{item.discountType}</td>
+                  <td>{formatDiscount(item.discount)}</td>
+                  <td>{item.maxUsage ? item.maxUsage : 0}</td>
 
-                  <td className={item.isActive ? "" : "isActive"}>
-                    {item.usedCount}
-                  </td>
+                  <td>{item.usedCount}</td>
                   <td>
                     <button
                       className="btn btn-secondary"
