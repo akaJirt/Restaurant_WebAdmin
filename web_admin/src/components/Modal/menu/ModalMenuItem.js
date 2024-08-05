@@ -84,6 +84,7 @@ const ModalMenuItem = ({ show, handleClose, setShow }) => {
         show={show}
         onHide={handleClose}
         className={`modal-delete ${theme ? "theme" : ""}`}
+        backdrop={"static"}
       >
         <Modal.Header closeButton className="modal-header">
           <Modal.Title className="modal-title">

@@ -12,6 +12,8 @@ import LoadingTable from "./LoadingTable";
 import { getAllTable } from "../../../api/call_api/tables/fetchApiTable";
 import { toast } from "react-toastify";
 import { AiOutlineSwapRight } from "react-icons/ai";
+import Lightbox from "react-awesome-lightbox";
+
 import _ from "lodash";
 const TableTable = () => {
   console.log("render TableTable");
@@ -23,6 +25,9 @@ const TableTable = () => {
   const [isClick, setIsClick] = useState("up");
   const [dataSort, setDataSort] = useState([]);
   const { isLoading, dataTable } = table;
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState("");
+  const [title, setTitle] = useState("");
   let data = dataTable?.data;
   const dispatch = useDispatch();
   const getApiTable = useCallback(async () => {
@@ -100,6 +105,14 @@ const TableTable = () => {
       return;
     }
   };
+
+  const handleClickImage = (qr, tableNumber) => {
+    setIsOpen(true);
+    setCurrentImage(qr);
+    setTitle(`Bàn ${tableNumber}`);
+  };
+  console.log(currentImage, title);
+
   return (
     <div className="mt-3 mb-3 layout">
       {isLoading ? (
@@ -157,6 +170,9 @@ const TableTable = () => {
                     handleClickDelete={handleClickDelete}
                     handleClickUpdateTable={handleClickUpdateTable}
                     status={status}
+                    onClick={() =>
+                      handleClickImage(item.qrCode, item.tableNumber)
+                    }
                   />
                 ))
               ) : (
@@ -195,6 +211,17 @@ const TableTable = () => {
             </div>
           ) : null}
         </>
+      )}
+      {currentImage && isOpen && (
+        <Lightbox
+          image={currentImage}
+          title={title}
+          onClose={() => {
+            setIsOpen(false);
+            setCurrentImage("");
+            setTitle("");
+          }}
+        />
       )}
 
       <ModalDeleteTable

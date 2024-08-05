@@ -11,7 +11,9 @@ import { AiOutlineSwapRight } from "react-icons/ai";
 import _ from "lodash";
 import ModalHistoryUser from "./ModalUser/ModalHistoryUser";
 import { valueFormUsers } from "../../../store/valueForm/users/actions";
-const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
+import Lightbox from "react-awesome-lightbox";
+
+const TableUser = ({ role, setRole, setShow }) => {
   console.log("render TableUser");
   const [showHistory, setShowHistory] = useState(false);
   const [item, setItem] = useState({});
@@ -23,6 +25,10 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   const { dataGetAllUsers } = allUsersState;
   const data = dataGetAllUsers?.data?.users;
   const [itemCount, setItemCount] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState("");
+
+  const [caption, setCaption] = useState("");
 
   const getApiUsers = useCallback(async () => {
     await getAllUsers(dispatch);
@@ -31,6 +37,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   useEffect(() => {
     getApiUsers();
   }, [getApiUsers]);
+
   const totalPageCount = 5;
   const offset = currentPage * totalPageCount;
 
@@ -62,6 +69,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   ).length;
 
   const totalPage = Math.ceil(itemPage / totalPageCount);
+
   const handleChange = (e) => {
     setRole(e.target.value);
     setCurrentPage(0);
@@ -70,7 +78,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
   };
-  //********************************************************************** */
 
   const handleClickXoa = (item, e) => {
     e.preventDefault();
@@ -79,14 +86,7 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
   };
 
   const handleClickSort = () => {
-    if (isClick === "up") {
-      setIsClick("down");
-      return;
-    }
-    if (isClick === "down") {
-      setIsClick("up");
-      return;
-    }
+    setIsClick((prev) => (prev === "up" ? "down" : "up"));
   };
 
   const handleClickView = (item) => {
@@ -98,11 +98,19 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
     setShow(true);
     dispatch(setStatusUsers.setStatus(["update", item]));
     dispatch(valueFormUsers.setFullName(item.fullName));
+    dispatch(valueFormUsers.setEmail(item.email));
+    dispatch(valueFormUsers.setPassword(item.password));
   };
 
   const handleClickAuthentication = (item) => {
     setShow(true);
     dispatch(setStatusUsers.setStatus(["authentication", item]));
+  };
+
+  const handleImageClick = (image, name) => {
+    setCurrentImage(image);
+    setCaption(name);
+    setIsOpen(true);
   };
 
   return (
@@ -166,8 +174,14 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
                     <td>{offset + index + 1}</td>
                     <td>{item.fullName}</td>
                     <td>{item.email}</td>
-                    <td className="img">
-                      <img alt="h1" src={item.img_avatar_url} />
+                    <td
+                      className="img"
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
+                        handleImageClick(item.img_avatar_url, item.fullName)
+                      }
+                    >
+                      <img alt="avatar" src={item.img_avatar_url} />
                     </td>
                     <td>
                       {item.role === "client"
@@ -178,7 +192,6 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
                         ? "Quản Lí"
                         : item.role}
                     </td>
-
                     <td>
                       {moment(item.violations.violation_date).format(
                         "DD-MM-YYYY ~ HH:mm:ss"
@@ -246,6 +259,17 @@ const TableUser = ({ role, setRole, capitalizeFirstLetter, setShow }) => {
           nextLinkClassName="page-link"
           breakLinkClassName="page-link"
           forcePage={currentPage}
+        />
+      )}
+      {currentImage && isOpen && (
+        <Lightbox
+          image={currentImage}
+          title={caption}
+          onClose={() => {
+            setIsOpen(false);
+            setCurrentImage("");
+            setCaption("");
+          }}
         />
       )}
     </div>

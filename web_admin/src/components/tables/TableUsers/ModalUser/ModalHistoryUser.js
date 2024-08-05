@@ -9,11 +9,15 @@ import { historyPaymentUser } from "../../../../api/call_api/auth/fetchApiAuth";
 import { FormatDay } from "../../../../utils/FormDay";
 import _ from "lodash";
 import ConvertMoney from "../../../../utils/convertMoney";
+import Lightbox from "react-awesome-lightbox";
+
 const ModalHistoryUser = ({ show, setShow, item }) => {
   const [data, setData] = useState([]);
-  console.log(data, "check data");
   const [listCash, setListCash] = useState({});
   const [listZaloPay, setlistZaloPay] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState("");
+  const [title, setTitle] = useState("");
 
   const getApiHistoryPayment = useCallback(async () => {
     if (item && show === true) {
@@ -50,8 +54,24 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
     setShow(false);
   };
 
+  const handleClickImage = () => {
+    setIsOpen(true);
+    setCurrentImage(item.img_avatar_url);
+    setTitle(item.fullName);
+  };
   return (
     <>
+      {currentImage && isOpen && (
+        <Lightbox
+          image={currentImage}
+          title={title}
+          onClose={() => {
+            setIsOpen(false);
+            setTitle("");
+            setCurrentImage("");
+          }}
+        />
+      )}
       <Modal show={show} onHide={handleClose} size="xl" backdrop={"static"}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -63,7 +83,7 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
             <Accordion.Item eventKey="0">
               <Accordion.Header>Thông tin</Accordion.Header>
               <Accordion.Body>
-                <div className="text-center mb-3">
+                <div className="text-center mb-3" onClick={handleClickImage}>
                   <Avatar
                     size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
                     icon={<img src={item.img_avatar_url} alt="img_user" />}

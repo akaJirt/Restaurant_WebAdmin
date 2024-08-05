@@ -5,20 +5,22 @@ import LoadingTableOrder from "./LoadingTableOrder";
 import ReactPaginate from "react-paginate";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import _ from "lodash";
+import Lightbox from "react-awesome-lightbox";
+
 const TableOrder = () => {
   const [idOption, setIdOption] = useState("Cash");
   const [listDataOrder, setListDataOrder] = useState([]);
   const [listNewDataOrder, setListNewDataOrder] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [isClick, setIsClick] = useState("up");
+  const [currentImage, setCurrentImage] = useState("");
+  const [title, setTitle] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const itemSelect = [
-    ...new Set(
-      listDataOrder && listDataOrder.length > 0
-        ? listDataOrder?.map((item) => item.paymentMethod)
-        : []
-    ),
+    ...new Set(listDataOrder.map((item) => item.paymentMethod)),
   ];
+
   const getApiOrders = async () => {
     await getAllOrder(setListDataOrder);
   };
@@ -27,12 +29,25 @@ const TableOrder = () => {
     getApiOrders();
   }, []);
 
+  const getDataOrder = useCallback(() => {
+    if (listDataOrder && listDataOrder.length > 0 > 0) {
+      let dataClone = _.cloneDeep(listDataOrder);
+      if (dataClone && dataClone.length > 0) {
+        if (isClick === "up") {
+          dataClone.sort((a, b) => a.amount - b.amount);
+        } else {
+          dataClone.sort((a, b) => b.amount - a.amount);
+        }
+      }
+      setListNewDataOrder(dataClone);
+    }
+  }, [isClick, listDataOrder]);
+
   const getNewDataOrder = useCallback(() => {
     if (listDataOrder && listDataOrder.length > 0) {
       let newData = listDataOrder.filter(
         (item) => item.paymentMethod === idOption
       );
-
       setListNewDataOrder(newData);
     }
   }, [listDataOrder, idOption]);
@@ -41,25 +56,14 @@ const TableOrder = () => {
     getNewDataOrder();
   }, [getNewDataOrder]);
 
-  /***************************************************PHAN TRANG****************************************************** */
-  let limit = 5;
-  let offset = currentPage * limit;
+  const limit = 5;
+  const offset = currentPage * limit;
+  const listDataSlice = listNewDataOrder.slice(offset, offset + limit);
+  const pageCount = Math.ceil(listNewDataOrder.length / limit);
 
   useEffect(() => {
-    if (listNewDataOrder && listNewDataOrder.length > 0) {
-      let dataClone = _.cloneDeep(listNewDataOrder);
-      if (isClick === "down") {
-        dataClone.sort((a, b) => a.amount - b.amount);
-      } else {
-        dataClone.sort((a, b) => b.amount - a.amount);
-      }
-      setListNewDataOrder(dataClone);
-    }
-  }, [isClick, listNewDataOrder]);
-
-  let listDataSlice = listNewDataOrder.slice(offset, offset + limit);
-  let pageCount = Math.ceil(listNewDataOrder.length / limit);
-
+    getDataOrder();
+  }, [getDataOrder]);
   useEffect(() => {
     if (currentPage >= pageCount && currentPage > 0) {
       setCurrentPage(pageCount - 1);
@@ -84,6 +88,13 @@ const TableOrder = () => {
       return;
     }
   };
+
+  const handleClickImage = (item) => {
+    setCurrentImage(item.userPay.img_avatar_url);
+    setTitle(item.userPay.fullName);
+    setIsOpen(true);
+  };
+
   return (
     <div className="table-order">
       <div className="box-top-order">
@@ -98,10 +109,10 @@ const TableOrder = () => {
         </h1>
         <div className="select">
           <select value={idOption} onChange={handleChangeOption}>
-            {itemSelect && itemSelect.length > 0 ? (
-              itemSelect?.map((item, index) => {
-                return <option key={index}>{item}</option>;
-              })
+            {itemSelect.length > 0 ? (
+              itemSelect.map((item, index) => (
+                <option key={index}>{item}</option>
+              ))
             ) : (
               <option>Không có dữ liệu</option>
             )}
@@ -132,9 +143,14 @@ const TableOrder = () => {
           </tr>
         </thead>
         <tbody>
-          {listDataSlice && listDataSlice.length > 0 ? (
+          {listDataSlice.length > 0 ? (
             listDataSlice.map((item, index) => (
-              <LoadingTableOrder item={item} index={index} key={index} />
+              <LoadingTableOrder
+                item={item}
+                index={index}
+                key={index}
+                onClick={() => handleClickImage(item)}
+              />
             ))
           ) : (
             <tr>
@@ -164,6 +180,18 @@ const TableOrder = () => {
         breakLinkClassName="page-link"
         forcePage={currentPage}
       />
+
+      {currentImage && isOpen && (
+        <Lightbox
+          image={currentImage}
+          title={title}
+          onClose={() => {
+            setIsOpen(false);
+            setCurrentImage("");
+            setTitle("");
+          }}
+        />
+      )}
     </div>
   );
 };

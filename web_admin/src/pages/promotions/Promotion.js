@@ -63,6 +63,7 @@ function Promotion(props) {
         setId={setId}
         setMaxUsage={setMaxUsage}
         setListDataPromotion={setListDataPromotion}
+        setIsLoadingPromotion={setIsLoadingPromotion}
       />
       <Tabs
         activeKey={eventKey}

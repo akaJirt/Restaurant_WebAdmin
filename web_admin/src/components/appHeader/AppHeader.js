@@ -122,12 +122,12 @@ const AppHeader = () => {
             <li className="item-profile">
               <Link to={"/profile"} className="item-link">
                 <UserOutlined className="item-icon" />
-                <span>My Profile</span>
+                <span>Thông tin của tôi</span>
               </Link>
             </li>
             <li onClick={handleClickLogout}>
               <Link className="item-link">
-                <LogoutOutlined className="item-icon" /> <span>Log out</span>
+                <LogoutOutlined className="item-icon" /> <span>Đăng xuất</span>
               </Link>
             </li>
           </ul>

@@ -9,7 +9,14 @@ import { valueFormMenu } from "../../../store/valueForm/menu/actions";
 import { setListOption } from "../../../store/menuItem/menuOption/action";
 import ConvertMoney from "../../../utils/convertMoney";
 
-const LoadingTableMenu = ({ item, index, offset, setShow, setShowOption }) => {
+const LoadingTableMenu = ({
+  item,
+  index,
+  offset,
+  setShow,
+  setShowOption,
+  onClick,
+}) => {
   console.log("render LoadingTableMenu");
   const dispatch = useDispatch();
 
@@ -45,7 +52,7 @@ const LoadingTableMenu = ({ item, index, offset, setShow, setShowOption }) => {
         <Tooltip text={item.description}>{cutString(item.description)}</Tooltip>
       </td>
       <td>{ConvertMoney(item.price)}</td>
-      <td className="img-table">
+      <td className="img-table" onClick={onClick}>
         <img src={item.image_url || itemMenu} alt="avatar" loading="lazy" />
       </td>
       <td>{item.rating}</td>

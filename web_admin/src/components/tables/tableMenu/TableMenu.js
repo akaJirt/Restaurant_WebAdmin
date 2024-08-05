@@ -14,6 +14,8 @@ import { getAllMenuItem } from "../../../api/call_api/menuItem/fetchApiMenuItem"
 import { getAllCategories } from "../../../api/call_api/categories/fetchApiCategory";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import _ from "lodash";
+import Lightbox from "react-awesome-lightbox";
+
 const TableMenu = ({ setShow, setShowOption }) => {
   console.log("TABLE MENU");
   const [category, setCategory] = useState("Món khai vị");
@@ -27,6 +29,9 @@ const TableMenu = ({ setShow, setShowOption }) => {
   const categoriesState = useSelector(getCategoriesState);
   const { dataGetCategories } = categoriesState;
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState("");
+  const [title, setTitle] = useState("");
 
   const getApiMenuItem = useCallback(async () => {
     await getAllMenuItem(dispatch);
@@ -89,6 +94,13 @@ const TableMenu = ({ setShow, setShowOption }) => {
       return;
     }
   };
+
+  const handleClickImage = (image, name) => {
+    setIsOpen(true);
+    setCurrentImage(image);
+    setTitle(name);
+  };
+  console.log(currentImage, title);
   return (
     <div className="mt-3 mb-3 table-users">
       {isLoadingMenuItem ? (
@@ -148,6 +160,7 @@ const TableMenu = ({ setShow, setShowOption }) => {
                     category={category}
                     setShow={setShow}
                     setShowOption={setShowOption}
+                    onClick={() => handleClickImage(item.image_url, item.name)}
                   />
                 ))
               ) : (
@@ -180,6 +193,17 @@ const TableMenu = ({ setShow, setShowOption }) => {
             forcePage={currentPage}
           />
         </>
+      )}
+      {currentImage && isOpen && (
+        <Lightbox
+          image={currentImage}
+          title={title}
+          onClose={() => {
+            setIsOpen(false);
+            setCurrentImage("");
+            setTitle("");
+          }}
+        />
       )}
     </div>
   );

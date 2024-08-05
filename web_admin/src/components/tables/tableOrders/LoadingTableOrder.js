@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import ConvertMoney from "../../../utils/convertMoney";
 import { FormatDay } from "../../../utils/FormDay";
 import ModalOrder from "./ModalOrders/ModalOrder";
-const LoadingTableOrder = ({ item, index }) => {
+
+const LoadingTableOrder = ({ item, index, onClick }) => {
   const [show, setShow] = useState(false);
   const [listDataItem, setListDataItem] = useState([]);
 
@@ -14,6 +15,7 @@ const LoadingTableOrder = ({ item, index }) => {
       setListDataItem([]);
     }
   };
+
   return (
     <>
       <ModalOrder show={show} setShow={setShow} listDataItem={listDataItem} />
@@ -29,7 +31,11 @@ const LoadingTableOrder = ({ item, index }) => {
             ? "Chuyển Khoản"
             : item.paymentMethod}
         </td>
-        <td className="img_avatar">
+        <td
+          className="img_avatar"
+          onClick={onClick}
+          style={{ cursor: "pointer" }}
+        >
           <img alt="img_avatar" src={item.userPay.img_avatar_url} />
         </td>
         <td>{FormatDay(item.createdAt)}</td>

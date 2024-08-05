@@ -36,6 +36,8 @@ const ModalUsers = ({
   const role = useSelector(roleState);
   const theme = useSelector(getThemeState);
   const getStatusUsers = useSelector(getSetStatusUsersState);
+  console.log(getStatusUsers, "check getStatusUsers");
+
   const dispatch = useDispatch();
   const userItem = getStatusUsers[1];
   const handleClickXacNhan = async () => {

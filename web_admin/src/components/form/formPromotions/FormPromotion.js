@@ -123,7 +123,7 @@ const FormPromotion = ({
     <div className="form mb-3">
       <h1 className="text-h1 text-center mt-3 mb-3">
         {statusPromotion[0] === "update"
-          ? "Update Khuyến Mãi"
+          ? "Cập nhật Khuyến Mãi"
           : "Tạo Khuyến Mãi"}
       </h1>
       <FloatingLabel
