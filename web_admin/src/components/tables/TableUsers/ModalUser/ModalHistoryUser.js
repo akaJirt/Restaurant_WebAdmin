@@ -4,21 +4,26 @@ import Accordion from "react-bootstrap/Accordion";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { Avatar } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { historyPaymentUser } from "../../../../api/call_api/auth/fetchApiAuth";
-import { FormatDay } from "../../../../utils/FormDay";
+import { FormatDay2 } from "../../../../utils/FormDay";
 import _ from "lodash";
-import ConvertMoney from "../../../../utils/convertMoney";
 import Lightbox from "react-awesome-lightbox";
+import LoadingCash from "./LoadingCash";
+import LoadingBanking from "./LoadingBanking";
 
 const ModalHistoryUser = ({ show, setShow, item }) => {
   const [data, setData] = useState([]);
   const [listCash, setListCash] = useState({});
-  const [listZaloPay, setlistZaloPay] = useState({});
+  const [listZaloPay, setListZaloPay] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState("");
   const [title, setTitle] = useState("");
+  const [isSelectDate, setIsSelectDate] = useState("");
+  const [isDataTime, setIsDataTime] = useState([]);
+  console.log(listZaloPay, "listZaloPay");
 
+  /**********************************GET DATA*************************** */
   const getApiHistoryPayment = useCallback(async () => {
     if (item && show === true) {
       await historyPaymentUser(item._id, setData);
@@ -30,28 +35,57 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
   useEffect(() => {
     getApiHistoryPayment();
   }, [getApiHistoryPayment]);
-
-  const getDataListPayment = useCallback(() => {
-    if (data) {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].paymentMethod === "ZaloPay") {
-          let newDataZaloPay = data[i];
-          setlistZaloPay(newDataZaloPay);
-        }
-        if (data[i].paymentMethod === "Cash") {
-          let newDataCash = data[i];
-          setListCash(newDataCash);
-        }
-      }
-    }
+  /**********************************LAY NGAY*************************** */
+  const dateTime = useMemo(() => {
+    return [...new Set(data.map((item) => FormatDay2(item.createdAt)) || [])];
   }, [data]);
 
+  useEffect(() => {
+    setIsDataTime(dateTime);
+  }, [dateTime]);
+
+  useEffect(() => {
+    if (isDataTime && isDataTime.length > 0 && isSelectDate === "") {
+      setIsSelectDate(isDataTime[0]);
+    }
+  }, [isDataTime, isSelectDate]);
+  /**********************************LAY THEO THANH TOAN*************************** */
+  const getDataListPayment = useCallback(() => {
+    if (data) {
+      let listDataZaloPay = [];
+      let listDataCash = [];
+      for (let i = 0; i < data.length; i++) {
+        if (
+          data[i].paymentMethod === "ZaloPay" ||
+          data[i].paymentMethod === "Banking"
+        ) {
+          if (FormatDay2(data[i].createdAt) === isSelectDate) {
+            listDataZaloPay.push(data[i]);
+          }
+        }
+        if (data[i].paymentMethod === "Cash") {
+          if (FormatDay2(data[i].createdAt) === isSelectDate) {
+            listDataCash.push(data[i]);
+          }
+        }
+      }
+      setListZaloPay(listDataZaloPay);
+      setListCash(listDataCash);
+    }
+  }, [data, isSelectDate]);
   useEffect(() => {
     getDataListPayment();
   }, [getDataListPayment]);
 
+  /***********************************LAY paymentMethod************************************* */
+  let paymentMethod = [
+    ...new Set(listZaloPay?.map((item) => item.paymentMethod) || []),
+  ];
+
   const handleClose = () => {
     setShow(false);
+    setIsSelectDate("");
+    setIsDataTime([]);
   };
 
   const handleClickImage = () => {
@@ -108,7 +142,7 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
                   <div className="col-6">
                     <FloatingLabel
                       controlId="floatingInput"
-                      label="Email"
+                      label="E-mail"
                       className="mb-3"
                     >
                       <Form.Control
@@ -125,11 +159,17 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
                   <div className="col-6">
                     <FloatingLabel
                       controlId="floatingInput"
-                      label="Role"
+                      label="Vai trò"
                       className="mb-3"
                     >
                       <Form.Control
-                        defaultValue={item.role}
+                        value={
+                          item.role === "admin"
+                            ? "Quản lý"
+                            : item.role === "staff"
+                            ? "Nhân viên"
+                            : "Khách hàng" || ""
+                        }
                         type="text"
                         placeholder="name@example.com"
                         disabled
@@ -144,7 +184,11 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
                       className="mb-3"
                     >
                       <Form.Control
-                        defaultValue={item.isVerified}
+                        value={
+                          item.isVerified === true
+                            ? "Đã xác thực"
+                            : "Chưa xác thực" || ""
+                        }
                         type="text"
                         placeholder="name@example.com"
                         disabled
@@ -160,7 +204,29 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
               <Accordion.Body>
                 {_.isArray(data) && data.length > 0 ? (
                   <>
-                    <div className="row">
+                    <FloatingLabel
+                      controlId="floatingSelect"
+                      label="Chọn ngày-tháng-năm"
+                    >
+                      <Form.Select
+                        value={isSelectDate}
+                        aria-label="Floating label select example"
+                        onChange={(e) => setIsSelectDate(e.target.value)}
+                      >
+                        {isDataTime?.length > 0 ? (
+                          isDataTime.map((item, index) => {
+                            return (
+                              <option value={item} key={index}>
+                                {item}
+                              </option>
+                            );
+                          })
+                        ) : (
+                          <option>Không có dữ liệu</option>
+                        )}
+                      </Form.Select>
+                    </FloatingLabel>
+                    <div className="row mt-3">
                       <div className="col-6">
                         <Accordion defaultActiveKey="0">
                           <Accordion.Item eventKey="0">
@@ -168,148 +234,13 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
                               Thanh toán tiền mặt
                             </Accordion.Header>
                             <Accordion.Body>
-                              <div>
-                                <div className="mb-3">
-                                  <h1 style={{ fontSize: "1.2rem" }}>
-                                    Thông tin món
-                                  </h1>
-                                </div>
-                                <div className="mt-3 mb-3">
-                                  <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Số bàn"
-                                    className="mb-3"
-                                  >
-                                    <Form.Control
-                                      defaultValue={listCash.tableNumber}
-                                      type="text"
-                                      placeholder="name@example.com"
-                                      disabled
-                                      readOnly
-                                    />
-                                  </FloatingLabel>
-                                </div>
-                                <div className="mt-3 mb-3">
-                                  <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Ngày đặt"
-                                    className="mb-3"
-                                  >
-                                    <Form.Control
-                                      defaultValue={FormatDay(
-                                        listCash.createdAt
-                                      )}
-                                      type="text"
-                                      placeholder="name@example.com"
-                                      disabled
-                                      readOnly
-                                    />
-                                  </FloatingLabel>
-                                  <div className="mt-3 mb-3">
-                                    <FloatingLabel
-                                      controlId="floatingInput"
-                                      label="Tổng Tiền"
-                                      className="mb-3"
-                                    >
-                                      <Form.Control
-                                        value={ConvertMoney(
-                                          listCash.amount || 0
-                                        )}
-                                        type="text"
-                                        placeholder="name@example.com"
-                                        disabled
-                                        readOnly
-                                      />
-                                    </FloatingLabel>
-                                  </div>
-                                </div>
-                                {listCash?.items?.length > 0 &&
-                                  listCash.items.map((item, index) => {
-                                    return (
-                                      <fieldset
-                                        key={index}
-                                        className="border rounded-3 p-3"
-                                      >
-                                        <legend
-                                          className="float-none w-auto px-3"
-                                          style={{
-                                            fontSize: "1rem",
-                                            fontWeight: "600",
-                                          }}
-                                        >
-                                          {item.engName}:
-                                        </legend>
-                                        <div className="row">
-                                          <div className="col-3">
-                                            <Avatar
-                                              size={{
-                                                xs: 24,
-                                                sm: 32,
-                                                md: 40,
-                                                lg: 64,
-                                                xl: 80,
-                                                xxl: 100,
-                                              }}
-                                              icon={
-                                                <img
-                                                  src={item.image_url}
-                                                  alt="img_user"
-                                                />
-                                              }
-                                            />
-                                          </div>
-                                          <div className="col-9">
-                                            <FloatingLabel
-                                              controlId="floatingInput"
-                                              label="Tên món"
-                                              className="mb-3"
-                                            >
-                                              <Form.Control
-                                                defaultValue={item.name}
-                                                type="text"
-                                                placeholder="name@example.com"
-                                                disabled
-                                                readOnly
-                                              />
-                                            </FloatingLabel>
-                                          </div>
-                                        </div>
-                                        <div className="mt-3 mb-3">
-                                          <FloatingLabel
-                                            controlId="floatingInput"
-                                            label="Số lượng"
-                                            className="mb-3"
-                                          >
-                                            <Form.Control
-                                              defaultValue={item.quantity}
-                                              type="text"
-                                              placeholder="name@example.com"
-                                              disabled
-                                              readOnly
-                                            />
-                                          </FloatingLabel>
-                                        </div>
-                                        <div className="mt-3 mb-3">
-                                          <FloatingLabel
-                                            controlId="floatingInput"
-                                            label="Giá"
-                                            className="mb-3"
-                                          >
-                                            <Form.Control
-                                              value={ConvertMoney(
-                                                item.price || 0
-                                              )}
-                                              type="text"
-                                              placeholder="name@example.com"
-                                              disabled
-                                              readOnly
-                                            />
-                                          </FloatingLabel>
-                                        </div>
-                                      </fieldset>
-                                    );
-                                  })}
-                              </div>
+                              {listCash?.length > 0 ? (
+                                listCash.map((item, index) => (
+                                  <LoadingCash key={index} item={item} />
+                                ))
+                              ) : (
+                                <div>Không có dữ liệu tiền mặt</div>
+                              )}
                             </Accordion.Body>
                           </Accordion.Item>
                         </Accordion>
@@ -318,151 +249,24 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
                         <Accordion defaultActiveKey="0">
                           <Accordion.Item eventKey="1">
                             <Accordion.Header>
-                              Thanh toán bằng ZaloPay
+                              Thanh toán bằng{" "}
+                              {paymentMethod[0] ? paymentMethod[0] : "ZaloPay"}
                             </Accordion.Header>
                             <Accordion.Body>
-                              <div>
-                                <div className="mb-3">
-                                  <h1 style={{ fontSize: "1.2rem" }}>
-                                    Thông tin món
-                                  </h1>
+                              {listZaloPay?.length > 0 ? (
+                                listZaloPay.map((item, index) => {
+                                  return (
+                                    <LoadingBanking key={index} item={item} />
+                                  );
+                                })
+                              ) : (
+                                <div>
+                                  Không có dữ liệu{" "}
+                                  {paymentMethod[0]
+                                    ? paymentMethod[0]
+                                    : "Thanh toán"}
                                 </div>
-                                <div className="mt-3 mb-3">
-                                  <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Số bàn"
-                                    className="mb-3"
-                                  >
-                                    <Form.Control
-                                      defaultValue={listZaloPay.tableNumber}
-                                      type="text"
-                                      placeholder="name@example.com"
-                                      disabled
-                                      readOnly
-                                    />
-                                  </FloatingLabel>
-                                </div>
-                                <div className="mt-3 mb-3">
-                                  <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Ngày đặt"
-                                    className="mb-3"
-                                  >
-                                    <Form.Control
-                                      defaultValue={FormatDay(
-                                        listZaloPay.createdAt
-                                      )}
-                                      type="text"
-                                      placeholder="name@example.com"
-                                      disabled
-                                      readOnly
-                                    />
-                                  </FloatingLabel>
-                                  <div className="mt-3 mb-3">
-                                    <FloatingLabel
-                                      controlId="floatingInput"
-                                      label="Tổng Tiền"
-                                      className="mb-3"
-                                    >
-                                      <Form.Control
-                                        value={ConvertMoney(
-                                          listZaloPay.amount || 0
-                                        )}
-                                        type="text"
-                                        placeholder="name@example.com"
-                                        disabled
-                                        readOnly
-                                      />
-                                    </FloatingLabel>
-                                  </div>
-                                </div>
-                                {listZaloPay?.items?.length > 0 &&
-                                  listZaloPay.items.map((item, index) => {
-                                    return (
-                                      <fieldset
-                                        key={index}
-                                        className="border rounded-3 p-3"
-                                      >
-                                        <legend
-                                          className="float-none w-auto px-3"
-                                          style={{
-                                            fontSize: "1rem",
-                                            fontWeight: "600",
-                                          }}
-                                        >
-                                          {item.engName}:
-                                        </legend>
-                                        <div className="row">
-                                          <div className="col-3">
-                                            <Avatar
-                                              size={{
-                                                xs: 24,
-                                                sm: 32,
-                                                md: 40,
-                                                lg: 64,
-                                                xl: 80,
-                                                xxl: 100,
-                                              }}
-                                              icon={
-                                                <img
-                                                  src={item.image_url}
-                                                  alt="img_user"
-                                                />
-                                              }
-                                            />
-                                          </div>
-                                          <div className="col-9">
-                                            <FloatingLabel
-                                              controlId="floatingInput"
-                                              label="Tên món"
-                                              className="mb-3"
-                                            >
-                                              <Form.Control
-                                                defaultValue={item.name}
-                                                type="text"
-                                                placeholder="name@example.com"
-                                                disabled
-                                                readOnly
-                                              />
-                                            </FloatingLabel>
-                                          </div>
-                                        </div>
-                                        <div className="mt-3 mb-3">
-                                          <FloatingLabel
-                                            controlId="floatingInput"
-                                            label="Số lượng"
-                                            className="mb-3"
-                                          >
-                                            <Form.Control
-                                              defaultValue={item.quantity}
-                                              type="text"
-                                              placeholder="name@example.com"
-                                              disabled
-                                              readOnly
-                                            />
-                                          </FloatingLabel>
-                                        </div>
-                                        <div className="mt-3 mb-3">
-                                          <FloatingLabel
-                                            controlId="floatingInput"
-                                            label="Giá"
-                                            className="mb-3"
-                                          >
-                                            <Form.Control
-                                              value={ConvertMoney(
-                                                item.price || 0
-                                              )}
-                                              type="text"
-                                              placeholder="name@example.com"
-                                              disabled
-                                              readOnly
-                                            />
-                                          </FloatingLabel>
-                                        </div>
-                                      </fieldset>
-                                    );
-                                  })}
-                              </div>
+                              )}
                             </Accordion.Body>
                           </Accordion.Item>
                         </Accordion>

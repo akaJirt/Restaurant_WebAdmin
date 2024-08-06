@@ -39,7 +39,11 @@ const FormTable = () => {
 
   return (
     <div className="form">
-      <h1 className="text-h1 text-center mt-3 mb-3">Tạo Bàn</h1>
+      <h1 className="text-h1 text-center mt-3 mb-3">
+        {statusState[0] !== "update" || statusState[0] === "create"
+          ? "Tạo Bàn"
+          : "Cập nhật bàn"}
+      </h1>
       <FloatingLabel
         controlId="floatingInput"
         label="Nhập bàn"

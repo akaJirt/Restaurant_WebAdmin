@@ -83,7 +83,7 @@ const FormLoginUser = (props) => {
       </div>
       <div className="text-center button mt-3">
         <button onClick={handleClickLogin} className="btn btn-primary">
-          {isLoading ? <LoadingOutlined /> : "Login"}
+          {isLoading ? <LoadingOutlined /> : "Đăng nhập"}
         </button>
       </div>
     </div>

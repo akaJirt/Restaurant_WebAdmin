@@ -13,7 +13,7 @@ function ModalOption({ show, setShow }) {
   return (
     <Modal show={show} onHide={handleClose} backdrop={"static"}>
       <Modal.Header closeButton>
-        <Modal.Title>Lựa Chọn</Modal.Title>
+        <Modal.Title>Món phụ</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {itemOption &&
