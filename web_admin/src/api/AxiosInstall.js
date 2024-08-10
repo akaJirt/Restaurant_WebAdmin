@@ -97,4 +97,33 @@ const apiPromotion = {
     axiosInstance.patch(`promotions/update-status/${id}`),
   resetAllPromotion: () => axiosInstance.post(`promotions/reset-promotion`),
 };
-export { api, apiTables, apiCategories, apiMenuItem, apiOrder, apiPromotion };
+//*******************************Statistical********************************* */
+const apiStatistical = {
+  getApiPaymentStatistical: (startDate, endDate) => {
+    if (startDate && endDate) {
+      return axiosInstance.get(
+        `statistics/revenue-by-payment-method?type=day&startDate=${startDate}&endDate=${endDate}`
+      );
+    } else {
+      return axiosInstance.get(`statistics/revenue-by-payment-method?type=day`);
+    }
+  },
+  getApiRevenueStatistical: (startDate, endDate) => {
+    if (startDate && endDate) {
+      return axiosInstance.get(
+        `statistics/revenue-statistics?type=day&startDate=${startDate}&endDate=${endDate}`
+      );
+    } else {
+      return axiosInstance.get(`statistics/revenue-statistics?type=day`);
+    }
+  },
+};
+export {
+  api,
+  apiTables,
+  apiCategories,
+  apiMenuItem,
+  apiOrder,
+  apiPromotion,
+  apiStatistical,
+};

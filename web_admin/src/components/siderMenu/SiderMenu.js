@@ -16,7 +16,7 @@ import { Layout, Menu, Button } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../store/selector";
-
+import { IoStatsChartSharp } from "react-icons/io5";
 const SiderMenu = () => {
   console.log("render SiderMenu");
   const { Sider } = Layout;
@@ -185,6 +185,24 @@ const SiderMenu = () => {
             className={`item-link ${collapsed ? "collapsed" : ""}`}
           >
             Quản lý danh mục
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/statistical",
+        icon: (
+          <IoStatsChartSharp
+            className="item-icon"
+            onClick={() => handleClick("/statistical")}
+          />
+        ),
+        label: (
+          <Link
+            to="/statistical"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
+            Quản lý thống kê
           </Link>
         ),
       },

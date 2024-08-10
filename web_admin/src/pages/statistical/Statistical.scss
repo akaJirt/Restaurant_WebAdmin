@@ -1,0 +1,134 @@
+.layout-statistical {
+    min-height: 100%;
+    padding: 20px;
+
+    .layout-revenue {
+        .box-revenue {
+            display: flex;
+            justify-content: space-between;
+
+            h1 {
+                font-size: 1.2rem;
+                color: #E8900C;
+            }
+
+        }
+
+        .containerStyle2 {
+            width: 100%;
+            height: 350px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15)
+        }
+
+
+
+    }
+
+    .layout-payment {
+        .box-payment {
+            .find-data{
+                display: flex;
+                justify-content: space-between;
+            }
+            .box-date{
+                display: flex;
+                gap: 8px;
+                .bt-date{
+                    button{
+                        outline: none;
+                        border: 1px solid rgba(0, 0, 0, 0.15);
+                        background-color: #fff;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                        transition: transform .6s ease-in-out;
+                        font-weight: 400;
+                        &:hover{
+                            box-shadow: none;
+                            opacity: .5;
+                            transform: translateY(3px);
+                        }
+                    }
+                }
+            }
+        }
+
+        .containerStyle {
+            width: 100%;
+            height:fit-content;
+            border-radius: 10px;
+            background-color: #fff;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15)
+        }
+                .box-loading {
+                    .loading {
+                        color: #E8900C;
+                        font-size: 50px;
+                    }
+        
+                    .loading.theme {
+                        color: #fff;
+                    }
+                }
+        .no-data{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            padding: 10px;
+        }
+        .box2{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            .text-color{
+                font-size: .9rem;
+            }
+            .box-content-tag{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .ip-ss{
+                border: none;
+                background-color: #108ee9;
+                font-weight: 600;
+                color: #fff;
+                width: 50px;
+                &::placeholder{
+                    color: #fff;
+                }
+                outline: none;
+            }
+        }
+
+
+        h1 {
+            font-size: 1.2rem;
+            color: #E8900C;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+
+            .box-bar {
+                display: flex;
+                gap: 5px;
+
+                .bar {
+                    width: 40px;
+                    height: 20px;
+
+                }
+            }
+        }
+    }
+}

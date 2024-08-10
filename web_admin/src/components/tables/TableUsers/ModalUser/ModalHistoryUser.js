@@ -21,7 +21,6 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
   const [title, setTitle] = useState("");
   const [isSelectDate, setIsSelectDate] = useState("");
   const [isDataTime, setIsDataTime] = useState([]);
-  console.log(listZaloPay, "listZaloPay");
 
   /**********************************GET DATA*************************** */
   const getApiHistoryPayment = useCallback(async () => {
@@ -79,7 +78,11 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
 
   /***********************************LAY paymentMethod************************************* */
   let paymentMethod = [
-    ...new Set(listZaloPay?.map((item) => item.paymentMethod) || []),
+    ...new Set(
+      (listZaloPay?.length > 0 &&
+        listZaloPay?.map((item) => item.paymentMethod)) ||
+        []
+    ),
   ];
 
   const handleClose = () => {
@@ -235,7 +238,7 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
                             </Accordion.Header>
                             <Accordion.Body>
                               {listCash?.length > 0 ? (
-                                listCash.map((item, index) => (
+                                listCash?.map((item, index) => (
                                   <LoadingCash key={index} item={item} />
                                 ))
                               ) : (
@@ -254,7 +257,7 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
                             </Accordion.Header>
                             <Accordion.Body>
                               {listZaloPay?.length > 0 ? (
-                                listZaloPay.map((item, index) => {
+                                listZaloPay?.map((item, index) => {
                                   return (
                                     <LoadingBanking key={index} item={item} />
                                   );

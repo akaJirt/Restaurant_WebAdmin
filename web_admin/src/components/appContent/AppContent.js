@@ -19,6 +19,7 @@ import {
 import ForgotPassword from "../../pages/forgotPassword/ForgotPassword";
 import ResetPassword from "../../pages/resetPassword/ResetPassword";
 import RegisterForm from "../quanLiUsers/RegisterForm";
+import Statistical from "../../pages/statistical/Statistical";
 const AppContent = () => {
   console.log("render App Content");
 
@@ -55,6 +56,7 @@ const AppContent = () => {
             <Route path="/menu" element={<Menu />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/categories" element={<Category />} />
+            <Route path="/statistical" element={<Statistical />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>

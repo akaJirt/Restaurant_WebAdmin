@@ -18,4 +18,27 @@ const Regex = () => {
 const FormatDay3 = (value) => {
   return moment.utc(value).format("DD-MM-YYYY HH:mm:ss");
 };
-export { FormatDay, FormatDay2, FormatTimeNow, Regex, FormatDay3 };
+
+const FormatDay4 = (value) => {
+  return moment(value).format("YYYY");
+};
+const FormatDay5 = (value) => {
+  return moment(value).format("MM-YYYY");
+};
+const FormatDay6 = (value) => {
+  return moment(value).format("MM");
+};
+const FormatDay7 = (value) => {
+  return moment(value).format("DD-MM");
+};
+export {
+  FormatDay,
+  FormatDay2,
+  FormatTimeNow,
+  Regex,
+  FormatDay3,
+  FormatDay4,
+  FormatDay5,
+  FormatDay6,
+  FormatDay7,
+};

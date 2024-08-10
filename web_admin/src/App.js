@@ -22,6 +22,7 @@ function App() {
     "/report",
     "/categories",
     "/profile",
+    "/statistical",
   ];
   let checkPath = path.includes(location.pathname);
 
