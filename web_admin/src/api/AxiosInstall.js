@@ -117,6 +117,8 @@ const apiStatistical = {
       return axiosInstance.get(`statistics/revenue-statistics?type=day`);
     }
   },
+  getApiTableStatistical: () =>
+    axiosInstance.get(`statistics/revenue-by-table?type=day`),
 };
 export {
   api,

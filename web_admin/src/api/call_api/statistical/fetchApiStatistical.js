@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { apiStatistical } from "../../AxiosInstall";
-
+import { typeActionTableStatistical } from "../../../store/statisticals/tableActions";
 const getPayment = async (startDate, endDate, setListPayment, setIsLoading) => {
   try {
     setIsLoading(true);
@@ -36,5 +36,19 @@ const getRevenue = async (startDate, endDate, setListRevenue) => {
     toast.error(status || message);
   }
 };
-
-export { getPayment, getRevenue };
+const getTable = async (dispatch, setListDataTable) => {
+  try {
+    dispatch(typeActionTableStatistical.fetchRequestTableStatistical());
+    const res = await apiStatistical.getApiTableStatistical();
+    if (res && res.data && res.data && res.data.status === "success") {
+      dispatch(
+        typeActionTableStatistical.fetchSuccessTableStatistical(res.data.data)
+      );
+    }
+  } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    toast.error(status || message);
+  }
+};
+export { getPayment, getRevenue, getTable };

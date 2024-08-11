@@ -1,7 +1,7 @@
 import React from "react";
 import PaymentStatistics from "../../components/chart/PaymentStatistics/PaymentStatistics";
 import "./Statistical.scss";
-import RevenueStatistics from "../../components/chart/RevenueStatistics/RevenueStatistics";
+import TableStatistics from "../../components/chart/TableStatistics/TableStatistics";
 
 const Statistical = () => {
   return (
@@ -11,7 +11,7 @@ const Statistical = () => {
           <PaymentStatistics />
         </div>
         <div className="col-6">
-          <RevenueStatistics />
+          <TableStatistics />
         </div>
       </div>
     </div>

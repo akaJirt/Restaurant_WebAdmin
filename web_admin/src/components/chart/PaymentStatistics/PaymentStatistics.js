@@ -16,8 +16,6 @@ const PaymentStatistics = () => {
   const [dataPaymentFilter, setDataPaymentFilter] = useState([]);
   const [dataPaymentFind, setDataPaymentFind] = useState([]);
   const [dataPaymentFind2, setDataPaymentFind2] = useState([]);
-  const [month, setMonth] = useState([]);
-  const [year, setYear] = useState([]);
   const [totalMonth, setTotalMonth] = useState("");
   const [totalYear, setTotalYear] = useState("");
   const [totalQuantity, setTotalQuantity] = useState("");
@@ -29,8 +27,8 @@ const PaymentStatistics = () => {
   const [startDateAndEndDate, setStartDateAndEndDate] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMt, setIsMt] = useState(false);
+  const [dataMonthYear, setDataMonthYear] = useState([]);
   const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
-  console.log(selectPaymentMonth, "~", selectPaymentYear, "selectPaymentMonth");
 
   /**************************************************GET PAYMENT****************************************** */
   const getPaymentApi = useCallback(async () => {
@@ -52,17 +50,38 @@ const PaymentStatistics = () => {
   }, [listPayment]);
 
   useEffect(() => {
-    if (dateYear && dateYear.length > 0) {
-      setYear(dateYear.reverse());
+    if (dateYear && dateYear.length > 0 && !selectPaymentYear) {
+      setSelectPaymentYear(dateYear[dateYear.length - 1]);
     }
-  }, [dateYear]);
+  }, [dateYear, selectPaymentYear]);
+
+  /**************************************************XU LI MONTH****************************************** */
+  const getMonth = useCallback(() => {
+    if (listPayment && listPayment.length > 0 && selectPaymentYear) {
+      let newMonth = [];
+      for (let i = 0; i < listPayment.length; i++) {
+        if (FormatDay4(listPayment[i].timePeriod) === selectPaymentYear) {
+          newMonth.unshift(listPayment[i].timePeriod);
+        }
+      }
+      setDataMonthYear(newMonth);
+    }
+  }, [listPayment, selectPaymentYear]);
+  useEffect(() => {
+    getMonth();
+  }, [getMonth]);
+
+  let dataMonth = useMemo(() => {
+    return [...new Set(dataMonthYear.map((item) => FormatDay5(item)) || [])];
+  }, [dataMonthYear]);
 
   useEffect(() => {
-    if (year && year.length > 0 && !selectPaymentYear) {
-      setSelectPaymentYear(year[0]);
+    if (dataMonth && dataMonth.length > 0 && !selectPaymentMonth) {
+      setSelectPaymentMonth(dataMonth[0]);
+    } else if (dataMonth.length === 0) {
+      setSelectPaymentMonth("");
     }
-  }, [year, selectPaymentYear]);
-
+  }, [dataMonth, selectPaymentMonth]);
   /**************************************************XU LI FILTER****************************************** */
 
   useEffect(() => {
@@ -96,26 +115,7 @@ const PaymentStatistics = () => {
   useEffect(() => {
     findAndReduce();
   }, [findAndReduce]);
-  /**************************************************XU LI SELECT MONTH****************************************** */
-  let dataMonth = useMemo(() => {
-    return [
-      ...new Set(
-        dataPaymentFind.map((item) => FormatDay5(item.timePeriod)) || []
-      ),
-    ];
-  }, [dataPaymentFind]);
 
-  useEffect(() => {
-    if (dataMonth && dataMonth.length > 0) {
-      setMonth(dataMonth.reverse());
-    }
-  }, [dataMonth]);
-
-  useEffect(() => {
-    if (month && month.length > 0 && !selectPaymentMonth) {
-      setSelectPaymentMonth(month[0]);
-    }
-  }, [month, selectPaymentMonth]);
   /**************************************************FIND MONTH 2****************************************** */
   const getFindMonth = useCallback(() => {
     if (
@@ -158,7 +158,6 @@ const PaymentStatistics = () => {
         listPayment[0].timePeriod,
         listPayment[listPayment.length - 1].timePeriod,
       ];
-      console.log(first, last, listPayment, "<<<<<CHECK");
       setStartDateAndEndDate([first, last]);
     }
   }, [listPayment, selectPayment, startFind]);
@@ -166,7 +165,6 @@ const PaymentStatistics = () => {
   useEffect(() => {
     getStartDateAndEndDate();
   }, [getStartDateAndEndDate]);
-  console.log(startDateAndEndDate, "startDateAndEndDate");
 
   /**************************************************SUCCESS DATA****************************************** */
 
@@ -190,7 +188,9 @@ const PaymentStatistics = () => {
             newTotalYear += dataPaymentFind[i].totalRevenue;
             newTotalQuantityYear += dataPaymentFind[i].totalOrders;
             if (
-              FormatDay5(dataPaymentFind[i].timePeriod) === selectPaymentMonth
+              FormatDay5(dataPaymentFind[i].timePeriod) ===
+                selectPaymentMonth &&
+              FormatDay4(dataPaymentFind[i].timePeriod) === selectPaymentYear
             ) {
               newTotalMonth += dataPaymentFind[i].totalRevenue;
               newTotalQuantity += dataPaymentFind[i].totalOrders;
@@ -214,7 +214,6 @@ const PaymentStatistics = () => {
           dataPaymentFind2.length > 0
         ) {
           for (let i = 0; i < dataPaymentFind2.length; i++) {
-            console.log(dataPaymentFind2[i], "check for ");
             newTotalYear += dataPaymentFind2[i].totalRevenue;
             newDataA.push({
               name: dataPaymentFind2[i].paymentMethod
@@ -242,12 +241,12 @@ const PaymentStatistics = () => {
     startFind,
     selectPayment,
     dataPaymentFind2,
+    selectPaymentYear,
   ]);
 
   useEffect(() => {
     dataPaymentStatistics();
   }, [dataPaymentStatistics]);
-  console.log(totalYear, "check totalYear");
 
   const data01 = dataA;
   const data02 = dataB;
@@ -259,7 +258,6 @@ const PaymentStatistics = () => {
       setStartFind(true);
     }
   };
-  console.log(dataPaymentFind2, "dataPaymentFind2");
 
   return (
     <div className="layout-payment">
@@ -279,20 +277,23 @@ const PaymentStatistics = () => {
                 value={selectPaymentMonth}
                 onChange={(e) => setSelectPaymentMonth(e.target.value)}
               >
-                {month.length > 0
-                  ? month.map((item, index) => {
-                      return (
-                        <option key={index} value={item}>
-                          Tháng:{item}
-                        </option>
-                      );
-                    })
-                  : "không có dữ liệu"}
+                {dataMonth.length > 0 ? (
+                  dataMonth.map((item, index) => {
+                    return (
+                      <option key={index} value={item}>
+                        Tháng:{item}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option>Không có dữ liệu tháng</option>
+                )}
               </select>
               <select
                 value={selectPaymentYear}
                 onChange={(e) => setSelectPaymentYear(e.target.value)}
               >
+                <option>2025</option>
                 {dateYear.length > 0
                   ? dateYear.map((item, index) => {
                       return (
@@ -330,241 +331,256 @@ const PaymentStatistics = () => {
         </div>
       </div>
       <div className="containerStyle">
-        {isLoading ? (
-          <div className="box-loading text-center">
-            <LoadingOutlined className="loading" />
-          </div>
-        ) : (
+        {dataA && dataA.length > 0 && dataB && dataB.length > 0 ? (
           <>
-            {listPayment && listPayment.length > 0 ? (
+            {isLoading ? (
+              <div className="box-loading text-center">
+                <LoadingOutlined className="loading" />
+              </div>
+            ) : (
               <>
-                <Accordion defaultActiveKey="0">
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>
-                      {startFind === false
-                        ? `Chi tiết giao dịch tháng ${selectPaymentMonth}`
-                        : `Chi tiết giao dich từ ngày ${FormatDay2(
-                            startDateAndEndDate[0]
-                          )} đến ngày ${FormatDay2(startDateAndEndDate[1])}`}
-                    </Accordion.Header>
-                    <Accordion.Body>
-                      <div className="box2">
-                        {startFind === false ? (
-                          <>
-                            <span>
-                              <Tag color="orange" className="text-color">
-                                Tổng tiền thanh toán tháng {selectPaymentMonth}{" "}
-                                :
-                              </Tag>
-                              <Tag color="#87d068" className="text-color">
-                                {ConvertMoney(totalMonth)}
-                              </Tag>
-                            </span>
-                            <span>
-                              <Tag color="orange" className="text-color">
-                                Tổng số giao dịch tháng {selectPaymentMonth} :
-                              </Tag>
-
-                              <Tag color="#87d068" className="text-color">
-                                {`${totalQuantity} lần`}
-                              </Tag>
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            {dataPaymentFind2.map((item, index) => {
-                              return (
-                                <div key={index} className="box-content-tag">
-                                  <div className="box-tag">
-                                    <Tag
-                                      color={COLORS[index % COLORS.length]}
-                                      className="text-color"
-                                    >
-                                      {`Tổng tiền tháng ${FormatDay5(
-                                        item.timePeriod
-                                      )} : `}
-                                    </Tag>
-                                    <Tag
-                                      color={COLORS[index % COLORS.length]}
-                                      className="text-color"
-                                    >
-                                      {`${ConvertMoney(item.totalRevenue)}`}
-                                    </Tag>
-                                  </div>
-                                  <div className="box-tag">
-                                    <Tag
-                                      color={COLORS[index % COLORS.length]}
-                                      className="text-color"
-                                    >
-                                      {`Tổng số giao dịch ${FormatDay5(
-                                        item.timePeriod
-                                      )} :`}
-                                    </Tag>
-                                    <Tag
-                                      color={COLORS[index % COLORS.length]}
-                                      className="text-color"
-                                    >
-                                      {`${item.totalOrders} lần`}
-                                    </Tag>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                            <div>
-                              <Tag color="#f50" className="text-color">
-                                Tổng tiền năm
-                                {FormatDay4(startDateAndEndDate[0])} :
-                              </Tag>
-                              <Tag className="text-color" color="#f50">
-                                {ConvertMoney(totalYear)}
-                              </Tag>
-                            </div>
-                            <div>
-                              <Tag
-                                color="#108ee9"
-                                onClick={() => setIsMt(!isMt)}
-                                style={{ cursor: "pointer" }}
-                                className="text-color"
-                              >
-                                {isMt ? (
-                                  <IoIosCloseCircle size={20} />
-                                ) : (
-                                  `Máy tính`
-                                )}
-                              </Tag>
-                              {isMt && (
-                                <>
-                                  <Tag color="#108ee9">
-                                    <input
-                                      placeholder="nhập số"
-                                      className="ip-ss"
-                                      type="text"
-                                    />
-                                  </Tag>
-                                  <Tag color="#108ee9">+</Tag>
-                                  <Tag color="#108ee9">
-                                    <input
-                                      placeholder="nhập số"
-                                      className="ip-ss"
-                                      type="text"
-                                    />
-                                  </Tag>
-                                  <Tag color="#108ee9">=</Tag>
-                                  <Tag color="#108ee9">?</Tag>
-                                </>
-                              )}
-                            </div>
-                          </>
-                        )}
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  {startFind === false &&
-                    selectPayment === "Tìm kiếm theo năm" && (
-                      <Accordion.Item eventKey="2">
+                {listPayment && listPayment.length > 0 ? (
+                  <>
+                    <Accordion defaultActiveKey="0">
+                      <Accordion.Item eventKey="1">
                         <Accordion.Header>
-                          Chi tiết giao dịch năm {selectPaymentYear}
+                          {startFind === false
+                            ? `Chi tiết giao dịch tháng ${selectPaymentMonth}`
+                            : `Chi tiết giao dich từ ngày ${FormatDay2(
+                                startDateAndEndDate[0]
+                              )} đến ngày ${FormatDay2(
+                                startDateAndEndDate[1]
+                              )}`}
                         </Accordion.Header>
                         <Accordion.Body>
                           <div className="box2">
-                            <span>
-                              <Tag color="orange" className="text-color">
-                                Tổng tiền thanh toán trong năm{" "}
-                                {selectPaymentYear} :
-                              </Tag>
+                            {startFind === false ? (
+                              <>
+                                <span>
+                                  <Tag color="orange" className="text-color">
+                                    Tổng tiền thanh toán tháng{" "}
+                                    {selectPaymentMonth} :
+                                  </Tag>
+                                  <Tag color="#87d068" className="text-color">
+                                    {ConvertMoney(totalMonth)}
+                                  </Tag>
+                                </span>
+                                <span>
+                                  <Tag color="orange" className="text-color">
+                                    Tổng số giao dịch tháng {selectPaymentMonth}{" "}
+                                    :
+                                  </Tag>
 
-                              <Tag color="#87d068" className="text-color">
-                                {ConvertMoney(totalYear)}
-                              </Tag>
-                            </span>
-                            <span>
-                              <Tag color="orange" className="text-color">
-                                Tổng số lần thanh toán trong năm{" "}
-                                {selectPaymentYear} :
-                              </Tag>
-
-                              <Tag color="#87d068" className="text-color">
-                                {`${totalQuantityYear} lần`}
-                              </Tag>
-                              <span className="text-color"></span>
-                            </span>
+                                  <Tag color="#87d068" className="text-color">
+                                    {`${totalQuantity} lần`}
+                                  </Tag>
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                {dataPaymentFind2.map((item, index) => {
+                                  return (
+                                    <div
+                                      key={index}
+                                      className="box-content-tag"
+                                    >
+                                      <div className="box-tag">
+                                        <Tag
+                                          color={COLORS[index % COLORS.length]}
+                                          className="text-color"
+                                        >
+                                          {`Tổng tiền tháng ${FormatDay5(
+                                            item.timePeriod
+                                          )} : `}
+                                        </Tag>
+                                        <Tag
+                                          color={COLORS[index % COLORS.length]}
+                                          className="text-color"
+                                        >
+                                          {`${ConvertMoney(item.totalRevenue)}`}
+                                        </Tag>
+                                      </div>
+                                      <div className="box-tag">
+                                        <Tag
+                                          color={COLORS[index % COLORS.length]}
+                                          className="text-color"
+                                        >
+                                          {`Tổng số giao dịch ${FormatDay5(
+                                            item.timePeriod
+                                          )} :`}
+                                        </Tag>
+                                        <Tag
+                                          color={COLORS[index % COLORS.length]}
+                                          className="text-color"
+                                        >
+                                          {`${item.totalOrders} lần`}
+                                        </Tag>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                                <div>
+                                  <Tag color="#f50" className="text-color">
+                                    Tổng tiền năm
+                                    {FormatDay4(startDateAndEndDate[0])} :
+                                  </Tag>
+                                  <Tag className="text-color" color="#f50">
+                                    {ConvertMoney(totalYear)}
+                                  </Tag>
+                                </div>
+                                <div>
+                                  <Tag
+                                    color="#108ee9"
+                                    onClick={() => setIsMt(!isMt)}
+                                    style={{ cursor: "pointer" }}
+                                    className="text-color"
+                                  >
+                                    {isMt ? (
+                                      <IoIosCloseCircle size={20} />
+                                    ) : (
+                                      `Máy tính`
+                                    )}
+                                  </Tag>
+                                  {isMt && (
+                                    <>
+                                      <Tag color="#108ee9">
+                                        <input
+                                          placeholder="nhập số"
+                                          className="ip-ss"
+                                          type="text"
+                                        />
+                                      </Tag>
+                                      <Tag color="#108ee9">+</Tag>
+                                      <Tag color="#108ee9">
+                                        <input
+                                          placeholder="nhập số"
+                                          className="ip-ss"
+                                          type="text"
+                                        />
+                                      </Tag>
+                                      <Tag color="#108ee9">=</Tag>
+                                      <Tag color="#108ee9">?</Tag>
+                                    </>
+                                  )}
+                                </div>
+                              </>
+                            )}
                           </div>
                         </Accordion.Body>
                       </Accordion.Item>
-                    )}
-                </Accordion>
-                <ResponsiveContainer width="100%" height={320}>
-                  <PieChart>
-                    <Pie
-                      data={data01}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={50}
-                      fill="#8884d8"
-                    >
-                      {data01.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={COLORS[index % COLORS.length]}
-                        />
-                      ))}
-                    </Pie>
+                      {startFind === false &&
+                        selectPayment === "Tìm kiếm theo năm" && (
+                          <Accordion.Item eventKey="2">
+                            <Accordion.Header>
+                              Chi tiết giao dịch năm {selectPaymentYear}
+                            </Accordion.Header>
+                            <Accordion.Body>
+                              <div className="box2">
+                                <span>
+                                  <Tag color="orange" className="text-color">
+                                    Tổng tiền thanh toán trong năm{" "}
+                                    {selectPaymentYear} :
+                                  </Tag>
 
-                    <Pie
-                      data={data02}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={80}
-                      fill="#82ca9d"
-                      label={({ name, value }) =>
-                        `${name} : ${ConvertMoney(value)}`
-                      }
-                    >
-                      {data02.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={COLORS[index % COLORS.length]}
-                        />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-                <div className="content-bar">
-                  {dataA.length > 0 &&
-                    dataA.map((item, index) => {
-                      return (
-                        <div className="box-bar">
-                          <div
-                            className="bar"
-                            style={{
-                              backgroundColor: COLORS[index % COLORS.length],
-                            }}
-                          ></div>
-                          <span
-                            key={index}
-                            style={{ color: COLORS[index % COLORS.length] }}
-                          >
-                            {item.name ? "Tổng số giao dịch" : item.name} :{" "}
-                            {item.value}
-                          </span>
-                        </div>
-                      );
-                    })}
-                </div>
+                                  <Tag color="#87d068" className="text-color">
+                                    {ConvertMoney(totalYear)}
+                                  </Tag>
+                                </span>
+                                <span>
+                                  <Tag color="orange" className="text-color">
+                                    Tổng số lần thanh toán trong năm{" "}
+                                    {selectPaymentYear} :
+                                  </Tag>
+
+                                  <Tag color="#87d068" className="text-color">
+                                    {`${totalQuantityYear} lần`}
+                                  </Tag>
+                                  <span className="text-color"></span>
+                                </span>
+                              </div>
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        )}
+                    </Accordion>
+                    <ResponsiveContainer width="100%" height={320}>
+                      <PieChart>
+                        <Pie
+                          data={data01}
+                          dataKey="value"
+                          nameKey="name"
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={50}
+                          fill="#8884d8"
+                        >
+                          {data01.map((entry, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={COLORS[index % COLORS.length]}
+                            />
+                          ))}
+                        </Pie>
+
+                        <Pie
+                          data={data02}
+                          dataKey="value"
+                          nameKey="name"
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          fill="#82ca9d"
+                          label={({ name, value }) =>
+                            `${name} : ${ConvertMoney(value)}`
+                          }
+                        >
+                          {data02.map((entry, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={COLORS[index % COLORS.length]}
+                            />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                      </PieChart>
+                    </ResponsiveContainer>
+                    <div className="content-bar">
+                      {dataA.length > 0 &&
+                        dataA.map((item, index) => {
+                          return (
+                            <div className="box-bar">
+                              <div
+                                className="bar"
+                                style={{
+                                  backgroundColor:
+                                    COLORS[index % COLORS.length],
+                                }}
+                              ></div>
+                              <span
+                                key={index}
+                                style={{ color: COLORS[index % COLORS.length] }}
+                              >
+                                {item.name ? "Tổng số giao dịch" : item.name} :{" "}
+                                {item.value}
+                              </span>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </>
+                ) : (
+                  <div className="no-data">
+                    Không có dữ liệu từ ngày {FormatDay2(startDate)} đến ngày{" "}
+                    {FormatDay2(endDate)}
+                  </div>
+                )}
               </>
-            ) : (
-              <div className="no-data">
-                Không có dữ liệu từ ngày {FormatDay2(startDate)} đến ngày{" "}
-                {FormatDay2(endDate)}
-              </div>
             )}
           </>
+        ) : (
+          <div style={{ padding: "10px 0", textAlign: "center" }}>
+            Không có dữ liệu
+          </div>
         )}
       </div>
     </div>

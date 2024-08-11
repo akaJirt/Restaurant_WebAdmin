@@ -74,3 +74,8 @@ export const getValueOptionsState = (state) => state.valueMenu.getOptions;
 //*************************************ORDERS*********************************************************/
 
 export const orderByTableIdState = (state) => state.orderByTableId;
+/****************************************STATISTICAL***************************************** */
+export const statisticalArrListTableState = (state) =>
+  state.statisticalTable.arrListTable;
+export const statisticalLoadingTableState = (state) =>
+  state.statisticalTable.isLoading;
