@@ -24,3 +24,5 @@ export const HIDE_LIGHT_BOX = "hide_light_box";
 export const SET_ACCESS_TOKEN = "set_access_token";
 //----------------MENU-OPTION-------------------
 export const MENU_OPTION = "menu_option";
+//----------------STATISTICAL PAYMENT-------------------
+export const STATISTICAL_PAYMENT = "STATISTICAL_PAYMENT";

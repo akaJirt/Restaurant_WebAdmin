@@ -10,82 +10,12 @@ import {
   ComposedChart,
   Bar,
 } from "recharts";
-import Accordion from "react-bootstrap/Accordion";
-import { Tag } from "antd";
-import ConvertMoney from "../../../utils/convertMoney";
-const LoadingLineChart = ({ dataTable, month, year, totalArr }) => {
+
+const LoadingLineChart = ({ dataTable }) => {
   return (
     <>
       {dataTable && dataTable.length > 0 ? (
         <>
-          <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="1">
-              <Accordion.Header>
-                Chi tiết thống kê bàn tháng {month}
-              </Accordion.Header>
-              <Accordion.Body>
-                <div className="box-2">
-                  {totalArr &&
-                    totalArr.length > 0 &&
-                    totalArr.map((item, index) => {
-                      return (
-                        <div key={index} className="box-text">
-                          <div>
-                            <Tag className="text-color" color="#4140a0">
-                              Tổng doanh thu bàn {month} :
-                            </Tag>
-                            <Tag className="text-color" color="#4140a0">
-                              {ConvertMoney(item.moneyMonth)}
-                            </Tag>
-                          </div>
-                          <div>
-                            <Tag className="text-color" color="#f50">
-                              Tổng lượt đặt bàn {month} :
-                            </Tag>
-                            <Tag className="text-color" color="#f50">
-                              {item.orderMonth}
-                            </Tag>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey="2">
-              <Accordion.Header>
-                Chi tiết thông kê bàn trong năm {year}
-              </Accordion.Header>
-              <Accordion.Body>
-                <div className="box-2">
-                  {totalArr &&
-                    totalArr.length > 0 &&
-                    totalArr.map((item, index) => {
-                      return (
-                        <div key={index} className="box-text">
-                          <div>
-                            <Tag className="text-color" color="#108ee9">
-                              Tổng doanh thu bàn {year} :
-                            </Tag>
-                            <Tag className="text-color" color="#108ee9">
-                              {ConvertMoney(item.moneyYear)}
-                            </Tag>
-                          </div>
-                          <div>
-                            <Tag className="text-color" color="#2db7f5">
-                              Tổng lượt đặt bàn {year} :
-                            </Tag>
-                            <Tag className="text-color" color="#2db7f5">
-                              {item.orderYear}
-                            </Tag>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
           <ResponsiveContainer
             width={"100%"}
             height={320}
@@ -93,10 +23,16 @@ const LoadingLineChart = ({ dataTable, month, year, totalArr }) => {
           >
             <ComposedChart data={dataTable}>
               <XAxis
-                dataKey="Bàn số"
-                tickFormatter={(value) => `Bàn số: ${value}`}
+                dataKey="Bàn"
+                tickFormatter={(value) => `Bàn: ${value} `}
               />
               <YAxis
+                yAxisId="left"
+                tickFormatter={(value) => `${value.toLocaleString("vi-VN")}`}
+              />
+              <YAxis
+                yAxisId="right"
+                orientation="right"
                 tickFormatter={(value) => `${value.toLocaleString("vi-VN")}`}
               />
               <Tooltip
@@ -106,12 +42,18 @@ const LoadingLineChart = ({ dataTable, month, year, totalArr }) => {
                   }
                   return value;
                 }}
-                labelFormatter={(label) => `Bàn số: ${label}`}
+                labelFormatter={(label) => `Bàn: ${label}`}
               />
               <Legend />
               <CartesianGrid stroke="#f5f5f5" />
-              <Bar dataKey="Tổng tiền bàn" barSize={20} fill="#413ea0" />
+              <Bar
+                yAxisId="left"
+                dataKey="Tổng tiền bàn"
+                barSize={20}
+                fill="#413ea0"
+              />
               <Line
+                yAxisId="right"
                 type="monotone"
                 dataKey="Tổng lượt đặt bàn"
                 stroke="#ff7300"

@@ -79,3 +79,4 @@ export const statisticalArrListTableState = (state) =>
   state.statisticalTable.arrListTable;
 export const statisticalLoadingTableState = (state) =>
   state.statisticalTable.isLoading;
+export const dataPaymentState = (state) => state.dataStatistical.dataPayment;

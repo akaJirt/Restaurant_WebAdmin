@@ -38,6 +38,7 @@ import createUserSlice from "./auth/createUser/createUserSlice.js";
 import orderByTableIdSlice from "./orders/getOrderByTableId/orderByTableIdSlice.js";
 import menuOptionSlice from "./menuItem/menuOption/menuOptionSlice.js";
 import tableSlice from "./statisticals/tableSlice.js";
+import dataStatisticalSlice from "./statisticals/valueStatistical/dataStatisticalSlice.js";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -79,5 +80,6 @@ const rootReducer = combineReducers({
   orderByTableId: orderByTableIdSlice,
   menuOption: menuOptionSlice,
   statisticalTable: tableSlice,
+  dataStatistical: dataStatisticalSlice,
 });
 export default rootReducer;

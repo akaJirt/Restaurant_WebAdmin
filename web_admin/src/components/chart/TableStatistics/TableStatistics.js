@@ -5,6 +5,7 @@ import { getTable } from "../../../api/call_api/statistical/fetchApiStatistical"
 import { useDispatch, useSelector } from "react-redux";
 import { statisticalArrListTableState } from "../../../store/selector";
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const TableStatistics = () => {
   const dispatch = useDispatch();
@@ -17,28 +18,37 @@ const TableStatistics = () => {
   const [selectTableNumber, setSelectTableNumber] = useState("");
   const [dataFind, setDataFind] = useState([]);
   const [dataTableStatistic, setDataTableStatistic] = useState([]);
-  const [totalArr, setTotalArr] = useState([]);
+  const [selectDate, setSelectDate] = useState("day");
+  const [isLoading, setIsLoading] = useState(false);
 
   /***********************************************GET DATA TABLE****************** */
   const getTableApi = useCallback(async () => {
-    await getTable(dispatch);
-  }, [dispatch]);
+    if (selectDate) {
+      await getTable(selectDate, "", "", dispatch, setIsLoading);
+    }
+  }, [dispatch, selectDate]);
 
   useEffect(() => {
     getTableApi();
   }, [getTableApi]);
   /***********************************************GET YEAR****************** */
+
   const dataYear = useMemo(() => {
-    return [
-      ...new Set(getStateArr.map((item) => FormatDay4(item.timePeriod) || [])),
-    ];
-  }, [getStateArr]);
+    if (selectDate !== "year") {
+      return [
+        ...new Set(getStateArr.map((item) => FormatDay4(item.timePeriod))),
+      ];
+    } else {
+      return [...new Set(getStateArr.map((item) => item.timePeriod || []))];
+    }
+  }, [getStateArr, selectDate]);
 
   useEffect(() => {
-    if (dataYear && dataYear.length > 0 && !selectYear) {
-      setSelectYear(dataYear[dataYear.length - 1]);
+    if (dataYear && dataYear.length > 0) {
+      let lastYear = dataYear[dataYear.length - 1];
+      setSelectYear(lastYear);
     }
-  }, [selectYear, dataYear]);
+  }, [dataYear]);
   /***********************************************GET LAY MONTH AND TABLE****************** */
 
   const getFilterMonth = useCallback(async () => {
@@ -53,6 +63,7 @@ const TableStatistics = () => {
           newTableNumber.unshift({ table: getStateArr[i].tableNumber });
         }
       }
+
       setMonth(newMonth.length > 0 ? newMonth : []);
       setTableNumber(newTableNumber);
     }
@@ -62,6 +73,7 @@ const TableStatistics = () => {
     getFilterMonth();
   }, [getFilterMonth]);
   /***********************************************Xu li SET MONTH AND TABLE****************** */
+
   let dataMonth = useMemo(() => {
     return [...new Set(month.map((item) => item.month || []))];
   }, [month]);
@@ -77,11 +89,13 @@ const TableStatistics = () => {
   let dataTableNumber = useMemo(() => {
     return [...new Set(tableNumber.map((item) => item.table || []))];
   }, [tableNumber]);
+
   useEffect(() => {
     if (dataTableNumber && dataTableNumber.length > 0 && !selectTableNumber) {
       setSelectTableNumber(dataTableNumber[0]);
     }
   }, [dataTableNumber, selectTableNumber]);
+
   /***********************************************Xu li Find AND REDUCE****************** */
   const dataReduceFind = useCallback(() => {
     if (
@@ -117,73 +131,85 @@ const TableStatistics = () => {
   /***********************************************SUCCESS DATA****************** */
 
   const dataSuccess = useCallback(() => {
-    if (dataFind && dataFind.length > 0 && selectMonth && selectYear) {
+    if (
+      dataFind &&
+      dataFind.length > 0 &&
+      selectMonth &&
+      selectYear &&
+      selectDate
+    ) {
       let newData = [];
-      let totalMonth = 0;
-      let totalOrderMonth = 0;
-      let totalYear = 0;
-      let totalOrderYear = 0;
-
-      for (let i = 0; i < dataFind.length; i++) {
-        totalYear += dataFind[i].totalRevenue;
-        totalOrderYear += dataFind[i].totalOrders;
-
-        if (
-          FormatDay4(dataFind[i].timePeriod) === selectYear &&
-          FormatDay5(dataFind[i].timePeriod) === selectMonth
-        ) {
-          totalMonth += dataFind[i].totalRevenue;
-          totalOrderMonth += dataFind[i].totalOrders;
-          newData.push({
-            "Bàn số": dataFind[i].tableNumber,
-            "Tổng tiền bàn": dataFind[i].totalRevenue,
-            "Tổng lượt đặt bàn": dataFind[i].totalOrders,
-          });
+      if (selectDate === "day") {
+        for (let i = 0; i < dataFind.length; i++) {
+          if (
+            FormatDay4(dataFind[i].timePeriod) === selectYear &&
+            FormatDay5(dataFind[i].timePeriod) === selectMonth
+          ) {
+            newData.push({
+              Bàn: dataFind[i].tableNumber,
+              "Tổng tiền bàn": dataFind[i].totalRevenue,
+              "Tổng lượt đặt bàn": dataFind[i].totalOrders,
+            });
+          }
         }
       }
-      setTotalArr([
-        {
-          moneyMonth: totalMonth,
-          orderMonth: totalOrderMonth,
-          moneyYear: totalYear,
-          orderYear: totalOrderYear,
-        },
-      ]);
+      if (selectDate === "year") {
+        for (let i = 0; i < dataFind.length; i++) {
+          if (
+            FormatDay4(dataFind[i].timePeriod) === selectYear ||
+            dataFind[i].timePeriod === parseInt(selectYear)
+          ) {
+            newData.push({
+              Bàn: dataFind[i].tableNumber,
+              "Tổng tiền bàn": dataFind[i].totalRevenue,
+              "Tổng lượt đặt bàn": dataFind[i].totalOrders,
+            });
+          }
+        }
+      }
 
       setDataTableStatistic(newData);
     }
-  }, [dataFind, selectMonth, selectYear]);
+  }, [dataFind, selectMonth, selectYear, selectDate]);
 
   useEffect(() => {
     dataSuccess();
   }, [dataSuccess]);
 
   return (
-    <div className="layout-table">
+    <div className="layout-table-statistical">
       <div className="box-table">
         <h1>Thống kê bàn</h1>
         <div className="select-table mt-2 mb-2">
           <select
-            value={selectMonth}
-            onChange={(e) => setSelectMonth(e.target.value)}
+            value={selectDate}
+            onChange={(e) => setSelectDate(e.target.value)}
           >
-            {dataMonth && dataMonth.length > 0 ? (
-              dataMonth.map((month, index) => {
-                return (
-                  <option key={index} value={month}>
-                    Tháng:{month}
-                  </option>
-                );
-              })
-            ) : (
-              <option>không có dữ liệu tháng</option>
-            )}
+            <option value={"day"}>Tìm kiếm theo tháng</option>
+            <option value={"year"}>Tìm kiếm trong năm</option>
           </select>
+          {selectDate === "day" && (
+            <select
+              value={selectMonth}
+              onChange={(e) => setSelectMonth(e.target.value)}
+            >
+              {dataMonth && dataMonth.length > 0 ? (
+                dataMonth.map((month, index) => {
+                  return (
+                    <option key={index} value={month}>
+                      Tháng:{month}
+                    </option>
+                  );
+                })
+              ) : (
+                <option>không có dữ liệu tháng</option>
+              )}
+            </select>
+          )}
           <select
             value={selectYear}
             onChange={(e) => setSelectYear(e.target.value)}
           >
-            <option>Năm:2025</option>;
             {dataYear && dataYear.length > 0 ? (
               dataYear.map((year, index) => {
                 return (
@@ -199,12 +225,17 @@ const TableStatistics = () => {
         </div>
       </div>
       <div className="containerStyle2">
-        <LoadingLineChart
-          dataTable={dataTableStatistic}
-          month={selectMonth}
-          year={selectYear}
-          totalArr={totalArr}
-        />
+        {isLoading ? (
+          <div className="box-loading text-center">
+            <LoadingOutlined className="loading" />
+          </div>
+        ) : (
+          <LoadingLineChart
+            dataTable={dataTableStatistic}
+            month={selectMonth}
+            year={selectYear}
+          />
+        )}
       </div>
     </div>
   );

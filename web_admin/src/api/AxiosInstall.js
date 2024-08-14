@@ -99,26 +99,46 @@ const apiPromotion = {
 };
 //*******************************Statistical********************************* */
 const apiStatistical = {
-  getApiPaymentStatistical: (startDate, endDate) => {
+  getApiPaymentStatistical: (type, startDate, endDate) => {
     if (startDate && endDate) {
       return axiosInstance.get(
         `statistics/revenue-by-payment-method?type=day&startDate=${startDate}&endDate=${endDate}`
       );
     } else {
-      return axiosInstance.get(`statistics/revenue-by-payment-method?type=day`);
+      return axiosInstance.get(
+        `statistics/revenue-by-payment-method?type=${type}`
+      );
     }
   },
-  getApiRevenueStatistical: (startDate, endDate) => {
+  getApiRevenueStatistical: (type, startDate, endDate) => {
     if (startDate && endDate) {
       return axiosInstance.get(
         `statistics/revenue-statistics?type=day&startDate=${startDate}&endDate=${endDate}`
       );
     } else {
-      return axiosInstance.get(`statistics/revenue-statistics?type=day`);
+      return axiosInstance.get(`statistics/revenue-statistics?type=${type}`);
     }
   },
-  getApiTableStatistical: () =>
-    axiosInstance.get(`statistics/revenue-by-table?type=day`),
+  getApiTableStatistical: (type, startDate, endDate) => {
+    if (startDate && endDate) {
+      return axiosInstance.get(
+        `statistics/revenue-by-table?type=day&startDate=${startDate}&endDate=${endDate}`
+      );
+    } else {
+      return axiosInstance.get(`statistics/revenue-by-table?type=${type}`);
+    }
+  },
+  getApiMenuItemStatistical: (type, startDate, endDate) => {
+    if (startDate && endDate) {
+      return axiosInstance.get(
+        `statistics/best-selling-menu-item?type=day&startDate=${startDate}&endDate=${endDate}`
+      );
+    } else {
+      return axiosInstance.get(
+        `statistics/best-selling-menu-item?type=${type}`
+      );
+    }
+  },
 };
 export {
   api,
