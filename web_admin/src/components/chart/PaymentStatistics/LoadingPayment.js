@@ -10,8 +10,10 @@ import {
   Line,
   ComposedChart,
 } from "recharts";
+import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
+import ConvertMoney from "../../../utils/convertMoney";
 
-const LoadingPayment = ({ data }) => {
+const LoadingPayment = ({ data, selectDate }) => {
   return (
     <>
       {data && data.length > 0 ? (
@@ -20,65 +22,84 @@ const LoadingPayment = ({ data }) => {
           height={320}
           style={{ padding: "5px 10px" }}
         >
-          <ComposedChart data={data}>
+          <ComposedChart data={data} margin={{ top: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="timePeriod" />
-
-            <YAxis
-              yAxisId="left"
-              tickFormatter={(value) => `${value.toLocaleString("vi-VN")}`}
+            <XAxis
+              dataKey="timePeriod"
+              tickFormatter={(label) => {
+                if (selectDate === "day") {
+                  return `Ngày:${FormatDay7(label)}`;
+                } else if (selectDate === "month") {
+                  return `Tháng:${FormatDay5(label)}`;
+                } else {
+                  return `Năm:${label}`;
+                }
+              }}
             />
 
-            <YAxis yAxisId="right" orientation="right" />
+            <YAxis
+              tickFormatter={(value) => {
+                if (value > 0) {
+                  return ConvertMoney(value);
+                } else {
+                  return value;
+                }
+              }}
+            />
 
             <Tooltip
               formatter={(value, name) => {
                 if (
-                  name === "Cash" ||
                   name === "Banking" ||
+                  name === "Cash" ||
                   name === "ZaloPay"
                 ) {
-                  return value > 0 ? `${value.toLocaleString("vi-VN")} VND` : 0;
+                  return ConvertMoney(value);
+                } else {
+                  return value;
                 }
-                return value;
+              }}
+              labelFormatter={(label) => {
+                if (selectDate === "day") {
+                  return `Ngày:${FormatDay7(label)}`;
+                } else if (selectDate === "month") {
+                  return `Tháng:${FormatDay5(label)}`;
+                } else {
+                  return `Năm:${label}`;
+                }
               }}
             />
             <Legend />
 
-            <Bar yAxisId="left" dataKey="Cash" stackId="a" fill="#82ca9d" />
-            <Bar yAxisId="left" dataKey="ZaloPay" stackId="a" fill="#8884d8" />
-            <Bar yAxisId="left" dataKey="Banking" stackId="a" fill="#ffc658" />
-
+            <Bar dataKey="Cash" stackId="a" fill="#82ca9d" />
             <Line
-              yAxisId="right"
               type="monotone"
               dataKey="CashOrder"
               stroke="#82ca9d"
               strokeWidth={2}
               dot={{ r: 3 }}
               connectNulls={true}
-              name="lần giao dịch"
+              name="Số lượt giao dịch cash"
             />
-
+            <Bar dataKey="ZaloPay" stackId="a" fill="#8884d8" />
             <Line
-              yAxisId="right"
               type="monotone"
               dataKey="ZaloPayOrder"
               stroke="#8884d8"
               dot={{ r: 3 }}
               strokeWidth={2}
               connectNulls={true}
-              name="lần giao dịch"
+              name="Số lượt giao dịch zaloPay"
             />
+            <Bar dataKey="Banking" stackId="a" fill="#ffc658" />
             <Line
-              yAxisId="right"
               type="monotone"
               dataKey="BankingOrder"
               stroke="#ffc658"
               strokeWidth={2}
               connectNulls={true}
               dot={{ r: 3 }}
-              name="lần giao dịch"
+              name="Số lượt giao dịch banking"
             />
           </ComposedChart>
         </ResponsiveContainer>

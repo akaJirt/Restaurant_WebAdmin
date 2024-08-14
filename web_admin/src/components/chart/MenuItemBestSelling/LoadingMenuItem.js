@@ -8,7 +8,7 @@ import {
   Bar,
   BarChart,
 } from "recharts";
-import { FormatDay2, FormatDay5 } from "../../../utils/FormDay";
+import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
 const LoadingMenuItem = ({ data, selectDate }) => {
   const dataKeys = Array.from(
     new Set(
@@ -43,11 +43,8 @@ const LoadingMenuItem = ({ data, selectDate }) => {
           <XAxis
             dataKey="timePeriod"
             tickFormatter={(value) => {
-              console.log("Selected Month:", selectDate);
-              console.log(value, "check value x");
               if (selectDate === "day") {
-                const formattedValue = FormatDay2(value);
-                console.log("Formatted value:", formattedValue);
+                const formattedValue = FormatDay7(value);
                 return `Ngày:${formattedValue}`;
               } else if (selectDate === "month") {
                 return `Tháng:${FormatDay5(value)}`;
@@ -63,14 +60,12 @@ const LoadingMenuItem = ({ data, selectDate }) => {
               }
             }}
             labelFormatter={(label) => {
-              if (label) {
-                if (selectDate === "day") {
-                  return FormatDay2(label);
-                } else if (selectDate === "month") {
-                  return FormatDay5(label);
-                } else {
-                  return label;
-                }
+              if (selectDate === "year") {
+                return `Năm:${label}`;
+              } else if (selectDate === "month") {
+                return `Tháng:${FormatDay5(label)}`;
+              } else {
+                return `Ngày:${FormatDay7(label)}`;
               }
             }}
           />

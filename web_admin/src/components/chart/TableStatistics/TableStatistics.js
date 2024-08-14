@@ -118,6 +118,7 @@ const TableStatistics = () => {
         } else {
           arr.push({ ...curr });
         }
+
         setDataFind(arr);
         return arr;
       }, []);
@@ -232,8 +233,7 @@ const TableStatistics = () => {
         ) : (
           <LoadingLineChart
             dataTable={dataTableStatistic}
-            month={selectMonth}
-            year={selectYear}
+            selectDate={selectDate}
           />
         )}
       </div>

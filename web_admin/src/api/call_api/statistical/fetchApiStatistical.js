@@ -78,7 +78,7 @@ const getTable = async (type, startDate, endDate, dispatch, setIsLoading) => {
   }
 };
 
-const getMenuitem = async (
+const getMenuitemBestSelling = async (
   type,
   startDate,
   endDate,
@@ -87,7 +87,7 @@ const getMenuitem = async (
 ) => {
   try {
     setIsLoading(true);
-    const res = await apiStatistical.getApiMenuItemStatistical(
+    const res = await apiStatistical.getApiMenuItemStatisticalBestSelling(
       type,
       startDate,
       endDate
@@ -103,4 +103,91 @@ const getMenuitem = async (
     toast.error(status || message);
   }
 };
-export { getPayment, getRevenue, getTable, getMenuitem };
+
+const getMenuItem = async (
+  type,
+  startDate,
+  endDate,
+  setListDataMenuItem,
+  setIsLoading
+) => {
+  try {
+    setIsLoading(true);
+    const res = await apiStatistical.getApiMenuItemStatistical(
+      type,
+      startDate,
+      endDate
+    );
+    if (res && res.data && res.data.status === "success") {
+      setListDataMenuItem(res.data.data);
+      setIsLoading(false);
+    }
+  } catch (error) {
+    setIsLoading(false);
+
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    toast.error(status || message);
+  }
+};
+
+const getOrder = async (
+  type,
+  startDate,
+  endDate,
+  setListDataOrder,
+  setIsLoading
+) => {
+  try {
+    setIsLoading(true);
+    const res = await apiStatistical.getApiOrderStatistical(
+      type,
+      startDate,
+      endDate
+    );
+    if (res && res.data && res.data.status === "success") {
+      setIsLoading(false);
+      setListDataOrder(res.data.data);
+    }
+  } catch (error) {
+    setIsLoading(false);
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    toast.error(status || message);
+  }
+};
+const getAverage = async (
+  type,
+  startDate,
+  endDate,
+  setListDataAverage,
+  setIsLoading
+) => {
+  try {
+    setIsLoading(true);
+    const res = await apiStatistical.getApiAverageStatistical(
+      type,
+      startDate,
+      endDate
+    );
+    if (res && res.data && res.data.status === "success") {
+      setIsLoading(false);
+      setListDataAverage(res.data.data);
+    }
+  } catch (error) {
+    setIsLoading(false);
+
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    toast.error(status || message);
+  }
+};
+export {
+  getPayment,
+  getRevenue,
+  getTable,
+  getMenuitemBestSelling,
+  getMenuItem,
+  getOrder,
+  getAverage,
+};

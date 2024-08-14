@@ -128,7 +128,7 @@ const apiStatistical = {
       return axiosInstance.get(`statistics/revenue-by-table?type=${type}`);
     }
   },
-  getApiMenuItemStatistical: (type, startDate, endDate) => {
+  getApiMenuItemStatisticalBestSelling: (type, startDate, endDate) => {
     if (startDate && endDate) {
       return axiosInstance.get(
         `statistics/best-selling-menu-item?type=day&startDate=${startDate}&endDate=${endDate}`
@@ -137,6 +137,33 @@ const apiStatistical = {
       return axiosInstance.get(
         `statistics/best-selling-menu-item?type=${type}`
       );
+    }
+  },
+  getApiMenuItemStatistical: (type, startDate, endDate) => {
+    if (startDate && endDate) {
+      return axiosInstance.get(
+        `statistics/menu-item-statistics?type=day&startDate=${startDate}&endDate=${endDate}`
+      );
+    } else {
+      return axiosInstance.get(`statistics/menu-item-statistics?type=${type}`);
+    }
+  },
+  getApiOrderStatistical: (type, startDate, endDate) => {
+    if (startDate && endDate) {
+      return axiosInstance.get(
+        `statistics/order-statistics?type=day&startDate=${startDate}&endDate=${endDate}`
+      );
+    } else {
+      return axiosInstance.get(`statistics/order-statistics?type=${type}`);
+    }
+  },
+  getApiAverageStatistical: (type, startDate, endDate) => {
+    if (startDate && endDate) {
+      return axiosInstance.get(
+        `statistics/average-order-value?type=day&startDate=${startDate}&endDate=${endDate}`
+      );
+    } else {
+      return axiosInstance.get(`statistics/average-order-value?type=${type}`);
     }
   },
 };

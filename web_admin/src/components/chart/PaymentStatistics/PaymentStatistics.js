@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { getPayment } from "../../../api/call_api/statistical/fetchApiStatistical";
-import { FormatDay2, FormatDay4, FormatDay5 } from "../../../utils/FormDay";
+import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import LoadingPayment from "./LoadingPayment";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -72,14 +72,7 @@ const PaymentStatistics = () => {
     }
   }, [dataMonth, selectYear, selectMonth]);
   /*******************************************CONVERT DATA PAYMENT********************************** */
-  const paymentMethod = [
-    "Cash",
-    "ZaloPay",
-    "Banking",
-    "CashOrder",
-    "ZaloPayOrder",
-    "BankingOrder",
-  ];
+
   const result = listPayment.reduce((arr, curr) => {
     const { timePeriod, paymentMethod, totalRevenue, totalOrders } = curr;
     if (!arr[timePeriod]) {
@@ -90,23 +83,14 @@ const PaymentStatistics = () => {
     return arr;
   }, []);
 
-  paymentMethod.forEach((method) => {
-    Object.keys(result).forEach((timePeriod) => {
-      if (!result[timePeriod][method]) {
-        result[timePeriod][method] = 0;
-      }
-    });
-  });
-
   const formatResult = Object.values(result);
+  console.log(formatResult, "check format result");
 
   useEffect(() => {
     if (formatResult && formatResult.length > 0) {
       if (JSON.stringify(formatResult) !== JSON.stringify(listNewDataPayment)) {
         setListNewDataPayment(formatResult);
       }
-    } else if (formatResult.length === 0) {
-      setListNewDataPayment([]);
     }
   }, [formatResult, listNewDataPayment]);
 
@@ -125,48 +109,26 @@ const PaymentStatistics = () => {
             FormatDay4(listNewDataPayment[i].timePeriod) === selectYear &&
             FormatDay5(listNewDataPayment[i].timePeriod) === selectMonth
           ) {
-            newData.push({
-              timePeriod: `${FormatDay2(listNewDataPayment[i].timePeriod)}`,
-              ZaloPay: listNewDataPayment[i].ZaloPay,
-              ZaloPayOrder: listNewDataPayment[i].ZaloPayOrder,
-              CashOrder: listNewDataPayment[i].CashOrder,
-              BankingOrder: listNewDataPayment[i].BankingOrder,
-              Cash: listNewDataPayment[i].Cash,
-              Banking: listNewDataPayment[i].Banking,
-            });
+            newData.push(listNewDataPayment[i]);
           }
         }
       }
       if (selectDate === "month") {
         for (let i = 0; i < listNewDataPayment.length; i++) {
           if (FormatDay4(listNewDataPayment[i].timePeriod) === selectYear) {
-            newData.push({
-              timePeriod: `${FormatDay2(listNewDataPayment[i].timePeriod)}`,
-              ZaloPay: listNewDataPayment[i].ZaloPay,
-              ZaloPayOrder: listNewDataPayment[i].ZaloPayOrder,
-              CashOrder: listNewDataPayment[i].CashOrder,
-              BankingOrder: listNewDataPayment[i].BankingOrder,
-              Cash: listNewDataPayment[i].Cash,
-              Banking: listNewDataPayment[i].Banking,
-            });
+            newData.push(listNewDataPayment[i]);
           }
         }
       }
       if (selectDate === "year") {
         for (let i = 0; i < listNewDataPayment.length; i++) {
           if (listNewDataPayment[i].timePeriod === parseInt(selectYear)) {
-            newData.push({
-              timePeriod: listNewDataPayment[i].timePeriod,
-              ZaloPay: listNewDataPayment[i].ZaloPay,
-              ZaloPayOrder: listNewDataPayment[i].ZaloPayOrder,
-              CashOrder: listNewDataPayment[i].CashOrder,
-              BankingOrder: listNewDataPayment[i].BankingOrder,
-              Cash: listNewDataPayment[i].Cash,
-              Banking: listNewDataPayment[i].Banking,
-            });
+            newData.push(listNewDataPayment[i]);
           }
         }
       }
+      console.log(newData);
+
       setDataPaymentSuccess(newData);
     }
   }, [listNewDataPayment, selectMonth, selectYear, selectDate]);
@@ -229,7 +191,7 @@ const PaymentStatistics = () => {
             <LoadingOutlined className="loading" />
           </div>
         ) : (
-          <LoadingPayment data={dataPaymentSuccess} />
+          <LoadingPayment data={dataPaymentSuccess} selectDate={selectDate} />
         )}
       </div>
     </div>

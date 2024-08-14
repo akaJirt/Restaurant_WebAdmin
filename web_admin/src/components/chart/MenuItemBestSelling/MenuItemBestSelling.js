@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import LoadingMenuItem from "./LoadingMenuItem";
-import { getMenuitem } from "../../../api/call_api/statistical/fetchApiStatistical";
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import { LoadingOutlined } from "@ant-design/icons";
+import { getMenuitemBestSelling } from "../../../api/call_api/statistical/fetchApiStatistical";
 
 const MenuItemBestSelling = () => {
   const [listMenuitem, setListMenuitem] = useState([]);
@@ -16,7 +16,13 @@ const MenuItemBestSelling = () => {
   /******************************************GET API MENU ITEM*************************** */
   const getMenuitemApi = useCallback(async () => {
     if (selectDate) {
-      await getMenuitem(selectDate, "", "", setListMenuitem, setIsLoading);
+      await getMenuitemBestSelling(
+        selectDate,
+        "",
+        "",
+        setListMenuitem,
+        setIsLoading
+      );
     }
   }, [selectDate]);
 
@@ -124,7 +130,6 @@ const MenuItemBestSelling = () => {
           }
         }
       }
-      console.log(newData, "check new dataa");
 
       if (JSON.stringify(newData) !== JSON.stringify(dataMenuitem)) {
         setDataMenuitem(newData);

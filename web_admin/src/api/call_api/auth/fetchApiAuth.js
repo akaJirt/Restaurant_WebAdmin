@@ -70,7 +70,6 @@ const getAllUsers = async (dispatch) => {
     }
   } catch (error) {
     NProgress.done();
-    console.log(error);
     dispatch(typeActionGetAllUsers.fetchGetAllUsersFailed(error));
   }
 };

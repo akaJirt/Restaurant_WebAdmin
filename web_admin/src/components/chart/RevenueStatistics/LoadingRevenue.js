@@ -10,6 +10,8 @@ import {
   CartesianGrid,
   ComposedChart,
 } from "recharts";
+import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
+import ConvertMoney from "../../../utils/convertMoney";
 const LoadingRevenue = ({ data, selectDate }) => {
   return (
     <>
@@ -19,21 +21,29 @@ const LoadingRevenue = ({ data, selectDate }) => {
           height={320}
           style={{ padding: "5px 10px" }}
         >
-          <ComposedChart data={data}>
+          <ComposedChart data={data} margin={{ top: 20 }}>
             <XAxis
               dataKey="_id"
-              tickFormatter={
-                selectDate === "year" && ((value) => `Năm: ${value}`)
-              }
-              label={{
-                value: "Ngày",
-                position: "insideBottomRight",
-                offset: -10,
+              tickFormatter={(value) => {
+                if (selectDate === "day") {
+                  const formattedValue = FormatDay7(value);
+                  return `Ngày:${formattedValue}`;
+                } else if (selectDate === "month") {
+                  return `Tháng:${FormatDay5(value)}`;
+                } else {
+                  return `Năm:${value}`;
+                }
               }}
             />
             <YAxis
               yAxisId="left"
-              tickFormatter={(value) => `${value.toLocaleString("vi-VN")}`}
+              tickFormatter={(value) => {
+                if (value > 0) {
+                  return ConvertMoney(value);
+                } else {
+                  return value;
+                }
+              }}
             />
             <YAxis yAxisId="right" orientation="right" />
             <Tooltip
@@ -42,6 +52,15 @@ const LoadingRevenue = ({ data, selectDate }) => {
                   return `${value.toLocaleString("vi-VN")} VND`;
                 }
                 return value;
+              }}
+              labelFormatter={(label) => {
+                if (selectDate === "year") {
+                  return `Năm:${label}`;
+                } else if (selectDate === "month") {
+                  return `Tháng:${FormatDay5(label)}`;
+                } else {
+                  return `Ngày:${FormatDay7(label)}`;
+                }
               }}
             />
             <Legend />

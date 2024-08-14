@@ -193,7 +193,7 @@ const TableUser = ({ role, setRole, setShow }) => {
                         : item.role}
                     </td>
                     <td>
-                      {moment(item.violations.violation_date).format(
+                      {moment(item?.violations?.violation_date).format(
                         "DD-MM-YYYY ~ HH:mm:ss"
                       )}
                     </td>

@@ -10,8 +10,9 @@ import {
   ComposedChart,
   Bar,
 } from "recharts";
+import ConvertMoney from "../../../utils/convertMoney";
 
-const LoadingLineChart = ({ dataTable }) => {
+const LoadingLineChart = ({ dataTable, selectDate }) => {
   return (
     <>
       {dataTable && dataTable.length > 0 ? (
@@ -21,14 +22,20 @@ const LoadingLineChart = ({ dataTable }) => {
             height={320}
             style={{ padding: "5px 10px" }}
           >
-            <ComposedChart data={dataTable}>
+            <ComposedChart data={dataTable} margin={{ top: 20 }}>
               <XAxis
                 dataKey="Bàn"
                 tickFormatter={(value) => `Bàn: ${value} `}
               />
               <YAxis
                 yAxisId="left"
-                tickFormatter={(value) => `${value.toLocaleString("vi-VN")}`}
+                tickFormatter={(value) => {
+                  if (value > 0) {
+                    return ConvertMoney(value);
+                  } else {
+                    return value;
+                  }
+                }}
               />
               <YAxis
                 yAxisId="right"

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import LoadingRevenue from "./LoadingRevenue";
 import { getRevenue } from "../../../api/call_api/statistical/fetchApiStatistical";
-import { FormatDay2, FormatDay4, FormatDay5 } from "../../../utils/FormDay";
+import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import { LoadingOutlined } from "@ant-design/icons";
 const RevenueStatistic = () => {
   const [listRevenue, setListRevenue] = useState([]);
@@ -79,7 +79,7 @@ const RevenueStatistic = () => {
             FormatDay4(listRevenue[i]._id) === selectYear
           ) {
             newDataRevenue.unshift({
-              _id: FormatDay2(listRevenue[i]._id),
+              _id: listRevenue[i]._id,
               "Tổng doanh thu": listRevenue[i].totalRevenue,
               "Tổng lượt đặt món": listRevenue[i].totalOrders,
             });
@@ -91,7 +91,7 @@ const RevenueStatistic = () => {
           console.log(listRevenue[i]);
           if (FormatDay4(listRevenue[i]._id) === selectYear) {
             newDataRevenue.unshift({
-              _id: FormatDay5(listRevenue[i]._id),
+              _id: listRevenue[i]._id,
               "Tổng doanh thu": listRevenue[i].totalRevenue,
               "Tổng lượt đặt món": listRevenue[i].totalOrders,
             });

@@ -12,7 +12,6 @@ const getPromotion = async (setListDataPromotion, setIsLoadingPromotion) => {
       setListDataPromotion([]);
     }
   } catch (error) {
-    console.log(error);
     setIsLoadingPromotion(false);
   }
 };
