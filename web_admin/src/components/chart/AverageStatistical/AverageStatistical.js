@@ -110,10 +110,9 @@ const AverageStatistical = () => {
     getDataSuccess();
   }, [getDataSuccess]);
   return (
-    <div className="layout-average-statistical mt-4">
-      <div className="content-average">
-        <h1>Thống kê trung bình tổng tiền</h1>
-        <div className="box-date mt-2 mb-2">
+    <div className="layout-average-statistical">
+      <div className="content-average ">
+        <div className="box-date mb-2 select">
           <select
             value={selectDate}
             onChange={(e) => setSelectDate(e.target.value)}

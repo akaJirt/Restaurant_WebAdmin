@@ -143,8 +143,7 @@ const MenuItemBestSelling = () => {
   return (
     <div className="layout-menuitem-best-selling">
       <div className="box-menuitem">
-        <h1>Thống kê món ăn ngon</h1>
-        <div className="box-date mt-2 mb-2">
+        <div className="box-date mb-2 select">
           <select
             value={selectDate}
             onChange={(e) => setSelectDate(e.target.value)}

@@ -9,8 +9,12 @@ import {
   Line,
 } from "recharts";
 import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 
 const LoadingOrderStatistical = ({ data, selectDate }) => {
+  const theme = useSelector(getThemeState);
+
   return (
     <ResponsiveContainer
       width={"100%"}
@@ -26,7 +30,10 @@ const LoadingOrderStatistical = ({ data, selectDate }) => {
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid
+          strokeDasharray="3 3"
+          stroke={theme ? "#fff" : "#e0e0e0"}
+        />
         <XAxis
           dataKey="_id"
           tickFormatter={(label) => {
@@ -39,6 +46,7 @@ const LoadingOrderStatistical = ({ data, selectDate }) => {
             }
           }}
           interval={0}
+          stroke={theme ? "#fff" : ""}
         />
         <Tooltip
           labelFormatter={(label) => {

@@ -119,8 +119,7 @@ const RevenueStatistic = () => {
   return (
     <div className="layout-revenue">
       <div className="box-revenue">
-        <h1>Thống kê doanh thu</h1>
-        <div className="box-date mt-2 mb-2">
+        <div className="box-date mb-2">
           <select
             value={selectDate}
             onChange={(e) => setSelectDate(e.target.value)}
@@ -167,7 +166,7 @@ const RevenueStatistic = () => {
           </select>
         </div>
       </div>
-      <div className="containerStyle3">
+      <div className="containerStyle">
         {isLoading ? (
           <div className="box-loading text-center">
             <LoadingOutlined className="loading" />

@@ -1,3 +1,133 @@
+.layout-statistical.theme {
+    background-color: #2e2e3e;
+    .collapsed {
+        background-color: #1e1e2e;
+        color: white;
+    }
+
+    .show {
+        background-color: #2e2e3e;
+
+    }
+    .accordion-body{
+        background-color: #2e2e3e;
+    }
+
+    .accordion-button {
+        background-color: #1e1e2e;
+        color: #fff;
+        &::after{
+        background-color: white;
+        }
+    }
+
+    .box-row3 {
+
+        .layout-payment {
+            .box-payment {
+                .select {
+                    select {
+                        color: #2e2e3e;
+                        border: 1px solid #2e2e3e;
+                    }
+                }
+            }
+
+            .containerStyle {
+                background-color: #1e1e2e;
+            }
+        }
+
+        .layout-table-statistical {
+            .box-table {
+                .select {
+                    select {
+                        color: #2e2e3e;
+                        border: 1px solid #2e2e3e;
+                    }
+                }
+            }
+
+            .containerStyle {
+                background-color: #1e1e2e;
+            }
+        }
+
+        .layout-revenue {
+            .box-revenue {
+                .select {
+                    select {
+                        color: #2e2e3e;
+                        border: 1px solid #2e2e3e;
+                    }
+                }
+            }
+
+            .containerStyle {
+                background-color: #1e1e2e;
+            }
+        }
+
+        .layout-menuitem-best-selling {
+            .box-menuitem {
+                .select {
+                    select {
+                        color: #2e2e3e;
+                        border: 1px solid #2e2e3e;
+                    }
+                }
+            }
+
+            .containerStyle {
+                background-color: #1e1e2e;
+            }
+        }
+
+        .layout-menu-item-statistical {
+            .content-menu-item{
+                .select {
+                    select {
+                        color: #2e2e3e;
+                        border: 1px solid #2e2e3e;
+                    }
+                }
+            }
+
+            .containerStyle {
+                background-color: #1e1e2e;
+            }
+        }
+                .layout-order-statistical {
+                    .content-order {
+                        .select {
+                            select {
+                                color: #2e2e3e;
+                                border: 1px solid #2e2e3e;
+                            }
+                        }
+                    }
+        
+                    .containerStyle {
+                        background-color: #1e1e2e;
+                    }
+                }
+                                .layout-average-statistical {
+                                    .content-average {
+                                        .select {
+                                            select {
+                                                color: #2e2e3e;
+                                                border: 1px solid #2e2e3e;
+                                            }
+                                        }
+                                    }
+                
+                                    .containerStyle {
+                                        background-color: #1e1e2e;
+                                    }
+                                }
+    }
+}
+
 .layout-statistical {
     min-height: 100%;
     padding: 20px;
@@ -8,6 +138,19 @@
     .box-row3 {
         .layout-average-statistical {
             .content-average {
+                .select {
+                        flex: 1;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                
+                        select {
+                            padding: 5px 15px;
+                            color: #E8900C;
+                            border: 1px solid #E8900C;
+                            outline: none;
+                        }
+                    }
                 h1 {
                     font-size: 1.2rem;
                     color: #E8900C;
@@ -51,6 +194,20 @@
                     margin: 0;
                 }
 
+                .select {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+
+                    select {
+                        padding: 5px 15px;
+                        color: #E8900C;
+                        border: 1px solid #E8900C;
+                        outline: none;
+                    }
+                }
+
                 .box-menu {
                     display: flex;
                     justify-content: space-between;
@@ -84,6 +241,19 @@
 
         .layout-order-statistical {
             .content-order {
+                .select {
+                        flex: 1;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                
+                        select {
+                            padding: 5px 15px;
+                            color: #E8900C;
+                            border: 1px solid #E8900C;
+                            outline: none;
+                        }
+                    }
                 h1 {
                     font-size: 1.2rem;
                     color: #E8900C;
@@ -144,7 +314,7 @@
                 }
             }
 
-            .containerStyle3 {
+            .containerStyle {
                 width: 100%;
                 height: fit-content;
                 border-radius: 10px;
@@ -166,12 +336,27 @@
 
         .layout-menuitem-best-selling {
             .box-menuitem {
+                .select {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+
+                    select {
+                        padding: 5px 15px;
+                        color: #E8900C;
+                        border: 1px solid #E8900C;
+                        outline: none;
+                    }
+                }
+
                 h1 {
                     font-size: 1.2rem;
                     color: #E8900C;
                     padding: 0;
                     margin: 0;
                 }
+
 
                 .box-date {
                     display: flex;
@@ -208,6 +393,20 @@
 
         .layout-table-statistical {
             .box-table {
+                .select {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+
+                    select {
+                        padding: 5px 15px;
+                        color: #E8900C;
+                        border: 1px solid #E8900C;
+                        outline: none;
+                    }
+                }
+
                 h1 {
                     font-size: 1.2rem;
                     color: #E8900C;
@@ -222,7 +421,7 @@
 
             }
 
-            .containerStyle2 {
+            .containerStyle {
                 width: 100%;
                 height: fit-content;
                 border-radius: 10px;
@@ -263,12 +462,27 @@
 
         .layout-payment {
             .box-payment {
-                h1 {
-                        font-size: 1.2rem;
+                .select {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+
+                    select {
+                        padding: 5px 15px;
                         color: #E8900C;
-                        padding: 0;
-                        margin: 0;
+                        border: 1px solid #E8900C;
+                        outline: none;
                     }
+                }
+
+                h1 {
+                    font-size: 1.2rem;
+                    color: #E8900C;
+                    padding: 0;
+                    margin: 0;
+                }
+
                 .find-data {
                     display: flex;
                     justify-content: space-between;

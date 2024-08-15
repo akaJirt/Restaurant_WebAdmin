@@ -12,7 +12,11 @@ import {
 } from "recharts";
 import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
 import ConvertMoney from "../../../utils/convertMoney";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 const LoadingRevenue = ({ data, selectDate }) => {
+  const theme = useSelector(getThemeState);
+
   return (
     <>
       {data && data.length > 0 ? (
@@ -34,6 +38,7 @@ const LoadingRevenue = ({ data, selectDate }) => {
                   return `Năm:${value}`;
                 }
               }}
+              stroke={theme ? "white" : ""}
             />
             <YAxis
               yAxisId="left"
@@ -44,8 +49,13 @@ const LoadingRevenue = ({ data, selectDate }) => {
                   return value;
                 }
               }}
+              stroke={theme ? "white" : ""}
             />
-            <YAxis yAxisId="right" orientation="right" />
+            <YAxis
+              yAxisId="right"
+              orientation="right"
+              stroke={theme ? "white" : ""}
+            />
             <Tooltip
               formatter={(value, name) => {
                 if (name === "Tổng doanh thu") {
@@ -64,7 +74,7 @@ const LoadingRevenue = ({ data, selectDate }) => {
               }}
             />
             <Legend />
-            <CartesianGrid stroke="#f5f5f5" />
+            <CartesianGrid stroke={theme ? "white" : "#e0e0e0"} />
             <Bar
               yAxisId="left"
               dataKey="Tổng doanh thu"

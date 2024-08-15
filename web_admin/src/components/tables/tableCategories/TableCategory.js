@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesState } from "../../../store/selector";
@@ -8,6 +8,7 @@ import { valueFormCategories } from "../../../store/valueForm/categories/actions
 import { setStatusCategories } from "../../../store/categories/setStatus/actions";
 import { LoadingOutlined } from "@ant-design/icons";
 import _ from "lodash";
+import { getAllCategories } from "../../../api/call_api/categories/fetchApiCategory";
 const TableCategory = () => {
   const [current, setCurrent] = useState(0);
   const [show, setShow] = useState(false);
@@ -17,9 +18,19 @@ const TableCategory = () => {
   const { dataGetCategories, isLoadingGetCategories } = getDataState;
   const data = dataGetCategories?.data;
   const [dataSort, setDataSort] = useState([]);
+
+  const getApiCategory = useCallback(async () => {
+    await getAllCategories(dispatch);
+  }, [dispatch]);
+  useEffect(() => {
+    getApiCategory();
+  }, [getApiCategory]);
+
   //*******************************PHAN TRANG ****************************************/
   const itemPage = 5;
   const offset = current * itemPage;
+
+  console.log(data, "check data category");
 
   useEffect(() => {
     if (data && data.length > 0) {

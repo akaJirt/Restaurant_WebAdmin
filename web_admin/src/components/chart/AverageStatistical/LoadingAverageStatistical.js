@@ -11,13 +11,18 @@ import {
 } from "recharts";
 import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
 import ConvertMoney from "../../../utils/convertMoney";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 const LoadingAverageStatistical = ({ data, selectDate }) => {
-  console.log(data, "check<<<<<<<<<<");
+  const theme = useSelector(getThemeState);
 
   return (
     <ResponsiveContainer width="100%" height={400}>
       <BarChart data={data} margin={{ left: 20, top: 20 }}>
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid
+          strokeDasharray="3 3"
+          stroke={theme ? "#fff" : "#e0e0e0"}
+        />
         <XAxis
           dataKey="_id"
           tickFormatter={(label) => {
@@ -29,6 +34,7 @@ const LoadingAverageStatistical = ({ data, selectDate }) => {
               return `Năm:${label}`;
             }
           }}
+          stroke={theme ? "#fff" : ""}
         />
         <YAxis
           tickFormatter={(label) => {
@@ -38,6 +44,7 @@ const LoadingAverageStatistical = ({ data, selectDate }) => {
               return label;
             }
           }}
+          stroke={theme ? "#fff" : ""}
         />
         <Tooltip
           labelFormatter={(label) => {

@@ -138,9 +138,8 @@ const PaymentStatistics = () => {
 
   return (
     <div className="layout-payment">
-      <div className="box-payment mb-2">
-        <h1>Thống kê thanh toán</h1>
-        <div className="find-data mt-2">
+      <div className="box-payment">
+        <div className="find-data mb-2 select">
           <select
             value={selectDate}
             onChange={(e) => setSelectDate(e.target.value)}

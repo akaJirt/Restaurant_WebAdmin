@@ -140,30 +140,40 @@ const TableStatistics = () => {
       selectDate
     ) {
       let newData = [];
-      if (selectDate === "day") {
-        for (let i = 0; i < dataFind.length; i++) {
+      for (let i = 0; i < dataFind.length; i++) {
+        if (selectDate === "day") {
           if (
             FormatDay4(dataFind[i].timePeriod) === selectYear &&
             FormatDay5(dataFind[i].timePeriod) === selectMonth
           ) {
             newData.push({
-              Bàn: dataFind[i].tableNumber,
+              tableNumber: dataFind[i].tableNumber,
               "Tổng tiền bàn": dataFind[i].totalRevenue,
               "Tổng lượt đặt bàn": dataFind[i].totalOrders,
+              timePeriod: dataFind[i].timePeriod,
             });
           }
         }
-      }
-      if (selectDate === "year") {
-        for (let i = 0; i < dataFind.length; i++) {
+        if (selectDate === "year") {
           if (
             FormatDay4(dataFind[i].timePeriod) === selectYear ||
             dataFind[i].timePeriod === parseInt(selectYear)
           ) {
             newData.push({
-              Bàn: dataFind[i].tableNumber,
+              tableNumber: dataFind[i].tableNumber,
               "Tổng tiền bàn": dataFind[i].totalRevenue,
               "Tổng lượt đặt bàn": dataFind[i].totalOrders,
+              timePeriod: dataFind[i].timePeriod,
+            });
+          }
+        }
+        if (selectDate === "month") {
+          if (FormatDay4(dataFind[i].timePeriod) === selectYear) {
+            newData.push({
+              tableNumber: dataFind[i].tableNumber,
+              "Tổng tiền bàn": dataFind[i].totalRevenue,
+              "Tổng lượt đặt bàn": dataFind[i].totalOrders,
+              timePeriod: dataFind[i].timePeriod,
             });
           }
         }
@@ -180,13 +190,13 @@ const TableStatistics = () => {
   return (
     <div className="layout-table-statistical">
       <div className="box-table">
-        <h1>Thống kê bàn</h1>
-        <div className="select-table mt-2 mb-2">
+        <div className="select-table mb-2 select">
           <select
             value={selectDate}
             onChange={(e) => setSelectDate(e.target.value)}
           >
-            <option value={"day"}>Tìm kiếm theo tháng</option>
+            <option value={"day"}>Tìm kiếm theo ngày</option>
+            <option value={"month"}>Tìm kiếm theo tháng</option>
             <option value={"year"}>Tìm kiếm trong năm</option>
           </select>
           {selectDate === "day" && (
@@ -225,7 +235,7 @@ const TableStatistics = () => {
           </select>
         </div>
       </div>
-      <div className="containerStyle2">
+      <div className="containerStyle">
         {isLoading ? (
           <div className="box-loading text-center">
             <LoadingOutlined className="loading" />

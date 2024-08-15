@@ -11,8 +11,13 @@ import {
   Bar,
 } from "recharts";
 import ConvertMoney from "../../../utils/convertMoney";
+import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 
 const LoadingLineChart = ({ dataTable, selectDate }) => {
+  const theme = useSelector(getThemeState);
+
   return (
     <>
       {dataTable && dataTable.length > 0 ? (
@@ -24,8 +29,19 @@ const LoadingLineChart = ({ dataTable, selectDate }) => {
           >
             <ComposedChart data={dataTable} margin={{ top: 20 }}>
               <XAxis
-                dataKey="Bàn"
-                tickFormatter={(value) => `Bàn: ${value} `}
+                dataKey={
+                  selectDate === "day" || selectDate === "year"
+                    ? "tableNumber"
+                    : "timePeriod"
+                }
+                tickFormatter={(value) => {
+                  if (selectDate === "day" || selectDate === "year") {
+                    return `Bàn: ${value}`;
+                  } else {
+                    return `Tháng: ${FormatDay5(value)}`;
+                  }
+                }}
+                stroke={theme ? "white" : ""}
               />
               <YAxis
                 yAxisId="left"
@@ -36,11 +52,13 @@ const LoadingLineChart = ({ dataTable, selectDate }) => {
                     return value;
                   }
                 }}
+                stroke={theme ? "white" : ""}
               />
               <YAxis
                 yAxisId="right"
                 orientation="right"
                 tickFormatter={(value) => `${value.toLocaleString("vi-VN")}`}
+                stroke={theme ? "white" : ""}
               />
               <Tooltip
                 formatter={(value, name) => {
@@ -49,10 +67,23 @@ const LoadingLineChart = ({ dataTable, selectDate }) => {
                   }
                   return value;
                 }}
-                labelFormatter={(label) => `Bàn: ${label}`}
+                labelFormatter={(label, payload) => {
+                  if (payload && payload.length > 0) {
+                    let time = payload[0].payload.timePeriod;
+                    let tableNumber = payload[0].payload.tableNumber;
+                    if (selectDate === "day") {
+                      return `Bàn: ${label} - Ngày: ${FormatDay7(time)}`;
+                    } else if (selectDate === "year") {
+                      return `Bàn: ${label} - Năm: ${time}`;
+                    } else {
+                      return `Bàn: ${tableNumber} - Tháng: ${FormatDay5(time)}`;
+                    }
+                  }
+                  return `Bàn: ${label}`;
+                }}
               />
               <Legend />
-              <CartesianGrid stroke="#f5f5f5" />
+              <CartesianGrid stroke={theme ? "white" : "#e0e0e0"} />
               <Bar
                 yAxisId="left"
                 dataKey="Tổng tiền bàn"

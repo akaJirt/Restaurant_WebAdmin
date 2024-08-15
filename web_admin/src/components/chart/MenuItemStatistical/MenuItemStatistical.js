@@ -125,10 +125,9 @@ const MenuItemStatistical = () => {
     getDataSuccess();
   }, [getDataSuccess]);
   return (
-    <div className="layout-menu-item-statistical mt-4">
+    <div className="layout-menu-item-statistical">
       <div className="content-menu-item">
-        <h1>Thống kê món ăn</h1>
-        <div className="box-menu mt-2 mb-2">
+        <div className="box-menu mb-2 select">
           <select
             value={selectDate}
             onChange={(e) => setSelectDate(e.target.value)}

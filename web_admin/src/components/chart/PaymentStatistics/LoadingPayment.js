@@ -12,8 +12,12 @@ import {
 } from "recharts";
 import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
 import ConvertMoney from "../../../utils/convertMoney";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 
 const LoadingPayment = ({ data, selectDate }) => {
+  const theme = useSelector(getThemeState);
+
   return (
     <>
       {data && data.length > 0 ? (
@@ -22,8 +26,11 @@ const LoadingPayment = ({ data, selectDate }) => {
           height={320}
           style={{ padding: "5px 10px" }}
         >
-          <ComposedChart data={data} margin={{ top: 20 }}>
-            <CartesianGrid strokeDasharray="3 3" />
+          <ComposedChart data={data} margin={{ top: 20, bottom: 20 }}>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke={theme ? "#fff" : "#e0e0e0"}
+            />
             <XAxis
               dataKey="timePeriod"
               tickFormatter={(label) => {
@@ -35,6 +42,7 @@ const LoadingPayment = ({ data, selectDate }) => {
                   return `Năm:${label}`;
                 }
               }}
+              stroke={theme ? "white" : ""}
             />
 
             <YAxis
@@ -45,6 +53,7 @@ const LoadingPayment = ({ data, selectDate }) => {
                   return value;
                 }
               }}
+              stroke={theme ? "white" : ""}
             />
 
             <Tooltip

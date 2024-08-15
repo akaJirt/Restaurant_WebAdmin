@@ -9,8 +9,12 @@ import {
   BarChart,
 } from "recharts";
 import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
+import { useSelector } from "react-redux";
+import { getThemeState } from "../../../store/selector";
 
 const LoadingMenuItemStatistical = ({ data, selectDate }) => {
+  const theme = useSelector(getThemeState);
+
   const formatData = Array.from(
     new Set(
       data.flatMap((item) =>
@@ -41,7 +45,10 @@ const LoadingMenuItemStatistical = ({ data, selectDate }) => {
         data={data}
         margin={{ left: 20, top: 20, right: 20, bottom: 20 }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid
+          strokeDasharray="3 3"
+          stroke={theme ? "white" : "#e0e0e0"}
+        />
         <XAxis
           dataKey="timePeriod"
           tickFormatter={(label) => {
@@ -53,6 +60,7 @@ const LoadingMenuItemStatistical = ({ data, selectDate }) => {
               return `Ngày:${FormatDay7(label)}`;
             }
           }}
+          stroke={theme ? "white" : ""}
         />
         <Tooltip
           formatter={(value, name) => {
