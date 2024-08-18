@@ -39,6 +39,7 @@ import orderByTableIdSlice from "./orders/getOrderByTableId/orderByTableIdSlice.
 import menuOptionSlice from "./menuItem/menuOption/menuOptionSlice.js";
 import tableSlice from "./statisticals/tableSlice.js";
 import dataStatisticalSlice from "./statisticals/valueStatistical/dataStatisticalSlice.js";
+import notificationSlice from "./notifications/notificationSlice.js";
 
 const rootReducer = combineReducers({
   scroll: scrollSlice,
@@ -81,5 +82,6 @@ const rootReducer = combineReducers({
   menuOption: menuOptionSlice,
   statisticalTable: tableSlice,
   dataStatistical: dataStatisticalSlice,
+  notificationValues: notificationSlice,
 });
 export default rootReducer;

@@ -39,9 +39,14 @@
 
     .table-users {
         background-color: #1e1e2e;
-
-        h1 {
-            color: #FFF;
+        .box-loading {
+                .loading {
+                    color: white;
+                }}
+        .content-user{
+            h1 {
+                color: #FFF;
+            }
         }
 
         .table {
@@ -68,17 +73,8 @@
 }
 
 .layout-review {
-    height: 100vh;
-        overflow: hidden;
-        /* Đảm bảo không có tràn ngoài */
-    
-        .ant-layout-content {
-            height: 100%;
-            overflow: auto;
-            overflow: hidden;
-            /* Đảm bảo nội dung có thể cuộn */
-        }
-
+    min-height: 100%;
+    padding:20px;
     .bt2 {
         background-color: #E8900C !important;
         border: 1px solid #E8900C;
@@ -132,16 +128,42 @@
     }
 
     .table-users {
-        margin-right: 20px;
-        margin-left: 20px;
-
-        h1 {
-            padding: 10px 0;
-            font-size: 24px;
-            margin-bottom: 0;
-            font-weight: 600;
-            color: #E8900C;
+        .box-loading {
+                .loading {
+                    color: #E8900C;
+                    font-size: 50px;
+                }
+        
+                .loading.theme {
+                    color: #fff;
+                }
+            }
+        .pagination {
+                display: flex;
+                justify-content: center;
+                list-style: none;
+        
+            }
+        .content-user{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            h1 {
+                    padding: 10px 0;
+                    font-size: 24px;
+                    margin-bottom: 0;
+                    font-weight: 600;
+                    color: #E8900C;
+                    flex: 1;
+                }
+            .h1{
+                flex: 1;
+            }
+            span{
+                flex: 1;
+            }
         }
+        
 
         thead {
             tr {
@@ -180,30 +202,3 @@
 
 }
 
-/* Máy tính để bàn (lớn) */
-@media (min-width: 1200px) {
-
-    /* CSS cho thiết bị từ 1200px trở lên */
-    .layout-review {
-        min-height: 100vh;
-    }
-}
-
-@media (max-width: 540px) {
-    .layout-review {
-        .form {
-            margin: 0 20px;
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .layout-review {
-
-        /* CSS cho thiết bị dưới 576px */
-        .text-h1 {
-            text-align: center;
-        }
-    }
-
-}

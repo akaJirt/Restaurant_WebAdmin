@@ -8,7 +8,9 @@ const Review = (props) => {
   const theme = useSelector(getThemeState);
   return (
     <div className={`layout-review ${theme ? "theme" : ""} `}>
-      <TableReview />
+      <div className="pt-3">
+        <TableReview />
+      </div>
     </div>
   );
 };

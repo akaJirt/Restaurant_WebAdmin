@@ -7,8 +7,8 @@ import { Loading3QuartersOutlined } from "@ant-design/icons";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { FormatDay } from "../../../utils/FormDay";
-import ConvertMoney from "../../../utils/convertMoney";
 import { Tag } from "antd";
+import { ConvertMoney } from "../../../utils/convertMoney";
 function ModalPromotion({
   show,
   setShow,

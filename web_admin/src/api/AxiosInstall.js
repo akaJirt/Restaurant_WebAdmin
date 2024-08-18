@@ -16,7 +16,6 @@ axiosInstance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    // Check if the data is FormData, if so, set the appropriate Content-Type
     if (config.data && config.data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
     } else {
@@ -167,6 +166,13 @@ const apiStatistical = {
     }
   },
 };
+
+const apiNotifications = {
+  getApiEvents: () => axiosInstance.get(`events`),
+  postApiEvent: (data) => axiosInstance.post(`events`, data),
+  deleteApiEvent: (id) => axiosInstance.delete(`events/${id}`),
+  updateApiEvent: (id, data) => axiosInstance.patch(`events/${id}`, data),
+};
 export {
   api,
   apiTables,
@@ -175,4 +181,5 @@ export {
   apiOrder,
   apiPromotion,
   apiStatistical,
+  apiNotifications,
 };

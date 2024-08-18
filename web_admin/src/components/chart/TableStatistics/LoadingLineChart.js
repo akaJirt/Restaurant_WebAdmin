@@ -10,10 +10,10 @@ import {
   ComposedChart,
   Bar,
 } from "recharts";
-import ConvertMoney from "../../../utils/convertMoney";
 import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../../store/selector";
+import { ConvertMoney } from "../../../utils/convertMoney";
 
 const LoadingLineChart = ({ dataTable, selectDate }) => {
   const theme = useSelector(getThemeState);

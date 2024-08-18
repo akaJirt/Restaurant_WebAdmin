@@ -38,7 +38,7 @@ function CardBanChayNhat(props) {
             <tr>
               <th>
                 <Link to={"/chiTietSanPham"} className="link-img">
-                  <img src={product} alt="products-1" />
+                  <img src={product} alt="products-1" loading="lazy" />
                 </Link>
               </th>
               <td className="text-mt">Cá viên chiên</td>

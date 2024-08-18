@@ -46,6 +46,7 @@ const CardProfileLeft = () => {
               src={getMe?.isDataMe?.img_avatar_url}
               alt="avatar"
               className="avatar"
+              loading="lazy"
             />
           }
         />

@@ -41,7 +41,13 @@ function ModalOption({ show, setShow }) {
                         xl: 80,
                         xxl: 100,
                       }}
-                      icon={<img src={item.image_url} alt="img_user" />}
+                      icon={
+                        <img
+                          src={item.image_url}
+                          alt="img_user"
+                          loading="lazy"
+                        />
+                      }
                     />
                   </div>
                   <div className="col-8">

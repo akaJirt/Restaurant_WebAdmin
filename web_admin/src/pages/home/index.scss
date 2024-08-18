@@ -6,20 +6,13 @@
     min-height: 100%;
     padding: 20px;
 
-
-
-    .ant-layout-content {
-        height: 100%;
-        /* Ensure the content takes up the full height */
-    }
-
     .row {
         .col-8 {
             .left-cart-1 {
                 display: flex;
-                flex-wrap: wrap;
                 margin-bottom: 20px;
                 gap: 20px;
+                flex-wrap: wrap;
 
                 .box-1 {
                     flex: 1;
@@ -47,7 +40,7 @@
             .right-cart-1 {
                 margin-bottom: 20px;
             }
-
+            
             .right-cart-2 {
                 margin-bottom: 20px;
 
@@ -58,11 +51,7 @@
 
 @media (max-width: 576px) {
 
-    /* CSS cho thiết bị dưới 576px */
-    .layout-home {
-        width: 100%;
-
-    }
+    
 }
 
 /* Điện thoại di động (trung bình) */
@@ -146,7 +135,7 @@
 
 @media (max-width: 1200px) {
     .layout-home {
-        height: 100%;
+        min-height: 100%;
     }
 }
 

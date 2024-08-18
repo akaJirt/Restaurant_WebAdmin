@@ -80,6 +80,7 @@ const EditProfile = () => {
         <div className="box-img-edit">
           <div className="img">
             <img
+              loading="lazy"
               src={avatarState}
               alt="avatar"
               style={{ cursor: "pointer" }}

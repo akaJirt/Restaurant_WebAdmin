@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
-import ConvertMoney from "../../../utils/convertMoney";
+import { ConvertMoney } from "../../../utils/convertMoney";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../../store/selector";
 const LoadingAverageStatistical = ({ data, selectDate }) => {

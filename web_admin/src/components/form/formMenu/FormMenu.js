@@ -118,6 +118,7 @@ const FormMenu = () => {
         <div className="img_menu">
           <img
             alt="hinh anh"
+            loading="lazy"
             src={isBase64 ? isBase64 : image}
             onClick={() => {
               setIsOpen(true);

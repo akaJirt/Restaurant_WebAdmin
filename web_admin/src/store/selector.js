@@ -80,3 +80,9 @@ export const statisticalArrListTableState = (state) =>
 export const statisticalLoadingTableState = (state) =>
   state.statisticalTable.isLoading;
 export const dataPaymentState = (state) => state.dataStatistical.dataPayment;
+/****************************************NOTIFICATION***************************************** */
+
+export const titleState = (state) => state.notificationValues.title;
+export const contentState = (state) => state.notificationValues.content;
+export const summaryState = (state) => state.notificationValues.summary;
+export const imagesState = (state) => state.notificationValues.images;

@@ -6,7 +6,7 @@ import {
   FormatDay2,
   FormatTimeNow,
 } from "../../../../utils/FormDay";
-import ConvertMoney from "../../../../utils/convertMoney";
+import { ConvertMoney } from "../../../../utils/convertMoney";
 import { Avatar, Tag } from "antd";
 const LoadingCash = ({ item }) => {
   console.log(item);
@@ -90,7 +90,9 @@ const LoadingCash = ({ item }) => {
                       xl: 80,
                       xxl: 100,
                     }}
-                    icon={<img src={item.image_url} alt="img_user" />}
+                    icon={
+                      <img src={item.image_url} alt="img_user" loading="lazy" />
+                    }
                   />
                 </div>
                 <div className="col-9">

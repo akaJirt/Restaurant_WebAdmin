@@ -40,7 +40,7 @@ const RegisterForm = (props) => {
   return (
     <div className="content-login-from form-register">
       <div className="logo-title mb-3">
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" loading="lazy" />
         <h3>NiceAdmin</h3>
       </div>
       <div className="form-login">

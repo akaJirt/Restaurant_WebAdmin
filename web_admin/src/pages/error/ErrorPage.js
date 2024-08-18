@@ -15,6 +15,7 @@ const ErrorPage = (props) => {
         <img
           src="https://img.lovepik.com/photo/45007/5339.jpg_wh860.jpg"
           alt="not-found"
+          loading="lazy"
         />
       </div>
     </div>

@@ -49,7 +49,7 @@ const AppContent = () => {
           <Route element={<PrivateNavigation />}>
             <Route path="/" element={<Home />} />
             <Route path="/users" element={<User />} />
-            <Route path="/reviews" element={<Review />} />
+            <Route path="/notification" element={<Review />} />
             <Route path="/promotions" element={<Promotion />} />
             <Route path="/order" element={<Order />} />
             <Route path="/tables" element={<Tables />} />

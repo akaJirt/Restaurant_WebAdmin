@@ -5,5 +5,12 @@ const ConvertMoney = (money) => {
     return `${money} %`;
   }
 };
+const ConvertMoney2 = (money) => {
+  if (money > 100) {
+    return `${money.toLocaleString()}`;
+  } else {
+    return `${money} %`;
+  }
+};
 
-export default ConvertMoney;
+export { ConvertMoney, ConvertMoney2 };

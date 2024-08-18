@@ -14,7 +14,7 @@ function App() {
   const path = [
     "/",
     "/users",
-    "/reviews",
+    "/notification",
     "/promotions",
     "/order",
     "/tables",

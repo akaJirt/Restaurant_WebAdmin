@@ -36,6 +36,7 @@ const LoadingTable = ({
         <td className="text-center">
           <div className="td">
             <img
+              loading="lazy"
               src={item.qrCode}
               alt="qr"
               onClick={onClick}

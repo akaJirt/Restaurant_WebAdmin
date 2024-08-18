@@ -42,7 +42,7 @@
                     }
 
                     &:last-child {
-                                        color: #FF771D;
+                        color: #FF771D;
                     }
                 }
             }
@@ -81,9 +81,9 @@
             }
         }
 
-                .icon-ellips {
-                    color: #C9AA05;
-                }
+        .icon-ellips {
+            color: #C9AA05;
+        }
     }
 
     .content-body-3 {
@@ -93,13 +93,23 @@
         .icon-userGroup {
             border: 1px solid #ffecdf;
             background: #ffecdf;
-            padding: 0 20px;
             border-radius: 100%;
+            width: 70px;
+            height: 70px;
 
-            .ic {
-                color: #ff771d;
-                font-size: 32px;
+            .ic-ne {
+                width: 100%;
                 height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .ic {
+                    color: #ff771d;
+                    font-size: 32px;
+                    height: 100%;
+                }
+
             }
         }
 

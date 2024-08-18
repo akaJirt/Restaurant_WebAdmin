@@ -23,7 +23,9 @@ function CardHome3(props) {
     >
       <div className="content-body-3">
         <div className="icon-userGroup">
-          <UsergroupAddOutlined className="ic" />
+          <div className="ic-ne">
+            <UsergroupAddOutlined className="ic" />
+          </div>
         </div>
         <div className="content-body-box-2">
           <h6 className="h6">1245</h6>

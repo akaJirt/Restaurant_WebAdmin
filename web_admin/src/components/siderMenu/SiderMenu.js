@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect, useCallback } from "react";
 import {
   HomeFilled,
   UserOutlined,
-  StarFilled,
   TagFilled,
   DropboxSquareFilled,
   BoxPlotFilled,
@@ -10,6 +9,7 @@ import {
   ShopFilled,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  BellFilled,
 } from "@ant-design/icons";
 import "./SiderMenu.scss";
 import { Layout, Menu, Button } from "antd";
@@ -82,19 +82,19 @@ const SiderMenu = () => {
       },
       {
         className: "item-menu",
-        key: "/reviews",
+        key: "/notification",
         icon: (
-          <StarFilled
+          <BellFilled
             className="item-icon"
-            onClick={() => handleClick("/reviews")}
+            onClick={() => handleClick("/notification")}
           />
         ),
         label: (
           <Link
-            to="/reviews"
+            to="/notification"
             className={`item-link ${collapsed ? "collapsed" : ""}`}
           >
-            Quản lý đánh giá
+            Quản lý thông báo
           </Link>
         ),
       },

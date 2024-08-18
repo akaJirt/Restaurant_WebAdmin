@@ -123,7 +123,13 @@ const ModalHistoryUser = ({ show, setShow, item }) => {
                 <div className="text-center mb-3" onClick={handleClickImage}>
                   <Avatar
                     size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                    icon={<img src={item.img_avatar_url} alt="img_user" />}
+                    icon={
+                      <img
+                        src={item.img_avatar_url}
+                        alt="img_user"
+                        loading="lazy"
+                      />
+                    }
                   />
                 </div>
                 <div className="row">

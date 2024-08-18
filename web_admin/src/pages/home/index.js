@@ -5,7 +5,6 @@ import CardHome2 from "../../components/card/card-show1/CardHome2";
 import CardHome3 from "../../components/card/card-show1/CardHome3";
 import CardChart from "../../components/card/card-show2/CardChart";
 import CardBanChay from "../../components/card/card-show3/CardBanChayNhat";
-import CardDatBan from "../../components/card/card-show4/CardDatBan";
 import CardMenu from "../../components/card/card-show5/CardMenu";
 import CardKM from "../../components/card/card-show6/CardKhuyenMaiVaThongBao";
 import CardBan from "../../components/card/card-show7/CardBan";
@@ -36,8 +35,8 @@ const Home = () => {
           <div className="left-cart-3">
             <CardBanChay />
           </div>
-          <div className="left-cart-4">
-            <CardDatBan />
+          <div className="right-cart-3">
+            <CardBan />
           </div>
         </div>
         <div className="col-4">
@@ -46,9 +45,6 @@ const Home = () => {
           </div>
           <div className="right-cart-2">
             <CardKM />
-          </div>
-          <div className="right-cart-3">
-            <CardBan />
           </div>
         </div>
       </div>

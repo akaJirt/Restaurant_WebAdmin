@@ -26,3 +26,5 @@ export const SET_ACCESS_TOKEN = "set_access_token";
 export const MENU_OPTION = "menu_option";
 //----------------STATISTICAL PAYMENT-------------------
 export const STATISTICAL_PAYMENT = "STATISTICAL_PAYMENT";
+//----------------NOTIFICATIONS-------------------
+export const SET_DATA_LIST_NOTIFICATIONS = "set_data_list_notifications";

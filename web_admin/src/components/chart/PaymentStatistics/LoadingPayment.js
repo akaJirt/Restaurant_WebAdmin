@@ -11,9 +11,9 @@ import {
   ComposedChart,
 } from "recharts";
 import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
-import ConvertMoney from "../../../utils/convertMoney";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../../store/selector";
+import { ConvertMoney } from "../../../utils/convertMoney";
 
 const LoadingPayment = ({ data, selectDate }) => {
   const theme = useSelector(getThemeState);

@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { setStatusMenuItem } from "../../../store/menuItem/setStatusMenuItem/actions";
 import { valueFormMenu } from "../../../store/valueForm/menu/actions";
 import { setListOption } from "../../../store/menuItem/menuOption/action";
-import ConvertMoney from "../../../utils/convertMoney";
+import { ConvertMoney } from "../../../utils/convertMoney";
 
 const LoadingTableMenu = ({
   item,

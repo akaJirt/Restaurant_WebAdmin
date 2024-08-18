@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ConvertMoney from "../../../utils/convertMoney";
 import { FormatDay } from "../../../utils/FormDay";
 import ModalOrder from "./ModalOrders/ModalOrder";
+import { ConvertMoney } from "../../../utils/convertMoney";
 
 const LoadingTableOrder = ({ item, index, onClick }) => {
   const [show, setShow] = useState(false);
@@ -24,19 +24,17 @@ const LoadingTableOrder = ({ item, index, onClick }) => {
         <td>{item.tableNumber}</td>
         <td>{ConvertMoney(item.amount)}</td>
         <td>{item.userPay.fullName}</td>
-        <td>
-          {item.paymentMethod === "Cash"
-            ? "Tiền mặt"
-            : item.paymentMethod === "ZaloPay"
-            ? "Chuyển Khoản"
-            : item.paymentMethod}
-        </td>
+        <td>{item.paymentMethod}</td>
         <td
           className="img_avatar"
           onClick={onClick}
           style={{ cursor: "pointer" }}
         >
-          <img alt="img_avatar" src={item.userPay.img_avatar_url} />
+          <img
+            alt="img_avatar"
+            src={item.userPay.img_avatar_url}
+            loading="lazy"
+          />
         </td>
         <td>{FormatDay(item.createdAt)}</td>
         <td className="bt">

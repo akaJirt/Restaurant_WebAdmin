@@ -16,8 +16,17 @@
             color: #fff;
         }
     }
+.box-loading {
 
+    .loading {
+        color: #fff;
+    }
+}
     .box-body {
+        .sp {
+                color: #fff;
+               
+            }
         .item-ban {
             .so-ban {
                 color: #C55402;
@@ -63,42 +72,59 @@
             color: #C9AA05;
         }
     }
+.box-loading {
+    text-align: center;
 
+    .loading {
+        font-size: 30px;
+        color: #E8900C;
+    }
+}
     .box-body {
-        display: flex;
         align-items: center;
         gap: 10px;
         position: relative;
-
-        .item-ban {
-            flex: 1;
-            height: 80px;
-            cursor: pointer;
-            border-radius: 80px;
-            box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.3);
-            background-color: #fff;
+        .sp{
+            color: #E8900C;
             display: flex;
             align-items: center;
-            gap: 5px;
             justify-content: center;
-
-            .so-ban {
-                font-size: 1.2rem;
-                font-weight: bold;
-                                                                                color: #E8900C;
-            }
-
-            .icon-smile {
-                font-size: 20px;
-                color: #31a24c;
-            }
+            font-size: 1.2rem;
         }
-
-        .item-status {
-            img {
-                max-width: 90px;
+        .box-item-ban{
+            display: flex;
+            margin-bottom: 10px;
+            .item-ban {
+                flex: 1;
+                height: 80px;
+                cursor: pointer;
+                border-radius: 80px;
+                box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.3);
+                background-color: #fff;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                margin-right: 10px;
+                justify-content: center;
+    
+                .so-ban {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                                                                                    color: #E8900C;
+                }
+    
+                .icon-smile {
+                    font-size: 20px;
+                    color: #31a24c;
+                }
             }
-
+    
+            .item-status {
+                img {
+                    max-width: 90px;
+                }
+    
+            }
         }
     }
 }

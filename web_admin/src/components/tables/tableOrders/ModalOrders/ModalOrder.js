@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import ConvertMoney from "../../../../utils/convertMoney";
+import { ConvertMoney } from "../../../../utils/convertMoney";
 
 function ModalOrder({ show, setShow, listDataItem }) {
   const handleClose = () => setShow(false);
@@ -39,7 +39,13 @@ function ModalOrder({ show, setShow, listDataItem }) {
                           xl: 80,
                           xxl: 100,
                         }}
-                        icon={<img src={item.image_url} alt="img_user" />}
+                        icon={
+                          <img
+                            src={item.image_url}
+                            alt="img_user"
+                            loading="lazy"
+                          />
+                        }
                       />
                     </div>
                     <div className="col-10">

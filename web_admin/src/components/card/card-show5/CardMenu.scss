@@ -17,7 +17,18 @@
         }
     }
 
+    .box-loading {
+
+        .loading {
+            color: #fff;
+        }
+    }
+
     .box-body {
+        span {
+            color: #E8900C;
+        }
+
         table {
             width: 100%;
 
@@ -75,21 +86,49 @@
         }
     }
 
+    .box-loading {
+        text-align: center;
+
+        .loading {
+            font-size: 30px;
+            color: #E8900C;
+        }
+    }
+
     .box-body {
+        span {
+            color: #E8900C;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 10px;
+        }
+
         table {
             width: 100%;
 
             thead {
                 tr {
                     color: #E8900C;
+
                 }
             }
 
             tbody {
                 text-align: center;
 
+                border-spacing: 10px;
+
                 tr {
                     color: #C9AA05;
+
+                    th,
+                    td {
+                        padding: 5px;
+                        /* Khoảng cách bên trong các ô */
+                    }
+
                     th {
                         .img {
                             img {

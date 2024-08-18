@@ -181,7 +181,11 @@ const TableUser = ({ role, setRole, setShow }) => {
                         handleImageClick(item.img_avatar_url, item.fullName)
                       }
                     >
-                      <img alt="avatar" src={item.img_avatar_url} />
+                      <img
+                        alt="avatar"
+                        src={item.img_avatar_url}
+                        loading="lazy"
+                      />
                     </td>
                     <td>
                       {item.role === "client"

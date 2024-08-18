@@ -74,7 +74,7 @@ const AppHeader = () => {
         >
           <Col flex={"auto"} style={{ flex: "2" }} className={`left-col`}>
             <Space size={12}>
-              <img src={logo} alt="logo" className="img" />
+              <img src={logo} alt="logo" className="img" loading="lazy" />
               <span className="nice-admin">Nice Admin</span>
             </Space>
           </Col>

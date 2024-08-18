@@ -15,7 +15,7 @@ const LoginFrom = (props) => {
   return (
     <div className="content-login-from">
       <div className="logo-title mb-3">
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" loading="lazy" />
         <h3>NiceAdmin</h3>
       </div>
       <div className="form-login">
