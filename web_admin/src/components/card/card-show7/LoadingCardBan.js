@@ -1,16 +1,40 @@
-import { SmileFilled } from "@ant-design/icons";
-import React from "react";
+import { BsEmojiHeartEyesFill } from "react-icons/bs";
+import { Tag } from "antd";
 
-const LoadingCardBan = ({ data }) => {
+import React, { useState } from "react";
+
+const LoadingCardBan = ({ data, handleClickTag }) => {
+  const [isActive, setIsActive] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsActive(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsActive(false);
+  };
+
   return (
-    <div className="box-item-ban">
+    <div
+      className="box-item-ban"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="item-ban">
-        <span className="so-ban">{data.tableNumber}</span>
-        <SmileFilled className="icon-smile" title="Bàn trống" />
+        <div className="b-ic">
+          <span className="so-ban">Bàn {data.tableNumber}</span>
+          <BsEmojiHeartEyesFill className="icon-smile" />
+        </div>
       </div>
       <div className="item-status">
         <img src={data.qrCode} alt="qr" loading="lazy" />
       </div>
+
+      {isActive && (
+        <Tag color="#E8900C" className="check" onClick={handleClickTag}>
+          Kiểm tra
+        </Tag>
+      )}
     </div>
   );
 };

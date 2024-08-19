@@ -7,6 +7,7 @@ import { getThemeState } from "../../../store/selector";
 import { toast } from "react-toastify";
 import { apiTables } from "../../../api/AxiosInstall";
 import LoadingCardBan from "./LoadingCardBan";
+import ModalCardBan from "./MoadlCardBan";
 const CardBan = (props) => {
   console.log("render CardBan");
   const theme = useSelector(getThemeState);
@@ -14,6 +15,8 @@ const CardBan = (props) => {
   const [isOpen] = useState("open");
   const [listDataTableSuccess, setListDataTableSuccess] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const [idAndTableNumber, setIdAndTableNumber] = useState([]);
 
   /**********************************GET DATA********************** */
   useEffect(() => {
@@ -47,44 +50,65 @@ const CardBan = (props) => {
           newData.push(listDataTable[i]);
         }
       }
-      console.log(newData, "check new data");
-
       setListDataTableSuccess(newData);
     }
   }, [listDataTable, isOpen]);
   useEffect(() => {
     getDataSuccess();
   }, [getDataSuccess]);
+  console.log(listDataTableSuccess, "check list dâta success");
+
+  const handleClickTag = (id, tableNumber) => {
+    setShow(true);
+    setIdAndTableNumber([id, tableNumber]);
+  };
   return (
-    <Card
-      className={`card-ban ${theme ? "theme" : ""}`}
-      title={
-        <div className="box-title">
-          <div className="box-text">
-            <p>Bàn đang hoạt động</p>
-            <span>| Hôm nay</span>
+    <>
+      <ModalCardBan
+        show={show}
+        setShow={setShow}
+        idAndTableNumber={idAndTableNumber}
+        setIdAndTableNumber={setIdAndTableNumber}
+      />
+      <Card
+        className={`card-ban ${theme ? "theme" : ""}`}
+        title={
+          <div className="box-title">
+            <div className="box-text">
+              <p>Bàn đang hoạt động</p>
+              <span>| Hôm nay</span>
+            </div>
+            <EllipsisOutlined className="icon-ellips" />
           </div>
-          <EllipsisOutlined className="icon-ellips" />
-        </div>
-      }
-      bordered={false}
-    >
-      {isLoading ? (
-        <div className="box-loading">
-          <LoadingOutlined className="loading" />
-        </div>
-      ) : (
-        <div className="box-body">
-          {listDataTableSuccess && listDataTableSuccess.length > 0 ? (
-            listDataTableSuccess.map((item, index) => (
-              <LoadingCardBan key={index} data={item} />
-            ))
-          ) : (
-            <span className="sp">Không có bàn nào hoạt động</span>
-          )}
-        </div>
-      )}
-    </Card>
+        }
+        bordered={false}
+      >
+        {isLoading ? (
+          <div className="box-loading">
+            <LoadingOutlined className="loading" />
+          </div>
+        ) : (
+          <div className="box-body">
+            <span className="mb-1">
+              Hiện có {listDataTableSuccess.length} bàn đang hoạt động
+            </span>
+            {listDataTableSuccess && listDataTableSuccess.length > 0 ? (
+              listDataTableSuccess.map((item, index) => (
+                <LoadingCardBan
+                  key={index}
+                  data={item}
+                  handleClickTag={() =>
+                    handleClickTag(item._id, item.tableNumber)
+                  }
+                />
+              ))
+            ) : (
+              <span className="sp">Không có bàn nào hoạt động</span>
+            )}
+          </div>
+        )}
+      </Card>
+    </>
   );
 };
 

@@ -63,6 +63,7 @@ const apiTables = {
   deleteTable: (id) => axiosInstance.delete(`tables/${id}`),
   updateStatusTable: (id, status) =>
     axiosInstance.patch(`tables/update-status/${id}`, { status }),
+  checkPeopleTable: (id) => axiosInstance.get(`tables/table-in-use/${id}`),
 };
 //*******************************CATEGORIES********************************* */
 

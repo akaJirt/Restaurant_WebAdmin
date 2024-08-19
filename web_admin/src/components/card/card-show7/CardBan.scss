@@ -16,17 +16,21 @@
             color: #fff;
         }
     }
-.box-loading {
 
-    .loading {
-        color: #fff;
+    .box-loading {
+
+        .loading {
+            color: #fff;
+        }
     }
-}
+
     .box-body {
+
         .sp {
-                color: #fff;
-               
-            }
+            color: #fff;
+
+        }
+
         .item-ban {
             .so-ban {
                 color: #C55402;
@@ -68,62 +72,106 @@
             }
 
         }
+
         .icon-ellips {
             color: #C9AA05;
         }
     }
-.box-loading {
-    text-align: center;
 
-    .loading {
-        font-size: 30px;
-        color: #E8900C;
+    .box-loading {
+        text-align: center;
+
+        .loading {
+            font-size: 30px;
+            color: #E8900C;
+        }
     }
-}
+
     .box-body {
         align-items: center;
         gap: 10px;
-        position: relative;
-        .sp{
+
+        span {
+            color: #E8900C;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+
+        }
+
+        .sp {
             color: #E8900C;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
         }
-        .box-item-ban{
+
+        
+
+        .box-item-ban {
             display: flex;
+            align-items: center;
             margin-bottom: 10px;
+            position: relative;
+
+            .check {
+                    position: absolute;
+                    bottom: 0;
+                    left: 40%;
+                    color: #fff;
+                    cursor: pointer;
+            
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: -10px;
+                        left: 10px;
+                        width: 0;
+                        height: 0;
+                        border-right: 10px solid transparent;
+                        border-bottom: 10px solid #E8900C;
+                        border-top-left-radius: 10px;
+                    }
+                    
+                }
             .item-ban {
                 flex: 1;
-                height: 80px;
                 cursor: pointer;
                 border-radius: 80px;
+                height: 80px;
                 box-shadow: 0rem 0.125rem 1.25rem rgba(1, 41, 112, 0.3);
                 background-color: #fff;
-                display: flex;
-                align-items: center;
                 gap: 5px;
                 margin-right: 10px;
-                justify-content: center;
-    
-                .so-ban {
-                    font-size: 1.2rem;
-                    font-weight: bold;
-                                                                                    color: #E8900C;
+                
+
+
+                .b-ic {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100%;
+
+                    .so-ban {
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        color: #E8900C;
+                    }
                 }
-    
+
                 .icon-smile {
                     font-size: 20px;
                     color: #31a24c;
                 }
             }
-    
+
             .item-status {
                 img {
                     max-width: 90px;
                 }
-    
+
             }
         }
     }
