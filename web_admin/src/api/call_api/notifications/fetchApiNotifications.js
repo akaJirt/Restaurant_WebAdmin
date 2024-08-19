@@ -32,9 +32,11 @@ const postEvent = async (
     formData.append("title", title);
     formData.append("summary", summary);
     formData.append("content", content);
-    images.forEach((image) => {
-      formData.append(`images`, image);
-    });
+    if (images && images.length > 0 && Array.isArray(images)) {
+      images.forEach((image) => {
+        formData.append(`images`, image);
+      });
+    }
     const res = await apiNotifications.postApiEvent(formData);
     if (res && res.data && res.data.status === "success") {
       setIsLoading(false);

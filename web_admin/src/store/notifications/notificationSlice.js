@@ -5,7 +5,7 @@ export const initState = {
   title: "",
   content: "",
   summary: "",
-  images: [""],
+  images: [],
 };
 
 const notificationSlice = (state = initState, action) => {

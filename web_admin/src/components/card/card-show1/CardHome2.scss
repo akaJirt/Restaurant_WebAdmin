@@ -16,12 +16,14 @@
             color: #fff;
         }
     }
-.box-loading {
 
-    .loading {
-        color: #fff;
+    .box-loading {
+
+        .loading {
+            color: #fff;
+        }
     }
-}
+
     .content-body-2 {
         .icon-dollar {
             border: 1px solid #fff;
@@ -87,18 +89,20 @@
             color: #C9AA05;
         }
     }
-.box-loading {
-    text-align: center;
 
-    .loading {
-        font-size: 30px;
-        color: #E8900C;
+    .box-loading {
+        text-align: center;
+
+        .loading {
+            font-size: 30px;
+            color: #E8900C;
+        }
     }
-}
+
     .content-body-2 {
         display: flex;
         gap: 15px;
-        
+
 
         .icon-dollar {
             border: 1px solid #e0f8e9;
@@ -106,13 +110,14 @@
             width: 70px;
             height: 70px;
             border-radius: 100%;
-            
+
             .ic-ne {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 width: 100%;
                 height: 100%;
+
                 .ic {
                     color: #2eca6a;
                     font-size: 32px;

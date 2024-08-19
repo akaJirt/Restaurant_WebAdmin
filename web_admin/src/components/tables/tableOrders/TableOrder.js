@@ -61,7 +61,6 @@ const TableOrder = () => {
   }, [idOption, selectOption]);
 
   /********************************************FILTER DATA****************** */
-  console.log(selectOption, "check<SELECT");
 
   const getNewDataOrder = useCallback(() => {
     if (listDataOrder && listDataOrder.length > 0 && selectOption) {
@@ -116,7 +115,6 @@ const TableOrder = () => {
   useEffect(() => {
     getDataOrder();
   }, [getDataOrder]);
-  console.log(isClick, "check is click");
 
   const handleClickSort = () => {
     if (isClick === "up") {
@@ -159,7 +157,13 @@ const TableOrder = () => {
             {idOption.length > 0 ? (
               idOption.map((item, index) => (
                 <option value={item} key={index}>
-                  {item}
+                  {item === "staff"
+                    ? "Nhân viên"
+                    : item === "client"
+                    ? "Khách hàng"
+                    : item === "admin"
+                    ? "Quản lý"
+                    : item}
                 </option>
               ))
             ) : (

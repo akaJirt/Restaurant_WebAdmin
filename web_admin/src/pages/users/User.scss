@@ -29,7 +29,9 @@
         }
 
         .box-h1-select {
-
+            span{
+                color: #fff;
+            }
             .text-center {
                 color: #fff;
             }
@@ -136,7 +138,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-
+span {
+        color: #E8900C;
+        font-size: 24px;
+        font-weight: 600;
+    }
             .text-center {
                 color: #E8900C;
             }

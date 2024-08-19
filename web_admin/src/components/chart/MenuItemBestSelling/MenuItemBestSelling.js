@@ -97,7 +97,6 @@ const MenuItemBestSelling = () => {
   }, []);
 
   let formatResult = Object.values(result);
-  console.log(formatResult, "check<<<<");
   console.log(selectDate, selectMonth, selectYear);
 
   /******************************************SUCCESS DATA*************************** */
@@ -139,6 +138,7 @@ const MenuItemBestSelling = () => {
   useEffect(() => {
     menuitemSuccessData();
   }, [menuitemSuccessData]);
+  console.log(dataMenuitem, "check data menu item");
 
   return (
     <div className="layout-menuitem-best-selling">

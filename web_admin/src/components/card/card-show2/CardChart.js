@@ -15,7 +15,7 @@ const CardChart = (props) => {
         <div className="box-title">
           <div className="box-text">
             <p className="text-baoCao">Báo cáo</p>
-            <span className="text-homNay">/Hôm nay</span>
+            <span className="text-homNay">| Tháng này</span>
           </div>
           <EllipsisOutlined className="icon-ellips" />
         </div>

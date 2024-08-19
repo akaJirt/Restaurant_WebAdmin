@@ -84,7 +84,6 @@ const PaymentStatistics = () => {
   }, []);
 
   const formatResult = Object.values(result);
-  console.log(formatResult, "check format result");
 
   useEffect(() => {
     if (formatResult && formatResult.length > 0) {
@@ -174,7 +173,7 @@ const PaymentStatistics = () => {
               dataYear.map((year, index) => {
                 return (
                   <option key={index} value={year}>
-                    {year}
+                    Năm:{year}
                   </option>
                 );
               })

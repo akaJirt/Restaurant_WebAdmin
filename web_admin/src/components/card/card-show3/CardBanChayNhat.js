@@ -15,7 +15,7 @@ function CardBanChayNhat(props) {
       title={
         <div className="box-title">
           <div className="box-text">
-            <p>Bán chạy nhất</p>
+            <p>Món chạy nhất</p>
             <span>| Hôm nay</span>
           </div>
           <EllipsisOutlined className="icon-ellips" />

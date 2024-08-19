@@ -122,10 +122,10 @@ const TableUser = ({ role, setRole, setShow }) => {
       />
       <div>
         <div className="box-h1-select">
-          <span></span>
+          <span>Hiện có:{itemPage}</span>
           <h1 className="text-center mb-2">
             {role === "admin"
-              ? "Quản Lí"
+              ? "Quản Lý"
               : role === "staff"
               ? "Nhân Viên"
               : role === "client"
@@ -134,10 +134,10 @@ const TableUser = ({ role, setRole, setShow }) => {
               ? "Đã Xác Thực"
               : role === "false"
               ? "Chưa Xác Thực"
-              : "Quản Lí Người Dùng"}
+              : "Quản Lý Người Dùng"}
           </h1>
           <select value={role} onChange={handleChange}>
-            <option value={"admin"}>Admin</option>
+            <option value={"admin"}>Quản Lý</option>
             <option value={"staff"}>Nhân Viên</option>
             <option value={"client"}>Khách Hàng</option>
             <option value={"true"}>Đã xác thực</option>
@@ -193,7 +193,7 @@ const TableUser = ({ role, setRole, setShow }) => {
                         : item.role === "staff"
                         ? "Nhân Viên"
                         : item.role === "admin"
-                        ? "Quản Lí"
+                        ? "Quản Lý"
                         : item.role}
                     </td>
                     <td>

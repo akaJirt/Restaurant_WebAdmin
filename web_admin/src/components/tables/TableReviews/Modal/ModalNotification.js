@@ -39,7 +39,7 @@ const ModalNotification = ({
     setShow(false);
     dispatch(typeActionNotificationValues.setTitle(""));
     dispatch(typeActionNotificationValues.setContent(""));
-    dispatch(typeActionNotificationValues.setImage([""]));
+    dispatch(typeActionNotificationValues.setImage([]));
     dispatch(typeActionNotificationValues.setSummary(""));
     setImage([]);
     setDeleteImages([]);

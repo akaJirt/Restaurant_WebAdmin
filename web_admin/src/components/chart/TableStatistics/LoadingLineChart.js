@@ -17,6 +17,7 @@ import { ConvertMoney } from "../../../utils/convertMoney";
 
 const LoadingLineChart = ({ dataTable, selectDate }) => {
   const theme = useSelector(getThemeState);
+  console.log(dataTable, selectDate, "check data table");
 
   return (
     <>
@@ -108,4 +109,4 @@ const LoadingLineChart = ({ dataTable, selectDate }) => {
   );
 };
 
-export default LoadingLineChart;
+export default React.memo(LoadingLineChart);

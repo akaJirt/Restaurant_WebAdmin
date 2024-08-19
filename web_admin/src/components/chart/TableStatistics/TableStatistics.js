@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { statisticalArrListTableState } from "../../../store/selector";
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import { LoadingOutlined } from "@ant-design/icons";
-
+import LoadingTableBarchart from "./LoadingTableBarchart";
 const TableStatistics = () => {
   const dispatch = useDispatch();
   const getStateArr = useSelector(statisticalArrListTableState);
@@ -169,6 +169,7 @@ const TableStatistics = () => {
         }
         if (selectDate === "month") {
           if (FormatDay4(dataFind[i].timePeriod) === selectYear) {
+            // newData.push(dataFind[i]);
             newData.push({
               tableNumber: dataFind[i].tableNumber,
               "Tổng tiền bàn": dataFind[i].totalRevenue,
@@ -178,7 +179,25 @@ const TableStatistics = () => {
           }
         }
       }
+      // if (newData && selectDate === "month") {
+      //   let resultMonth = newData.reduce((newArr, prevItem) => {
+      //     const { tableNumber, totalRevenue, totalOrders, timePeriod } =
+      //       prevItem;
 
+      //     if (!newArr[timePeriod]) {
+      //       newArr[timePeriod] = { timePeriod };
+      //     }
+      //     newArr[timePeriod][`tableNumber_${tableNumber}`] = totalRevenue;
+      //     newArr[timePeriod][`order_${tableNumber}`] = totalOrders;
+
+      //     return newArr;
+      //   }, []);
+
+      //   let formatResult = Object.values(resultMonth);
+      //   setDataTableStatistic(formatResult);
+      // }
+      // if (selectDate !== "month") {
+      // }
       setDataTableStatistic(newData);
     }
   }, [dataFind, selectMonth, selectYear, selectDate]);

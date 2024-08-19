@@ -7,6 +7,7 @@ import { getThemeState } from "../../../store/selector";
 function CardHome3(props) {
   console.log("render CardHome3");
   const theme = useSelector(getThemeState);
+
   return (
     <Card
       className={`card-3 ${theme ? "theme" : ""}`}
