@@ -112,6 +112,7 @@ const ModalCardBan = ({
                         placeholder="name@example.com"
                         readOnly
                         value={item.fullName}
+                        disabled
                       />
                     </FloatingLabel>
                   </div>

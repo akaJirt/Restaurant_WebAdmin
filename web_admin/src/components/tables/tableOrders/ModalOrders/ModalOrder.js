@@ -4,9 +4,45 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { ConvertMoney } from "../../../../utils/convertMoney";
+import { useCallback, useEffect, useState } from "react";
 
-function ModalOrder({ show, setShow, listDataItem }) {
-  const handleClose = () => setShow(false);
+function ModalOrder({ show, setShow, listDataItem, setListDataItem }) {
+  const [listNewDataItem, setListNewDataItem] = useState([]);
+  console.log(listDataItem, "check listDataItem");
+
+  const findElement = useCallback(() => {
+    if (listDataItem && listDataItem.length > 0) {
+      let result = listDataItem.reduce((arr, curr) => {
+        const { menuItemId, quantity, price, name } = curr;
+        let findData = arr.find(
+          (item) => item.menuItemId === menuItemId && item.name === name
+        );
+        if (findData) {
+          findData.quantity += quantity;
+          findData.price += price;
+        } else {
+          arr.push({ ...curr });
+        }
+
+        return arr;
+      }, []);
+      if (result && result.length > 0) {
+        setListNewDataItem(result);
+      } else {
+        setListNewDataItem([]);
+      }
+    }
+  }, [listDataItem]);
+  console.log(listNewDataItem, "check list new data");
+
+  useEffect(() => {
+    findElement();
+  }, [findElement]);
+  const handleClose = () => {
+    setShow(false);
+    setListNewDataItem([]);
+    setListDataItem([]);
+  };
 
   return (
     <>
@@ -15,8 +51,8 @@ function ModalOrder({ show, setShow, listDataItem }) {
           <Modal.Title>Món đã đặt</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {listDataItem && listDataItem.length > 0 ? (
-            listDataItem.map((item, index) => {
+          {listNewDataItem && listNewDataItem.length > 0 ? (
+            listNewDataItem.map((item, index) => {
               return (
                 <fieldset key={index} className="border rounded-3 p-3">
                   <legend

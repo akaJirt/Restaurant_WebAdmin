@@ -31,6 +31,9 @@ const FormatDay6 = (value) => {
 const FormatDay7 = (value) => {
   return moment(value).format("DD-MM");
 };
+
+export const checkDate = /^\d{1,2}-\d{1,2}-\d{4}$/;
+
 export {
   FormatDay,
   FormatDay2,

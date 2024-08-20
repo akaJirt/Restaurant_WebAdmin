@@ -27,9 +27,9 @@ const TableUser = ({ role, setRole, setShow }) => {
   const [itemCount, setItemCount] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState("");
-
   const [caption, setCaption] = useState("");
-
+  const [dataListConcat, setDataListConcat] = useState([]);
+  /*************************GET DATA ************************** */
   const getApiUsers = useCallback(async () => {
     await getAllUsers(dispatch);
   }, [dispatch]);
@@ -40,6 +40,37 @@ const TableUser = ({ role, setRole, setShow }) => {
 
   const totalPageCount = 5;
   const offset = currentPage * totalPageCount;
+  /*************************SET DATA ROLE AND VERIFY ************************** */
+
+  let dataRole = useMemo(() => {
+    if (data && data.length > 0) {
+      return [...new Set(data.map((item) => item.role) || [])];
+    }
+  }, [data]);
+  let dataVerify = useMemo(() => {
+    if (data && data.length > 0) {
+      return [...new Set(data.map((item) => item.isVerified) || [])];
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (
+      dataRole &&
+      dataRole.length > 0 &&
+      dataVerify &&
+      dataVerify.length > 0
+    ) {
+      setDataListConcat(dataRole.concat(dataVerify));
+    }
+  }, [dataRole, dataVerify]);
+
+  useEffect(() => {
+    if (dataListConcat && dataListConcat.length > 0 && !role) {
+      setRole(dataListConcat[0]);
+    } else if (dataListConcat.length === 0) {
+      setRole("");
+    }
+  }, [dataListConcat, role, setRole]);
 
   useEffect(() => {
     const listData = () => {
@@ -137,11 +168,27 @@ const TableUser = ({ role, setRole, setShow }) => {
               : "Quản Lý Người Dùng"}
           </h1>
           <select value={role} onChange={handleChange}>
-            <option value={"admin"}>Quản Lý</option>
-            <option value={"staff"}>Nhân Viên</option>
-            <option value={"client"}>Khách Hàng</option>
-            <option value={"true"}>Đã xác thực</option>
-            <option value={"false"}>Chưa xác thực</option>
+            {dataListConcat && dataListConcat.length > 0 ? (
+              dataListConcat.map((item, index) => {
+                return (
+                  <option key={index} value={item}>
+                    {item === true
+                      ? "Đã xác thực"
+                      : item === false
+                      ? "Chưa xác thực"
+                      : item === "admin"
+                      ? "Quản lý"
+                      : item === "staff"
+                      ? "Nhân viên"
+                      : item === "client"
+                      ? "Khách hàng"
+                      : item}
+                  </option>
+                );
+              })
+            ) : (
+              <option>Không có dữ liệu</option>
+            )}
           </select>
         </div>
         <Table striped bordered hover responsive>
@@ -202,14 +249,15 @@ const TableUser = ({ role, setRole, setShow }) => {
                       )}
                     </td>
                     <td>
-                      {item.isVerified === false && (
-                        <button
-                          className="btn btn-warning mx-2"
-                          onClick={() => handleClickAuthentication(item)}
-                        >
-                          Xác thực
-                        </button>
-                      )}
+                      {item.isVerified.toString() === role &&
+                        item.isVerified.toString() === "false" && (
+                          <button
+                            className="btn btn-warning mx-2"
+                            onClick={() => handleClickAuthentication(item)}
+                          >
+                            Xác thực
+                          </button>
+                        )}
                       <button
                         className="btn btn-secondary"
                         onClick={() => handleClickView(item)}

@@ -1,26 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormatDay } from "../../../utils/FormDay";
-import ModalOrder from "./ModalOrders/ModalOrder";
 import { ConvertMoney } from "../../../utils/convertMoney";
 
-const LoadingTableOrder = ({ item, index, onClick }) => {
-  const [show, setShow] = useState(false);
-  const [listDataItem, setListDataItem] = useState([]);
-
-  const handleClickView = (item) => {
-    setShow(true);
-    if (item && item.items && item.items.length > 0) {
-      setListDataItem(item.items);
-    } else {
-      setListDataItem([]);
-    }
-  };
-
+const LoadingTableOrder = ({
+  item,
+  index,
+  onClick,
+  offset,
+  handleClickView,
+}) => {
   return (
     <>
-      <ModalOrder show={show} setShow={setShow} listDataItem={listDataItem} />
       <tr key={index}>
-        <td>{index + 1}</td>
+        <td>{offset + index + 1}</td>
         <td>{item.tableNumber}</td>
         <td>{ConvertMoney(item.amount)}</td>
         <td>{item.userPay.fullName}</td>

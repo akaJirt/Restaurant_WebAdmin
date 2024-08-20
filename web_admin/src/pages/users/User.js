@@ -13,7 +13,7 @@ const capitalizeFirstLetter = (string) => {
 };
 const User = (props) => {
   console.log("render User");
-  const [role, setRole] = useState("admin");
+  const [role, setRole] = useState("");
   const [show, setShow] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
   const [send, setSend] = useState(false);

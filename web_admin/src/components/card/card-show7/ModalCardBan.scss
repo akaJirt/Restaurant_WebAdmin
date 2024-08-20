@@ -4,28 +4,32 @@
         display: flex;
         align-items: center;
         flex: 1;
-.loading{
-    font-size: 18px;
-}
+
+        .loading {
+            font-size: 18px;
+        }
+
         .span {
             color: black;
         }
-        .span2{
+
+        .span2 {
             color: black;
             flex: 1;
             display: flex;
             align-items: center;
             gap: 8px;
             justify-content: center;
-            .ic-user{
-            }
+
+            .ic-user {}
         }
     }
-    .box-loading{
+
+    .box-loading {
         text-align: center;
-        
-        .loading{
-font-size: 35px;
+
+        .loading {
+            font-size: 35px;
         }
     }
 }
