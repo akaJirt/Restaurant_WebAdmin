@@ -85,6 +85,11 @@ const apiMenuItem = {
 //*******************************Orders********************************* */
 const apiOrder = {
   getOrder: () => axiosInstance.get(`payments/payments-history`),
+  getConfirmOrder: (tableId) => axiosInstance.get(`tables/${tableId}/orders`),
+  patchConfirmOrder: (tableId, itemId, type) =>
+    axiosInstance.patch(
+      `tables/${tableId}/orders/items/${itemId}?status=${type}`
+    ),
 };
 //*******************************Promotions********************************* */
 const apiPromotion = {

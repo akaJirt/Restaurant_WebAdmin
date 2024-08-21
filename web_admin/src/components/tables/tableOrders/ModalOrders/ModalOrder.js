@@ -6,26 +6,33 @@ import Form from "react-bootstrap/Form";
 import { ConvertMoney } from "../../../../utils/convertMoney";
 import { useCallback, useEffect, useState } from "react";
 
-function ModalOrder({ show, setShow, listDataItem, setListDataItem }) {
+function ModalOrder({
+  show,
+  setShow,
+  listDataItem,
+  setListDataItem,
+  voucher,
+  setVoucher,
+}) {
   const [listNewDataItem, setListNewDataItem] = useState([]);
-  console.log(listDataItem, "check listDataItem");
 
   const findElement = useCallback(() => {
     if (listDataItem && listDataItem.length > 0) {
       let result = listDataItem.reduce((arr, curr) => {
-        const { menuItemId, quantity, price, name } = curr;
+        const { menuItemId, quantity, amount, name } = curr;
         let findData = arr.find(
           (item) => item.menuItemId === menuItemId && item.name === name
         );
         if (findData) {
           findData.quantity += quantity;
-          findData.price += price;
+          findData.amount += amount;
         } else {
           arr.push({ ...curr });
         }
 
         return arr;
       }, []);
+
       if (result && result.length > 0) {
         setListNewDataItem(result);
       } else {
@@ -33,8 +40,6 @@ function ModalOrder({ show, setShow, listDataItem, setListDataItem }) {
       }
     }
   }, [listDataItem]);
-  console.log(listNewDataItem, "check list new data");
-
   useEffect(() => {
     findElement();
   }, [findElement]);
@@ -42,6 +47,7 @@ function ModalOrder({ show, setShow, listDataItem, setListDataItem }) {
     setShow(false);
     setListNewDataItem([]);
     setListDataItem([]);
+    setVoucher([]);
   };
 
   return (
@@ -122,7 +128,7 @@ function ModalOrder({ show, setShow, listDataItem, setListDataItem }) {
                       className="mb-3"
                     >
                       <Form.Control
-                        value={ConvertMoney(item.price || 0)}
+                        value={ConvertMoney(item.amount || 0)}
                         type="text"
                         placeholder="name@example.com"
                         disabled
@@ -130,6 +136,23 @@ function ModalOrder({ show, setShow, listDataItem, setListDataItem }) {
                       />
                     </FloatingLabel>
                   </div>
+                  {voucher && voucher.length > 0 && (
+                    <div className="mt-3 mb-3">
+                      <FloatingLabel
+                        controlId="floatingInput"
+                        label="Mã giảm giá"
+                        className="mb-3"
+                      >
+                        <Form.Control
+                          value={voucher[0]}
+                          type="text"
+                          placeholder="name@example.com"
+                          disabled
+                          readOnly
+                        />
+                      </FloatingLabel>
+                    </div>
+                  )}
                 </fieldset>
               );
             })

@@ -267,7 +267,9 @@ const TableUser = ({ role, setRole, setShow }) => {
                       <button
                         className="btn btn-danger mx-2"
                         onClick={(e) => handleClickXoa(item, e)}
-                        disabled={item.isVerified === true ? true : false}
+                        disabled={
+                          item.isVerified.toString() === "true" ? true : false
+                        }
                       >
                         Xóa
                       </button>

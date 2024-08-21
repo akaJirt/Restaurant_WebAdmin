@@ -48,7 +48,7 @@ const Statistical = () => {
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="5">
-            <Accordion.Header>Thống kê đặt món</Accordion.Header>
+            <Accordion.Header>Thống kê lượt đặt món</Accordion.Header>
             <Accordion.Body>
               <OrderStatistical />
             </Accordion.Body>

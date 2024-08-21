@@ -1,5 +1,5 @@
 import React from "react";
-import { FormatDay } from "../../../utils/FormDay";
+import { FormatDay2, FormatTimeNow } from "../../../utils/FormDay";
 import { ConvertMoney } from "../../../utils/convertMoney";
 
 const LoadingTableOrder = ({
@@ -28,7 +28,9 @@ const LoadingTableOrder = ({
             loading="lazy"
           />
         </td>
-        <td>{FormatDay(item.createdAt)}</td>
+        <td>
+          {FormatDay2(item.createdAt)} ~ {FormatTimeNow(item.createdAt)}
+        </td>
         <td className="bt">
           <button
             className="btn btn-secondary"

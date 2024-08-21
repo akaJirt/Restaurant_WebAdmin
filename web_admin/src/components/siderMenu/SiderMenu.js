@@ -130,7 +130,7 @@ const SiderMenu = () => {
             to="/order"
             className={`item-link ${collapsed ? "collapsed" : ""}`}
           >
-            Quản lý đơn hàng
+            Quản lý hóa đơn
           </Link>
         ),
       },

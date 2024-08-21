@@ -21,6 +21,8 @@ const TableOrder = () => {
   const [show, setShow] = useState(false);
   const [listDataItem, setListDataItem] = useState([]);
   const [month, setMonth] = useState([]);
+  const [voucher, setVoucher] = useState([]);
+  const [selectVoucher] = useState(true);
   /********************************************GET DATA****************** */
 
   useEffect(() => {
@@ -37,7 +39,6 @@ const TableOrder = () => {
       ];
     }
   }, [listDataOrder]);
-
   const dataUser = useMemo(() => {
     if (listDataOrder && listDataOrder?.length > 0) {
       return [...new Set(listDataOrder.map((item) => item.userPay.role) || [])];
@@ -68,14 +69,14 @@ const TableOrder = () => {
       dataUser &&
       dataUser?.length > 0 &&
       month &&
-      month.length > 0
+      month.length > 0 &&
+      selectVoucher
     ) {
-      setIdOption(dataOption.concat(dataUser, month));
+      setIdOption(dataOption.concat(dataUser, month, selectVoucher));
     } else if (dataOption?.length === 0 && dataUser?.length === 0) {
       setIdOption("");
     }
-  }, [dataOption, dataUser, month]);
-
+  }, [dataOption, dataUser, month, selectVoucher]);
   useEffect(() => {
     if (idOption && idOption.length > 0 && !selectOption) {
       setSelectOption(idOption[0]);
@@ -89,18 +90,23 @@ const TableOrder = () => {
   const getNewDataOrder = useCallback(() => {
     if (listDataOrder && listDataOrder.length > 0 && selectOption) {
       let newData = [];
+      let checkVoucher = true;
       for (let i = 0; i < listDataOrder.length; i++) {
         if (
           listDataOrder[i].paymentMethod === selectOption ||
           listDataOrder[i].userPay.role === selectOption ||
           FormatDay2(listDataOrder[i].createdAt) === selectOption
         ) {
+          checkVoucher = false;
+          newData.push(listDataOrder[i]);
+        }
+        if (listDataOrder[i].voucher && checkVoucher === selectVoucher) {
           newData.push(listDataOrder[i]);
         }
       }
       setListNewDataOrder(newData);
     }
-  }, [listDataOrder, selectOption]);
+  }, [listDataOrder, selectOption, selectVoucher]);
 
   useEffect(() => {
     getNewDataOrder();
@@ -162,11 +168,16 @@ const TableOrder = () => {
     setShow(true);
     if (item && item.items && item.items.length > 0) {
       setListDataItem(item.items);
+      if (item.voucher) {
+        setVoucher([item.voucher]);
+      } else {
+        setVoucher([]);
+      }
     } else {
       setListDataItem([]);
     }
   };
-  console.log(selectOption, "check selectOption");
+  console.log(listDataSlice, "check order");
 
   return (
     <>
@@ -175,6 +186,8 @@ const TableOrder = () => {
         setShow={setShow}
         listDataItem={listDataItem}
         setListDataItem={setListDataItem}
+        voucher={voucher}
+        setVoucher={setVoucher}
       />
       <div className="table-order">
         <div className="box-top-order">
@@ -182,15 +195,15 @@ const TableOrder = () => {
           <h1 className="text-center mb-2">
             Tất cả hóa đơn{" "}
             {selectOption === "Cash"
-              ? "Tiền Mặt"
-              : selectOption === "ZaloPay"
-              ? "ZaloPay"
+              ? "tiền mặt"
               : selectOption === "staff"
               ? "nhân viên"
               : selectOption === "client"
               ? "khách hàng"
               : checkDate.test(selectOption)
-              ? "hàng mới nhất"
+              ? "mới nhất"
+              : selectOption === selectVoucher.toString()
+              ? "có khuyến mãi"
               : selectOption}
           </h1>
           <div className="select">
@@ -208,7 +221,9 @@ const TableOrder = () => {
                       : item === "admin"
                       ? "Quản lý"
                       : checkDate.test(item)
-                      ? "Đơn hàng mới nhất"
+                      ? "Hóa đơn mới nhất"
+                      : item === selectVoucher
+                      ? "Hóa đơn có khuyến mãi"
                       : item}
                   </option>
                 ))

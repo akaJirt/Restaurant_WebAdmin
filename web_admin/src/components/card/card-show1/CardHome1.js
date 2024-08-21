@@ -144,15 +144,14 @@ function CardHome1(props) {
     if (listDataSuccess && listDataSuccess.length > 0) {
       setQuantity(listDataSuccess[listDataSuccess.length - 1]);
       let newTotalPercentage =
-        ((listDataSuccess[1].totalQuantity - listDataSuccess[0].totalQuantity) /
-          listDataSuccess[0].totalQuantity) *
-        100;
-      setResultPercentage(newTotalPercentage.toFixed(2));
+        listDataSuccess[1].totalQuantity - listDataSuccess[0].totalQuantity;
+      setResultPercentage(newTotalPercentage);
     }
     if (listDataSuccess.length === 0) {
       setQuantity("");
     }
   }, [listDataSuccess]);
+  console.log(resultPercentage, "check");
 
   return (
     <Card
@@ -182,8 +181,9 @@ function CardHome1(props) {
           <div className="content-body-box-2">
             <h6 className="h6">{quantity.totalQuantity}</h6>
             <div className="span">
-              <span>{resultPercentage > 0 ? "Tăng" : "Giảm"}</span>
-              <span>{resultPercentage}%</span>
+              <span>{resultPercentage > 0 ? "tăng" : "giảm"}</span>
+              <span className="a">{Math.abs(resultPercentage)}</span>
+              <span className="a">món</span>
             </div>
           </div>
         </div>
