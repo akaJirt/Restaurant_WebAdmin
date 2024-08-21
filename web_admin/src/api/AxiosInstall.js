@@ -52,6 +52,8 @@ const api = {
   verifyUser: (data) => axiosInstance.post(`users/verify`, data),
   sendVerifyUser: (email) =>
     axiosInstance.post(`users/resend-verification`, { email }),
+  updateUser: (id, data) =>
+    axiosInstance.patch(`users/update-user/${id}`, data),
 };
 //*******************************TABLES********************************* */
 

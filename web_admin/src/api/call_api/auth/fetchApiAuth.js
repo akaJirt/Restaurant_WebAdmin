@@ -262,7 +262,22 @@ const postSendVerifyAuthentication = async (email, setSend, dispatch) => {
     toast.error(message || status);
   }
 };
-
+const patchUpdateUser = async (id, fullName, role, dispatch, handleClose) => {
+  try {
+    const data = { fullName, role };
+    const res = await api.updateUser(id, data);
+    if (res && res.data && res.data.status === "success") {
+      toast.success(res.data.message);
+      handleClose();
+      await getAllUsers(dispatch);
+    }
+    console.log(res, "check role");
+  } catch (error) {
+    const status = error?.response?.data?.status;
+    const message = error?.response?.data?.message;
+    toast.error(message || status);
+  }
+};
 export {
   Login,
   getMe,
@@ -276,4 +291,5 @@ export {
   historyPaymentUser,
   postVerifyAuthentication,
   postSendVerifyAuthentication,
+  patchUpdateUser,
 };

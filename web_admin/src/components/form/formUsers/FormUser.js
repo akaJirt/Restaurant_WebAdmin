@@ -70,7 +70,6 @@ const FormUser = () => {
       <FloatingLabel controlId="floatingSelect" label="Vai trò">
         <Form.Select
           aria-label="Floating label select example"
-          disabled={status === "update" ? true : false}
           onChange={(e) => dispatch(valueFormUsers.setRole(e.target.value))}
           value={role}
         >

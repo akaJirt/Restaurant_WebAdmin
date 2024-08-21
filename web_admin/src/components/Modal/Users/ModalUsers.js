@@ -13,6 +13,7 @@ import FormUser from "../../form/formUsers/FormUser";
 import "./ModalUsers.scss";
 import {
   destroyUser,
+  patchUpdateUser,
   postSendVerifyAuthentication,
   postUser,
   postVerifyAuthentication,
@@ -42,10 +43,8 @@ const ModalUsers = ({
   const userItem = getStatusUsers[1];
   const handleClickXacNhan = async () => {
     if (send === true) {
-      console.log("1");
       await postSendVerifyAuthentication(email, setSend, dispatch);
     } else {
-      console.log("2");
       if (getStatusUsers[0] === "create") {
         const data = {
           fullName,
@@ -64,6 +63,15 @@ const ModalUsers = ({
           verifyCode,
           handleClose,
           dispatch
+        );
+      }
+      if (getStatusUsers[0] === "update") {
+        await patchUpdateUser(
+          getStatusUsers[1]._id,
+          fullName,
+          role,
+          dispatch,
+          handleClose
         );
       }
     }

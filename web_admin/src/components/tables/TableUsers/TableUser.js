@@ -130,7 +130,7 @@ const TableUser = ({ role, setRole, setShow }) => {
     dispatch(setStatusUsers.setStatus(["update", item]));
     dispatch(valueFormUsers.setFullName(item.fullName));
     dispatch(valueFormUsers.setEmail(item.email));
-    dispatch(valueFormUsers.setPassword(item.password));
+    dispatch(valueFormUsers.setRole(item.role));
   };
 
   const handleClickAuthentication = (item) => {
