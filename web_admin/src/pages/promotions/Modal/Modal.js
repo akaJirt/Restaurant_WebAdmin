@@ -32,7 +32,7 @@ function ModalPromotion({
       setDiscount(itemPromotion?.item?.discount || "");
       setDiscountType(itemPromotion?.item?.discountType || "");
       setMinOrderValue(itemPromotion?.item?.minOrderValue || "");
-      setMaxDiscount(itemPromotion?.item?.maxDiscount || "");
+      setMaxDiscount(itemPromotion?.item?.maxDiscount || 0);
       setStartDate(FormatDate(itemPromotion?.item?.startDate) || "");
       setEndDate(FormatDate(itemPromotion?.item?.endDate) || "");
       setMaxUsage(itemPromotion?.item?.maxUsage || "");

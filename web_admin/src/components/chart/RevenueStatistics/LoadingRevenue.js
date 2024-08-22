@@ -84,7 +84,7 @@ const LoadingRevenue = ({ data, selectDate }) => {
             <Line
               yAxisId="right"
               type="monotone"
-              dataKey="Tổng lượt đặt món"
+              dataKey="Tổng lượt thanh toán"
               stroke="#ff7300"
             />
           </ComposedChart>

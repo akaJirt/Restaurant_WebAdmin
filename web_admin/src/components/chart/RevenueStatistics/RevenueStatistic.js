@@ -81,7 +81,7 @@ const RevenueStatistic = () => {
             newDataRevenue.unshift({
               _id: listRevenue[i]._id,
               "Tổng doanh thu": listRevenue[i].totalRevenue,
-              "Tổng lượt đặt món": listRevenue[i].totalOrders,
+              "Tổng lượt thanh toán": listRevenue[i].totalOrders,
             });
           }
         }
@@ -93,7 +93,7 @@ const RevenueStatistic = () => {
             newDataRevenue.unshift({
               _id: listRevenue[i]._id,
               "Tổng doanh thu": listRevenue[i].totalRevenue,
-              "Tổng lượt đặt món": listRevenue[i].totalOrders,
+              "Tổng lượt thanh toán": listRevenue[i].totalOrders,
             });
           }
         }
@@ -104,7 +104,7 @@ const RevenueStatistic = () => {
             newDataRevenue.push({
               _id: listRevenue[i]._id,
               "Tổng doanh thu": listRevenue[i].totalRevenue,
-              "Tổng lượt đặt món": listRevenue[i].totalOrders,
+              "Tổng lượt thanh toán": listRevenue[i].totalOrders,
             });
           }
         }
