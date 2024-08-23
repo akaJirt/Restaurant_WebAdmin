@@ -56,7 +56,6 @@ const CardBan = (props) => {
   useEffect(() => {
     getDataSuccess();
   }, [getDataSuccess]);
-  console.log(listDataTableSuccess, "check list dâta success");
 
   const handleClickTag = (id, tableNumber) => {
     setShow(true);
