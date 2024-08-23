@@ -1,9 +1,8 @@
 import { BsEmojiHeartEyesFill } from "react-icons/bs";
 import { Tag } from "antd";
-
 import React, { useState } from "react";
 
-const LoadingCardBan = ({ data, handleClickTag }) => {
+const LoadingCardBan = ({ data, handleClickTag, handleClickImageQR }) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleMouseEnter = () => {
@@ -26,8 +25,13 @@ const LoadingCardBan = ({ data, handleClickTag }) => {
           <BsEmojiHeartEyesFill className="icon-smile" />
         </div>
       </div>
-      <div className="item-status">
-        <img src={data.qrCode} alt="qr" loading="lazy" />
+      <div className="item-status" style={{ cursor: "pointer" }}>
+        <img
+          src={data.qrCode}
+          alt="qr"
+          loading="lazy"
+          onClick={handleClickImageQR}
+        />
       </div>
 
       {isActive && (

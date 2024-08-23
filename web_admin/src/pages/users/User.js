@@ -11,15 +11,15 @@ import { valueFormUsers } from "../../store/valueForm/users/actions";
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
-const User = (props) => {
+const User = () => {
   console.log("render User");
   const [role, setRole] = useState("");
   const [show, setShow] = useState(false);
   const [verifyCode, setVerifyCode] = useState("");
   const [send, setSend] = useState(false);
-
   const dispatch = useDispatch();
   const theme = useSelector(getThemeState);
+
   const handleClickAddNewUser = () => {
     setShow(true);
     dispatch(setStatusUsers.setStatus(["create"]));
