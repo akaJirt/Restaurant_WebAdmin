@@ -181,6 +181,10 @@ const apiNotifications = {
   deleteApiEvent: (id) => axiosInstance.delete(`events/${id}`),
   updateApiEvent: (id, data) => axiosInstance.patch(`events/${id}`, data),
 };
+
+const apiReviews = {
+  getAllReviews: () => axiosInstance.get(`reviews`),
+};
 export {
   api,
   apiTables,
@@ -190,4 +194,5 @@ export {
   apiPromotion,
   apiStatistical,
   apiNotifications,
+  apiReviews,
 };

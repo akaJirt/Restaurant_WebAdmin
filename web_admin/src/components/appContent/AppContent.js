@@ -20,6 +20,7 @@ import ForgotPassword from "../../pages/forgotPassword/ForgotPassword";
 import ResetPassword from "../../pages/resetPassword/ResetPassword";
 import RegisterForm from "../quanLiUsers/RegisterForm";
 import Statistical from "../../pages/statistical/Statistical";
+import ReviewsUsers from "../../pages/danhGia/ReviewsUsers";
 const AppContent = () => {
   console.log("render App Content");
 
@@ -45,7 +46,6 @@ const AppContent = () => {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
           </Route>
-
           <Route element={<PrivateNavigation />}>
             <Route path="/" element={<Home />} />
             <Route path="/users" element={<User />} />
@@ -57,6 +57,7 @@ const AppContent = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/categories" element={<Category />} />
             <Route path="/statistical" element={<Statistical />} />
+            <Route path="/reviews" element={<ReviewsUsers />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
