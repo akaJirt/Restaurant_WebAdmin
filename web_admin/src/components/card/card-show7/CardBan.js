@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { apiTables } from "../../../api/AxiosInstall";
 import LoadingCardBan from "./LoadingCardBan";
 import ModalCardBan from "./MoadlCardBan";
+import Lightbox from "react-awesome-lightbox";
+
 const CardBan = (props) => {
   console.log("render CardBan");
   const theme = useSelector(getThemeState);
@@ -17,7 +19,8 @@ const CardBan = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [idAndTableNumber, setIdAndTableNumber] = useState([]);
-
+  const [isShow, setIsShow] = useState(false);
+  const [imageClick, setImageClick] = useState([]);
   /**********************************GET DATA********************** */
   useEffect(() => {
     getTableApi();
@@ -56,12 +59,18 @@ const CardBan = (props) => {
   useEffect(() => {
     getDataSuccess();
   }, [getDataSuccess]);
-  console.log(listDataTableSuccess, "check list dâta success");
 
   const handleClickTag = (id, tableNumber) => {
     setShow(true);
     setIdAndTableNumber([id, tableNumber]);
   };
+
+  const handleClickImageQR = (item) => {
+    setIsShow(true);
+    setImageClick([item.tableNumber, item.qrCode]);
+  };
+  console.log(imageClick, "check image click");
+
   return (
     <>
       <ModalCardBan
@@ -100,6 +109,7 @@ const CardBan = (props) => {
                   handleClickTag={() =>
                     handleClickTag(item._id, item.tableNumber)
                   }
+                  handleClickImageQR={() => handleClickImageQR(item)}
                 />
               ))
             ) : (
@@ -108,6 +118,13 @@ const CardBan = (props) => {
           </div>
         )}
       </Card>
+      {isShow && (
+        <Lightbox
+          image={imageClick[1]}
+          title={`Bàn ${imageClick[0]}`}
+          onClose={() => setIsShow(false)}
+        />
+      )}
     </>
   );
 };

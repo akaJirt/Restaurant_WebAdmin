@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { statisticalArrListTableState } from "../../../store/selector";
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import { LoadingOutlined } from "@ant-design/icons";
-import LoadingTableBarchart from "./LoadingTableBarchart";
 const TableStatistics = () => {
   const dispatch = useDispatch();
   const getStateArr = useSelector(statisticalArrListTableState);
@@ -266,6 +265,7 @@ const TableStatistics = () => {
           />
         )}
       </div>
+      {}
     </div>
   );
 };
