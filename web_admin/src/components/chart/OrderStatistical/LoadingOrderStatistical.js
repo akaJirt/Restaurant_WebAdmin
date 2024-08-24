@@ -16,16 +16,12 @@ const LoadingOrderStatistical = ({ data, selectDate }) => {
   const theme = useSelector(getThemeState);
 
   return (
-    <ResponsiveContainer
-      width={"100%"}
-      height={320}
-      style={{ padding: "5px 10px" }}
-    >
+    <ResponsiveContainer width={"100%"} height={320}>
       <LineChart
         data={data}
         margin={{
           top: 20,
-          right: 30,
+          right: 50,
           left: 50,
           bottom: 5,
         }}
@@ -41,8 +37,10 @@ const LoadingOrderStatistical = ({ data, selectDate }) => {
               return `Ngày:${FormatDay7(label)}`;
             } else if (selectDate === "month") {
               return `Tháng:${FormatDay5(label)}`;
-            } else {
+            } else if (selectDate === "year") {
               return `Năm:${label}`;
+            } else {
+              return `Ngày:${FormatDay7(label)}`;
             }
           }}
           interval={0}
@@ -54,8 +52,10 @@ const LoadingOrderStatistical = ({ data, selectDate }) => {
               return `Ngày:${FormatDay7(label)}`;
             } else if (selectDate === "month") {
               return `Tháng:${FormatDay5(label)}`;
-            } else {
+            } else if (selectDate === "year") {
               return `Năm:${label}`;
+            } else {
+              return `Ngày:${FormatDay7(label)}`;
             }
           }}
         />

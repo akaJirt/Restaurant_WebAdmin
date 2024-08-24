@@ -30,8 +30,10 @@ const LoadingAverageStatistical = ({ data, selectDate }) => {
               return `Ngày:${FormatDay7(label)}`;
             } else if (selectDate === "month") {
               return `Tháng:${FormatDay5(label)}`;
-            } else {
+            } else if (selectDate === "year") {
               return `Năm:${label}`;
+            } else {
+              return `Ngày:${FormatDay7(label)}`;
             }
           }}
           stroke={theme ? "#fff" : ""}
@@ -52,8 +54,10 @@ const LoadingAverageStatistical = ({ data, selectDate }) => {
               return `Ngày:${FormatDay7(label)}`;
             } else if (selectDate === "month") {
               return `Tháng:${FormatDay5(label)}`;
-            } else {
+            } else if (selectDate === "year") {
               return `Năm:${label}`;
+            } else {
+              return `Ngày:${FormatDay7(label)}`;
             }
           }}
           formatter={(value, name) => {

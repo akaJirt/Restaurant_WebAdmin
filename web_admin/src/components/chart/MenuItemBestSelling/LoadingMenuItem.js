@@ -49,14 +49,15 @@ const LoadingMenuItem = ({ data, selectDate }) => {
           />
           <XAxis
             dataKey="timePeriod"
-            tickFormatter={(value) => {
+            tickFormatter={(label) => {
               if (selectDate === "day") {
-                const formattedValue = FormatDay7(value);
-                return `Ngày:${formattedValue}`;
+                return `Ngày:${FormatDay7(label)}`;
               } else if (selectDate === "month") {
-                return `Tháng:${FormatDay5(value)}`;
+                return `Tháng:${FormatDay5(label)}`;
+              } else if (selectDate === "year") {
+                return `Năm:${label}`;
               } else {
-                return `Năm:${value}`;
+                return `Ngày:${FormatDay7(label)}`;
               }
             }}
             stroke={theme ? "white" : ""}
@@ -68,10 +69,12 @@ const LoadingMenuItem = ({ data, selectDate }) => {
               }
             }}
             labelFormatter={(label) => {
-              if (selectDate === "year") {
-                return `Năm:${label}`;
+              if (selectDate === "day") {
+                return `Ngày:${FormatDay7(label)}`;
               } else if (selectDate === "month") {
                 return `Tháng:${FormatDay5(label)}`;
+              } else if (selectDate === "year") {
+                return `Năm:${label}`;
               } else {
                 return `Ngày:${FormatDay7(label)}`;
               }

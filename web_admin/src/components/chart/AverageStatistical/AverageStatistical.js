@@ -3,6 +3,8 @@ import { getAverage } from "../../../api/call_api/statistical/fetchApiStatistica
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import LoadingAverageStatistical from "./LoadingAverageStatistical";
 import { LoadingOutlined } from "@ant-design/icons";
+import { FcSearch } from "react-icons/fc";
+import FindStatistical from "../../findStatistical/FindStatistical";
 
 const AverageStatistical = () => {
   const [listDataAverage, setListDataAverage] = useState([]);
@@ -12,10 +14,15 @@ const AverageStatistical = () => {
   const [month, setMonth] = useState([]);
   const [listDataAverageSuccess, setListDataAverageSuccess] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [starDate, setStarDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [runDate, setRunDate] = useState(false);
   /****************************************GET DATA ************************/
   const getAverageApi = useCallback(async () => {
-    if (selectDate) {
+    if (selectDate !== "find") {
+      setStarDate("");
+      setEndDate("");
+      setRunDate(false);
       await getAverage(selectDate, "", "", setListDataAverage, setIsLoading);
     }
   }, [selectDate]);
@@ -99,16 +106,36 @@ const AverageStatistical = () => {
             newData.unshift(listDataAverage[i]);
           }
         }
+        if (selectDate === "find" && starDate && endDate && runDate) {
+          newData.unshift(listDataAverage[i]);
+        }
       }
       setListDataAverageSuccess(newData);
     }
-  }, [listDataAverage, selectDate, selectYear, selectMonth]);
-
-  console.log(listDataAverageSuccess, "listDataAverageSuccess");
+  }, [
+    listDataAverage,
+    selectDate,
+    selectYear,
+    selectMonth,
+    starDate,
+    endDate,
+    runDate,
+  ]);
 
   useEffect(() => {
     getDataSuccess();
   }, [getDataSuccess]);
+  /************************************FIND DATA******************************** */
+  const handleClickFind = async () => {
+    setRunDate(true);
+    await getAverage(
+      "day",
+      starDate,
+      endDate,
+      setListDataAverage,
+      setIsLoading
+    );
+  };
   return (
     <div className="layout-average-statistical">
       <div className="content-average ">
@@ -120,6 +147,7 @@ const AverageStatistical = () => {
             <option value={"day"}>Tìm kiếm theo ngày</option>
             <option value={"month"}>Tìm kiếm theo tháng</option>
             <option value={"year"}>Tìm kiếm trong năm</option>
+            <option value={"find"}>Tìm kiếm trong khoảng</option>
           </select>
           {selectDate === "day" && (
             <select
@@ -139,22 +167,34 @@ const AverageStatistical = () => {
               )}
             </select>
           )}
-          <select
-            value={selectYear}
-            onChange={(e) => setSelectYear(e.target.value)}
-          >
-            {dataYear && dataYear.length > 0 ? (
-              dataYear.map((year, i) => {
-                return (
-                  <option key={i} value={year}>
-                    {year}
-                  </option>
-                );
-              })
-            ) : (
-              <option>Không có dữ liệu năm</option>
-            )}
-          </select>
+          {selectDate !== "find" ? (
+            <select
+              value={selectYear}
+              onChange={(e) => setSelectYear(e.target.value)}
+            >
+              {dataYear && dataYear.length > 0 ? (
+                dataYear.map((year, i) => {
+                  return (
+                    <option key={i} value={year}>
+                      {year}
+                    </option>
+                  );
+                })
+              ) : (
+                <option>Không có dữ liệu năm</option>
+              )}
+            </select>
+          ) : (
+            <div className="box-find">
+              <FindStatistical
+                handleClickFind={handleClickFind}
+                valueStart={starDate}
+                onChangeStart={(e) => setStarDate(e.target.value)}
+                valueEnd={endDate}
+                onChangeEnd={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="containerStyle">
@@ -162,11 +202,16 @@ const AverageStatistical = () => {
           <div className="box-loading text-center">
             <LoadingOutlined className="loading" />
           </div>
-        ) : (
+        ) : listDataAverageSuccess && listDataAverageSuccess.length > 0 ? (
           <LoadingAverageStatistical
             data={listDataAverageSuccess}
             selectDate={selectDate}
           />
+        ) : (
+          <div className="text-center py-3 find">
+            Vui lòng nhập ngày bắt đầu và ngày kết thúc để bắt đầu tìm kiếm{" "}
+            <FcSearch size={20} />
+          </div>
         )}
       </div>
     </div>

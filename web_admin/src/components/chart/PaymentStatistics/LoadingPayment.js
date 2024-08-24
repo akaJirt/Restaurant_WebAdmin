@@ -10,7 +10,7 @@ import {
   Line,
   ComposedChart,
 } from "recharts";
-import { FormatDay5, FormatDay7 } from "../../../utils/FormDay";
+import { FormatDay2, FormatDay5, FormatDay7 } from "../../../utils/FormDay";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../../store/selector";
 import { ConvertMoney } from "../../../utils/convertMoney";
@@ -38,8 +38,10 @@ const LoadingPayment = ({ data, selectDate }) => {
                   return `Ngày:${FormatDay7(label)}`;
                 } else if (selectDate === "month") {
                   return `Tháng:${FormatDay5(label)}`;
-                } else {
+                } else if (selectDate === "year") {
                   return `Năm:${label}`;
+                } else {
+                  return `Ngày:${FormatDay2(label)}`;
                 }
               }}
               stroke={theme ? "white" : ""}
@@ -73,8 +75,10 @@ const LoadingPayment = ({ data, selectDate }) => {
                   return `Ngày:${FormatDay7(label)}`;
                 } else if (selectDate === "month") {
                   return `Tháng:${FormatDay5(label)}`;
-                } else {
+                } else if (selectDate === "year") {
                   return `Năm:${label}`;
+                } else {
+                  return `Ngày:${FormatDay2(label)}`;
                 }
               }}
             />

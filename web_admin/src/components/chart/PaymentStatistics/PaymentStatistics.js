@@ -3,7 +3,8 @@ import { getPayment } from "../../../api/call_api/statistical/fetchApiStatistica
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import LoadingPayment from "./LoadingPayment";
 import { LoadingOutlined } from "@ant-design/icons";
-
+import { FcSearch } from "react-icons/fc";
+import FindStatistical from "../../findStatistical/FindStatistical";
 const PaymentStatistics = () => {
   const [listPayment, setListPayment] = useState([]);
   const [selectDate, setSelectDate] = useState("day");
@@ -13,10 +14,15 @@ const PaymentStatistics = () => {
   const [listNewDataPayment, setListNewDataPayment] = useState([]);
   const [dataPaymentSuccess, setDataPaymentSuccess] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [starDate, setStarDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [runDate, setRunDate] = useState(false);
   /*******************************************GET API PAYMENT********************************** */
   const getPaymentApi = useCallback(async () => {
-    if (selectDate) {
+    if (selectDate !== "find") {
+      setStarDate("");
+      setEndDate("");
+      setRunDate(false);
       await getPayment(selectDate, "", "", setListPayment, setIsLoading);
     }
   }, [selectDate]);
@@ -47,13 +53,12 @@ const PaymentStatistics = () => {
   /*******************************************GET MONTH AND SELECT MONTH********************************** */
   const getDataMonth = useCallback(() => {
     if (listPayment && listPayment.length > 0 && selectYear) {
-      let newDataMonth = [];
-      for (let i = 0; i < listPayment.length; i++) {
-        if (FormatDay4(listPayment[i].timePeriod) === selectYear) {
-          newDataMonth.unshift(FormatDay5(listPayment[i].timePeriod));
-        }
+      let filterData = listPayment.filter(
+        (item) => FormatDay4(item.timePeriod) === selectYear
+      );
+      if (filterData) {
+        setMonth(filterData.reverse());
       }
-      setMonth(newDataMonth);
     }
   }, [listPayment, selectYear]);
   useEffect(() => {
@@ -61,7 +66,7 @@ const PaymentStatistics = () => {
   }, [getDataMonth]);
 
   const dataMonth = useMemo(() => {
-    return [...new Set(month.map((item) => item) || [])];
+    return [...new Set(month.map((item) => FormatDay5(item.timePeriod)) || [])];
   }, [month]);
 
   useEffect(() => {
@@ -72,26 +77,29 @@ const PaymentStatistics = () => {
     }
   }, [dataMonth, selectYear, selectMonth]);
   /*******************************************CONVERT DATA PAYMENT********************************** */
+  const dataReduce = useCallback(() => {
+    if (listPayment && listPayment.length > 0) {
+      const result = listPayment.reduce((arr, curr) => {
+        const { timePeriod, paymentMethod, totalRevenue, totalOrders } = curr;
+        if (!arr[timePeriod]) {
+          arr[timePeriod] = { timePeriod };
+        }
+        arr[timePeriod][paymentMethod] = totalRevenue;
+        arr[timePeriod][`${paymentMethod}Order`] = totalOrders;
+        return arr;
+      }, []);
+      const formatResult = Object.values(result);
 
-  const result = listPayment.reduce((arr, curr) => {
-    const { timePeriod, paymentMethod, totalRevenue, totalOrders } = curr;
-    if (!arr[timePeriod]) {
-      arr[timePeriod] = { timePeriod };
-    }
-    arr[timePeriod][paymentMethod] = totalRevenue;
-    arr[timePeriod][`${paymentMethod}Order`] = totalOrders;
-    return arr;
-  }, []);
-
-  const formatResult = Object.values(result);
-
-  useEffect(() => {
-    if (formatResult && formatResult.length > 0) {
       if (JSON.stringify(formatResult) !== JSON.stringify(listNewDataPayment)) {
         setListNewDataPayment(formatResult);
       }
     }
-  }, [formatResult, listNewDataPayment]);
+  }, [listPayment, listNewDataPayment]);
+
+  useEffect(() => {
+    dataReduce();
+  }, [dataReduce]);
+  console.log(listNewDataPayment, "listNewDataPayment");
 
   /*******************************************DATA-SUCCESS********************************* */
   const getSuccess = useCallback(() => {
@@ -102,8 +110,8 @@ const PaymentStatistics = () => {
       selectYear
     ) {
       let newData = [];
-      if (selectDate === "day") {
-        for (let i = 0; i < listNewDataPayment.length; i++) {
+      for (let i = 0; i < listNewDataPayment.length; i++) {
+        if (selectDate === "day") {
           if (
             FormatDay4(listNewDataPayment[i].timePeriod) === selectYear &&
             FormatDay5(listNewDataPayment[i].timePeriod) === selectMonth
@@ -111,29 +119,41 @@ const PaymentStatistics = () => {
             newData.push(listNewDataPayment[i]);
           }
         }
-      }
-      if (selectDate === "month") {
-        for (let i = 0; i < listNewDataPayment.length; i++) {
+        if (selectDate === "month") {
           if (FormatDay4(listNewDataPayment[i].timePeriod) === selectYear) {
             newData.push(listNewDataPayment[i]);
           }
         }
-      }
-      if (selectDate === "year") {
-        for (let i = 0; i < listNewDataPayment.length; i++) {
+        if (selectDate === "year") {
           if (listNewDataPayment[i].timePeriod === parseInt(selectYear)) {
             newData.push(listNewDataPayment[i]);
           }
         }
+        if (selectDate === "find" && starDate && endDate && runDate) {
+          newData.push(listNewDataPayment[i]);
+        }
       }
-      console.log(newData);
-
       setDataPaymentSuccess(newData);
     }
-  }, [listNewDataPayment, selectMonth, selectYear, selectDate]);
+  }, [
+    listNewDataPayment,
+    selectMonth,
+    selectYear,
+    selectDate,
+    starDate,
+    endDate,
+    runDate,
+  ]);
+
   useEffect(() => {
     getSuccess();
   }, [getSuccess]);
+
+  /************************************FIND DATA******************************** */
+  const handleClickFind = async () => {
+    setRunDate(true);
+    await getPayment("day", starDate, endDate, setListPayment, setIsLoading);
+  };
 
   return (
     <div className="layout-payment">
@@ -146,6 +166,7 @@ const PaymentStatistics = () => {
             <option value={"day"}>Tìm kiếm theo ngày</option>
             <option value={"month"}>Tìm kiếm trong tháng</option>
             <option value={"year"}>Tìm kiếm trong năm</option>
+            <option value={"find"}>Tìm kiếm trong khoảng</option>
           </select>
           {selectDate === "day" && (
             <select
@@ -165,22 +186,34 @@ const PaymentStatistics = () => {
               )}
             </select>
           )}
-          <select
-            value={selectYear}
-            onChange={(e) => setSelectYear(e.target.value)}
-          >
-            {dataYear && dataYear.length > 0 ? (
-              dataYear.map((year, index) => {
-                return (
-                  <option key={index} value={year}>
-                    Năm:{year}
-                  </option>
-                );
-              })
-            ) : (
-              <option>Không có dữ liệu năm</option>
-            )}
-          </select>
+          {selectDate !== "find" ? (
+            <select
+              value={selectYear}
+              onChange={(e) => setSelectYear(e.target.value)}
+            >
+              {dataYear && dataYear.length > 0 ? (
+                dataYear.map((year, index) => {
+                  return (
+                    <option key={index} value={year}>
+                      Năm:{year}
+                    </option>
+                  );
+                })
+              ) : (
+                <option>Không có dữ liệu năm</option>
+              )}
+            </select>
+          ) : (
+            <div className="box-find">
+              <FindStatistical
+                handleClickFind={handleClickFind}
+                valueStart={starDate}
+                onChangeStart={(e) => setStarDate(e.target.value)}
+                valueEnd={endDate}
+                onChangeEnd={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="containerStyle">
@@ -188,8 +221,13 @@ const PaymentStatistics = () => {
           <div className="box-loading text-center">
             <LoadingOutlined className="loading" />
           </div>
-        ) : (
+        ) : dataPaymentSuccess && dataPaymentSuccess.length > 0 ? (
           <LoadingPayment data={dataPaymentSuccess} selectDate={selectDate} />
+        ) : (
+          <div className="text-center py-3 find">
+            Vui lòng nhập ngày bắt đầu và ngày kết thúc để bắt đầu tìm kiếm{" "}
+            <FcSearch size={20} />
+          </div>
         )}
       </div>
     </div>

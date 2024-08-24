@@ -3,6 +3,8 @@ import { getMenuItem } from "../../../api/call_api/statistical/fetchApiStatistic
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import LoadingMenuItemStatistical from "./LoadingMenuItemStatistical";
 import { LoadingOutlined } from "@ant-design/icons";
+import { FcSearch } from "react-icons/fc";
+import FindStatistical from "../../findStatistical/FindStatistical";
 
 const MenuItemStatistical = () => {
   const [listDataMenuItem, setListDataMenuItem] = useState([]);
@@ -12,10 +14,16 @@ const MenuItemStatistical = () => {
   const [month, setMonth] = useState([]);
   const [dataMenuItemSuccess, setDataMenuItemSuccess] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [starDate, setStarDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [runDate, setRunDate] = useState(false);
 
   /********************************************GET API DATA***************************** */
   const getMenuItemApi = useCallback(async () => {
-    if (selectDate) {
+    if (selectDate !== "find") {
+      setStarDate("");
+      setEndDate("");
+      setRunDate(false);
       await getMenuItem(selectDate, "", "", setListDataMenuItem, setIsLoading);
     }
   }, [selectDate]);
@@ -114,16 +122,39 @@ const MenuItemStatistical = () => {
             newData.push(formatResult[i]);
           }
         }
+        if (selectDate === "find" && starDate && endDate && runDate) {
+          newData.push(formatResult[i]);
+        }
       }
       if (JSON.stringify(newData) !== JSON.stringify(dataMenuItemSuccess)) {
         setDataMenuItemSuccess(newData);
       }
     }
-  }, [formatResult, selectDate, selectYear, selectMonth, dataMenuItemSuccess]);
+  }, [
+    formatResult,
+    selectDate,
+    selectYear,
+    selectMonth,
+    dataMenuItemSuccess,
+    starDate,
+    endDate,
+    runDate,
+  ]);
 
   useEffect(() => {
     getDataSuccess();
   }, [getDataSuccess]);
+  /************************************FIND DATA******************************** */
+  const handleClickFind = async () => {
+    setRunDate(true);
+    await getMenuItem(
+      "day",
+      starDate,
+      endDate,
+      setListDataMenuItem,
+      setIsLoading
+    );
+  };
   return (
     <div className="layout-menu-item-statistical">
       <div className="content-menu-item">
@@ -135,6 +166,7 @@ const MenuItemStatistical = () => {
             <option value={"day"}>Tìm kiếm theo ngày</option>
             <option value={"month"}>Tìm kiếm theo tháng</option>
             <option value={"year"}>Tìm kiếm trong năm</option>
+            <option value={"find"}>Tìm kiếm trong khoảng</option>
           </select>
           {selectDate === "day" && (
             <select
@@ -154,22 +186,34 @@ const MenuItemStatistical = () => {
               )}
             </select>
           )}
-          <select
-            value={selectYear}
-            onChange={(e) => setSelectYear(e.target.value)}
-          >
-            {dataYear && dataYear.length > 0 ? (
-              dataYear.map((year, i) => {
-                return (
-                  <option value={year} key={i}>
-                    Năm:{year}
-                  </option>
-                );
-              })
-            ) : (
-              <option>Không có dữ liệu</option>
-            )}
-          </select>
+          {selectDate !== "find" ? (
+            <select
+              value={selectYear}
+              onChange={(e) => setSelectYear(e.target.value)}
+            >
+              {dataYear && dataYear.length > 0 ? (
+                dataYear.map((year, i) => {
+                  return (
+                    <option value={year} key={i}>
+                      Năm:{year}
+                    </option>
+                  );
+                })
+              ) : (
+                <option>Không có dữ liệu</option>
+              )}
+            </select>
+          ) : (
+            <div className="box-find">
+              <FindStatistical
+                handleClickFind={handleClickFind}
+                valueStart={starDate}
+                onChangeStart={(e) => setStarDate(e.target.value)}
+                valueEnd={endDate}
+                onChangeEnd={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="containerStyle">
@@ -177,11 +221,16 @@ const MenuItemStatistical = () => {
           <div className="box-loading text-center">
             <LoadingOutlined className="loading" />
           </div>
-        ) : (
+        ) : dataMenuItemSuccess && dataMenuItemSuccess.length > 0 ? (
           <LoadingMenuItemStatistical
             data={dataMenuItemSuccess}
             selectDate={selectDate}
           />
+        ) : (
+          <div className="text-center py-3 find">
+            Vui lòng nhập ngày bắt đầu và ngày kết thúc để bắt đầu tìm kiếm{" "}
+            <FcSearch size={20} />
+          </div>
         )}
       </div>
     </div>

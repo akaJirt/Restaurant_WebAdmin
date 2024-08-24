@@ -4,8 +4,9 @@ import { Avatar } from "antd";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 function ModalReviews({ show, setShow, menuItem }) {
-  const handleClose = () => setShow(false);
-  console.log(menuItem, "check menu item");
+  const handleClose = () => {
+    setShow(false);
+  };
 
   return (
     <>

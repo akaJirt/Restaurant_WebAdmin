@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { statisticalArrListTableState } from "../../../store/selector";
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import { LoadingOutlined } from "@ant-design/icons";
+import { FcSearch } from "react-icons/fc";
+import FindStatistical from "../../findStatistical/FindStatistical";
+
 const TableStatistics = () => {
   const dispatch = useDispatch();
   const getStateArr = useSelector(statisticalArrListTableState);
-  // const getLoading = useSelector(statisticalLoadingTableState);
   const [month, setMonth] = useState([]);
   const [tableNumber, setTableNumber] = useState([]);
   const [selectYear, setSelectYear] = useState("");
@@ -19,10 +21,16 @@ const TableStatistics = () => {
   const [dataTableStatistic, setDataTableStatistic] = useState([]);
   const [selectDate, setSelectDate] = useState("day");
   const [isLoading, setIsLoading] = useState(false);
+  const [starDate, setStarDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [runDate, setRunDate] = useState(false);
 
   /***********************************************GET DATA TABLE****************** */
   const getTableApi = useCallback(async () => {
-    if (selectDate) {
+    if (selectDate !== "find") {
+      setStarDate("");
+      setEndDate("");
+      setRunDate(false);
       await getTable(selectDate, "", "", dispatch, setIsLoading);
     }
   }, [dispatch, selectDate]);
@@ -129,7 +137,6 @@ const TableStatistics = () => {
   }, [dataReduceFind]);
 
   /***********************************************SUCCESS DATA****************** */
-
   const dataSuccess = useCallback(() => {
     if (
       dataFind &&
@@ -168,7 +175,6 @@ const TableStatistics = () => {
         }
         if (selectDate === "month") {
           if (FormatDay4(dataFind[i].timePeriod) === selectYear) {
-            // newData.push(dataFind[i]);
             newData.push({
               tableNumber: dataFind[i].tableNumber,
               "Tổng tiền bàn": dataFind[i].totalRevenue,
@@ -177,34 +183,35 @@ const TableStatistics = () => {
             });
           }
         }
+        if (selectDate === "find" && starDate && endDate && runDate) {
+          newData.push({
+            tableNumber: dataFind[i].tableNumber,
+            "Tổng tiền bàn": dataFind[i].totalRevenue,
+            "Tổng lượt đặt bàn": dataFind[i].totalOrders,
+            timePeriod: dataFind[i].timePeriod,
+          });
+        }
       }
-      // if (newData && selectDate === "month") {
-      //   let resultMonth = newData.reduce((newArr, prevItem) => {
-      //     const { tableNumber, totalRevenue, totalOrders, timePeriod } =
-      //       prevItem;
-
-      //     if (!newArr[timePeriod]) {
-      //       newArr[timePeriod] = { timePeriod };
-      //     }
-      //     newArr[timePeriod][`tableNumber_${tableNumber}`] = totalRevenue;
-      //     newArr[timePeriod][`order_${tableNumber}`] = totalOrders;
-
-      //     return newArr;
-      //   }, []);
-
-      //   let formatResult = Object.values(resultMonth);
-      //   setDataTableStatistic(formatResult);
-      // }
-      // if (selectDate !== "month") {
-      // }
       setDataTableStatistic(newData);
     }
-  }, [dataFind, selectMonth, selectYear, selectDate]);
+  }, [
+    dataFind,
+    selectMonth,
+    selectYear,
+    selectDate,
+    starDate,
+    endDate,
+    runDate,
+  ]);
 
   useEffect(() => {
     dataSuccess();
   }, [dataSuccess]);
-
+  /************************************FIND DATA******************************** */
+  const handleClickFind = async () => {
+    setRunDate(true);
+    await getTable("day", starDate, endDate, dispatch, setIsLoading);
+  };
   return (
     <div className="layout-table-statistical">
       <div className="box-table">
@@ -216,6 +223,7 @@ const TableStatistics = () => {
             <option value={"day"}>Tìm kiếm theo ngày</option>
             <option value={"month"}>Tìm kiếm theo tháng</option>
             <option value={"year"}>Tìm kiếm trong năm</option>
+            <option value={"find"}>Tìm kiếm trong khoảng</option>
           </select>
           {selectDate === "day" && (
             <select
@@ -235,22 +243,34 @@ const TableStatistics = () => {
               )}
             </select>
           )}
-          <select
-            value={selectYear}
-            onChange={(e) => setSelectYear(e.target.value)}
-          >
-            {dataYear && dataYear.length > 0 ? (
-              dataYear.map((year, index) => {
-                return (
-                  <option key={index} value={year}>
-                    Năm:{year}
-                  </option>
-                );
-              })
-            ) : (
-              <option>không có dữ liệu Năm</option>
-            )}
-          </select>
+          {selectDate !== "find" ? (
+            <select
+              value={selectYear}
+              onChange={(e) => setSelectYear(e.target.value)}
+            >
+              {dataYear && dataYear.length > 0 ? (
+                dataYear.map((year, index) => {
+                  return (
+                    <option key={index} value={year}>
+                      Năm:{year}
+                    </option>
+                  );
+                })
+              ) : (
+                <option>không có dữ liệu Năm</option>
+              )}
+            </select>
+          ) : (
+            <div className="box-find">
+              <FindStatistical
+                handleClickFind={handleClickFind}
+                valueStart={starDate}
+                onChangeStart={(e) => setStarDate(e.target.value)}
+                valueEnd={endDate}
+                onChangeEnd={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="containerStyle">
@@ -258,11 +278,16 @@ const TableStatistics = () => {
           <div className="box-loading text-center">
             <LoadingOutlined className="loading" />
           </div>
-        ) : (
+        ) : dataTableStatistic && dataTableStatistic.length > 0 ? (
           <LoadingLineChart
             dataTable={dataTableStatistic}
             selectDate={selectDate}
           />
+        ) : (
+          <div className="text-center py-3 find">
+            Vui lòng nhập ngày bắt đầu và ngày kết thúc để bắt đầu tìm kiếm{" "}
+            <FcSearch size={20} />
+          </div>
         )}
       </div>
       {}

@@ -3,6 +3,8 @@ import { getOrder } from "../../../api/call_api/statistical/fetchApiStatistical"
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import LoadingOrderStatistical from "./LoadingOrderStatistical";
 import { LoadingOutlined } from "@ant-design/icons";
+import { FcSearch } from "react-icons/fc";
+import FindStatistical from "../../findStatistical/FindStatistical";
 
 const OrderStatistical = () => {
   const [listDataOrder, setListDataOrder] = useState([]);
@@ -12,9 +14,15 @@ const OrderStatistical = () => {
   const [month, setMonth] = useState([]);
   const [listDataOrderSuccess, setListDataOrderSuccess] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [starDate, setStarDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [runDate, setRunDate] = useState(false);
   /*****************************************GET DATA******************************* */
   const getOrderApi = useCallback(async () => {
-    if (selectDate) {
+    if (selectDate !== "find") {
+      setStarDate("");
+      setEndDate("");
+      setRunDate(false);
       await getOrder(selectDate, "", "", setListDataOrder, setIsLoading);
     }
   }, [selectDate]);
@@ -96,14 +104,31 @@ const OrderStatistical = () => {
             newData.unshift(listDataOrder[i]);
           }
         }
+        if (selectDate === "find" && starDate && endDate && runDate) {
+          newData.unshift(listDataOrder[i]);
+        }
       }
       setListDataOrderSuccess(newData);
     }
-  }, [listDataOrder, selectDate, selectYear, selectMonth]);
+  }, [
+    listDataOrder,
+    selectDate,
+    selectYear,
+    selectMonth,
+    starDate,
+    endDate,
+    runDate,
+  ]);
 
   useEffect(() => {
     getDataSuccess();
   }, [getDataSuccess]);
+
+  /************************************FIND DATA******************************** */
+  const handleClickFind = async () => {
+    setRunDate(true);
+    await getOrder("day", starDate, endDate, setListDataOrder, setIsLoading);
+  };
   return (
     <div className="layout-order-statistical">
       <div className="content-order">
@@ -115,6 +140,7 @@ const OrderStatistical = () => {
             <option value={"day"}>Tìm kiếm theo ngày</option>
             <option value={"month"}>Tìm kiếm theo tháng</option>
             <option value={"year"}>Tìm kiếm trong năm</option>
+            <option value={"find"}>Tìm kiếm trong khoảng</option>
           </select>
           {selectDate === "day" && (
             <select
@@ -135,22 +161,34 @@ const OrderStatistical = () => {
             </select>
           )}
 
-          <select
-            value={selectYear}
-            onChange={(e) => setSelectYear(e.target.value)}
-          >
-            {dataYear && dataYear.length > 0 ? (
-              dataYear.map((item, index) => {
-                return (
-                  <option key={index} value={item}>
-                    Năm:{item}
-                  </option>
-                );
-              })
-            ) : (
-              <option>Không có dữ liệu năm</option>
-            )}
-          </select>
+          {selectDate !== "find" ? (
+            <select
+              value={selectYear}
+              onChange={(e) => setSelectYear(e.target.value)}
+            >
+              {dataYear && dataYear.length > 0 ? (
+                dataYear.map((item, index) => {
+                  return (
+                    <option key={index} value={item}>
+                      Năm:{item}
+                    </option>
+                  );
+                })
+              ) : (
+                <option>Không có dữ liệu năm</option>
+              )}
+            </select>
+          ) : (
+            <div className="box-find">
+              <FindStatistical
+                handleClickFind={handleClickFind}
+                valueStart={starDate}
+                onChangeStart={(e) => setStarDate(e.target.value)}
+                valueEnd={endDate}
+                onChangeEnd={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="containerStyle">
@@ -158,11 +196,16 @@ const OrderStatistical = () => {
           <div className="box-loading text-center">
             <LoadingOutlined className="loading" />
           </div>
-        ) : (
+        ) : listDataOrderSuccess && listDataOrderSuccess.length > 0 ? (
           <LoadingOrderStatistical
             data={listDataOrderSuccess}
             selectDate={selectDate}
           />
+        ) : (
+          <div className="text-center py-3 find">
+            Vui lòng nhập ngày bắt đầu và ngày kết thúc để bắt đầu tìm kiếm{" "}
+            <FcSearch size={20} />
+          </div>
         )}
       </div>
     </div>
