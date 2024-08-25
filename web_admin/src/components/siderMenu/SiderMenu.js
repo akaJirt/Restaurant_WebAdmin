@@ -17,6 +17,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getThemeState } from "../../store/selector";
 import { IoStatsChartSharp } from "react-icons/io5";
+import { FaStar } from "react-icons/fa6";
 const SiderMenu = () => {
   console.log("render SiderMenu");
   const { Sider } = Layout;
@@ -203,6 +204,24 @@ const SiderMenu = () => {
             className={`item-link ${collapsed ? "collapsed" : ""}`}
           >
             Quản lý thống kê
+          </Link>
+        ),
+      },
+      {
+        className: "item-menu",
+        key: "/reviews",
+        icon: (
+          <FaStar
+            className="item-icon"
+            onClick={() => handleClick("/reviews")}
+          />
+        ),
+        label: (
+          <Link
+            to="/reviews"
+            className={`item-link ${collapsed ? "collapsed" : ""}`}
+          >
+            Quản lý đánh giá
           </Link>
         ),
       },

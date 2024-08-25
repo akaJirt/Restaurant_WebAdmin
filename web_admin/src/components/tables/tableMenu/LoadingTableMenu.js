@@ -8,6 +8,7 @@ import { setStatusMenuItem } from "../../../store/menuItem/setStatusMenuItem/act
 import { valueFormMenu } from "../../../store/valueForm/menu/actions";
 import { setListOption } from "../../../store/menuItem/menuOption/action";
 import { ConvertMoney } from "../../../utils/convertMoney";
+import { StarRating } from "../../../utils/Rating";
 
 const LoadingTableMenu = ({
   item,
@@ -55,7 +56,9 @@ const LoadingTableMenu = ({
       <td className="img-table" onClick={onClick}>
         <img src={item.image_url || itemMenu} alt="avatar" loading="lazy" />
       </td>
-      <td>{item.rating}</td>
+      <td>
+        <StarRating rating={item.rating} />
+      </td>
       <td>{item.category}</td>
       <td>
         {item && item.options && item.options.length > 0 && (

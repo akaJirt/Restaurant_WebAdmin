@@ -17,7 +17,6 @@ import { ConvertMoney } from "../../../utils/convertMoney";
 
 const LoadingLineChart = ({ dataTable, selectDate }) => {
   const theme = useSelector(getThemeState);
-  console.log(dataTable, selectDate, "check data table");
 
   return (
     <>
@@ -31,12 +30,18 @@ const LoadingLineChart = ({ dataTable, selectDate }) => {
             <ComposedChart data={dataTable} margin={{ top: 20 }}>
               <XAxis
                 dataKey={
-                  selectDate === "day" || selectDate === "year"
+                  selectDate === "day" ||
+                  selectDate === "year" ||
+                  selectDate === "find"
                     ? "tableNumber"
                     : "timePeriod"
                 }
                 tickFormatter={(value) => {
-                  if (selectDate === "day" || selectDate === "year") {
+                  if (
+                    selectDate === "day" ||
+                    selectDate === "year" ||
+                    selectDate === "find"
+                  ) {
                     return `Bàn: ${value}`;
                   } else {
                     return `Tháng: ${FormatDay5(value)}`;
@@ -76,8 +81,10 @@ const LoadingLineChart = ({ dataTable, selectDate }) => {
                       return `Bàn: ${label} - Ngày: ${FormatDay7(time)}`;
                     } else if (selectDate === "year") {
                       return `Bàn: ${label} - Năm: ${time}`;
-                    } else {
+                    } else if (selectDate === "month") {
                       return `Bàn: ${tableNumber} - Tháng: ${FormatDay5(time)}`;
+                    } else if (selectDate === "find") {
+                      return `Bàn: ${label} - Ngày: ${FormatDay7(time)}`;
                     }
                   }
                   return `Bàn: ${label}`;

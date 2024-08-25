@@ -31,6 +31,9 @@ const TableOrder = () => {
   const getApiOrders = async () => {
     await getAllOrder(setListDataOrder);
   };
+
+  console.log(listDataOrder, "check data");
+
   /********************************************SET OPTION****************** */
   const dataOption = useMemo(() => {
     if (listDataOrder && listDataOrder?.length > 0) {

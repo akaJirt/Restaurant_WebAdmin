@@ -3,6 +3,8 @@ import LoadingRevenue from "./LoadingRevenue";
 import { getRevenue } from "../../../api/call_api/statistical/fetchApiStatistical";
 import { FormatDay4, FormatDay5 } from "../../../utils/FormDay";
 import { LoadingOutlined } from "@ant-design/icons";
+import { FcSearch } from "react-icons/fc";
+import FindStatistical from "../../findStatistical/FindStatistical";
 const RevenueStatistic = () => {
   const [listRevenue, setListRevenue] = useState([]);
   const [selectDate, setSelectDate] = useState("day");
@@ -11,10 +13,15 @@ const RevenueStatistic = () => {
   const [dataFindMonth, setDataFindMonth] = useState([]);
   const [dataRevenue, setDataRevenue] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [starDate, setStarDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [runDate, setRunDate] = useState(false);
   /****************************************GET API REVENUE*********************** */
   const getRevenueApi = useCallback(async () => {
-    if (setSelectDate) {
+    if (selectDate !== "find") {
+      setStarDate("");
+      setEndDate("");
+      setRunDate(false);
       await getRevenue(selectDate, "", "", setListRevenue, setIsLoading);
     }
   }, [selectDate]);
@@ -72,8 +79,8 @@ const RevenueStatistic = () => {
   const getDataSuccess = useCallback(() => {
     if (listRevenue && listRevenue.length > 0 && selectYear && selectMonth) {
       let newDataRevenue = [];
-      if (selectDate === "day") {
-        for (let i = 0; i < listRevenue.length; i++) {
+      for (let i = 0; i < listRevenue.length; i++) {
+        if (selectDate === "day") {
           if (
             FormatDay5(listRevenue[i]._id) === selectMonth &&
             FormatDay4(listRevenue[i]._id) === selectYear
@@ -85,10 +92,7 @@ const RevenueStatistic = () => {
             });
           }
         }
-      }
-      if (selectDate === "month") {
-        for (let i = 0; i < listRevenue.length; i++) {
-          console.log(listRevenue[i]);
+        if (selectDate === "month") {
           if (FormatDay4(listRevenue[i]._id) === selectYear) {
             newDataRevenue.unshift({
               _id: listRevenue[i]._id,
@@ -97,9 +101,7 @@ const RevenueStatistic = () => {
             });
           }
         }
-      }
-      if (selectDate === "year") {
-        for (let i = 0; i < listRevenue.length; i++) {
+        if (selectDate === "year") {
           if (listRevenue[i]._id === parseInt(selectYear)) {
             newDataRevenue.push({
               _id: listRevenue[i]._id,
@@ -108,18 +110,39 @@ const RevenueStatistic = () => {
             });
           }
         }
+        if (selectDate === "find" && starDate && endDate && runDate) {
+          newDataRevenue.unshift({
+            _id: listRevenue[i]._id,
+            "Tổng doanh thu": listRevenue[i].totalRevenue,
+            "Tổng lượt thanh toán": listRevenue[i].totalOrders,
+          });
+        }
       }
       setDataRevenue(newDataRevenue);
     }
-  }, [listRevenue, selectYear, selectMonth, selectDate]);
+  }, [
+    listRevenue,
+    selectYear,
+    selectMonth,
+    selectDate,
+    starDate,
+    endDate,
+    runDate,
+  ]);
   useEffect(() => {
     getDataSuccess();
   }, [getDataSuccess]);
+  /************************************FIND DATA******************************** */
+  const handleClickFind = async () => {
+    setRunDate(true);
+    await getRevenue("day", starDate, endDate, setListRevenue, setIsLoading);
+  };
+  console.log(runDate, "check");
 
   return (
     <div className="layout-revenue">
       <div className="box-revenue">
-        <div className="box-date mb-2">
+        <div className="box-date mb-2 select">
           <select
             value={selectDate}
             onChange={(e) => setSelectDate(e.target.value)}
@@ -127,6 +150,7 @@ const RevenueStatistic = () => {
             <option value={"day"}>Tìm kiếm theo ngày</option>
             <option value={"month"}>Tìm kiếm theo tháng</option>
             <option value={"year"}>Tìm kiếm trong năm</option>
+            <option value={"find"}>Tìm kiếm trong khoảng</option>
           </select>
           <div className="box-month">
             {selectDate === "day" && (
@@ -148,22 +172,34 @@ const RevenueStatistic = () => {
               </select>
             )}
           </div>
-          <select
-            value={selectYear}
-            onChange={(e) => setSelectYear(e.target.value)}
-          >
-            {dataYear && dataYear.length > 0 ? (
-              dataYear.map((year, index) => {
-                return (
-                  <option key={index} value={year}>
-                    Năm:{year}
-                  </option>
-                );
-              })
-            ) : (
-              <option>Không có dữ liệu năm</option>
-            )}
-          </select>
+          {selectDate !== "find" ? (
+            <select
+              value={selectYear}
+              onChange={(e) => setSelectYear(e.target.value)}
+            >
+              {dataYear && dataYear.length > 0 ? (
+                dataYear.map((year, index) => {
+                  return (
+                    <option key={index} value={year}>
+                      Năm:{year}
+                    </option>
+                  );
+                })
+              ) : (
+                <option>Không có dữ liệu năm</option>
+              )}
+            </select>
+          ) : (
+            <div className="box-find">
+              <FindStatistical
+                handleClickFind={handleClickFind}
+                valueStart={starDate}
+                onChangeStart={(e) => setStarDate(e.target.value)}
+                valueEnd={endDate}
+                onChangeEnd={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="containerStyle">
@@ -171,8 +207,13 @@ const RevenueStatistic = () => {
           <div className="box-loading text-center">
             <LoadingOutlined className="loading" />
           </div>
-        ) : (
+        ) : dataRevenue && dataRevenue.length > 0 ? (
           <LoadingRevenue data={dataRevenue} selectDate={selectDate} />
+        ) : (
+          <div className="text-center py-3 find">
+            Vui lòng nhập ngày bắt đầu và ngày kết thúc để bắt đầu tìm kiếm{" "}
+            <FcSearch size={20} />
+          </div>
         )}
       </div>
     </div>
