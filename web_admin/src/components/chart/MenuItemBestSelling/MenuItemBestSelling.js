@@ -36,6 +36,8 @@ const MenuItemBestSelling = () => {
   useEffect(() => {
     getMenuitemApi();
   }, [getMenuitemApi]);
+  console.log(listMenuitem, "check menu");
+
   /******************************************GET YEAR AND SELECT YEAR*************************** */
 
   let dataYear = useMemo(() => {
@@ -104,7 +106,6 @@ const MenuItemBestSelling = () => {
   }, []);
 
   let formatResult = Object.values(result);
-  console.log(selectDate, selectMonth, selectYear);
 
   /******************************************SUCCESS DATA*************************** */
   const menuitemSuccessData = useCallback(() => {

@@ -11,7 +11,6 @@ const PaymentStatistics = () => {
   const [selectYear, setSelectYear] = useState("");
   const [selectMonth, setSelectMonth] = useState("");
   const [month, setMonth] = useState([]);
-  const [listNewDataPayment, setListNewDataPayment] = useState([]);
   const [dataPaymentSuccess, setDataPaymentSuccess] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [starDate, setStarDate] = useState("");
@@ -24,12 +23,17 @@ const PaymentStatistics = () => {
       setEndDate("");
       setRunDate(false);
       await getPayment(selectDate, "", "", setListPayment, setIsLoading);
+    } else {
+      setListPayment([]);
     }
   }, [selectDate]);
 
   useEffect(() => {
     getPaymentApi();
   }, [getPaymentApi]);
+
+  console.log(listPayment, "chec<<<<<<<<");
+
   /*******************************************GET YEAR AND SELECT YEAR********************************** */
   const dataYear = useMemo(() => {
     if (selectDate !== "year") {
@@ -77,72 +81,64 @@ const PaymentStatistics = () => {
     }
   }, [dataMonth, selectYear, selectMonth]);
   /*******************************************CONVERT DATA PAYMENT********************************** */
-  const dataReduce = useCallback(() => {
-    if (listPayment && listPayment.length > 0) {
-      const result = listPayment.reduce((arr, curr) => {
-        const { timePeriod, paymentMethod, totalRevenue, totalOrders } = curr;
-        if (!arr[timePeriod]) {
-          arr[timePeriod] = { timePeriod };
-        }
-        arr[timePeriod][paymentMethod] = totalRevenue;
-        arr[timePeriod][`${paymentMethod}Order`] = totalOrders;
-        return arr;
-      }, []);
-      const formatResult = Object.values(result);
-
-      if (JSON.stringify(formatResult) !== JSON.stringify(listNewDataPayment)) {
-        setListNewDataPayment(formatResult);
-      }
+  const result = listPayment.reduce((arr, curr) => {
+    const { timePeriod, paymentMethod, totalRevenue, totalOrders } = curr;
+    if (!arr[timePeriod]) {
+      arr[timePeriod] = { timePeriod };
     }
-  }, [listPayment, listNewDataPayment]);
-
-  useEffect(() => {
-    dataReduce();
-  }, [dataReduce]);
-  console.log(listNewDataPayment, "listNewDataPayment");
+    arr[timePeriod][paymentMethod] = totalRevenue;
+    arr[timePeriod][`${paymentMethod}Order`] = totalOrders;
+    return arr;
+  }, []);
+  const formatResult = Object.values(result);
+  console.log(formatResult, "check form result");
 
   /*******************************************DATA-SUCCESS********************************* */
   const getSuccess = useCallback(() => {
-    if (
-      listNewDataPayment &&
-      listNewDataPayment.length > 0 &&
-      selectMonth &&
-      selectYear
-    ) {
+    if (formatResult && formatResult.length > 0 && selectMonth && selectYear) {
       let newData = [];
-      for (let i = 0; i < listNewDataPayment.length; i++) {
+      for (let i = 0; i < formatResult.length; i++) {
         if (selectDate === "day") {
           if (
-            FormatDay4(listNewDataPayment[i].timePeriod) === selectYear &&
-            FormatDay5(listNewDataPayment[i].timePeriod) === selectMonth
+            FormatDay4(formatResult[i].timePeriod) === selectYear &&
+            FormatDay5(formatResult[i].timePeriod) === selectMonth
           ) {
-            newData.push(listNewDataPayment[i]);
+            newData.push(formatResult[i]);
           }
         }
         if (selectDate === "month") {
-          if (FormatDay4(listNewDataPayment[i].timePeriod) === selectYear) {
-            newData.push(listNewDataPayment[i]);
+          if (FormatDay4(formatResult[i].timePeriod) === selectYear) {
+            newData.push(formatResult[i]);
           }
         }
         if (selectDate === "year") {
-          if (listNewDataPayment[i].timePeriod === parseInt(selectYear)) {
-            newData.push(listNewDataPayment[i]);
+          if (formatResult[i].timePeriod === parseInt(selectYear)) {
+            newData.push(formatResult[i]);
           }
         }
-        if (selectDate === "find" && starDate && endDate && runDate) {
-          newData.push(listNewDataPayment[i]);
+        if (selectDate === "find") {
+          if (starDate && endDate && runDate) {
+            newData.push(formatResult[i]);
+          }
         }
       }
-      setDataPaymentSuccess(newData);
+      if (JSON.stringify(newData) !== JSON.stringify(dataPaymentSuccess)) {
+        setDataPaymentSuccess(newData);
+      }
+    } else if (formatResult.length === 0) {
+      if (JSON.stringify(formatResult) !== JSON.stringify(dataPaymentSuccess)) {
+        setDataPaymentSuccess([]);
+      }
     }
   }, [
-    listNewDataPayment,
+    formatResult,
     selectMonth,
     selectYear,
     selectDate,
     starDate,
     endDate,
     runDate,
+    dataPaymentSuccess,
   ]);
 
   useEffect(() => {
@@ -225,7 +221,7 @@ const PaymentStatistics = () => {
           <LoadingPayment data={dataPaymentSuccess} selectDate={selectDate} />
         ) : (
           <div className="text-center py-3 find">
-            Vui lòng nhập ngày bắt đầu và ngày kết thúc để bắt đầu tìm kiếm{" "}
+            Vui lòng nhập ngày bắt đầu và ngày kết thúc để bắt đầu tìm kiếm
             <FcSearch size={20} />
           </div>
         )}

@@ -18,7 +18,6 @@ const getPayment = async (
 
     if (res && res.data && res.data.status === "success") {
       setIsLoading(false);
-
       setListPayment(res.data.data);
     }
   } catch (error) {
